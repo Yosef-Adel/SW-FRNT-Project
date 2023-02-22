@@ -1,0 +1,68 @@
+:root { 
+    --primary-background: rgb(248, 247, 250);
+    --secondary-background : rgb(255, 255, 255);
+    --primary-text : rgb(57,54,79);
+    --secondary-text: rgb(114, 117, 150); 
+    --content-text: rgb(30, 10, 60);
+    --orange : rgb(209,65,12);
+    --bright-blue: rgb(54,89,227);
+    --footer: rgb(30, 10, 60);
+    
+}
+
+
+* {
+  padding: 0;
+  margin: 0;
+  text-decoration: none;
+  list-style: none;
+  
+}
+html {
+  font-size: 62.5%;
+
+}
+
+body {
+  margin: 0;
+  font-family: 'Fjalla One', sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+
+}
+.fixTop {
+  padding-top: 8rem;
+}
+code {
+  font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
+    monospace;
+}
+
+@media screen and (max-width: 1000px) {
+
+  html {
+    font-size: 55%;
+  }
+
+}
+@media screen and (max-width: 890px) {
+
+  html {
+    font-size: 45%;
+  }
+
+}
+@media screen and (max-width: 600px) {
+
+  html {
+    font-size: 35%;
+  }
+
+}
+@media screen and (max-width: 450px) {
+
+  html {
+    font-size: 28%;
+  }
+
+}
