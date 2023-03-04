@@ -6,8 +6,10 @@
     --content-text: rgb(30, 10, 60);
     --orange : rgb(209,65,12);
     --bright-blue: rgb(54,89,227);
-    --footer: rgb(30, 10, 60);
+    --footer: rgb(30, 10, 60); 
+
     
+    --main-h1:"Neue Plak,-apple-system,BlinkMacSystemFont,Roboto,Helvetica Neue,Helvetica,Tahoma,Arial,sans-serif"
 }
 
 
@@ -41,28 +43,28 @@ code {
 @media screen and (max-width: 1000px) {
 
   html {
-    font-size: 55%;
+    font-size: 65%;
   }
 
 }
 @media screen and (max-width: 890px) {
 
   html {
-    font-size: 45%;
+    font-size: 55%;
   }
 
 }
 @media screen and (max-width: 600px) {
 
   html {
-    font-size: 35%;
+    font-size: 45%;
   }
 
 }
 @media screen and (max-width: 450px) {
 
   html {
-    font-size: 28%;
+    font-size: 40%;
   }
 
 }
