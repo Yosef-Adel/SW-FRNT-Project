@@ -149,7 +149,7 @@
 
 .image{
     width: 50%;
-    background-image: url(https://cdn.evbstatic.com/s3-build/perm_001/1bab52/django/images/login/lateral-image-1.jpg);
+    /* background-image: url(https://cdn.evbstatic.com/s3-build/perm_001/1bab52/django/images/login/lateral-image-1.jpg); */
     background-position: 0;
     background-repeat: no-repeat;
     background-size: cover;

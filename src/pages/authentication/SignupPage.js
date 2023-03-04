@@ -4,10 +4,13 @@ import { Formik, Form, Field, ErrorMessage } from 'formik';
 import * as Yup from "yup";
 import logo from '../../assets/brand/Eventbrite_Logo.png'
 import DriveFileRenameOutlineIcon from '@mui/icons-material/DriveFileRenameOutline';
-
+import images from '../../assets/data/loginPhotos'
+import { Link } from "react-router-dom";
 
 const SignupPage = () =>{
     const [cont, setContinue] = useState(false);
+    const [randImg, setrandImg]=useState(Math.floor(Math.random()*3))
+
     const initialValues = {
         email: '',
         confirmemail:'',
@@ -41,9 +44,11 @@ const SignupPage = () =>{
         <div className={classes.main}>
             <div className={classes.info}>
                 <div className={classes.form}>
-                    <div className={classes.logoContainer}>
-                        <img src={logo} alt="Envie Logo"/>
-                    </div>
+                    <Link to="/">
+                        <div className={classes.logoContainer}>
+                            <img src={logo} alt="Envie Logo"/>
+                        </div>
+                    </Link>
                     <h1>Create an account</h1>
                     <Formik initialValues={initialValues} validationSchema={validationSchema} onSubmit={onSubmit}>
                         <Form >
@@ -95,7 +100,7 @@ const SignupPage = () =>{
                     </Formik>
                 </div>
             </div>
-            <div className={classes.image}></div>
+            <div className={classes.image} style={{backgroundImage:`url(${images[randImg]})`}}></div>
         </div>
     )
 }
