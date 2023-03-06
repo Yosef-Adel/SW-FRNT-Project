@@ -6,6 +6,7 @@ import logo from '../../assets/brand/Eventbrite_Logo.png'
 import images from '../../assets/data/loginPhotos'
 import { Link } from "react-router-dom";
 
+
 const LoginPage = () =>{
     const [randImg, setrandImg]=useState(Math.floor(Math.random()*3))
     const initialValues = {
@@ -56,6 +57,12 @@ const LoginPage = () =>{
                             </div>
                         </Form>
                     </Formik>
+                    <Link to="/signup">
+                        <p className={classes.link}>
+                            Signup
+                        </p>
+                    </Link>
+
                 </div>
             </div>
             <div className={classes.image} style={{backgroundImage:`url(${images[randImg]})`}}></div>

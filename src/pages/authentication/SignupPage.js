@@ -1,15 +1,28 @@
-import React,{useState} from "react";
+import React,{useState, useEffect} from "react";
 import classes from "./auth.module.css"
-import { Formik, Form, Field, ErrorMessage } from 'formik';
+import { useFormikContext, Formik, Form, Field, ErrorMessage } from 'formik';
 import * as Yup from "yup";
 import logo from '../../assets/brand/Eventbrite_Logo.png'
 import DriveFileRenameOutlineIcon from '@mui/icons-material/DriveFileRenameOutline';
 import images from '../../assets/data/loginPhotos'
 import { Link } from "react-router-dom";
+import { TailSpin } from  'react-loader-spinner'
 
 const SignupPage = () =>{
     const [cont, setContinue] = useState(false);
+    const [loader, setLoader] = useState(false)
     const [randImg, setrandImg]=useState(Math.floor(Math.random()*3))
+
+    const contFn=()=>{
+
+        console.log(initialValues.email)
+
+        setLoader(true)
+        setTimeout(() => {
+          setLoader(false);
+          setContinue(true)
+        }, 800);
+    }
 
     const initialValues = {
         email: '',
@@ -30,7 +43,7 @@ const SignupPage = () =>{
         // }),
         firstName: Yup.string().required("First name is required"),
         lastName: Yup.string().required("Last name is required"),
-        password: Yup.string().required("Field required"),
+        password: Yup.string().min(8).required("Field required"),
 
 
     })
@@ -55,13 +68,29 @@ const SignupPage = () =>{
                             <div className={classes.boxContainer}>
                                 <div className={classes.fieldContainer}>
                                     <label className={classes.label}> Email address </label>
-                                    <Field className={classes.field} name='email' autoComplete="off"  disabled={cont}/>
+                                    <Field className={classes.field} id="email" name='email' autoComplete="off"  disabled={cont}/>
                                 </div>
                                 <ErrorMessage name='email' component="span" />
                             </div>
-                            {!cont?<div className={classes.btn}>
-                                <button className={classes.btn} onClick={()=>setContinue(true)}>Continue</button>
-                            </div>:<>
+                            {!cont?
+                                <div className={classes.btn}>
+                                    <button className={classes.btn} onClick={contFn}>
+                                    {loader?
+                                        <TailSpin
+                                            height="25"
+                                            width="20"
+                                            color="#ffffffff"
+                                            ariaLabel="tail-spin-loading"
+                                            radius="2"
+                                            wrapperStyle={{}}
+                                            wrapperClass={classes.loader}
+                                            visible={true}
+                                            />:
+                                        <>Continue</>}
+                                    </button>
+                                </div>
+                            :
+                            <>
                             <div className={classes.boxContainer}>
                                 <div className={classes.fieldContainer}>
                                     <label className={classes.label}> Confirm email</label>
@@ -92,13 +121,20 @@ const SignupPage = () =>{
                                 </div>
                                 <ErrorMessage name='password' component="span" />
                             </div>
-
-                            <div className={classes.btn}>
-                                <button type='submit' className={classes.btn}>Create account</button>
+                            <div className={classes.linearLine}></div>
+                            <span className={classes.mssg}> Your password must be at least 8 characters </span>
+                            <div className={classes.btn} style={{margin:'2rem auto'}}>
+                                <button type='submit'>Create account</button>
                             </div></>}
                         </Form>
                     </Formik>
+                    <Link to="/login">
+                        <p className={classes.link}>
+                            Login
+                        </p>
+                    </Link>
                 </div>
+
             </div>
             <div className={classes.image} style={{backgroundImage:`url(${images[randImg]})`}}></div>
         </div>
