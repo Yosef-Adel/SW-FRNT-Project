@@ -1,12 +1,12 @@
 import React from 'react'
 import classes from './home.module.css'
+import NavBar from '../../layouts/nav/NavBar'
+
 
 const HomePage = () => {
   return (
     <div className={classes.container}>
-    
-        <h1 className={classes.title}> Welcome Home Y'all</h1>
-      
+        <NavBar/>
     </div>
   )
 }

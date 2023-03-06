@@ -1,7 +1,15 @@
+@font-face {
+  font-family: "Neue Plak";
+  /* src: url("neue_plak_black-webfont.eot"); */
+  src: url("./assets/fonts/neue_plak_black-webfont.woff") format("woff"),
+  /* url("neue_plak_black-webfont.otf") format("opentype"),
+  url("CustomFont.svg#filename") format("svg"); */
+  }
+
 :root { 
     --primary-background: rgb(248, 247, 250);
     --secondary-background : rgb(255, 255, 255);
-    --primary-text : rgb(57,54,79);
+    --primary-text : #39364f;
     --secondary-text: rgb(114, 117, 150); 
     --content-text: rgb(30, 10, 60);
     --orange : rgb(209,65,12);
@@ -9,7 +17,7 @@
     --footer: rgb(30, 10, 60); 
 
     
-    --main-h1:"Neue Plak,-apple-system,BlinkMacSystemFont,Roboto,Helvetica Neue,Helvetica,Tahoma,Arial,sans-serif"
+    --main-h1: 'Vazirmatn', sans-serif;
 }
 
 

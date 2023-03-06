@@ -1,0 +1,109 @@
+.logo{
+    width: 11rem;
+    height: 2rem;
+    padding-left: 3rem;
+    padding-top: 2.5rem;
+}
+
+
+.nav{
+    display: flex;
+    justify-content: space-between;
+    background-color: var(--secondary-background);
+}
+
+.routes{
+    display: flex;
+}
+
+.routes>ul{
+    display: flex;
+}
+
+.list{
+    display: flex;
+    flex-direction: column;
+}
+
+.navItem{
+    color: var(--primary-text);
+    font-family: var(--main-h1);
+    font-weight: 500;
+    font-size: 1.2rem;
+    letter-spacing: .05rem;
+    padding-block: 2.5rem;
+    padding-inline: 2rem;
+    text-overflow: ellipsis;
+    text-decoration: 'none';
+    margin-block: auto;
+    position: relative;
+}
+
+a{
+    color: unset;
+}
+
+.wrapper .arrow{
+    fill: #c2c2cc;
+    stroke: #c2c2cc;
+    stroke-width: 1px;
+    position: relative;
+    /* top: .4rem; */
+    width: 2rem;    
+}
+
+.wrapper{
+    display: flex;
+    flex-direction: column;
+    place-items: center;
+}
+
+.wrapper svg{
+    fill: var(--primary-text);
+    width: 2.8rem;
+    height: 2.8rem;
+}
+
+.wrapper>div{
+    display: flex;
+    place-items: center;
+    gap: 1.3rem;
+}
+
+
+
+.navItem:hover{
+    background-color: var(--primary-background)
+}
+.navItem>ol{
+    display: none;
+}
+
+.navItem:hover>ol{
+    display: unset;
+}
+
+.dropDown:hover{
+    display: unset;
+}
+
+.navSubItem:hover{
+    background-color: var(--primary-background);
+    color: var(--primary-text);
+
+}
+
+.dropDown{
+    right: 0;
+    position: absolute;
+    width: 25rem;
+    top: 100%;
+    background-color: var(--secondary-background);
+    color: #a1a1ac;
+}
+
+.dropDown>li{
+    padding: 1.5rem;
+}
+
+

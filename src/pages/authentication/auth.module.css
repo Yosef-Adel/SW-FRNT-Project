@@ -38,7 +38,7 @@
     padding-left: 10px;
     color: var( --content-text);
 
-    font-family: 'Roboto', sans-serif;
+    font-family: var(--main-h1);
 }
 
 .fieldContainer{
