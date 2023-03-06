@@ -1,8 +1,8 @@
-import React,{useState, useEffect} from "react";
+import React,{useState} from "react";
 import classes from "./auth.module.css"
-import { useFormikContext, Formik, Form, Field, ErrorMessage } from 'formik';
+import { Formik, Form, Field, ErrorMessage } from 'formik';
 import * as Yup from "yup";
-import logo from '../../assets/brand/Eventbrite_Logo.png'
+import logo from '../../assets/brand/envie.svg'
 import DriveFileRenameOutlineIcon from '@mui/icons-material/DriveFileRenameOutline';
 import images from '../../assets/data/loginPhotos'
 import { Link } from "react-router-dom";

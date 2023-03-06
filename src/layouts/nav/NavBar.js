@@ -1,14 +1,14 @@
 import React from 'react'
 import classes from './navbar.module.css'
 import navData from '../../assets/data/navData'
-import logo from '../../assets/brand/Eventbrite_Logo.png'
+import logo from '../../assets/brand/envie.svg'
 import KeyboardArrowDownIcon from '@mui/icons-material/KeyboardArrowDown';
 import { NavLink } from 'react-router-dom'
 
 
 
 const NavBar = () => {
-    const logged = true;
+    const logged = false;
     const email= logged? 'ranaagamaaall@gmail.com':''
     console.log(navData)
     const page = logged? navData.homeUser : navData.homeAttendee
