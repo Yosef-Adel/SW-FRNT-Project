@@ -29,7 +29,7 @@ const SignupPage = () =>{
         //     )
         // }),
         firstName: Yup.string().required("First name is required"),
-        lastName: Yup.string().required("last name is required"),
+        lastName: Yup.string().required("Last name is required"),
         password: Yup.string().required("Field required"),
 
 
