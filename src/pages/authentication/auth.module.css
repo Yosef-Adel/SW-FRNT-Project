@@ -11,7 +11,7 @@
 
 .info .form{
     width: 100%;
-    width: 42rem;
+    width: 40rem;
     margin: auto;
 
     display: flex;
@@ -212,7 +212,7 @@
 }
 
 .smallScreenlink{
-    visibility: hidden;
+    display: none;
 }
 
 .loader{
@@ -347,7 +347,7 @@
 .downArrow{
     padding-left: 2.2rem;
     color: rgb(44, 43, 51);
-    visibility: hidden;
+    display: none;
 }
 
 @media screen and (max-width:960px) {
@@ -372,7 +372,7 @@
     }
 
     .methods .downArrow{
-        visibility: visible;
+        display: initial;
     }
     .methods ul{
         margin: auto;
@@ -385,10 +385,10 @@
     }
 
     .wideScreenlink{
-        visibility: hidden;    
+       display: none;    
     }
     .smallScreenlink{
-        visibility: visible;
+        display: initial;
         margin-left: 1rem;
         color: var(--bright-blue);
         font-size: 1.4rem;
