@@ -16,7 +16,9 @@ const NavBar = () => {
   return (
     <div className={classes.nav}>
         {/* <NavLink to='/'  activeClassName={classes.activeLink}> */}
-            <img className={classes.logo} src={logo} alt='logo'/>
+            <div className={classes.logoContainer}>
+                <img className={classes.logo} src={logo} alt='logo'/>
+            </div>
         {/* </NavLink> */}
 
 
