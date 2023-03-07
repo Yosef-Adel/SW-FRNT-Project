@@ -7,11 +7,15 @@ import DriveFileRenameOutlineIcon from '@mui/icons-material/DriveFileRenameOutli
 import images from '../../assets/data/loginPhotos'
 import { Link } from "react-router-dom";
 import { TailSpin } from  'react-loader-spinner'
-
+import { FcGoogle } from 'react-icons/fc';
+import {GrFacebookOption} from 'react-icons/gr';
+import {AiFillApple} from 'react-icons/ai';
+import {FaChevronDown} from 'react-icons/fa';
 const SignupPage = () =>{
     const [cont, setContinue] = useState(false);
     const [loader, setLoader] = useState(false)
     const [randImg, setrandImg]=useState(Math.floor(Math.random()*3))
+    const [dropDown, setDropDown] = useState(false)
 
     const contFn=()=>{
 
@@ -62,7 +66,14 @@ const SignupPage = () =>{
                             <img src={logo} alt="Envie Logo"/>
                         </div>
                     </Link>
-                    <h1>Create an account</h1>
+                    <div className={classes.header}>
+                        <Link to="/signup">
+                            <p className={classes.smallScreenlink}>
+                                Log in
+                            </p>
+                        </Link>
+                    </div>
+                    <h1>Create an <br></br>account </h1>
                     <Formik initialValues={initialValues} validationSchema={validationSchema} onSubmit={onSubmit}>
                         <Form >
                             <div className={classes.boxContainer}>
@@ -133,14 +144,21 @@ const SignupPage = () =>{
                         <div className={classes.splittext}>or</div> 
                     </div>
                     <div className={classes.btn1}>
-                        <button className={classes.btn1}>Email me a login link</button>
+                            <button  className={classes.btn1}> <FcGoogle className={classes.icon}/> <p> Sign in with Google </p></button>
                     </div>
-                     <div className={classes.btn1}>
-                        <button  className={classes.btn1}>Sign in with Google</button>
-                    </div>
+                    <div className={classes.methods}>
+                            <h3 onClick={()=>setDropDown(!dropDown)}>Other login methods <FaChevronDown className={classes.downArrow} size={12}/></h3>
+                            <ul className={dropDown?classes.showDropDown:null} style={{paddingLeft:'3.5rem'}}>
+                                <li style={{backgroundColor:'#1877f2'}}>
+                                    <div>
+                                        <GrFacebookOption className={classes.methodsIcon}/>
+                                    </div>
+                                </li>
+                            </ul>
+                        </div>
                     <Link to="/login">
-                        <p className={classes.link}>
-                            Login
+                        <p className={classes.wideScreenlink}>
+                            Log in
                         </p>
                     </Link>
                 </div>
