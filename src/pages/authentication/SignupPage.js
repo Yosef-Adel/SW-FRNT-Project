@@ -128,6 +128,16 @@ const SignupPage = () =>{
                             </div></>}
                         </Form>
                     </Formik>
+                    <div className={classes.splitfield}>
+                        <hr  className={classes.hr_split}/>
+                        <div className={classes.splittext}>or</div> 
+                    </div>
+                    <div className={classes.btn1}>
+                        <button className={classes.btn1}>Email me a login link</button>
+                    </div>
+                     <div className={classes.btn1}>
+                        <button  className={classes.btn1}>Sign in with Google</button>
+                    </div>
                     <Link to="/login">
                         <p className={classes.link}>
                             Login

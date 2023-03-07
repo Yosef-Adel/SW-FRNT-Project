@@ -11,12 +11,12 @@
 
 .info .form{
     width: 100%;
-    width: 40rem;
+    width: 42rem;
     margin: auto;
 
     display: flex;
     flex-direction: column;
-    gap: 2.8rem
+    gap: 1rem
 
 }
 
@@ -32,10 +32,10 @@
 }
 
 .info .form h1{
-    font-size: 5.4rem;
+    font-size: 4.5rem;
     line-height: 1.2;
     margin-right: -1px;
-    font-weight: 800;
+    font-weight: 900;
     padding-left: 10px;
     color: var( --content-text);
 
@@ -71,6 +71,8 @@
     display: block;
     transition: 0.2s;
     z-index: 1;
+
+    padding-left: 0.4rem;
 }
 
 .field::placeholder {
@@ -85,6 +87,8 @@
     color: var( --primary-tex);
     background-color: transparent;
     z-index: 2;
+
+    padding-left: 0.4rem;
 }
 
 
@@ -96,13 +100,13 @@
 
 .fieldContainer:has(.field:not(:placeholder-shown)) .label{
     top: 0;
-    font-size: 1.4rem;
+    font-size: 1.2rem;
 }
 
 .fieldContainer:has(.field:focus) .label{
     color: var( --bright-blue);
     top: 0;
-    font-size: 1.4rem;
+    font-size: 1.2rem;
 }
 
 .boxContainer:has(span) .fieldContainer{
@@ -114,7 +118,7 @@
 .boxContainer:has(span) .fieldContainer .label{
     color: var(--errorText);
     top: 0;
-    font-size: 1.4rem;
+    font-size: 1.2rem;
 }
 
 .boxContainer span{
@@ -195,21 +199,155 @@
     font-size: 1.2rem;
 }
 
-.link{
+.wideScreenlink{
     margin-left: 1rem;
     color: var(--bright-blue);
     font-size: 1.4rem;
     font-weight: 600;
 }
 
-.link:hover{
+.wideScneenlink:hover{
     text-decoration: underline;
     cursor: pointer;
+}
+
+.smallScreenlink{
+    visibility: hidden;
 }
 
 .loader{
     margin: auto;
     justify-content: center;
+}
+
+
+.splitfield
+{
+    position: relative;
+    align-items: center;
+    display: flex;
+    justify-content: center;
+    margin-top: 2.5rem;
+    margin-bottom: 1.5rem;
+}
+.splittext{
+    border: 1px solid #a9a8b3;
+    border-radius: 100px;
+    background: #fff;
+    position: relative;
+    display: inline-block;
+    padding: 3px 14px 3px;
+    min-width: 20px;
+    text-align: center;
+    color: var(--secondary-text);
+    font-size: 1.4rem;
+    font-family:var(--main-h1);
+    font-weight: 800;
+
+    letter-spacing: 0.5px;
+}
+.hr_split
+{
+    width:95%;
+    height:0.1px;
+    color:white;
+    position: absolute;
+    left: 1rem;
+    justify-content: center;
+    background-color: rgb(169,168,179);
+    margin: 2rem 0;
+}
+.btn1{
+    width: 95%;
+    text-align: center;
+    margin: 0.1rem auto;
+}
+.btn1 button{
+    width: 100%;
+    background-color: white;
+    color: rgb(57,54,79);
+    font-size: 1.5rem;
+    border: 1px solid #dbdae3;
+    font-weight: 600;
+    border-radius: 3px;
+    height: 44px;
+    font-family: var(--main-h1);
+    letter-spacing: 0.5px;
+
+    display: flex;
+    justify-content: center;
+}
+
+.btn1 button p{
+    padding-top: 1rem;
+}
+
+.btn1 button:hover{
+    background-color: rgb(249,249,251);
+    cursor: pointer;
+    transition: 2ms;
+}
+
+.icon{
+    width: 2.5rem;
+    height: 2.5rem;
+    padding-top: 1rem;
+    padding-right: 1.5rem;
+}
+
+.methods{
+    width: 95%;
+    margin: auto;
+    margin-top: 4rem;
+    margin-bottom: 5rem;
+}
+
+.methods h3{
+    font-size: 1.4rem;
+    color: rgb(57,54,79);
+    font-size: 1.5rem;
+    letter-spacing: 0.5px;
+    font-weight: 500;
+    color: rgb(103,100,119);
+    font-family: var(--main-h1);
+
+    width: fit-content;
+}
+
+.methods ul{
+    display: flex;
+    flex-direction: row;
+    gap: 5rem;
+    padding-top: 2rem;
+
+    width: fit-content;
+}
+
+.methods li{
+    width: 4.7rem;
+    height: 4.7rem;
+    border-radius: 50%;
+}
+
+.methods li div{
+    width: 50%;
+    height: 50%;
+    position: relative;
+    top:50%;
+    left:50%;
+    transform: translate(-50%,-50%);
+    border-radius: 50%;
+}
+.methodsIcon{
+    width: 100%;
+    height: 100%;
+    color: white;
+}
+
+.downArrow{
+    padding-left: 2.2rem;
+    color: rgb(44, 43, 51);
+    visibility: hidden;
 }
 
 @media screen and (max-width:960px) {
@@ -223,11 +361,55 @@
     }
     
     .info .form{
-        width: 50rem;
+        width: 40rem;
+    }
+
+    .methods h3{
+        margin: auto;
+        cursor: pointer;
+        border-bottom:0.1px solid #a9a8a848;
+        padding:0.5rem 1rem;
+    }
+
+    .methods .downArrow{
+        visibility: visible;
+    }
+    .methods ul{
+        margin: auto;
+        opacity: 0;
+    }
+
+    .methods .showDropDown{
+        opacity: 1;
+        transition: opacity 0.7s;
+    }
+
+    .wideScreenlink{
+        visibility: hidden;    
+    }
+    .smallScreenlink{
+        visibility: visible;
+        margin-left: 1rem;
+        color: var(--bright-blue);
+        font-size: 1.4rem;
+        font-weight: 600;
+
+        padding-top: 30%;
+    }
+    
+    .smallScreenlink:hover{
+        text-decoration: underline;
+        cursor: pointer;
+    }
+    
+    .header{
+        display: flex;
+        flex-direction: row;
+        justify-content: space-between;
+        width: 97%;
     }
 
 }
-
 
 /* ----------------------------------------------
  * Generated by Animista on 2023-3-4 8:35:57
