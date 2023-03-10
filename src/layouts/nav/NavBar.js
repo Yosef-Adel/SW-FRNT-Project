@@ -5,9 +5,12 @@ import logo from '../../assets/brand/envie.svg'
 import KeyboardArrowDownIcon from '@mui/icons-material/KeyboardArrowDown';
 import { NavLink } from 'react-router-dom'
 
-
-
-const NavBar = () => {
+/**
+ * Component that renders nav bar
+ *
+ * @component
+ */
+const NavBar = (props) => {
     const logged = false;
     const email= logged? 'ranaagamaaall@gmail.com':''
     console.log(navData)
@@ -27,7 +30,7 @@ const NavBar = () => {
                 {page[0].map((element,index) => {
                     return(
                         <div className={classes.list}>
-                            <li className={classes.navItem}>
+                            <li className={`${classes.navItem} ${element.color? classes.blue: ""}`}>
                                 <NavLink to={element.route}  activeClassName={classes.activeLink}>
                                     <div className={classes.wrapper}>
                                         {element.icon} 

@@ -42,6 +42,14 @@
     position: relative;
 }
 
+.blue{
+    color: var(--bright-blue);
+}
+
+.blue .wrapper svg{
+    fill: var(--bright-blue);
+}
+
 a{
     color: unset;
 }
