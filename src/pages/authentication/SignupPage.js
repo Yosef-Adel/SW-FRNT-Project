@@ -11,22 +11,13 @@ import { FcGoogle } from 'react-icons/fc';
 import {GrFacebookOption} from 'react-icons/gr';
 import {AiFillApple} from 'react-icons/ai';
 import {FaChevronDown} from 'react-icons/fa';
+import validator from 'validator';
 const SignupPage = () =>{
     const [cont, setContinue] = useState(false);
     const [loader, setLoader] = useState(false)
     const [randImg, setrandImg]=useState(Math.floor(Math.random()*3))
     const [dropDown, setDropDown] = useState(false)
-
-    const contFn=()=>{
-
-        console.log(initialValues.email)
-
-        setLoader(true)
-        setTimeout(() => {
-          setLoader(false);
-          setContinue(true)
-        }, 800);
-    }
+    const [myEmail,setMyEmail]=useState();
 
     const initialValues = {
         email: '',
@@ -35,16 +26,24 @@ const SignupPage = () =>{
         lastName:'',
         password: '',
     }
+    const contFn=()=>{
+        if (validator.isEmail(myEmail)) {
+            setLoader(true)
+            setTimeout(() => {
+              setLoader(false);
+              setContinue(true)
+            }, 800);
+          }
+
+       
+    }
 
     const validationSchema = Yup.object().shape({
         email: Yup.string().min(3).email('Invalid email address').required(" Email field is required"),
-        // confirmemail: Yup.string().when("email", {
-        //     is: val => (val && val.length > 0 ? true : false),
-        //     then: Yup.string().oneOf(
-        //         [Yup.ref("email")],
-        //         "Both email need to be the same"
-        //     )
-        // }),
+        confirmemail: Yup.string()
+        .required("Please confirm your Email")
+        .oneOf([Yup.ref("email")], "Email address doesn't match. Please try again"),
+    
         firstName: Yup.string().required("First name is required"),
         lastName: Yup.string().required("Last name is required"),
         password: Yup.string().min(8).required("Field required"),
@@ -73,19 +72,23 @@ const SignupPage = () =>{
                             </p>
                         </Link>
                     </div>
-                    <h1>Create an <br></br>account </h1>
-                    <Formik initialValues={initialValues} validationSchema={validationSchema} onSubmit={onSubmit}>
+                    <h1 style={{marginBottom:'3rem'}}>Create an <br></br>account </h1>
+                    
+                    <Formik initialValues={initialValues} validationSchema={validationSchema} onSubmit={onSubmit} >
+                    {
+                        ({values})=>
                         <Form >
+                            {setMyEmail(values.email)}
                             <div className={classes.boxContainer}>
-                                <div className={classes.fieldContainer}>
+                                <div className={classes.fieldContainer} style={{backgroundColor:!cont ?'none':'#f8f7fa'}}>
                                     <label className={classes.label}> Email address </label>
-                                    <Field className={classes.field} id="email" name='email' autoComplete="off"  disabled={cont}/>
+                                    <Field className={  classes.field} id="email" name='email' autoComplete="off"  disabled={cont}  />
                                 </div>
                                 <ErrorMessage name='email' component="span" />
                             </div>
                             {!cont?
-                                <div className={classes.btn}>
-                                    <button className={classes.btn} onClick={contFn}>
+                                <div className={classes.btn} >
+                                    <div className={classes.button} onClick={contFn}>
                                     {loader?
                                         <TailSpin
                                             height="25"
@@ -97,11 +100,11 @@ const SignupPage = () =>{
                                             wrapperClass={classes.loader}
                                             visible={true}
                                             />:
-                                        <>Continue</>}
-                                    </button>
+                                        <p>Continue</p>}
+                                    </div>
                                 </div>
-                            :
-                            <>
+                            :null}
+                        <div className={cont? classes.formshow:classes.formhide}>
                             <div className={classes.boxContainer}>
                                 <div className={classes.fieldContainer}>
                                     <label className={classes.label}> Confirm email</label>
@@ -135,10 +138,14 @@ const SignupPage = () =>{
                             <div className={classes.linearLine}></div>
                             <span className={classes.mssg}> Your password must be at least 8 characters </span>
                             <div className={classes.btn} style={{margin:'2rem auto'}}>
-                                <button type='submit'>Create account</button>
-                            </div></>}
+                                <button type='submit' className={classes.button}>Create account</button>
+                            </div>
+                        </div>
                         </Form>
+                    }
                     </Formik>
+                    {!cont?
+                    <>
                     <div className={classes.splitfield}>
                         <hr  className={classes.hr_split}/>
                         <div className={classes.splittext}>or</div> 
@@ -147,15 +154,17 @@ const SignupPage = () =>{
                             <button  className={classes.btn1}> <FcGoogle className={classes.icon}/> <p> Sign in with Google </p></button>
                     </div>
                     <div className={classes.methods}>
-                            <h3 onClick={()=>setDropDown(!dropDown)}>Other login methods <FaChevronDown className={classes.downArrow} size={12}/></h3>
-                            <ul className={dropDown?classes.showDropDown:null} style={{paddingLeft:'3.5rem'}}>
-                                <li style={{backgroundColor:'#1877f2'}}>
-                                    <div>
-                                        <GrFacebookOption className={classes.methodsIcon}/>
-                                    </div>
-                                </li>
-                            </ul>
-                        </div>
+                        <h3 onClick={()=>setDropDown(!dropDown)}>Other sign up methods <FaChevronDown className={classes.downArrow} size={12}/></h3>
+                        <ul className={dropDown?classes.showDropDown:null} style={{paddingLeft:'3.5rem'}}>
+                            <li style={{backgroundColor:'#1877f2'}}>
+                                <div>
+                                    <GrFacebookOption className={classes.methodsIcon}/>
+                                </div>
+                            </li>
+                        </ul>
+                    </div>
+                    </>
+                    :null}
                     <Link to="/login">
                         <p className={classes.wideScreenlink}>
                             Log in

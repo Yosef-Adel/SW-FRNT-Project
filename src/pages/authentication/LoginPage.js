@@ -66,10 +66,14 @@ const LoginPage = () =>{
                             </div>
 
                             <div className={classes.btn}>
-                                <button type='submit' className={classes.btn}>Log in</button>
+                                <button type='submit' className={classes.button}>Log in</button>
                             </div>
                         </Form>
+                    
                     </Formik>
+                    <p className={classes.screenLink}>
+                                Forgot password?
+                        </p>
                         <div className={classes.splitfield}>
                             <hr  className={classes.hr_split}/>
                             <div className={classes.splittext}>or</div> 
