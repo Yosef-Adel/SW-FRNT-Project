@@ -60,19 +60,20 @@ const SignupPage = () =>{
         <div className={classes.main}>
             <div className={classes.info}>
                 <div className={classes.form}>
-                    <Link to="/">
-                        <div className={classes.logoContainer}>
+                    <Link to="/" className={classes.logoContainer}>
+                        <div >
                             <img src={logo} alt="Envie Logo"/>
                         </div>
                     </Link>
                     <div className={classes.header}>
-                        <Link to="/signup">
+                        <h1 style={{marginBottom:'3rem'}}>Create an <br></br>account </h1>
+                        <Link to="/login">
                             <p className={classes.smallScreenlink}>
                                 Log in
                             </p>
                         </Link>
                     </div>
-                    <h1 style={{marginBottom:'3rem'}}>Create an <br></br>account </h1>
+                    
                     
                     <Formik initialValues={initialValues} validationSchema={validationSchema} onSubmit={onSubmit} >
                     {
