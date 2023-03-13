@@ -42,7 +42,7 @@ const Banner = () => {
           <img src={header} alt="Now Is Your Time" />
         </div>
         <div className={classes.bannerheaderbtn}>
-          <Link to="/signup" className={classes.bannerheaderlink}>
+          <Link to="/" className={classes.bannerheaderlink}>
             <div> Find Your Next Event</div>
           </Link>
         </div>

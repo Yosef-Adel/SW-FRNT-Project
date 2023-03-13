@@ -53,4 +53,8 @@
   .footer {
     flex-direction: column;
   }
+
+  /* .footer > div {
+    padding-top: 2rem;
+  } */
 }
