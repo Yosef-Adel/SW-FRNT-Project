@@ -39,9 +39,14 @@
   outline: none;
   color: #dbdae3;
   overflow-y: scroll;
-  padding: 0 0 0 1rem;
-  text-align: center;
+  padding: 0 1rem 0 0rem;
+  text-align: end;
   /* margin-left: 2rem; */
+}
+
+.dropdown > select:focus {
+  padding: 0 0 0 1rem;
+  text-align: start;
 }
 
 @media screen and (max-width: 790px) {
