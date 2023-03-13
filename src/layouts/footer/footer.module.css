@@ -5,9 +5,11 @@
   flex-wrap: nowrap;
   background-color: var(--footer);
   color: #dbdae3;
-  padding: 1.6rem;
+  padding: 1.6rem 3.2rem;
   font-size: 12px;
   height: auto;
+  row-gap: 1.6rem;
+  column-gap: 6.4rem;
 }
 
 .footerdata {
@@ -16,12 +18,32 @@
   flex-wrap: wrap;
 }
 
-.footeritem {
-  padding: 0 2rem;
+.footeritem > div {
+  line-height: 2.4rem;
+}
+
+.footeritem > div::after {
+  content: "●";
+  font-size: 6px;
+  color: #6f7287;
+  padding: 0 1rem;
 }
 
 .copyright {
-  display: flex;
-  justify-content: center;
-  align-items: center;
+  white-space: nowrap;
+}
+
+.dropdown > select {
+  background: none;
+  border: none;
+  outline: none;
+  color: #dbdae3;
+  overflow-y: scroll;
+  padding: 0 1rem;
+}
+
+@media screen and (max-width: 790px) {
+  .footer {
+    flex-direction: column;
+  }
 }
