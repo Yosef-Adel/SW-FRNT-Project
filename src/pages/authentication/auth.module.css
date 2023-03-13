@@ -1,7 +1,7 @@
 .main{
     display: flex;
     flex-direction: row;
-    padding-top: 5rem;
+    /* padding-top: 5rem; */
 }
 .info{
     min-width: 50%;
