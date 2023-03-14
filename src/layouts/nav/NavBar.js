@@ -11,7 +11,7 @@ import { NavLink } from 'react-router-dom'
  * @component
  */
 const NavBar = (props) => {
-    const logged = false;
+    const logged = true;
     const email= logged? 'ranaagamaaall@gmail.com':''
     console.log(navData)
     const page = logged? navData.homeUser : navData.homeAttendee
