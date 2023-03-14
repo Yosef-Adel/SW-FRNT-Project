@@ -1,6 +1,9 @@
 .container{
     margin-inline: 10rem;
     margin-block: 3rem;
+    display: flex;
+    flex-direction: column;
+    flex-wrap: wrap;
 }
 
 .subHead{
@@ -10,8 +13,9 @@
 }
 .categoriesContainer{
     display: grid;
-    grid-template-columns: 1fr 1fr 1fr 1fr;
-    row-gap: 1.5rem;
+    grid-template-columns: repeat(4,1.2fr);
+    grid-column-gap: 1.2rem;
+    grid-row-gap: 1.2rem;
     cursor: pointer;
 }
 
@@ -20,9 +24,14 @@
     align-items: center;    
     border: 1px solid #eeedf2;
     height: 5rem;
-    width: 30rem;
+    /* width: 30rem; */
     border-radius: 2px;
     background-color: var(--primary-background);
+    color: var(--primary-text);
+    font-family: var(--main-h1);
+    font-weight: 500;
+    font-size: 1.3rem;
+    gap: 2rem;
 }
 
 .category>svg, .category>svg>path{
@@ -33,14 +42,6 @@
 .category>svg{
     background-color: #fdf7f5;
     padding: 1rem;
-}
-
-.category{
-    color: var(--primary-text);
-    font-family: var(--main-h1);
-    font-weight: 500;
-    font-size: 1.3rem;
-    gap: 2rem;
 }
 
 
