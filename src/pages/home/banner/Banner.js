@@ -6,6 +6,16 @@ import classes from "./banner.module.css";
 import header from "../../../assets/imgs/banner/header.svg";
 import { Link } from "react-router-dom";
 
+/**
+ * Component that renders banner of homa page
+ *
+ * @component
+ * @example
+ * return(
+ * <Banner />
+ * )
+ */
+
 const Banner = () => {
   const [randImg, setrandImg] = useState(
     Math.floor(Math.random() * labimgs.length)
@@ -42,7 +52,7 @@ const Banner = () => {
           <img src={header} alt="Now Is Your Time" />
         </div>
         <div className={classes.bannerheaderbtn}>
-          <Link to="/signup" className={classes.bannerheaderlink}>
+          <Link to="/" className={classes.bannerheaderlink}>
             <div> Find Your Next Event</div>
           </Link>
         </div>

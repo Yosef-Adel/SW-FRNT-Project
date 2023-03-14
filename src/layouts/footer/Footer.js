@@ -1,6 +1,16 @@
-import React from "react";
+import React, { Component } from "react";
 import classes from "./footer.module.css";
 import FooterData from "../../assets/data/FooterData";
+
+/**
+ * Component that renders footer
+ *
+ * @component
+ * @example
+ * return(
+ * <Footer />
+ * )
+ */
 
 const Footer = (props) => {
   return (
