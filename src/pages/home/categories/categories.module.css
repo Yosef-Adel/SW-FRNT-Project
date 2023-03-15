@@ -1,6 +1,6 @@
 .container{
-    margin-inline: 10rem;
-    margin-block: 3rem;
+    margin-inline: 1.5rem;
+    margin-block: .5rem;
     display: flex;
     flex-direction: column;
     flex-wrap: wrap;

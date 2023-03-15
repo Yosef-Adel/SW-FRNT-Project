@@ -14,16 +14,21 @@ const HomePage = () => {
     <div className={classes.container}>
       <NavBar />
       <Banner />
-      <Categories/>
-      <EventCard 
-        img={eventImage1}
-        title="Celebrating Century : Presidency University"
-        time="Tue, Mar 14, 7:00 PM + 37 more events"
-        location="Presidency University, Kolkata"
-        price="Free"
-        companyName="Presidency University"
-        followersNo="100"
-      />
+      
+      <div className={classes.containerbox}>
+        <FilterTabs/>
+        <Categories/>
+        <EventCard 
+          img={eventImage1}
+          title="Celebrating Century : Presidency University"
+          time="Tue, Mar 14, 7:00 PM + 37 more events"
+          location="Presidency University, Kolkata"
+          price="Free"
+          companyName="Presidency University"
+          followersNo="100"
+        />
+      </div>
+      
 
       <Footer />
     </div>

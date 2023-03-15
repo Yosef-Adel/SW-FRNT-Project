@@ -4,7 +4,6 @@ const FilterTabsData = {
         [
             {
                 "title":"All",
-                "color": "blue",
                 "route":"",
             },
             {
