@@ -7,8 +7,6 @@
 }
 .containerbox
 {
-
-    width:80%;
-    position: relative;
-    left:30rem;
+    width:85%;
+    margin: auto;
 }
