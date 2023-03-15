@@ -2,3 +2,13 @@
     margin-top: 10rem;
     color: var(--orange);
 }
+.container{
+    width:100%;
+}
+.containerbox
+{
+
+    width:80%;
+    position: relative;
+    left:30rem;
+}

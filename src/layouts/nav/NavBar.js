@@ -23,7 +23,7 @@ const NavBar = (props) => {
                 <img className={classes.logo} src={logo} alt='logo'/>
             </div>
         {/* </NavLink> */}
-
+        {console.log(page)}
 
         <div className={classes.routes}>
             <ul>
