@@ -37,7 +37,6 @@
 
 .clicked
 {
-    display: flex !important;
     padding-bottom: .7rem !important;
     border-bottom: 2px blue solid !important;
     color: var(--bright-blue) !important;
