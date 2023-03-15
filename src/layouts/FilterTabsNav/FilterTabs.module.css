@@ -4,10 +4,10 @@
   justify-content: space-between;
   background-color: var(--secondary-background);
 }
-.Nav ul{
+.Filter ul{
   display: flex;
 }
-.navItem{ 
+.FilterItem{ 
   font-family: var(--main-h1);
   font-weight: 600;
   font-size: 1.5rem;
@@ -18,7 +18,7 @@
   position: relative;
   white-space: nowrap;
 }
-.navItem hr{
+.FilterItem hr{
   display:none;
 }
 .element
@@ -26,7 +26,7 @@
   color: var(--secondary-text);
 }
 
-.navItem .element:hover{
+.FilterItem .element:hover{
    
   color:var(--primary-color); 
   padding-bottom: .6rem;

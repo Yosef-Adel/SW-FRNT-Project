@@ -6,7 +6,7 @@ import { NavLink } from 'react-router-dom'
 const FilterTabs= () => {
     const page =FilterTabsData.FilterTabsInfo;
     const [clicked, setIndexClicked] = useState(0);
-    //for selecting mulipule filters ---- to make it usestate of indexclicked([1,0,0,0,0,0]) if condition (clicked[index]=1)
+    //for selecting multiple filters ---- to make it usestate of indexclicked([1,0,0,0,0,0])---- if condition (clicked[index]=1)
      function setclicked(index){
         if(clicked[index]==0)
         {
@@ -17,12 +17,12 @@ const FilterTabs= () => {
     }
     return(
         <div className={classes.FilterNav}>
-            <div className={classes.Nav}>
+            <div className={classes.Filter}>
                 <ul>
                     {page[0].map((element,index) => {
                         return(
                             <div>
-                                <li className={`${classes.navItem}`} >
+                                <li className={`${classes.FilterItem}`} >
                                     <NavLink to={element.route}  activeClassName={classes.activeLink}>
                                     <div>
                                         <div className={index==clicked? classes.clicked:classes.element} onClick={() =>setIndexClicked(index)}>{element.title}</div>
