@@ -1,50 +1,56 @@
 
 .FilterNav{
-    display: flex;
-    justify-content: space-between;
-    background-color: var(--secondary-background);
+  display: flex;
+  justify-content: space-between;
+  background-color: var(--secondary-background);
 }
 .Nav ul{
-    display: flex;
+  display: flex;
 }
-.navItem{
-    
-    font-family: var(--main-h1);
-    font-weight: 600;
-    font-size: 1.5rem;
-    letter-spacing: .05rem;
-    padding-block: 2.5rem;
-    padding-inline: 1.5rem;
-    margin-block: auto;
-    position: relative;
-    white-space: nowrap;
+.navItem{ 
+  font-family: var(--main-h1);
+  font-weight: 600;
+  font-size: 1.5rem;
+  letter-spacing: .05rem;
+  padding-block: 2.5rem;
+  padding-inline: 1.5rem;
+  margin-block: auto;
+  position: relative;
+  white-space: nowrap;
 }
 .navItem hr{
-   display:none;
+  display:none;
 }
 .element
 {
-    color: var(--secondary-text);
+  color: var(--secondary-text);
 }
 
 .navItem .element:hover{
    
-    color:var(--primary-color); 
-    padding-bottom: .6rem;
-    border-bottom: 2px black solid;
+  color:var(--primary-color); 
+  padding-bottom: .6rem;
+  border-bottom: 2px black solid;
 }
 
 .clicked
 {
+<<<<<<< Updated upstream
     padding-bottom: .7rem !important;
     border-bottom: 2px blue solid !important;
     color: var(--bright-blue) !important;
+=======
+  display: flex !important;
+  padding-bottom: .7rem !important;
+  border-bottom: 2px blue solid !important;
+  color: var(--bright-blue) !important;
+>>>>>>> Stashed changes
 }
 
 
 @media  screen and (max-width:1150px) {
-    .FilterNav{
-      overflow-x: scroll;
-    }
+  .FilterNav{
+    overflow-x:scroll;
+  }
 }
   
