@@ -15,8 +15,6 @@ const FilterTabs= () => {
             setIndexClicked(clicked => [...clicked, clickedcl]);
         }
     }
-       
-
     return(
         <div className={classes.FilterNav}>
             <div className={classes.Nav}>
@@ -38,7 +36,5 @@ const FilterTabs= () => {
             </div>
         </div>
     )
-   
-
 }
 export default FilterTabs
