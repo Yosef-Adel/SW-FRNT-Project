@@ -1,6 +1,5 @@
 .container{
-    margin-inline: 1.5rem;
-    margin-block: .5rem;
+    margin-block: 1rem;
     display: flex;
     flex-direction: column;
     flex-wrap: wrap;
@@ -9,7 +8,7 @@
 .subHead{
     font-size: 2.5rem;
     color: var(--content-text);
-    margin-block: 1.5rem;
+    margin-block: 2rem;
 }
 .categoriesContainer{
     display: grid;

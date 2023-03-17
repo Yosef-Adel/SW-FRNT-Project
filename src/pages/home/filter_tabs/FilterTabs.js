@@ -1,12 +1,13 @@
-import React, { useState ,useEffect} from 'react'
+import React, { useState} from 'react'
 import classes from './FilterTabs.module.css'
-import FilterTabsData from '../../assets/data/FilterTabsData'
+import FilterTabsData from '../../../assets/data/FilterTabsData'
+import Location from '../location/Location'
 import { NavLink } from 'react-router-dom'
 
 const FilterTabs= () => {
     const page =FilterTabsData.FilterTabsInfo;
     const [clicked, setIndexClicked] = useState(0);
-    //for selecting multiple filters ---- to make it usestate of indexclicked([1,0,0,0,0,0])---- if condition (clicked[index]=1)
+    //for selecting multiple filters ---- to make it usestate of indexclicked([1,0,0,0,0,0])---- if condition (clicked[index]==1)
      function setclicked(index){
         if(clicked[index]==0)
         {
@@ -16,7 +17,8 @@ const FilterTabs= () => {
         }
     }
     return(
-        <div className={classes.FilterNav}>
+        <div className={classes.container}>
+            <Location/>
             <div className={classes.Filter}>
                 <ul>
                     {page[0].map((element,index) => {

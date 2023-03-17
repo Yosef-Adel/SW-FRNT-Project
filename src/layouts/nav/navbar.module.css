@@ -101,7 +101,6 @@ a{
 .navSubItem:hover{
     background-color: var(--primary-background);
     color: var(--primary-text);
-
 }
 
 .dropDown{

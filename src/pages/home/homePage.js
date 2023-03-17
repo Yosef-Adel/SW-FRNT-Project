@@ -5,8 +5,7 @@ import Categories from "./categories/Categories";
 import EventCard from "../../generic components/event card/EventCard";
 import Banner from "./banner/Banner";
 import Footer from "../../layouts/footer/Footer";
-import FilterTabs from "../../layouts/FilterTabsNav/FilterTabs";
-
+import FilterTabs from "./filter_tabs/FilterTabs";
 import eventImage1 from '../../assets/imgs/events/event2.png'
 
 const HomePage = () => {

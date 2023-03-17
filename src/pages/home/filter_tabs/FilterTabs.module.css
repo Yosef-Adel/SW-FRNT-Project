@@ -1,21 +1,15 @@
-
-.FilterNav{
-  display: flex;
-  justify-content: space-between;
-  background-color: var(--secondary-background);
-}
 .Filter ul{
   display: flex;
+  justify-content: space-between;
+  width: 90%;
+  margin-block: 2rem;
 }
 .FilterItem{ 
+  width: fit-content;
   font-family: var(--main-h1);
   font-weight: 600;
   font-size: 1.5rem;
   letter-spacing: .05rem;
-  padding-block: 2.5rem;
-  padding-inline: 1.5rem;
-  margin-block: auto;
-  position: relative;
   white-space: nowrap;
 }
 .FilterItem hr{
