@@ -28,6 +28,12 @@ const LoginPage = () => {
     password: Yup.string().required("Password is required"),
   });
 
+  /**
+ * Submits the form login data to the server
+ * @param   {string} email      User valid email
+ * @param   {string} password   User password
+ */
+
   const onSubmit = (data, { resetForm }) => {
     console.log(data);
   };
