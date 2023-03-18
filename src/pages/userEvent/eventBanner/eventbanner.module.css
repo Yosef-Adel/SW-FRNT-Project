@@ -1,6 +1,10 @@
 .eventbannercontainer {
+  background-position: top;
+  background-size: cover;
   width: 100%;
-  height: 55vh;
+  /* height: 55vh; */
+  /* height: 27vw; */
+  height: 40rem;
   display: flex;
   margin-bottom: 7.2rem;
   padding-top: 3.2rem;
@@ -8,21 +12,32 @@
 .imgbackgroundcontainer {
   width: 120rem;
   /* height: 50vw; */
-  height: 62vh;
+  /* height: 30vw; */
+  height: 45rem;
   overflow: hidden;
   border-radius: 24px;
   margin: 0 auto;
 }
 .imgbackground {
+background-position: center;
+  background-size: cover;
   width: 100%;
   height: 100%;
   /* filter: blur(35px) brightness(.8) opacity(0.9); */
-  display: flex;
 }
+
+.eventimgcontainer {
+  display: flex;
+  background-color: rgba(255, 255, 255, 0.09);
+  -webkit-backdrop-filter: blur(50px);
+  backdrop-filter: blur(50px);
+  height: 100%;
+}
+
 .eventimg {
-  background: rgba(255, 255, 255, 0.8);
-  backdrop-filter: blur(35px) brightness(0.8) opacity(0.9);
+  width: 90.7rem;
   margin: 0 auto;
+  height: 100%;
 }
 
 @media screen and (max-width: 900px) {
@@ -30,12 +45,20 @@
     background-image: none !important;
   }
 
+  .eventimgcontainer {
+    width: 100% !important;
+  }
+
   .eventimg {
-    width: 100%;
+    width: 100% !important;
     margin: 0;
   }
 
   .imgbackgroundcontainer {
+    height: 50vw;
+  }
+
+  .eventbannercontainer {
     height: 50vw;
   }
 }
@@ -44,6 +67,9 @@
   .eventbannercontainer {
     padding: 0;
     background-image: none !important;
-    height: 50vw;
+  }
+
+  .imgbackgroundcontainer {
+    border-radius: 0 0 24px 24px;
   }
 }

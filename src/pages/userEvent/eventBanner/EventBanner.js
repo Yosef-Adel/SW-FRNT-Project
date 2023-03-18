@@ -4,7 +4,8 @@ import { useState, useEffect } from "react";
 import classes from "./eventbanner.module.css";
 import { Link, useParams } from "react-router-dom";
 import bannercurve from "../../../assets/imgs/banner/eventbanner.svg";
-import mobimgs from "../../../assets/data/BannerMobImgs";
+import event from "../../../assets/imgs/banner/event2.jpg";
+import mobimgs from "../../../assets/data/BannerLabImgs";
 
 const EventBanner = () => {
   const [windowWidth, setWindowWidth] = useState(window.innerWidth);
@@ -28,19 +29,17 @@ const EventBanner = () => {
     <div
       className={classes.eventbannercontainer}
       style={{
-        backgroundPosition: "top",
-        backgroundSize: "cover",
         backgroundImage: "url(" + bannercurve + ")",
       }}>
       <div className={classes.imgbackgroundcontainer}>
         <div
           className={classes.imgbackground}
           style={{
-            backgroundPosition: "center",
-            backgroundSize: "cover",
-            backgroundImage: "url(" + mobimgs[0] + ")",
+            backgroundImage: "url(" + event + ")",
           }}>
-          <img className={classes.eventimg} src={mobimgs[0]} alt="Event" />
+          <div className={classes.eventimgcontainer}>
+            <img className={classes.eventimg} src={event} alt="Event" />
+          </div>
         </div>
       </div>
     </div>
