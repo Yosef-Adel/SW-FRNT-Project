@@ -8,21 +8,10 @@ import event from "../../../assets/imgs/banner/event2.jpg";
 import mobimgs from "../../../assets/data/BannerLabImgs";
 
 const EventBanner = () => {
-  const [windowWidth, setWindowWidth] = useState(window.innerWidth);
-
   let { id } = useParams();
 
   useEffect(() => {
     console.log(id);
-    const handleWindowResize = () => {
-      setWindowWidth(window.innerWidth);
-    };
-
-    window.addEventListener("resize", handleWindowResize);
-
-    return () => {
-      window.removeEventListener("resize", handleWindowResize);
-    };
   }, []);
 
   return (
