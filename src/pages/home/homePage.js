@@ -6,8 +6,9 @@ import EventCard from "../../generic components/event card/EventCard";
 import Banner from "./banner/Banner";
 import Footer from "../../layouts/footer/Footer";
 import FilterTabs from "../../layouts/FilterTabsNav/FilterTabs";
-
-import eventImage1 from '../../assets/imgs/events/event2.png'
+import EventList from "../../generic components/Event List/EventList";
+import eventImage1 from '../../assets/imgs/events/event1.png';
+import eventImage2 from '../../assets/imgs/events/event2.png';
 
 const HomePage = () => {
   return (
@@ -18,19 +19,14 @@ const HomePage = () => {
       <div className={classes.containerbox}>
         <FilterTabs/>
         <Categories/>
-        <EventCard 
-          img={eventImage1}
-          title="Celebrating Century : Presidency University"
-          time="Tue, Mar 14, 7:00 PM + 37 more events"
-          location="Presidency University, Kolkata"
-          price="Free"
-          companyName="Presidency University"
-          followersNo="100"
-        />
+        <div className={classes.secheader}>
+        <h3>Events in Al Qahirah</h3>
+        </div>
+        <div className={classes.list}>
+          <EventList/>
+        </div>
       </div>
-      
-
-      <Footer />
+      <Footer/>
     </div>
   );
 };

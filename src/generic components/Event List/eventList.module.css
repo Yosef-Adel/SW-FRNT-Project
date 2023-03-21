@@ -1,0 +1,34 @@
+.list{
+    display: grid;
+    grid-template-columns: repeat(auto-fit,minmax(260px,1.2fr));
+    column-gap: 5rem;
+    row-gap: 1rem;
+    overflow-wrap: normal ;
+    }
+
+.moreBtn
+{
+    width: 100%;
+    justify-content: center;
+    display: flex;
+}
+.moreBtn button
+{
+    border:solid 2px var(--morebtn);
+    background-color: var(--secondary-background);
+    color: var(--moretext);
+    font-size: 1.4rem;
+    padding: 1.2rem 0;
+    font-weight: 600;
+    border-radius: 3px;
+    width:40rem;
+    margin: auto;
+    margin-bottom: 2rem;
+    
+}
+.moreBtn button:hover{
+    border:solid 2px var(--secondary-text);
+    background-color: var(--primary-background);
+    cursor: pointer;
+    transition: 0.5s;
+}
