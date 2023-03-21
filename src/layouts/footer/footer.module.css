@@ -54,7 +54,8 @@
     flex-direction: column;
   }
 
-  /* .footer > div {
-    padding-top: 2rem;
-  } */
+  .dropdown > select {
+    padding: 0 0 0 1rem;
+    text-align: start;
+  }
 }

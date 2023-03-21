@@ -7,10 +7,9 @@ import header from "../../../assets/imgs/banner/header.svg";
 import { Link } from "react-router-dom";
 
 /**
- * Component that renders banner of homa page
+ * Component that renders banner of home page
  *
  * @component
- * @example
  * return(
  * <Banner />
  * )
