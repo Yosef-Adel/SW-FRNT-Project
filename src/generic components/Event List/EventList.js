@@ -55,7 +55,11 @@ const CardInfo = [{
 const EventList = () => {
     return (
         <div>
+            <div className={classes.secheader}>
+                    <h3>Events in Al Qahirah</h3>
+                </div>
             <div className={classes.list}>
+                
                 {
                 CardInfo.map((card)=>
                 <EventCard key = {card.id} img = {card.img} title = {card.title} time = {card.time} location = {card.location} price = {card.price} companyName = {card.companyName} followersNo = {card.followersNo} />)
