@@ -54,6 +54,13 @@ const SignupPage = () => {
     password: Yup.string().min(8).required("Field required"),
   });
 
+  /* TO DO Change the documentation of the function to match the sign-up */
+  /**
+   * Submits the form login data to the server
+   * @param   {string} email      User valid email
+   * @param   {string} password   User password
+   */
+
   const onSubmit = (data, { resetForm }) => {
     console.log(data);
   };
@@ -80,14 +87,16 @@ const SignupPage = () => {
             <Formik
               initialValues={initialValues}
               validationSchema={validationSchema}
-              onSubmit={onSubmit}>
+              onSubmit={onSubmit}
+            >
               {({ values }) => (
                 <Form>
                   {setMyEmail(values.email)}
                   <div className={classes.boxContainer}>
                     <div
                       className={classes.fieldContainer}
-                      style={{ backgroundColor: !cont ? "none" : "#f8f7fa" }}>
+                      style={{ backgroundColor: !cont ? "none" : "#f8f7fa" }}
+                    >
                       <label className={classes.label}> Email address </label>
                       <Field
                         className={classes.field}
@@ -178,7 +187,8 @@ const SignupPage = () => {
                     </span>
                     <div
                       className={classes.btn}
-                      style={{ margin: "2rem auto" }}>
+                      style={{ margin: "2rem auto" }}
+                    >
                       <button type="submit" className={classes.button}>
                         Create account
                       </button>
@@ -207,7 +217,8 @@ const SignupPage = () => {
                   </h3>
                   <ul
                     className={dropDown ? classes.showDropDown : null}
-                    style={{ paddingLeft: "3.5rem" }}>
+                    style={{ paddingLeft: "3.5rem" }}
+                  >
                     <li style={{ backgroundColor: "#1877f2" }}>
                       <div>
                         <GrFacebookOption className={classes.methodsIcon} />
@@ -224,7 +235,8 @@ const SignupPage = () => {
         </div>
         <div
           className={classes.image}
-          style={{ backgroundImage: `url(${images[randImg]})` }}></div>
+          style={{ backgroundImage: `url(${images[randImg]})` }}
+        ></div>
       </div>
       <Footer />
     </div>

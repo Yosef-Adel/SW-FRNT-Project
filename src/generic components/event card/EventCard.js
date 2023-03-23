@@ -2,6 +2,23 @@ import classes from './eventCard.module.css'
 import React from 'react'
 import {HiOutlineUser} from "react-icons/hi";
 
+
+/**
+ * Component that renders the event card in user view
+ * @component
+ * @example
+ * return (
+ *  <EventCard 
+          img="srcURL"
+          title="Celebrating Century : Presidency University"
+          time="Tue, Mar 14, 7:00 PM + 37 more events"
+          location="Presidency University, Kolkata"
+          price="Free"
+          companyName="Presidency University"
+          followersNo="100"
+        />
+ * )
+ */
 const EventCard = (props) => {
     return (
       <div className={classes.card}>
