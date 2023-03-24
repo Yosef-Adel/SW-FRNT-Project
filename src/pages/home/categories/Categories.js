@@ -2,7 +2,15 @@ import React from 'react'
 import classes from './categories.module.css'
 import categoriesData from '../../../assets/data/categoriesData';
 
-
+/**
+ * Component that renders events categories in landing
+ *
+ * @component
+ * @example
+ * return (
+ *   <Categories />
+ * )
+ */
 const Categories = () => {
   return (
     <div className={classes.container}>

@@ -7,8 +7,11 @@ import { NavLink } from 'react-router-dom'
 
 /**
  * Component that renders nav bar
- *
  * @component
+ * @example
+ * return (
+ *   <NavBar />
+ * )
  */
 const NavBar = (props) => {
     const logged = false;

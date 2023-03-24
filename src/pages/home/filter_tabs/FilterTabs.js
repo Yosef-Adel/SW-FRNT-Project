@@ -4,6 +4,15 @@ import FilterTabsData from '../../../assets/data/FilterTabsData'
 import Location from '../location/Location'
 import { NavLink } from 'react-router-dom'
 
+
+/**
+ * Component that renders Filter tabs in Landing page
+ * 
+ * @component
+ * @example
+ * return(<FilterTabs />)
+ */
+
 const FilterTabs= () => {
     const page =FilterTabsData.FilterTabsInfo;
     const [clicked, setIndexClicked] = useState(0);

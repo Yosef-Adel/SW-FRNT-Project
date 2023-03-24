@@ -11,6 +11,14 @@ import { AiFillApple } from "react-icons/ai";
 import { FaChevronDown } from "react-icons/fa";
 import Footer from "../../layouts/footer/Footer";
 
+/**
+ * Component that renders Login Page
+ * 
+ * @component
+ * @example
+ * return(<LoginPage />)
+ */
+
 const LoginPage = () => {
   const [randImg, setrandImg] = useState(Math.floor(Math.random() * 3));
   const [dropDown, setDropDown] = useState(false);

@@ -3,7 +3,10 @@ import classes from "./location.module.css";
 import { FaChevronDown } from "react-icons/fa";
 
 /**
+ * Component that renders and detects geolocation section in landing page
+ * 
  * @component
+ * @example
  * return(<Location />)
  */
 
@@ -12,8 +15,12 @@ const Location = () => {
   const [dropList, setDropList] = useState(false);
   const containerRef = useRef();
 
+
+  /**
+   * Function that Detects device geolocation
+   */
   const handleLocation = () => {
-    navigator.geolocation.getCurrentPosition(function (position) {
+      navigator.geolocation.getCurrentPosition(function (position) {
       console.log(position.coords.latitude);
       console.log(position.coords.longitude);
     });
