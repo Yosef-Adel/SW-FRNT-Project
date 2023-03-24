@@ -1,6 +1,5 @@
 .card{
-    width: 32rem;
-    height: 55vh;
+    /* width: 32rem; */
     background-color: #fff;
     border-radius: 2px;
     box-shadow: 0 0 10px 0 rgba(0,0,0,0.1);
@@ -63,6 +62,7 @@
 
 .cardContent .company{
     padding: 0.5rem 0;
+    margin-bottom: 2rem;
 }
 .cardContent .company p{
     font-size: 1.6rem;
