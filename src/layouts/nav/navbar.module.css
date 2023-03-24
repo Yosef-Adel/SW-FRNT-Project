@@ -53,6 +53,12 @@ a {
   color: unset;
 }
 
+.dots{
+  color: var(--primary-text);
+  width: 2rem !important;
+  height: 2rem !important;
+}
+
 .wrapper .arrow {
   fill: #c2c2cc;
   stroke: #c2c2cc;

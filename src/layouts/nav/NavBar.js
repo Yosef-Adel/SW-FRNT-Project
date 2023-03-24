@@ -3,6 +3,7 @@ import classes from "./navbar.module.css";
 import navData from "../../assets/data/navData";
 import logo from "../../assets/brand/envie.svg";
 import KeyboardArrowDownIcon from "@mui/icons-material/KeyboardArrowDown";
+import MoreVertIcon from '@mui/icons-material/MoreVert';
 import { NavLink } from "react-router-dom";
 import { useState, useEffect } from "react";
 
@@ -15,7 +16,7 @@ import { useState, useEffect } from "react";
  * )
  */
 const NavBar = (props) => {
-  const logged = false;
+  const logged = true;
   const email = logged ? "ranaagamaaall@gmail.com" : "";
   console.log(navData);
   const page = logged ? navData.homeUser : navData.homeAttendee;
@@ -37,11 +38,11 @@ const NavBar = (props) => {
 
   return (
     <div className={classes.nav}>
-      {/* <NavLink to='/'  activeClassName={classes.activeLink}> */}
+      <NavLink to='/'  activeClassName={classes.activeLink}>
       <div className={classes.logoContainer}>
         <img className={classes.logo} src={logo} alt="logo" />
       </div>
-      {/* </NavLink> */}
+      </NavLink>
       {console.log(page)}
 
       <div className={classes.routes}>
@@ -93,7 +94,7 @@ const NavBar = (props) => {
           <ul>
             <div className={classes.list}>
               <li className={`${classes.navItem} ${classes.navcollapse} `}>
-                COLLAPSE
+                <MoreVertIcon className={classes.dots}/>
                 <ol className={classes.dropDown}>
                   {page[0].map((item, index) => {
                     return (

@@ -106,7 +106,6 @@ const navData = {
     [
       {
         title: "",
-        route: "/profile",
         inlineIcon: (
           <svg x="0" y="0" viewBox="0 0 24 24">
             <path
