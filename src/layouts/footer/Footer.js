@@ -12,7 +12,7 @@ import FooterData from "../../assets/data/FooterData";
  * )
  */
 
-const Footer = (props) => {
+const Footer = () => {
   return (
     <div className={classes.footer}>
       <div className={classes.copyright}>
@@ -20,19 +20,19 @@ const Footer = (props) => {
       </div>
       <div className={classes.footerdata}>
         {FooterData.staticData.map((element) => (
-          <li className={classes.footeritem}>
+          <li key={element} className={classes.footeritem}>
             <div>{element}</div>
           </li>
         ))}
       </div>
 
       <div className={classes.dropdown}>
-        <select>
-          <option value="Egypt" selected>
-            <strong>Egypt</strong>
+        <select defaultValue="Egypt">
+          <option key="Egypt" value="Egypt" data-testid="Egypt">
+            Egypt
           </option>
           {FooterData.countriesData.map((element) => (
-            <option value={element} disabled>
+            <option key={element} value={element} disabled data-testid={element}>
               {element}
             </option>
           ))}
