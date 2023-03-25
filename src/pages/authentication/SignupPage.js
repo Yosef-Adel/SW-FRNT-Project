@@ -99,19 +99,20 @@ const SignupPage = ({onSubmit}) => {
                       style={{ backgroundColor: !cont ? "none" : "#f8f7fa" }}
                     >
                       <label className={classes.label}> Email address </label>
-                      <Field
+                      <Field 
                         className={classes.field}
                         id="email"
                         name="email"
                         autoComplete="off"
                         disabled={cont}
+                        data-testid="EmailFieldInput"
                       />
                     </div>
                     <ErrorMessage name="email" component="span" />
                   </div>
                   {!cont ? (
                     <div className={classes.btn}>
-                      <div className={classes.button} onClick={contFn}>
+                      <button type="button" className={classes.button} onClick={contFn} data-testid="ContinueBtn">
                         {loader ? (
                           <TailSpin
                             height="25"
@@ -126,7 +127,7 @@ const SignupPage = ({onSubmit}) => {
                         ) : (
                           <p>Continue</p>
                         )}
-                      </div>
+                      </button>
                     </div>
                   ) : null}
                   <div className={cont ? classes.formshow : classes.formhide}>
@@ -138,6 +139,7 @@ const SignupPage = ({onSubmit}) => {
                           name="confirmemail"
                           placeholder="Confirm Email"
                           autoComplete="off"
+                          data-testid="Confirmemailfield"
                         />
                       </div>
                       <ErrorMessage name="confirmemail" component="span" />
@@ -151,6 +153,7 @@ const SignupPage = ({onSubmit}) => {
                             name="firstName"
                             placeholder="First Name"
                             autoComplete="off"
+                            data-testid="FirstNamefield"
                           />
                         </div>
                         <ErrorMessage name="firstName" component="span" />
@@ -163,6 +166,7 @@ const SignupPage = ({onSubmit}) => {
                             name="lastName"
                             placeholder="Last Name"
                             autoComplete="off"
+                            data-testid="LastNamefield"
                           />
                         </div>
                         <ErrorMessage name="lastName" component="span" />
@@ -177,6 +181,7 @@ const SignupPage = ({onSubmit}) => {
                           type="password"
                           placeholder="Password"
                           autoComplete="off"
+                          data-testid="Passwordfield"
                         />
                       </div>
                       <ErrorMessage name="password" component="span" />
@@ -190,7 +195,7 @@ const SignupPage = ({onSubmit}) => {
                       className={classes.btn}
                       style={{ margin: "2rem auto" }}
                     >
-                      <button type="submit" className={classes.button}>
+                      <button type="submit" className={classes.button} data-testid="CreateBtn">
                         Create account
                       </button>
                     </div>

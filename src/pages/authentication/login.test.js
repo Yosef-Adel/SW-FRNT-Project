@@ -47,7 +47,7 @@ describe("should render LoginPage component", () => {
     await waitFor(() => {
       expect(handleSubmit).toHaveBeenCalledWith({
         email: "omarenoalaa475@gmail.com",
-        password: "12345678",
+        password: "12345678"
       });
     });
   });
