@@ -4,23 +4,22 @@ import { FaChevronDown } from "react-icons/fa";
 
 /**
  * Component that renders and detects geolocation section in landing page
- * 
+ *
  * @component
  * @example
  * return(<Location />)
  */
 
 const Location = () => {
-  const [location, setLocation] = useState(false);
+  const [location, setLocation] = useState("");
   const [dropList, setDropList] = useState(false);
   const containerRef = useRef();
-
 
   /**
    * Function that Detects device geolocation
    */
   const handleLocation = () => {
-      navigator.geolocation.getCurrentPosition(function (position) {
+    navigator.geolocation.getCurrentPosition(function (position) {
       console.log(position.coords.latitude);
       console.log(position.coords.longitude);
     });
@@ -64,7 +63,9 @@ const Location = () => {
             type="text"
             className={classes.default}
             placeholder={"Choose a location"}
-            value={location ? location : null}
+            value={location}
+            data-testid="LocationInput"
+            onInput={(e) => setLocation(e.target.value)}
           />
         </div>
         <ul
@@ -78,7 +79,9 @@ const Location = () => {
             </svg>
             Use my current location
           </li>
-          <li onClick={() => setLocation("Online events")}>
+          <li
+            data-testid="OnlineEventsbtn"
+            onClick={() => setLocation("Online events")}>
             <svg x="0" y="0" viewBox="0 0 24 24">
               <g>
                 <path d="M19 4v1H5V4H3v16h2v-1h14v1h2V4h-2zm0 13H5V7h14v10z"></path>

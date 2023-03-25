@@ -1,7 +1,8 @@
 import { render, screen, cleanup, waitFor } from "@testing-library/react";
 import renderer from "react-test-renderer";
 import LoginPage from "./LoginPage";
-import userEvent from "@testing-library/user-event";"@testing-library/jest-dom";
+import userEvent from "@testing-library/user-event";
+("@testing-library/jest-dom");
 import { MemoryRouter } from "react-router-dom";
 
 afterEach(() => {
@@ -9,40 +10,87 @@ afterEach(() => {
 });
 
 describe("should render LoginPage component", () => {
-  it('Failure Test',async () => {
+  it("Failure Test", async () => {
     const handleSubmit = jest.fn();
 
     render(
       <MemoryRouter>
-        <LoginPage onSubmit={handleSubmit}/>
+        <LoginPage onSubmit={handleSubmit} />
       </MemoryRouter>
-      );
+    );
 
-    const submitButton = screen.getByTestId('LoginFormSubmitButton');
+    const submitButton = screen.getByTestId("LoginFormSubmitButton");
     userEvent.click(submitButton);
 
     await waitFor(() => {
-      expect(screen.getByText("Please enter a valid email address")).toBeInTheDocument();
+      expect(
+        screen.getByText("Please enter a valid email address")
+      ).toBeInTheDocument();
       expect(screen.getByText("Password is required")).toBeInTheDocument();
     });
   });
 
-  it('Success Test',async () => {
+  it("Invalid Email address", async () => {
     const handleSubmit = jest.fn();
 
     render(
       <MemoryRouter>
-        <LoginPage onSubmit={handleSubmit}/>
+        <LoginPage onSubmit={handleSubmit} />
       </MemoryRouter>
-      );
+    );
 
-    const submitButton = screen.getByTestId('LoginFormSubmitButton');  
-    const email = screen.getByTestId('LoginFormEmailInput');
-    const password = screen.getByTestId('LoginFormPasswordInput');
+    const submitButton = screen.getByTestId("LoginFormSubmitButton");
+    const email = screen.getByTestId("LoginFormEmailInput");
+    const password = screen.getByTestId("LoginFormPasswordInput");
+
+    userEvent.type(email, "omarenoalaa475q");
+    userEvent.type(password, "12345678");
+    userEvent.click(submitButton);
+
+    await waitFor(() => {
+      expect(
+        screen.getByText("Please enter a valid email address")
+      ).toBeInTheDocument();
+    });
+  });
+
+  it("missing Password Test", async () => {
+    const handleSubmit = jest.fn();
+
+    render(
+      <MemoryRouter>
+        <LoginPage onSubmit={handleSubmit} />
+      </MemoryRouter>
+    );
+
+    const submitButton = screen.getByTestId("LoginFormSubmitButton");
+    const email = screen.getByTestId("LoginFormEmailInput");
+
+    userEvent.type(email, "omarenoalaa475@gmail.com");
+
+    userEvent.click(submitButton);
+
+    await waitFor(() => {
+      expect(screen.getByText("Password is required")).toBeInTheDocument();
+    });
+  });
+
+  it("Success Test", async () => {
+    const handleSubmit = jest.fn();
+
+    render(
+      <MemoryRouter>
+        <LoginPage onSubmit={handleSubmit} />
+      </MemoryRouter>
+    );
+
+    const submitButton = screen.getByTestId("LoginFormSubmitButton");
+    const email = screen.getByTestId("LoginFormEmailInput");
+    const password = screen.getByTestId("LoginFormPasswordInput");
 
     userEvent.type(email, "omarenoalaa475@gmail.com");
     userEvent.type(password, "12345678");
-    userEvent.click(submitButton);  
+    userEvent.click(submitButton);
 
     await waitFor(() => {
       expect(handleSubmit).toHaveBeenCalledWith({
@@ -52,4 +100,3 @@ describe("should render LoginPage component", () => {
     });
   });
 });
-
