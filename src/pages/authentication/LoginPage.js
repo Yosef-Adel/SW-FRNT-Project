@@ -19,7 +19,7 @@ import Footer from "../../layouts/footer/Footer";
  * return(<LoginPage />)
  */
 
-const LoginPage = () => {
+const LoginPage = ({onSubmit}) => {
   const [randImg, setrandImg] = useState(Math.floor(Math.random() * 3));
   const [dropDown, setDropDown] = useState(false);
 
@@ -42,12 +42,13 @@ const LoginPage = () => {
  * @param   {string} password   User password
  */
 
-  const onSubmit = (data, { resetForm }) => {
+  const handleSubmit = (data, { resetForm }) => {
     console.log(data);
+    onSubmit(data)
   };
 
   return (
-    <div>
+    <div data-testid="LoginComponent">
       <div className={classes.main}>
         <div className={classes.info}>
           <div className={classes.form}>
@@ -65,7 +66,7 @@ const LoginPage = () => {
             <Formik
               initialValues={initialValues}
               validationSchema={validationSchema}
-              onSubmit={onSubmit}>
+              onSubmit={handleSubmit}>
               <Form>
                 <div className={classes.boxContainer}>
                   <div className={classes.fieldContainer}>
@@ -74,9 +75,10 @@ const LoginPage = () => {
                       className={classes.field}
                       name="email"
                       autoComplete="off"
+                      data-testid="LoginFormEmailInput"
                     />
                   </div>
-                  <ErrorMessage name="email" component="span" />
+                  <ErrorMessage name="email" component="span" data-testid="emailError"/>
                 </div>
                 <div className={classes.boxContainer}>
                   <div className={classes.fieldContainer}>
@@ -86,13 +88,14 @@ const LoginPage = () => {
                       name="password"
                       type="password"
                       autoComplete="off"
+                      data-testid="LoginFormPasswordInput"
                     />
                   </div>
                   <ErrorMessage name="password" component="span" />
                 </div>
 
                 <div className={classes.btn}>
-                  <button type="submit" className={classes.button}>
+                  <button type="submit" className={classes.button} data-testid="LoginFormSubmitButton">
                     Log in
                   </button>
                 </div>

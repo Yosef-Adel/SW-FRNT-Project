@@ -32,17 +32,17 @@ const Location = () => {
 
   useEffect(() => {
     window.onclick = (event) => {
-      console.log(containerRef.current);
-      console.log(event.target);
-      console.log(event.target !== containerRef.current);
-      console.log(event.target.contains(containerRef.current));
-      console.log(containerRef.current.contains(event.target));
-      // if (
-      //   event.target.contains(containerRef.current) &&
-      //   event.target !== containerRef.current
-      // ) {
-      //   setDropList(false);
-      // } else
+      // console.log(containerRef.current);
+      // console.log(event.target);
+      // console.log(event.target !== containerRef.current);
+      // console.log(event.target.contains(containerRef.current));
+      // console.log(containerRef.current.contains(event.target));
+      // // if (
+      // //   event.target.contains(containerRef.current) &&
+      // //   event.target !== containerRef.current
+      // // ) {
+      // //   setDropList(false);
+      // // } else
       if (containerRef.current.contains(event.target)) {
         setDropList(true);
       } else {

@@ -13,7 +13,7 @@ import { AiFillApple } from "react-icons/ai";
 import { FaChevronDown } from "react-icons/fa";
 import validator from "validator";
 import Footer from "../../layouts/footer/Footer";
-const SignupPage = () => {
+const SignupPage = ({onSubmit}) => {
   const [cont, setContinue] = useState(false);
   const [loader, setLoader] = useState(false);
   const [randImg, setrandImg] = useState(Math.floor(Math.random() * 3));
@@ -61,8 +61,9 @@ const SignupPage = () => {
    * @param   {string} password   User password
    */
 
-  const onSubmit = (data, { resetForm }) => {
+  const handleSubmit = (data, { resetForm }) => {
     console.log(data);
+    onSubmit(data);
   };
 
   return (
@@ -87,7 +88,7 @@ const SignupPage = () => {
             <Formik
               initialValues={initialValues}
               validationSchema={validationSchema}
-              onSubmit={onSubmit}
+              onSubmit={handleSubmit}
             >
               {({ values }) => (
                 <Form>

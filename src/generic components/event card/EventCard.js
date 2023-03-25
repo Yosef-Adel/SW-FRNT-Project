@@ -26,7 +26,7 @@ const EventCard = (props) => {
         <img src={props.img} alt="event_img" />
       </div>
       <ul className={classes.cardContent}>
-        <h3>{props.title}</h3>
+        <h3 data-testid="title">{props.title}</h3>
         <li className={classes.time}>{props.time}</li>
         <li className={classes.location}>
           <p>{props.location}</p>
