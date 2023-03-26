@@ -1,6 +1,6 @@
 const routes = {
-    signUp: "/user/signup",
-    logIn: "/user/login",
+    signUp: "/auth/sign-up",
+    logIn: "/auth/login",
     getUser: "/user"
 }
 export default routes 

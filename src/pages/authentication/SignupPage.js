@@ -13,6 +13,9 @@ import { AiFillApple } from "react-icons/ai";
 import { FaChevronDown } from "react-icons/fa";
 import validator from "validator";
 import Footer from "../../layouts/footer/Footer";
+import axios from "../../requests/axios"
+import routes from "../../requests/routes"
+
 const SignupPage = ({onSubmit}) => {
   const [cont, setContinue] = useState(false);
   const [loader, setLoader] = useState(false);
@@ -21,7 +24,7 @@ const SignupPage = ({onSubmit}) => {
   const [myEmail, setMyEmail] = useState();
 
   const initialValues = {
-    email: "",
+    emailAddress: "",
     confirmemail: "",
     firstName: "",
     lastName: "",
@@ -38,14 +41,14 @@ const SignupPage = ({onSubmit}) => {
   };
 
   const validationSchema = Yup.object().shape({
-    email: Yup.string()
+    emailAddress: Yup.string()
       .min(3)
       .email("Invalid email address")
       .required(" Email field is required"),
     confirmemail: Yup.string()
       .required("Please confirm your Email")
       .oneOf(
-        [Yup.ref("email")],
+        [Yup.ref("emailAddress")],
         "Email address doesn't match. Please try again"
       ),
 
@@ -57,13 +60,26 @@ const SignupPage = ({onSubmit}) => {
   /* TO DO Change the documentation of the function to match the sign-up */
   /**
    * Submits the form login data to the server
-   * @param   {string} email      User valid email
+   * @param   {string} emailAddress      User valid email
    * @param   {string} password   User password
    */
 
   const handleSubmit = (data, { resetForm }) => {
     console.log(data);
-    onSubmit(data);
+
+    async function sendData(){
+      try{
+        const request = await axios.post(routes.signUp, data)
+        console.log(request)
+        
+      } catch(err){
+        
+        resetForm()
+      }
+    }
+    sendData()
+
+    //onSubmit(data);
   };
 
   return (
@@ -92,7 +108,7 @@ const SignupPage = ({onSubmit}) => {
             >
               {({ values }) => (
                 <Form>
-                  {setMyEmail(values.email)}
+                  {setMyEmail(values.emailAddress)}
                   <div className={classes.boxContainer}>
                     <div
                       className={classes.fieldContainer}
@@ -101,14 +117,14 @@ const SignupPage = ({onSubmit}) => {
                       <label className={classes.label}> Email address </label>
                       <Field 
                         className={classes.field}
-                        id="email"
-                        name="email"
+                        id="emailAddress"
+                        name="emailAddress"
                         autoComplete="off"
                         disabled={cont}
                         data-testid="EmailFieldInput"
                       />
                     </div>
-                    <ErrorMessage name="email" component="span" />
+                    <ErrorMessage name="emailAddress" component="span" />
                   </div>
                   {!cont ? (
                     <div className={classes.btn}>

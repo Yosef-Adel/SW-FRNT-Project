@@ -10,6 +10,9 @@ import { GrFacebookOption } from "react-icons/gr";
 import { AiFillApple } from "react-icons/ai";
 import { FaChevronDown } from "react-icons/fa";
 import Footer from "../../layouts/footer/Footer";
+import axios from "../../requests/axios"
+import routes from "../../requests/routes"
+import { useNavigate } from "react-router-dom";
 
 /**
  * Component that renders Login Page
@@ -20,16 +23,17 @@ import Footer from "../../layouts/footer/Footer";
  */
 
 const LoginPage = ({onSubmit}) => {
+  const navigate = useNavigate();
   const [randImg, setrandImg] = useState(Math.floor(Math.random() * 3));
   const [dropDown, setDropDown] = useState(false);
 
   const initialValues = {
-    email: "",
+    emailAddress: "",
     password: "",
   };
 
   const validationSchema = Yup.object().shape({
-    email: Yup.string()
+    emailAddress: Yup.string()
       .min(3)
       .email("Please enter a valid email address")
       .required("Please enter a valid email address"),
@@ -38,13 +42,30 @@ const LoginPage = ({onSubmit}) => {
 
   /**
  * Submits the form login data to the server
- * @param   {string} email      User valid email
+ * @param   {string} emailAddress      User valid email
  * @param   {string} password   User password
  */
 
   const handleSubmit = (data, { resetForm }) => {
     console.log(data);
-    onSubmit(data)
+
+    async function sendData(){
+      try{
+        const response = await axios.post(routes.logIn, data)
+        console.log(response)
+        sessionStorage.setItem("token", response.data.token);
+        sessionStorage.setItem("ID", response.data.user._id);
+        sessionStorage.setItem("email", response.data.user.emailAddress);
+        navigate("/");
+        
+      } catch(err){
+        
+        resetForm()
+      }
+    }
+    sendData()
+
+    onSubmit(data);
   };
 
   return (
@@ -73,12 +94,12 @@ const LoginPage = ({onSubmit}) => {
                     <label className={classes.label}> Email address</label>
                     <Field
                       className={classes.field}
-                      name="email"
+                      name="emailAddress"
                       autoComplete="off"
                       data-testid="LoginFormEmailInput"
                     />
                   </div>
-                  <ErrorMessage name="email" component="span" data-testid="emailError"/>
+                  <ErrorMessage name="emailAddress" component="span" data-testid="emailError"/>
                 </div>
                 <div className={classes.boxContainer}>
                   <div className={classes.fieldContainer}>
