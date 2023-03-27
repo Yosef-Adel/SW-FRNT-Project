@@ -77,6 +77,12 @@ const SignupPage = () => {
    * @param   {string} password   User password
    */
 
+ /**
+   * Submits the email and go to another form 
+   * @namespace onClick
+   * @param   {string} email      check if It's avalid email or not 
+   */
+
   const handleSubmit = (data, { resetForm }) => {
     console.log(data);
 
