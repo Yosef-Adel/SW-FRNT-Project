@@ -10,6 +10,9 @@ import { GrFacebookOption } from "react-icons/gr";
 import { AiFillApple } from "react-icons/ai";
 import { FaChevronDown } from "react-icons/fa";
 import Footer from "../../layouts/footer/Footer";
+import axios from "../../requests/axios"
+import routes from "../../requests/routes"
+import { useNavigate } from "react-router-dom";
 
 /**
  * Component that renders Login Page
@@ -19,17 +22,18 @@ import Footer from "../../layouts/footer/Footer";
  * return(<LoginPage />)
  */
 
-const LoginPage = () => {
+const LoginPage = ({onSubmit}) => {
+  const navigate = useNavigate();
   const [randImg, setrandImg] = useState(Math.floor(Math.random() * 3));
   const [dropDown, setDropDown] = useState(false);
 
   const initialValues = {
-    email: "",
+    emailAddress: "",
     password: "",
   };
 
   const validationSchema = Yup.object().shape({
-    email: Yup.string()
+    emailAddress: Yup.string()
       .min(3)
       .email("Please enter a valid email address")
       .required("Please enter a valid email address"),
@@ -43,12 +47,30 @@ const LoginPage = () => {
  * @param   {string} password   User password
  */
 
-  const onSubmit = (data, { resetForm }) => {
+  const handleSubmit = (data, { resetForm }) => {
     console.log(data);
+
+    async function sendData(){
+      try{
+        const response = await axios.post(routes.logIn, data)
+        console.log(response)
+        sessionStorage.setItem("token", response.data.token);
+        sessionStorage.setItem("ID", response.data.user._id);
+        sessionStorage.setItem("email", response.data.user.emailAddress);
+        navigate("/");
+        
+      } catch(err){
+        
+        resetForm()
+      }
+    }
+    sendData()
+
+    onSubmit(data);
   };
 
   return (
-    <div>
+    <div data-testid="LoginComponent">
       <div className={classes.main}>
         <div className={classes.info}>
           <div className={classes.form}>
@@ -66,18 +88,19 @@ const LoginPage = () => {
             <Formik
               initialValues={initialValues}
               validationSchema={validationSchema}
-              onSubmit={onSubmit}>
+              onSubmit={handleSubmit}>
               <Form>
                 <div className={classes.boxContainer}>
                   <div className={classes.fieldContainer}>
                     <label className={classes.label}> Email address</label>
                     <Field
                       className={classes.field}
-                      name="email"
+                      name="emailAddress"
                       autoComplete="off"
+                      data-testid="LoginFormEmailInput"
                     />
                   </div>
-                  <ErrorMessage name="email" component="span" />
+                  <ErrorMessage name="emailAddress" component="span" data-testid="emailError"/>
                 </div>
                 <div className={classes.boxContainer}>
                   <div className={classes.fieldContainer}>
@@ -87,13 +110,14 @@ const LoginPage = () => {
                       name="password"
                       type="password"
                       autoComplete="off"
+                      data-testid="LoginFormPasswordInput"
                     />
                   </div>
                   <ErrorMessage name="password" component="span" />
                 </div>
 
                 <div className={classes.btn}>
-                  <button type="submit" className={classes.button}>
+                  <button type="submit" className={classes.button} data-testid="LoginFormSubmitButton">
                     Log in
                   </button>
                 </div>

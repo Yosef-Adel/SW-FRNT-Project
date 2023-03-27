@@ -11,7 +11,7 @@ import { FaChevronDown } from "react-icons/fa";
  */
 
 const Location = () => {
-  const [location, setLocation] = useState(false);
+  const [location, setLocation] = useState("");
   const [dropList, setDropList] = useState(false);
   const containerRef = useRef();
 
@@ -34,17 +34,17 @@ const Location = () => {
 
   useEffect(() => {
     window.onclick = (event) => {
-      console.log(containerRef.current);
-      console.log(event.target);
-      console.log(event.target !== containerRef.current);
-      console.log(event.target.contains(containerRef.current));
-      console.log(containerRef.current.contains(event.target));
-      // if (
-      //   event.target.contains(containerRef.current) &&
-      //   event.target !== containerRef.current
-      // ) {
-      //   setDropList(false);
-      // } else
+      // console.log(containerRef.current);
+      // console.log(event.target);
+      // console.log(event.target !== containerRef.current);
+      // console.log(event.target.contains(containerRef.current));
+      // console.log(containerRef.current.contains(event.target));
+      // // if (
+      // //   event.target.contains(containerRef.current) &&
+      // //   event.target !== containerRef.current
+      // // ) {
+      // //   setDropList(false);
+      // // } else
       if (containerRef.current.contains(event.target)) {
         setDropList(true);
       } else {
@@ -67,7 +67,9 @@ const Location = () => {
             type="text"
             className={classes.default}
             placeholder={"Choose a location"}
-            value={location ? location : null}
+            value={location}
+            data-testid="LocationInput"
+            onInput={(e) => setLocation(e.target.value)}
           />
         </div>
         <ul
@@ -82,7 +84,9 @@ const Location = () => {
             </svg>
             Use my current location
           </li>
-          <li onClick={() => setLocation("Online events")}>
+          <li
+            data-testid="OnlineEventsbtn"
+            onClick={() => setLocation("Online events")}>
             <svg x="0" y="0" viewBox="0 0 24 24">
               <g>
                 <path d="M19 4v1H5V4H3v16h2v-1h14v1h2V4h-2zm0 13H5V7h14v10z"></path>

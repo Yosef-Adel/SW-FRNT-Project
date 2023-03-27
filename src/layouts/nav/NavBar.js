@@ -16,8 +16,8 @@ import { useState, useEffect } from "react";
  * )
  */
 const NavBar = (props) => {
-  const logged = true;
-  const email = logged ? "ranaagamaaall@gmail.com" : "";
+  const logged = sessionStorage.getItem("token");
+  const email = logged ? sessionStorage.getItem("email") : "";
   console.log(navData);
   const page = logged ? navData.homeUser : navData.homeAttendee;
 

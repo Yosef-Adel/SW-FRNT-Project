@@ -13,6 +13,10 @@ import { AiFillApple } from "react-icons/ai";
 import { FaChevronDown } from "react-icons/fa";
 import validator from "validator";
 import Footer from "../../layouts/footer/Footer";
+import axios from "../../requests/axios"
+import routes from "../../requests/routes"
+
+
 
 /**
  * Component that renders Signup page
@@ -29,7 +33,7 @@ const SignupPage = () => {
   const [myEmail, setMyEmail] = useState();
 
   const initialValues = {
-    email: "",
+    emailAddress: "",
     confirmemail: "",
     firstName: "",
     lastName: "",
@@ -46,14 +50,14 @@ const SignupPage = () => {
   };
 
   const validationSchema = Yup.object().shape({
-    email: Yup.string()
+    emailAddress: Yup.string()
       .min(3)
       .email("Invalid email address")
       .required(" Email field is required"),
     confirmemail: Yup.string()
       .required("Please confirm your Email")
       .oneOf(
-        [Yup.ref("email")],
+        [Yup.ref("emailAddress")],
         "Email address doesn't match. Please try again"
       ),
 
@@ -73,8 +77,22 @@ const SignupPage = () => {
    * @param   {string} password   User password
    */
 
-  const onSubmit = (data, { resetForm }) => {
+  const handleSubmit = (data, { resetForm }) => {
     console.log(data);
+
+    async function sendData(){
+      try{
+        const request = await axios.post(routes.signUp, data)
+        console.log(request)
+        
+      } catch(err){
+        
+        resetForm()
+      }
+    }
+    sendData()
+
+    //onSubmit(data);
   };
 
   return (
@@ -99,30 +117,31 @@ const SignupPage = () => {
             <Formik
               initialValues={initialValues}
               validationSchema={validationSchema}
-              onSubmit={onSubmit}
+              onSubmit={handleSubmit}
             >
               {({ values }) => (
                 <Form>
-                  {setMyEmail(values.email)}
+                  {setMyEmail(values.emailAddress)}
                   <div className={classes.boxContainer}>
                     <div
                       className={classes.fieldContainer}
                       style={{ backgroundColor: !cont ? "none" : "#f8f7fa" }}
                     >
                       <label className={classes.label}> Email address </label>
-                      <Field
+                      <Field 
                         className={classes.field}
-                        id="email"
-                        name="email"
+                        id="emailAddress"
+                        name="emailAddress"
                         autoComplete="off"
                         disabled={cont}
+                        data-testid="EmailFieldInput"
                       />
                     </div>
-                    <ErrorMessage name="email" component="span" />
+                    <ErrorMessage name="emailAddress" component="span" />
                   </div>
                   {!cont ? (
                     <div className={classes.btn}>
-                      <div className={classes.button} onClick={contFn}>
+                      <button type="button" className={classes.button} onClick={contFn} data-testid="ContinueBtn">
                         {loader ? (
                           <TailSpin
                             height="25"
@@ -137,7 +156,7 @@ const SignupPage = () => {
                         ) : (
                           <p>Continue</p>
                         )}
-                      </div>
+                      </button>
                     </div>
                   ) : null}
                   <div className={cont ? classes.formshow : classes.formhide}>
@@ -149,6 +168,7 @@ const SignupPage = () => {
                           name="confirmemail"
                           placeholder="Confirm Email"
                           autoComplete="off"
+                          data-testid="Confirmemailfield"
                         />
                       </div>
                       <ErrorMessage name="confirmemail" component="span" />
@@ -162,6 +182,7 @@ const SignupPage = () => {
                             name="firstName"
                             placeholder="First Name"
                             autoComplete="off"
+                            data-testid="FirstNamefield"
                           />
                         </div>
                         <ErrorMessage name="firstName" component="span" />
@@ -174,6 +195,7 @@ const SignupPage = () => {
                             name="lastName"
                             placeholder="Last Name"
                             autoComplete="off"
+                            data-testid="LastNamefield"
                           />
                         </div>
                         <ErrorMessage name="lastName" component="span" />
@@ -188,6 +210,7 @@ const SignupPage = () => {
                           type="password"
                           placeholder="Password"
                           autoComplete="off"
+                          data-testid="Passwordfield"
                         />
                       </div>
                       <ErrorMessage name="password" component="span" />
@@ -201,7 +224,7 @@ const SignupPage = () => {
                       className={classes.btn}
                       style={{ margin: "2rem auto" }}
                     >
-                      <button type="submit" className={classes.button}>
+                      <button type="submit" className={classes.button} data-testid="CreateBtn">
                         Create account
                       </button>
                     </div>
