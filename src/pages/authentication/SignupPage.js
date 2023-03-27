@@ -79,7 +79,7 @@ const SignupPage = () => {
 
  /**
    * Submits the email and go to another form 
-   * @namespace onClick
+   * @namespace contFn
    * @param   {string} email      check if It's avalid email or not 
    */
 
