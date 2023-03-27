@@ -10,6 +10,14 @@ import EventList from "../../generic components/Event List/EventList";
 // import eventImage1 from '../../assets/imgs/events/event1.png';
 // import eventImage2 from '../../assets/imgs/events/event2.png';
 
+
+/**
+ * Component that returns Home Page
+ * 
+ * @component
+ * @example
+ * return(<HomePage />)
+ */
 const HomePage = () => {
   return (
     <div className={classes.container}>

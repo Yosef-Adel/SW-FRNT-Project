@@ -13,6 +13,14 @@ import { AiFillApple } from "react-icons/ai";
 import { FaChevronDown } from "react-icons/fa";
 import validator from "validator";
 import Footer from "../../layouts/footer/Footer";
+
+/**
+ * Component that renders Signup page
+ * 
+ * @component
+ * @example
+ * return(<SignupPage />)
+ */
 const SignupPage = () => {
   const [cont, setContinue] = useState(false);
   const [loader, setLoader] = useState(false);
@@ -54,10 +62,14 @@ const SignupPage = () => {
     password: Yup.string().min(8).required("Field required"),
   });
 
-  /* TO DO Change the documentation of the function to match the sign-up */
+
   /**
-   * Submits the form login data to the server
+   * Submits the form signup data to the server
+   * @namespace onSubmit 
    * @param   {string} email      User valid email
+   * @param   {string} confirmemail      User input matching email
+   * @param   {string} firstName      User valid first name
+   * @param   {string} lastName      User valid last name
    * @param   {string} password   User password
    */
 

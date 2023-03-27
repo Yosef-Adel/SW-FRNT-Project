@@ -4,7 +4,7 @@ import { FaChevronDown } from "react-icons/fa";
 
 /**
  * Component that renders and detects geolocation section in landing page
- * 
+ *
  * @component
  * @example
  * return(<Location />)
@@ -15,12 +15,14 @@ const Location = () => {
   const [dropList, setDropList] = useState(false);
   const containerRef = useRef();
 
-
   /**
    * Function that Detects device geolocation
+   * @namespace handleLocation
+   * @param   {none}
+   * @returns {void}
    */
   const handleLocation = () => {
-      navigator.geolocation.getCurrentPosition(function (position) {
+    navigator.geolocation.getCurrentPosition(function (position) {
       console.log(position.coords.latitude);
       console.log(position.coords.longitude);
     });
@@ -58,7 +60,8 @@ const Location = () => {
         <div
           className={classes.dropContainer}
           onClick={() => setDropList(!dropList)}
-          ref={containerRef}>
+          ref={containerRef}
+        >
           <FaChevronDown className={classes.arrow} />
           <input
             type="text"
@@ -69,7 +72,8 @@ const Location = () => {
         </div>
         <ul
           className={classes.dropList}
-          style={dropList ? { display: "unset" } : { display: "none" }}>
+          style={dropList ? { display: "unset" } : { display: "none" }}
+        >
           <li onClick={handleLocation}>
             <svg viewBox="0 0 24 24">
               <g stroke="none" stroke-width="1" fill-rule="evenodd">

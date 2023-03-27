@@ -38,6 +38,7 @@ const LoginPage = () => {
 
   /**
  * Submits the form login data to the server
+ * @namespace onSubmit
  * @param   {string} email      User valid email
  * @param   {string} password   User password
  */
