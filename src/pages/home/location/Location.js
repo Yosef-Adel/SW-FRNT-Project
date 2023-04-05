@@ -1,6 +1,8 @@
 import React, { useState, useEffect, useRef } from "react";
 import classes from "./location.module.css";
 import { FaChevronDown } from "react-icons/fa";
+import axios from "../../../requests/axios";
+import routes from "../../../requests/routes";
 
 /**
  * Component that renders and detects geolocation section in landing page
@@ -10,8 +12,9 @@ import { FaChevronDown } from "react-icons/fa";
  * return(<Location />)
  */
 
-const Location = () => {
-  const [location, setLocation] = useState("");
+const Location = (props) => {
+  const [location, setLocation] = useState([]);
+  const [city, setCity] = useState("");
   const [dropList, setDropList] = useState(false);
   const containerRef = useRef();
 
@@ -21,16 +24,35 @@ const Location = () => {
    * @param   {none}
    * @returns {void}
    */
-  const handleLocation = () => {
-    navigator.geolocation.getCurrentPosition(function (position) {
-      console.log(position.coords.latitude);
-      console.log(position.coords.longitude);
-    });
+
+  async function getLocation(loc) {
+    let response = "";
+    try {
+      response = await axios.get(
+        routes.events + "/nearest?lat=" + loc[0] + "&lng=" + loc[1]
+      );
+      setCity(response.data.city)
+      return response.data;
+    } catch (error) {
+      if (error.response) {
+        return error.response;
+      }
+    }
+  }
+
+  const handleLocation = async() => {
+    await navigator.geolocation.getCurrentPosition(function (position) {
+      props.onDetect([position.coords.latitude, position.coords.longitude])
+      // getLocation([position.coords.latitude, position.coords.longitude]);
+    });     
   };
 
   useEffect(() => {
-    handleLocation();
-  }, [location]);
+    (async () => {
+      await handleLocation();
+    })();
+  }, []);
+
 
   useEffect(() => {
     window.onclick = (event) => {
@@ -67,7 +89,7 @@ const Location = () => {
             type="text"
             className={classes.default}
             placeholder={"Choose a location"}
-            value={location}
+            value={props.City}
             data-testid="LocationInput"
             onInput={(e) => setLocation(e.target.value)}
           />
@@ -86,7 +108,8 @@ const Location = () => {
           </li>
           <li
             data-testid="OnlineEventsbtn"
-            onClick={() => setLocation("Online events")}>
+            onClick={() => setLocation("Online events")}
+          >
             <svg x="0" y="0" viewBox="0 0 24 24">
               <g>
                 <path d="M19 4v1H5V4H3v16h2v-1h14v1h2V4h-2zm0 13H5V7h14v10z"></path>
