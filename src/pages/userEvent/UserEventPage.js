@@ -28,9 +28,9 @@ const UserEventPage = () => {
 
   async function getEvent() {
 
-    console.log(routes.getEvents + "/" + _id);
+    console.log(routes.events + "/" + _id);
     try {
-      const response = await axios.get(routes.getEvents + "/" + _id);
+      const response = await axios.get(routes.events + "/" + _id);
       console.log(response);
       setEvent(response.data);
     } catch (err) {
