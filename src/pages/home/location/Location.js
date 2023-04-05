@@ -45,8 +45,13 @@ const Location = () => {
       // // ) {
       // //   setDropList(false);
       // // } else
-      if (containerRef.current.contains(event.target)) {
-        setDropList(true);
+      if (containerRef.current) {
+        if (containerRef.current.contains(event.target)) {
+          setDropList(true);
+        }
+        else {
+          setDropList(false);
+        }
       } else {
         setDropList(false);
       }
@@ -60,8 +65,7 @@ const Location = () => {
         <div
           className={classes.dropContainer}
           onClick={() => setDropList(!dropList)}
-          ref={containerRef}
-        >
+          ref={containerRef}>
           <FaChevronDown className={classes.arrow} />
           <input
             type="text"
@@ -74,8 +78,7 @@ const Location = () => {
         </div>
         <ul
           className={classes.dropList}
-          style={dropList ? { display: "unset" } : { display: "none" }}
-        >
+          style={dropList ? { display: "unset" } : { display: "none" }}>
           <li onClick={handleLocation}>
             <svg viewBox="0 0 24 24">
               <g stroke="none" stroke-width="1" fill-rule="evenodd">

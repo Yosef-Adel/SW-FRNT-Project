@@ -7,13 +7,16 @@ import bannercurve from "../../../assets/imgs/banner/eventbanner.svg";
 import event from "../../../assets/imgs/banner/event2.jpg";
 import mobimgs from "../../../assets/data/BannerLabImgs";
 
-const EventBanner = () => {
-  let { id } = useParams();
+/**
+ * Component that renders banner of Event page attendee view
+ *
+ * @component
+ * return(
+ * <EventBanner image="" />
+ * )
+ */
 
-  useEffect(() => {
-    console.log(id);
-  }, []);
-
+const EventBanner = ({ image }) => {
   return (
     <div
       className={classes.eventbannercontainer}
