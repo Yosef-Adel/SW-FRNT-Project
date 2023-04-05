@@ -8,10 +8,11 @@ import EventBanner from "./eventBanner/EventBanner";
 import LocationDetails from "./locationDetails/LocationDetails";
 import axios from "../../requests/axios";
 import routes from "../../requests/routes";
+import BookingPopup from "./bookingPopup/BookingPopup";
 
 /**
  * Component that returns Event page attendee veiw
- * 
+ *
  * @component
  * @example
  * return(<UserEventPage />)
@@ -19,15 +20,14 @@ import routes from "../../requests/routes";
 
 const UserEventPage = () => {
   let { _id } = useParams();
-  const [event,setEvent] = useState({});
+  const [event, setEvent] = useState({});
 
-   /**
- * function gets the event data from the server by ID
- * @namespace getEvent
- */
+  /**
+   * function gets the event data from the server by ID
+   * @namespace getEvent
+   */
 
   async function getEvent() {
-
     console.log(routes.events + "/" + _id);
     try {
       const response = await axios.get(routes.events + "/" + _id);
@@ -38,17 +38,16 @@ const UserEventPage = () => {
     }
   }
 
-
   useEffect(() => {
     getEvent();
   }, []);
-
 
   return (
     <div className={classes.container}>
       <NavBar />
       <EventBanner />
       {/* <LocationDetails /> */}
+      <BookingPopup eventtitle="EVENT HEADER" date="date" />
       <Footer />
     </div>
   );

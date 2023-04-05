@@ -1,0 +1,84 @@
+.bookingheader {
+  width: 100%;
+  text-align: center;
+  border-bottom: 2px solid rgb(238, 237, 242);
+  padding-bottom: 1.2rem;
+}
+
+.bookingheader div {
+  padding-top: 1.2rem;
+  font-weight: 400;
+  font-size: 2rem;
+}
+
+.eventdate {
+  font-size: 1.8rem !important;
+  color: var(--faded-grey) !important;
+}
+
+.tickets {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  overflow-y: scroll;
+}
+
+.singleticket {
+  font-weight: 400;
+  font-size: 16px;
+  line-height: 16px;
+  background: rgb(255, 255, 255);
+  border: 2px solid rgb(238, 237, 242);
+  border-radius: 8px;
+  padding: 1.6rem 0;
+  margin: 1.6rem 0;
+  width: 85%;
+}
+
+.singleticketnamecontainer {
+  display: flex;
+  border-bottom: 2px solid rgb(238, 237, 242);
+  padding: 0 1.6rem 1.6rem;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.addremoveticket {
+  display: flex;
+  justify-content: space-between;
+  flex-direction: row-reverse;
+  align-items: center;
+}
+
+.addremove {
+
+  padding:1rem;
+  cursor: default;
+  background-color: rgb(238,237,242);
+  font-size: 4rem;
+  border-radius: 8px;
+}
+
+.addremoveactive {
+  background-color: var(--bright-blue);
+  padding:1rem;
+  cursor: pointer;
+
+  font-size: 4rem;
+  border-radius: 8px;
+}
+
+.addremoveactive svg{
+    width: 2rem;
+    fill: white;
+}
+
+.addremove svg{
+    width: 2rem;
+    fill: var(--faded-grey);
+}
+
+.ticketamount {
+  margin: 0 1.5rem;
+}
