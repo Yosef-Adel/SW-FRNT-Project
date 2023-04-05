@@ -6,6 +6,7 @@ import KeyboardArrowDownIcon from "@mui/icons-material/KeyboardArrowDown";
 import MoreVertIcon from '@mui/icons-material/MoreVert';
 import { NavLink } from "react-router-dom";
 import { useState, useEffect } from "react";
+import { useSelector } from "react-redux";
 
 /**
  * Component that renders nav bar
@@ -16,15 +17,17 @@ import { useState, useEffect } from "react";
  * )
  */
 const NavBar = (props) => {
-  const logged = sessionStorage.getItem("token");
-  const email = logged ? sessionStorage.getItem("email") : "";
-  console.log(navData);
+  const [user,setUser] = useState(useSelector((state) => state.user))
+  const logged = user.token ? true : false;
+  const email = logged ? user.email : "";
+  // console.log(navData);
   const page = logged ? navData.homeUser : navData.homeAttendee;
 
   const [windowWidth, setWindowWidth] = useState(window.innerWidth);
   const display = windowWidth > 940 ? true : false;
 
   useEffect(() => {
+    console.log(user)
     const handleWindowResize = () => {
       setWindowWidth(window.innerWidth);
     };
@@ -43,7 +46,7 @@ const NavBar = (props) => {
         <img className={classes.logo} src={logo} alt="logo" />
       </div>
       </NavLink>
-      {console.log(page)}
+      {/* {console.log(page)} */}
 
       <div className={classes.routes}>
         {display && (

@@ -1,5 +1,4 @@
 .card{
-    /* width: 32rem; */
     background-color: #fff;
     border-radius: 2px;
     box-shadow: 0 0 10px 0 rgba(0,0,0,0.1);
@@ -68,4 +67,10 @@
     font-size: 1.6rem;
     font-weight: 400;
     padding: 0.2rem 0;
+}
+
+@media screen and (max-width: 768px) {
+    .card{
+        width: 50rem;
+    }
 }

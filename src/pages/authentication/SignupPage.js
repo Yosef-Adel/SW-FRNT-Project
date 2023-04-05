@@ -96,7 +96,7 @@ const SignupPage = () => {
         resetForm()
       }
     }
-    sendData()
+    //  sendData()  
 
     //onSubmit(data);
   };

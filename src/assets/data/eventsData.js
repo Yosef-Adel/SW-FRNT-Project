@@ -53,6 +53,36 @@ const CardInfo = [
     companyName: "Borcelle Community",
     followersNo: "50",
   },
+  {
+    id: 5,
+    img: eventImage2,
+    title: "Event 5",
+    time: "Tue, Oct 14, 7:00 PM",
+    location: "Presidency University, Kolkata",
+    price: "Free",
+    companyName: "Borcelle Community",
+    followersNo: "50",
+  },
+  {
+    id: 6,
+    img: eventImage2,
+    title: "Event 5",
+    time: "Tue, Oct 14, 7:00 PM",
+    location: "Presidency University, Kolkata",
+    price: "Free",
+    companyName: "Borcelle Community",
+    followersNo: "50",
+  },
+  {
+    id: 7,
+    img: eventImage2,
+    title: "Event 5",
+    time: "Tue, Oct 14, 7:00 PM",
+    location: "Presidency University, Kolkata",
+    price: "Free",
+    companyName: "Borcelle Community",
+    followersNo: "50",
+  },
 ];
 
 export default CardInfo;

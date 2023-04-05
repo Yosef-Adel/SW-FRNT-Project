@@ -48,7 +48,7 @@ const UserEventPage = () => {
     <div className={classes.container}>
       <NavBar />
       <EventBanner />
-      <LocationDetails />
+      {/* <LocationDetails /> */}
       <Footer />
     </div>
   );

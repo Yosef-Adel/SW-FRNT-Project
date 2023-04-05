@@ -13,6 +13,8 @@ import Footer from "../../layouts/footer/Footer";
 import axios from "../../requests/axios"
 import routes from "../../requests/routes"
 import { useNavigate } from "react-router-dom";
+import { useDispatch } from 'react-redux'
+import {userActions} from '../../store/userSlice'
 
 /**
  * Component that renders Login Page
@@ -24,6 +26,7 @@ import { useNavigate } from "react-router-dom";
 
 const LoginPage = ({onSubmit}) => {
   const navigate = useNavigate();
+  const dispatch = useDispatch();
   const [randImg, setrandImg] = useState(Math.floor(Math.random() * 3));
   const [dropDown, setDropDown] = useState(false);
 
@@ -48,15 +51,16 @@ const LoginPage = ({onSubmit}) => {
  */
 
   const handleSubmit = (data, { resetForm }) => {
-    console.log(data);
 
     async function sendData(){
       try{
         const response = await axios.post(routes.logIn, data)
         console.log(response)
-        sessionStorage.setItem("token", response.data.token);
-        sessionStorage.setItem("ID", response.data.user._id);
-        sessionStorage.setItem("email", response.data.user.emailAddress);
+
+        dispatch(userActions.login(
+          { id: response.data.user._id, 
+            token: response.data.token, email: 
+            response.data.user.emailAddress}))
         navigate("/");
         
       } catch(err){
@@ -66,7 +70,7 @@ const LoginPage = ({onSubmit}) => {
     }
     sendData()
 
-    onSubmit(data);
+    // onSubmit(data);
   };
 
   return (

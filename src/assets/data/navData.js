@@ -7,22 +7,22 @@ const navData = {
           {
             title: "Create Events",
             icon: "",
-            route: "/organizer/overview/",
+            route: "/",
           },
           {
             title: "Pricing",
             icon: "//balbla",
-            route: "/organizer/pricing/",
+            route: "/",
           },
           {
             title: "Resources",
             icon: "//balbla",
-            route: "/blog/",
+            route: "/",
           },
           {
             title: "Contact Sales",
             icon: "//balbla",
-            route: "/l/contact-eventbrite-sales/",
+            route: "/",
           },
         ],
       },
@@ -32,17 +32,17 @@ const navData = {
           {
             title: "Find your tickets",
             icon: "//balbla",
-            route: "",
+            route: "/",
           },
           {
             title: "Contact an event organizer",
             icon: "//balbla",
-            route: "//balbla",
+            route: "/",
           },
           {
             title: "Visit the help center",
             icon: "//balbla",
-            route: "//balbla",
+            route: "/",
           },
         ],
       },
