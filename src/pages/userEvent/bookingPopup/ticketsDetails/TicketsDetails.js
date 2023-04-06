@@ -5,24 +5,54 @@ import classes from "./tickets.module.css";
 import { Link, useParams } from "react-router-dom";
 import tickets from "../../../../assets/data/dummytickets";
 
-const TicketsDetails = ({ eventtitle, date }) => {
-  const filledArray = Array(tickets.tickets.length).fill(0);
+const TicketsDetails = ({ eventtitle, date, calculateprice }) => {
+  //   const filledArray = Array(tickets.tickets.length).fill(0);
+  const filledArray = new Array(tickets.tickets.length)
+    .fill()
+    .map((element, index) => ({
+      ticketClass: tickets.tickets[index]._id,
+      number: 0,
+    }));
 
+  //   const [ticketsAmount, setTicketsAmount] = useState(filledArray);
   const [ticketsAmount, setTicketsAmount] = useState(filledArray);
+  const [subtotal, setSubtotal] = useState(0.0);
+  const [fee, setFee] = useState(0.0);
+  const [total, setTotal] = useState(0.0);
 
   function addamount(index) {
-    if (ticketsAmount[index] < tickets.tickets[index].maxQuantityPerOrder) {
+    if (
+      ticketsAmount[index].number < tickets.tickets[index].maxQuantityPerOrder
+    ) {
       let amount = ticketsAmount;
-      amount[index] = amount[index] + 1;
+      amount[index].number = amount[index].number + 1;
       setTicketsAmount((ticketsAmount) => [...ticketsAmount, amount]);
+      let sub = subtotal;
+      sub = sub + tickets.tickets[index].price;
+      setSubtotal(sub);
+      let fees = fee;
+      fees = fees + tickets.tickets[index].fee;
+      setFee(fees);
+      let tot = sub + fees;
+      setTotal(tot);
+      calculateprice(sub, fees, tot);
     }
   }
 
   function removeamount(index) {
-    if (ticketsAmount[index] > 0) {
+    if (ticketsAmount[index].number > 0) {
       let amount = ticketsAmount;
-      amount[index] = amount[index] - 1;
+      amount[index].number = amount[index].number - 1;
       setTicketsAmount((ticketsAmount) => [...ticketsAmount, amount]);
+      let sub = subtotal;
+      sub = sub - tickets.tickets[index].price;
+      setSubtotal(sub);
+      let fees = fee;
+      fees = fees - tickets.tickets[index].fee;
+      setFee(fees);
+      let tot =sub + fees;
+      setTotal(tot);
+      calculateprice(sub, fees, tot);
     }
   }
 
@@ -41,7 +71,7 @@ const TicketsDetails = ({ eventtitle, date }) => {
                 <div className={classes.addremoveticket}>
                   <div
                     className={
-                      ticketsAmount[index] == element.maxQuantityPerOrder
+                      ticketsAmount[index].number == element.maxQuantityPerOrder
                         ? classes.addremove
                         : classes.addremoveactive
                     }
@@ -59,11 +89,11 @@ const TicketsDetails = ({ eventtitle, date }) => {
                     </svg>
                   </div>
                   <div className={classes.ticketamount}>
-                    {ticketsAmount[index]}
+                    {ticketsAmount[index].number}
                   </div>
                   <div
                     className={
-                      ticketsAmount[index] == 0
+                      ticketsAmount[index].number == 0
                         ? classes.addremove
                         : classes.addremoveactive
                     }

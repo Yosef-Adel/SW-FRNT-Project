@@ -14,6 +14,16 @@ const BookingPopup = ({ eventtitle }) => {
   const [open, setOpen] = useState(false);
   const handleOpen = () => setOpen(true);
   const handleClose = () => setOpen(false);
+  const [subtotal, setSubtotal] = useState(0.0);
+  const [fee, setFee] = useState(0.0);
+  const [total, setTotal] = useState(0.0);
+
+  function calculateprice(subtotal,fee,total) {
+    setSubtotal(subtotal);
+    setFee(fee);
+    setTotal(total);
+    // console.log(total)
+  }
 
   return (
     <div className={classes.bookingpopscontainer}>
@@ -33,10 +43,12 @@ const BookingPopup = ({ eventtitle }) => {
         <Box className={classes.bookingbox}>
           <div className={classes.bookingcontainer}>
             <div className={classes.ticketsformcontainer}>
-              <TicketsDetails eventtitle={eventtitle} date="date" />
+              <TicketsDetails eventtitle={eventtitle} date="date" calculateprice={calculateprice} />
             </div>
 
-            <div className={classes.summarycontainer}></div>
+            <div className={classes.summarycontainer}>
+              {total}
+            </div>
           </div>
         </Box>
       </Modal>
