@@ -3,25 +3,29 @@
   text-align: center;
   border-bottom: 2px solid rgb(238, 237, 242);
   padding-bottom: 1.2rem;
+ 
 }
 
 .bookingheader div {
   padding-top: 1.2rem;
   font-weight: 400;
-  font-size: 2rem;
+  font-size: 1.8rem;
 }
 
 .eventdate {
-  font-size: 1.8rem !important;
-  color: var(--faded-grey) !important;
+  font-size: 1.2rem !important;
+  margin-top: .8rem;
+  color:#6f7287
 }
 
 .tickets {
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
+  margin: auto;
+  max-height:  50rem;
   overflow-y: scroll;
+}
+.containerticketinfo{
+  padding-left: 1.6rem;
+  padding-top:1.6rem ;
 }
 
 .singleticket {
@@ -32,8 +36,9 @@
   border: 2px solid rgb(238, 237, 242);
   border-radius: 8px;
   padding: 1.6rem 0;
-  margin: 1.6rem 0;
-  width: 85%;
+  margin: 1.6rem auto;
+  width: 79%;
+ 
 }
 
 .singleticketnamecontainer {
@@ -43,42 +48,74 @@
   justify-content: space-between;
   align-items: center;
 }
+.singleticketname{
+  font-size: 1.6rem;
+  font-weight: 600;
+  color:#39364f;
+}
 
 .addremoveticket {
   display: flex;
   justify-content: space-between;
   flex-direction: row-reverse;
   align-items: center;
+ 
 }
 
 .addremove {
-
-  padding:1rem;
   cursor: default;
   background-color: rgb(238,237,242);
   font-size: 4rem;
   border-radius: 8px;
+  max-height: 30px;
+  padding: .5rem;
 }
 
 .addremoveactive {
-  background-color: var(--bright-blue);
-  padding:1rem;
-  cursor: pointer;
+  background-color: #3d64ff;
 
+  cursor: pointer;
   font-size: 4rem;
   border-radius: 8px;
+  max-height: 30px;
+  padding: .5rem;
 }
 
 .addremoveactive svg{
-    width: 2rem;
-    fill: white;
+    width: 2.6rem;
+    fill:white !important;
 }
 
 .addremove svg{
-    width: 2rem;
+    width: 2.6rem;
     fill: var(--faded-grey);
 }
 
 .ticketamount {
   margin: 0 1.5rem;
+  font-size: 1.9rem;
+  font-weight: 600;
+}
+.headercontainer{
+  margin-bottom: 2rem;
+}
+.price{
+  font-size: 1.6rem;
+  font-weight: 600;
+  margin-bottom: .5rem;
+  color:#39364f;
+}
+.sales{
+  font-size: 1.4rem;
+}
+.includedpr{
+  margin-bottom: 1rem;
+  color:#6f7287;
+  font-size: 1.3rem;
+
+}
+.Detailsabout{
+  margin-bottom: 1rem;
+  font-size:1.3rem;
+  color:#6f7287
 }

@@ -47,7 +47,7 @@ const UserEventPage = () => {
       <NavBar />
       <EventBanner />
       {/* <LocationDetails /> */}
-      <BookingPopup eventtitle="EVENT HEADER" date="date" />
+      <BookingPopup eventtitle="AfricArena 2023 VC Unconference Weekend in Cairo, Egypt" date="April 29 · 3pm - May 1 · 3pm EET" />
       <Footer />
     </div>
   );

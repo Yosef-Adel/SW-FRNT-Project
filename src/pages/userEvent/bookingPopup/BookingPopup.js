@@ -10,7 +10,7 @@ import Button from "@mui/material/Button";
 import Modal from "@mui/material/Modal";
 import TicketsDetails from "./ticketsDetails/TicketsDetails";
 
-const BookingPopup = ({ eventtitle }) => {
+const BookingPopup = ({ eventtitle,date }) => {
   const [open, setOpen] = useState(false);
   const handleOpen = () => setOpen(true);
   const handleClose = () => setOpen(false);
@@ -43,7 +43,7 @@ const BookingPopup = ({ eventtitle }) => {
         <Box className={classes.bookingbox}>
           <div className={classes.bookingcontainer}>
             <div className={classes.ticketsformcontainer}>
-              <TicketsDetails eventtitle={eventtitle} date="date" calculateprice={calculateprice} />
+              <TicketsDetails eventtitle={eventtitle} date={date} calculateprice={calculateprice} />
             </div>
 
             <div className={classes.summarycontainer}>

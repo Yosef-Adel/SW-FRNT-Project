@@ -111,6 +111,31 @@ const TicketsDetails = ({ eventtitle, date, calculateprice }) => {
                   </div>
                 </div>
               </div>
+              <div className={classes.containerticketinfo}>
+                  <div className={classes.headercontainer}> 
+                      <p className={classes.price}>{element.price}</p>
+                      <p className={classes.sales}>sales end on {element.salesEnd}</p>
+                  </div>
+                  <div className={classes.aboutticket}>
+                      <p className={classes.includedpr}>WHAT IS INCLUDED IN YOUR TICKET? </p>
+                      {element.about && (
+                      <ul className={classes.aboutsection}>
+                        {element.about.map((item, index) => {
+                          return (
+                            <li className={classes.Detailsabout}>
+                                {item.name}
+                            </li>
+                          );
+                        })}
+                      </ul>
+                    )}
+
+                  </div>
+
+              </div>
+              
+              
+
             </div>
           );
         })}
