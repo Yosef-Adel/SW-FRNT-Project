@@ -4,6 +4,7 @@ import { useState, useEffect } from "react";
 import classes from "./tickets.module.css";
 import { Link, useParams } from "react-router-dom";
 import tickets from "../../../../assets/data/dummytickets";
+import Button from "@mui/material/Button";
 
 const TicketsDetails = ({ eventtitle, date, calculateprice }) => {
   //   const filledArray = Array(tickets.tickets.length).fill(0);
@@ -80,12 +81,12 @@ const TicketsDetails = ({ eventtitle, date, calculateprice }) => {
                       id="plus-chunky_svg__eds-icon--plus-chunky_svg"
                       x="0"
                       y="0"
-                      viewBox="0 0 24 24">
+                      viewBox="0 0 24 24" >
                       <path
                         id="plus-chunky_svg__eds-icon--plus-chunky_base"
                         fill-rule="evenodd"
                         clip-rule="evenodd"
-                        d="M13 11V4h-2v7H4v2h7v7h2v-7h7v-2z"></path>
+                        d="M13 11V4h-2v7H4v2h7v7h2v-7h7v-2z" ></path>
                     </svg>
                   </div>
                   <div className={classes.ticketamount}>
@@ -142,6 +143,12 @@ const TicketsDetails = ({ eventtitle, date, calculateprice }) => {
         <div className={classes.ticketsfooter}>
           <h3>powered by envie</h3>
         </div>
+      </div>
+      <div className={classes.btn}>
+            <button  className={classes.button} data-testid="CreateBtn">
+                Check out
+            </button>
+
       </div>
     </div>
   );
