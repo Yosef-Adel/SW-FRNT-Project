@@ -1,22 +1,52 @@
 import React from "react";
+import { useState, useEffect } from "react";
 import EventCard from "../event card/EventCard";
 import CardInfo from "../../assets/data/eventsData";
 import classes from "./eventList.module.css";
+import axios from "../../requests/axios";
+import routes from "../../requests/routes";
+import { resolvePath } from "react-router-dom";
+import eventImage1 from "../../assets/imgs/events/event1.png";
+import eventImage2 from "../../assets/imgs/events/event1.png";
 
 const EventList = () => {
+  const [Eventcards,SetEventcards] = useState([]);
+  async function getEventCards()
+  {
+    let response = "";
+    try
+    {
+      response = await axios.get(routes.events);
+      SetEventcards(response.data);
+      return (response.data) ;
+    }
+    catch(error)
+    {
+      if (error.response)
+      {
+        return error.response;
+      }
+    }
+  }
+useEffect(() => {getEventCards(Eventcards);}
+);
+function formatDate(date)
+{
+    return(date?date.slice(0,10):null)
+}
   return (
     <div>
       <div className={classes.secheader}>
         <h3>Events in Al Qahirah</h3>
       </div>
       <div className={classes.list}>
-        {CardInfo.map((card) => (
+        {Eventcards.map((card) => (
           <EventCard
             id={card.id}
             key={card.id}
-            img={card.img}
-            title={card.title}
-            time={card.time}
+            img={eventImage1}
+            title={card.name}
+            time={formatDate(card.date)}
             location={card.location}
             price={card.price}
             companyName={card.companyName}
