@@ -157,3 +157,18 @@
   background-color: var(--hoverButton);
   cursor: pointer;
 }
+.ticketsfooter{
+  width: 78%;
+  margin: auto;
+  font-size: 1rem;
+  color:#6f7287;
+  font-weight: 400;
+  margin-bottom: 5rem;
+  margin-top: 4rem;
+}
+.envie{
+   color:#6f7287;
+  font-size: 1.5rem;
+  font-weight: 600;
+
+}

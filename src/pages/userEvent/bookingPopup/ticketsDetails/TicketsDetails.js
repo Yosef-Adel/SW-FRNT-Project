@@ -141,7 +141,7 @@ const TicketsDetails = ({ eventtitle, date, calculateprice }) => {
           );
         })}
         <div className={classes.ticketsfooter}>
-          <h3>powered by envie</h3>
+          <h3>Powered by <span className={classes.envie}>envie</span></h3>
         </div>
       </div>
       <div className={classes.btn}>
