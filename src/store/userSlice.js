@@ -27,6 +27,11 @@ const userSlice = createSlice({
         },
         logout: (state) =>{
             state.loggedIn= false
+            state.id= ""
+            state.token= ""
+            state.email= ""
+            state.firstName= ""
+            state.lastName= ""
             localStorage.clear()
         },
         creator: (state, action)=>{

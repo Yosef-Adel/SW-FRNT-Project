@@ -53,8 +53,8 @@ const CreatorNav = (props) => {
           <li className={`${classes.navItem} ${classes.navItemCreator}`}>
             <div className={`${classes.wrapper} ${classes.wrapperCreator}`}>
               <div className={classes.name}>
-                {/* <span>{initials}</span> */}
-                {props.name[0]} {props.name[1]} 
+                <span>{user.firstName[0]}{user.lastName[0]}</span>
+                {user.firstName} {user.lastName} 
                 <KeyboardArrowDownIcon className={classes.arrow} />
               </div>
             </div>

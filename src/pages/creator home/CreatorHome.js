@@ -5,6 +5,7 @@ import Footer from "../../layouts/footer/Footer";
 import axios from "../../requests/axios";
 import routes from "../../requests/routes";
 import { useNavigate } from "react-router-dom";
+import {useSelector} from 'react-redux';
 
 /**
  * Component that returns Creator's main page
@@ -14,7 +15,10 @@ import { useNavigate } from "react-router-dom";
  * return(<HomePage />)
  */
 const CreatorHomePage = () => {
-    let id = sessionStorage.getItem("id");
+  
+    const user = useSelector( state => state.user)
+
+    let id = user.id;
     const [name, setName] = useState([])
     const navigate = useNavigate();
 
@@ -24,7 +28,7 @@ const CreatorHomePage = () => {
           response = await axios.get(
             routes.userToCreator+"/"+id
           );
-          setName([response.data.firstName, response.data.lastName])
+          setName([user.firstName, user.lastName])
 
           return response.data;
         } catch (error) {
@@ -35,7 +39,7 @@ const CreatorHomePage = () => {
       }
 
       const checkCreator = () => {
-        if(sessionStorage.getItem("token")){
+        if(user.loggedIn && !user.creator){
             const resp = switchCreator();
         }else{
             navigate("/login");
