@@ -1,10 +1,11 @@
 import React from "react";
 import { useState, useEffect } from "react";
-
 import classes from "./tickets.module.css";
 import { Link, useParams } from "react-router-dom";
+import logo from "../../../../assets/brand/envie.svg";
 import tickets from "../../../../assets/data/dummytickets";
 import Button from "@mui/material/Button";
+import moment from "moment";
 
 const TicketsDetails = ({ eventtitle, date, calculateprice }) => {
   //   const filledArray = Array(tickets.tickets.length).fill(0);
@@ -51,7 +52,7 @@ const TicketsDetails = ({ eventtitle, date, calculateprice }) => {
       let fees = fee;
       fees = fees - tickets.tickets[index].fee;
       setFee(fees);
-      let tot =sub + fees;
+      let tot = sub + fees;
       setTotal(tot);
       calculateprice(sub, fees, tot);
     }
@@ -81,12 +82,12 @@ const TicketsDetails = ({ eventtitle, date, calculateprice }) => {
                       id="plus-chunky_svg__eds-icon--plus-chunky_svg"
                       x="0"
                       y="0"
-                      viewBox="0 0 24 24" >
+                      viewBox="0 0 24 24">
                       <path
                         id="plus-chunky_svg__eds-icon--plus-chunky_base"
                         fill-rule="evenodd"
                         clip-rule="evenodd"
-                        d="M13 11V4h-2v7H4v2h7v7h2v-7h7v-2z" ></path>
+                        d="M13 11V4h-2v7H4v2h7v7h2v-7h7v-2z"></path>
                     </svg>
                   </div>
                   <div className={classes.ticketamount}>
@@ -113,42 +114,46 @@ const TicketsDetails = ({ eventtitle, date, calculateprice }) => {
                 </div>
               </div>
               <div className={classes.containerticketinfo}>
-                  <div className={classes.headercontainer}> 
-                      <p className={classes.price}>{element.price}</p>
-                      <p className={classes.sales}>sales end on {element.salesEnd}</p>
-                  </div>
-                  <div className={classes.aboutticket}>
-                      <p className={classes.includedpr}>WHAT IS INCLUDED IN YOUR TICKET? </p>
-                      {element.about && (
-                      <ul className={classes.aboutsection}>
-                        {element.about.map((item, index) => {
-                          return (
-                            <li className={classes.Detailsabout}>
-                                {item.name}
-                            </li>
-                          );
-                        })}
-                      </ul>
-                    )}
-
-                  </div>
-
+                <div className={classes.headercontainer}>
+                  <p className={classes.price}>{element.price}</p>
+                  <p className={classes.sales}>
+                    sales end on{" "}
+                    {moment(element.salesStart).format("MMMM Do YYYY")}
+                  </p>
+                </div>
+                <div className={classes.aboutticket}>
+                  <p className={classes.includedpr}>
+                    WHAT IS INCLUDED IN YOUR TICKET?{" "}
+                  </p>
+                  {element.about && (
+                    <ul className={classes.aboutsection}>
+                      {element.about.map((item, index) => {
+                        return (
+                          <li className={classes.Detailsabout}>{item.name}</li>
+                        );
+                      })}
+                    </ul>
+                  )}
+                </div>
               </div>
-              
-              
-
             </div>
           );
         })}
         <div className={classes.ticketsfooter}>
-          <h3>powered by envie</h3>
+          <div>Powered by </div>
+          <img className={classes.logo} src={logo} alt="logo" />
         </div>
       </div>
-      <div className={classes.btn}>
-            <button  className={classes.button} data-testid="CreateBtn">
-                Check out
-            </button>
+      <div className={classes.checkoutcontainer}>
+      <div className={classes.summarycontainer}>
+              {total}
+            </div>
+        <div className={classes.btn}>
 
+          <button className={classes.button} data-testid="CreateBtn">
+            Check out
+          </button>
+        </div>
       </div>
     </div>
   );

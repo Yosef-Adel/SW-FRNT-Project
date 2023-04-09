@@ -8,6 +8,8 @@ import tickets from "../../../assets/data/dummytickets";
 import Box from "@mui/material/Box";
 import Button from "@mui/material/Button";
 import Modal from "@mui/material/Modal";
+import IconButton from '@mui/material/IconButton';
+import CloseIcon from '@mui/icons-material/Close';
 import TicketsDetails from "./ticketsDetails/TicketsDetails";
 
 const BookingPopup = ({ eventtitle,date }) => {
@@ -35,12 +37,19 @@ const BookingPopup = ({ eventtitle,date }) => {
 
       <Modal
         open={open}
-        onClose={handleClose}
+        // onClose={handleClose}
         disableBackdropClick
         aria-labelledby="modal-modal-title"
         aria-describedby="modal-modal-description"
         className={classes.bookingmodal}>
         <Box className={classes.bookingbox}>
+        <IconButton
+          aria-label="close"
+          onClick={handleClose}
+          className={classes.bookingmodalclose}
+        >
+          <CloseIcon />
+        </IconButton>
           <div className={classes.bookingcontainer}>
             <div className={classes.ticketsformcontainer}>
               <TicketsDetails eventtitle={eventtitle} date={date} calculateprice={calculateprice} />

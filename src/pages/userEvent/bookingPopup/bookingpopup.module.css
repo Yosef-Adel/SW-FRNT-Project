@@ -1,38 +1,17 @@
-.bookingmodal {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  background-color: rgba(57, 54, 79, 0.8);
-}
-.bookingbox {
-  width: 95%;
-  height: 95%;
-  max-width: 108rem;
-  max-height: 72rem;
-  background-color: var(--primary-background);
-  border: none;
-  
-}
-
-.bookingcontainer {
-  display: flex;
-}
-
-.ticketsformcontainer {
-  width: calc(100% - 36rem);
-  border-right: 2px solid rgb(238, 237, 242);;
-}
-
-.summarycontainer {
+.bookingpopscontainer{
   width: 36rem;
+  display: flex;
+  flex-direction: column;
 }
 
 .btn {
-  width: 25%;
-  margin: auto;
+  width: 100%;
+  /* margin: auto; */
   justify-content: center;
   /* background-color: black; */
   display: flex;
+  border: 2px solid rgb(238, 237, 242);
+  border-radius: 8px;
 }
 .btn .button {
   width: 90%;
@@ -55,6 +34,50 @@
   cursor: pointer;
 }
 
+.bookingmodal {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background-color: rgba(57, 54, 79, 0.8);
+}
+.bookingbox {
+  width: 95%;
+  height: 95%;
+  max-width: 108rem;
+  max-height: 72rem;
+  background-color: var(--primary-background);
+  border: none;
+  position: relative;
+}
+
+.bookingmodalclose
+{
+  position: absolute !important;
+  right: 8px;
+  top: 8px;
+  background-color: rgba(167, 73, 229, 0.65) !important;
+  width: 4rem;
+  height: 4rem;
+  z-index: 1000;
+  
+}
+
+.bookingcontainer {
+  display: flex;
+  height: 100%;
+}
+
+.ticketsformcontainer {
+  width: calc(100% - 36rem);
+  border-right: 2px solid rgb(238, 237, 242);;
+}
+
+.summarycontainer {
+  width: 36rem;
+}
+
+
+
 @media screen and (max-width: 660px) {
   .bookingbox {
     width: 100%;
@@ -71,5 +94,22 @@
 
   .ticketsformcontainer {
     width: 100%;
+  }
+}
+
+@media screen and (max-width: 960px) {
+  .bookingpopscontainer{
+    width: 100%;
+    position:fixed;
+    left: 0;
+    bottom: 0;
+    background-color: white;
+    box-shadow: 0 -1px 24px rgba(40,44,53,.1), 0 -2px 8px rgba(40,44,53,.1);
+  }
+
+  .btn {
+    border:0;
+    border-radius: 0;
+    /* box-shadow: 0 -1px 24px rgba(40,44,53,.1), 0 -2px 8px rgba(40,44,53,.1); */
   }
 }

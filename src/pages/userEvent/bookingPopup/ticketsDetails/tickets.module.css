@@ -1,8 +1,12 @@
+.ticketscontainer{
+  height: 100%;
+}
 .bookingheader {
   width: 100%;
+  min-height: 8rem;
   text-align: center;
   border-bottom: 2px solid rgb(238, 237, 242);
-  padding-bottom: 1.2rem;
+  /* padding-bottom: 1.2rem; */
  
 }
 
@@ -20,7 +24,8 @@
 
 .tickets {
   margin: auto;
-  max-height:  56rem;
+  /* max-height:  56rem; */
+  max-height: calc(100% - 17rem);
   overflow-y: scroll;
   border-bottom: 2px solid rgb(238, 237, 242);;
 }
@@ -29,7 +34,7 @@
   padding-top:1.6rem ;
 }
 
-.singleticket {
+.singleticket{
   font-weight: 400;
   font-size: 16px;
   line-height: 16px;
@@ -57,8 +62,6 @@
 .addremoveactive:focus ~ .addremoveticket {
   border: 2px solid blue !important;
 }
-
-
 
 .addremoveticket {
   display: flex;
@@ -88,12 +91,12 @@
 }
 
 .addremoveactive svg{
-    width: 2.6rem;
+    width: 2rem;
     fill:white !important;
 }
 
 .addremove svg{
-    width: 2.6rem;
+    width: 2rem;
     fill: var(--faded-grey);
 }
 
@@ -125,16 +128,59 @@
   font-size:1.3rem;
   color:#6f7287
 }
-.btn {
-  width: 25%;
-  margin: auto;
+
+.ticketsfooter {
+  padding: 1.6rem 0;
+  margin: 1.6rem auto;
+  display: flex;
+  align-items: center;
+  column-gap: 0.5rem;
+  width: 79%;
+  color: #6f7287;
+}
+
+.ticketsfooter div{
+  text-align: center;
+  font-weight: 400;
+  font-size: 1.2rem;
+  line-height: 1rem;
+  text-align: center;
+}
+
+.logo
+{
+  width: 4rem;
+  filter: grayscale(100%);
+}
+
+.checkoutcontainer{
+  width: 100%;
+  min-height: 8rem;
+  display: flex;
+  flex-direction: column;
   justify-content: center;
+  align-items: end;
+}
+
+.summarycontainer {
+  margin: 0 auto;
+  width: 77.5%;
+  justify-content: flex-end;
+}
+
+.btn {
+  /* width: 25%; */
+  /* margin: auto; */
+  justify-content: flex-end;
+  align-items: center;
   /* background-color: black; */
   display: flex;
-  position: relative;
+  /* position: relative; */
+  margin:0 auto;
+  width: 77.5%;
 }
 .btn .button {
-  width: 75%;
+  width:30%;
   background-color: var(--orange);
   color: white;
   font-size: 1.4rem;
@@ -144,9 +190,9 @@
   font-weight: 600;
   border-radius: 3px;
   /* margin-top: 1.8rem; */
-  margin: 1.6rem auto;
-  position: absolute;
-  left:240px;
+  /* margin:auto 1.6rem; */
+  /* position: absolute; */
+  /* left:240px; */
   max-height: 5rem;
   border-radius: 5px;
 }
@@ -156,4 +202,11 @@
 .btn .button:hover {
   background-color: var(--hoverButton);
   cursor: pointer;
+}
+
+@media screen and (min-width: 791px) {
+  .summarycontainer {
+    display: none;
+  }
+
 }
