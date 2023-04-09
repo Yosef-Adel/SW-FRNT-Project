@@ -15,6 +15,8 @@ import routes from "../../requests/routes"
 import { useNavigate } from "react-router-dom";
 import { useDispatch } from 'react-redux'
 import {userActions} from '../../store/userSlice'
+import ErrorNotification from "../../generic components/error message/ErrorNotification";
+import { Create } from "@mui/icons-material";
 
 /**
  * Component that renders Login Page
@@ -29,6 +31,11 @@ const LoginPage = ({onSubmit}) => {
   const dispatch = useDispatch();
   const [randImg, setrandImg] = useState(Math.floor(Math.random() * 3));
   const [dropDown, setDropDown] = useState(false);
+
+  const [errorMsg, setErrorMsg] = useState('');
+  const [errorLink, setErrorLink] = useState('');
+  const [errorLinkMsg, setErrorLinkMsg] = useState('');
+
 
   const initialValues = {
     emailAddress: "",
@@ -50,8 +57,10 @@ const LoginPage = ({onSubmit}) => {
  * @param   {string} password   User password
  */
 
-  const handleSubmit = (data, { resetForm }) => {
-
+  const handleSubmit = (data, {setErrors}) => {
+    setErrorMsg("")
+    setErrorLinkMsg("")
+    setErrorLink("")
     async function sendData(){
       try{
         const response = await axios.post(routes.logIn, data)
@@ -64,8 +73,17 @@ const LoginPage = ({onSubmit}) => {
         navigate("/");
         
       } catch(err){
-        
-        resetForm()
+        if(err.response.data.message==="Password is incorrect"){
+          setErrorMsg(err.response.data.message)
+          setErrors({password:err.response.data.message})
+        }
+        else {
+          setErrorMsg("There is no account associated with the email.")
+          setErrors({email:"There is no account associated with the email."})
+          setErrorLinkMsg("Create account")
+          setErrorLink("/signup")
+        }
+
       }
     }
     sendData()
@@ -89,6 +107,10 @@ const LoginPage = ({onSubmit}) => {
                 <p className={classes.smallScreenlink}>Signup</p>
               </Link>
             </div>
+           
+            {errorMsg?
+            <ErrorNotification mssg={errorMsg} linkmsg={errorLinkMsg} link={errorLink}/>:null}
+
             <Formik
               initialValues={initialValues}
               validationSchema={validationSchema}

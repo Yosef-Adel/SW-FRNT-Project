@@ -15,6 +15,7 @@ import validator from "validator";
 import Footer from "../../layouts/footer/Footer";
 import axios from "../../requests/axios"
 import routes from "../../requests/routes"
+import ErrorNotification from "../../generic components/error message/ErrorNotification";
 
 
 
@@ -31,6 +32,11 @@ const SignupPage = () => {
   const [randImg, setrandImg] = useState(Math.floor(Math.random() * 3));
   const [dropDown, setDropDown] = useState(false);
   const [myEmail, setMyEmail] = useState();
+
+
+  const [errorMsg, setErrorMsg] = useState('');
+  const [errorLink, setErrorLink] = useState('');
+  const [errorLinkMsg, setErrorLinkMsg] = useState('');
 
   const initialValues = {
     emailAddress: "",
@@ -83,8 +89,10 @@ const SignupPage = () => {
    * @param   {string} email      check if It's avalid email or not 
    */
 
-  const handleSubmit = (data, { resetForm }) => {
-    console.log(data);
+  const handleSubmit = (data) => {
+    setErrorMsg("")
+    setErrorLinkMsg("")
+    setErrorLink("")
 
     async function sendData(){
       try{
@@ -93,10 +101,12 @@ const SignupPage = () => {
         
       } catch(err){
         
-        resetForm()
+        setErrorMsg("There is an account associated with the email.")
+        setErrorLinkMsg("Log in")
+        setErrorLink("/login")
       }
     }
-    //  sendData()  
+     sendData()  
 
     //onSubmit(data);
   };
@@ -119,6 +129,9 @@ const SignupPage = () => {
                 <p className={classes.smallScreenlink}>Log in</p>
               </Link>
             </div>
+
+            {errorMsg?
+            <ErrorNotification mssg={errorMsg} linkmsg={errorLinkMsg} link={errorLink} signUp={true}/>:null}
 
             <Formik
               initialValues={initialValues}
