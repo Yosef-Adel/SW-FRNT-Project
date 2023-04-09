@@ -20,14 +20,13 @@ const NavBar = (props) => {
   const [user,setUser] = useState(useSelector((state) => state.user))
   const logged = user.token ? true : false;
   const email = logged ? user.email : "";
-  // console.log(navData);
   const page = logged ? navData.homeUser : navData.homeAttendee;
 
   const [windowWidth, setWindowWidth] = useState(window.innerWidth);
   const display = windowWidth > 940 ? true : false;
 
   useEffect(() => {
-    console.log(user)
+    // console.log(user)
     const handleWindowResize = () => {
       setWindowWidth(window.innerWidth);
     };

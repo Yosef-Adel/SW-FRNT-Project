@@ -2,10 +2,12 @@
   width: 8rem;
   padding-left: 3rem;
   padding-top: 2rem;
+  display: flex;
 }
 
 .logoContainer img {
   width: 100%;
+  justify-items: center;
 }
 
 .nav {
@@ -122,4 +124,55 @@ a {
 
 .navcollapse {
   cursor: pointer;
+}
+
+
+/* Creator */
+
+.initials{
+  color: red;
+}
+
+.navSubItem svg{
+  fill: var(--primary-text);
+  width: 2.8rem;
+  height: 2.8rem;
+  position: relative;
+  top: 1rem;
+  margin-right: 1rem;
+}
+
+.dark{
+  color:var(--primary-text) !important;
+}
+
+.name{
+  font-weight: 900;
+}
+
+.wrapperCreator{
+  display: flex;
+  flex-direction: column;
+  place-items: center;
+  background-color: var(--primary-background);
+  padding: 1rem;
+  border-radius: 2rem;
+}
+
+.wrapperCreator svg{
+  fill: var(--primary-text) !important;
+  stroke: var(--primary-text) !important;
+}
+
+.navItemCreator{
+  padding-block: 1rem !important;
+  padding-inline: 2rem;
+  justify-items: center;
+}
+
+.navItemCreator:hover{
+  background-color: white !important;
+}
+.navItemCreator:hover > .wrapperCreator{
+  background-color: rgb(235, 235, 239);
 }

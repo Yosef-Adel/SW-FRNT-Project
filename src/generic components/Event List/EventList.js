@@ -10,30 +10,29 @@ import eventImage1 from "../../assets/imgs/events/event1.png";
 import eventImage2 from "../../assets/imgs/events/event1.png";
 
 const EventList = () => {
-  const [Eventcards,SetEventcards] = useState([]);
-  async function getEventCards()
-  {
+  const [Eventcards, SetEventcards] = useState([]);
+
+  async function getEventCards() {
     let response = "";
-    try
-    {
+    try {
       response = await axios.get(routes.events);
       SetEventcards(response.data);
-      return (response.data) ;
-    }
-    catch(error)
-    {
-      if (error.response)
-      {
+      return response.data;
+    } catch (error) {
+      if (error.response) {
         return error.response;
       }
     }
   }
-useEffect(() => {getEventCards(Eventcards);}
-);
-function formatDate(date)
-{
-    return(date?date.slice(0,10):null)
-}
+
+  useEffect(() => {
+    getEventCards();
+  }, []);
+
+  function formatDate(date) {
+    return date ? date.slice(0, 10) : null;
+  }
+
   return (
     <div>
       <div className={classes.secheader}>
@@ -42,8 +41,8 @@ function formatDate(date)
       <div className={classes.list}>
         {Eventcards.map((card) => (
           <EventCard
-            id={card.id}
-            key={card.id}
+            id={card._id}
+            key={card._id}
             img={eventImage1}
             title={card.name}
             time={formatDate(card.date)}
