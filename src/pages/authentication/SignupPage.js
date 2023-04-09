@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState ,useEffect} from "react";
 import classes from "./auth.module.css";
 import { Formik, Form, Field, ErrorMessage } from "formik";
 import * as Yup from "yup";
@@ -16,7 +16,8 @@ import Footer from "../../layouts/footer/Footer";
 import axios from "../../requests/axios"
 import routes from "../../requests/routes"
 import ErrorNotification from "../../generic components/error message/ErrorNotification";
-
+import { useSelector } from "react-redux";
+import { useNavigate } from "react-router-dom";
 
 
 /**
@@ -27,6 +28,9 @@ import ErrorNotification from "../../generic components/error message/ErrorNotif
  * return(<SignupPage />)
  */
 const SignupPage = () => {
+  const navigate = useNavigate();
+  const [user,setUser] = useState(useSelector((state) => state.user))
+
   const [cont, setContinue] = useState(false);
   const [loader, setLoader] = useState(false);
   const [randImg, setrandImg] = useState(Math.floor(Math.random() * 3));
@@ -37,6 +41,15 @@ const SignupPage = () => {
   const [errorMsg, setErrorMsg] = useState('');
   const [errorLink, setErrorLink] = useState('');
   const [errorLinkMsg, setErrorLinkMsg] = useState('');
+
+
+    //To make sure user can't access signUp if he is already logged in 
+    useEffect(() => {
+      if(user.loggedIn){
+        navigate("/")
+      }
+    }, []);
+
 
   const initialValues = {
     emailAddress: "",

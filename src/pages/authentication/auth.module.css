@@ -1,6 +1,7 @@
 .main{
     display: flex;
     flex-direction: row;
+    min-height: 100vh;
 }
 .info{
     min-width: 50%;
@@ -407,9 +408,11 @@
     }
 
     .methods .showDropDown{
-        display: unset;
+        display: flex;
         opacity: 1;
         transition: opacity 0.7s;
+
+        justify-content: center;
     }
 
     .wideScreenlink{

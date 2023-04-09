@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import classes from "./auth.module.css";
 import { Formik, Form, Field, ErrorMessage } from "formik";
 import * as Yup from "yup";
@@ -16,7 +16,7 @@ import { useNavigate } from "react-router-dom";
 import { useDispatch } from 'react-redux'
 import {userActions} from '../../store/userSlice'
 import ErrorNotification from "../../generic components/error message/ErrorNotification";
-import { Create } from "@mui/icons-material";
+import { useSelector } from "react-redux";
 
 /**
  * Component that renders Login Page
@@ -24,19 +24,29 @@ import { Create } from "@mui/icons-material";
  * @component
  * @example
  * return(<LoginPage />)
- */
+*/
 
 const LoginPage = ({onSubmit}) => {
+  
   const navigate = useNavigate();
   const dispatch = useDispatch();
+  const [user,setUser] = useState(useSelector((state) => state.user))
+  
   const [randImg, setrandImg] = useState(Math.floor(Math.random() * 3));
   const [dropDown, setDropDown] = useState(false);
-
+  
   const [errorMsg, setErrorMsg] = useState('');
   const [errorLink, setErrorLink] = useState('');
   const [errorLinkMsg, setErrorLinkMsg] = useState('');
+  
 
-
+  //To make sure user can't access login if he is already logged in 
+  useEffect(() => {
+    if(user.loggedIn){
+      navigate("/")
+    }
+  }, []);
+  
   const initialValues = {
     emailAddress: "",
     password: "",
@@ -68,8 +78,12 @@ const LoginPage = ({onSubmit}) => {
 
         dispatch(userActions.login(
           { id: response.data.user._id, 
-            token: response.data.token, email: 
-            response.data.user.emailAddress}))
+            token: response.data.token, 
+            email: response.data.user.emailAddress,
+            firstName: response.data.user.firstName,
+            lastName: response.data.user.lastName,
+            isCreator: response.data.user.isCreator 
+          }))
         navigate("/");
         
       } catch(err){
@@ -90,6 +104,8 @@ const LoginPage = ({onSubmit}) => {
 
     // onSubmit(data);
   };
+
+
 
   return (
     <div data-testid="LoginComponent">

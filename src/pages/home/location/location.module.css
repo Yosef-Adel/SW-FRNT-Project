@@ -3,6 +3,7 @@
     align-items: center;
     gap: 1rem;
     margin: 2rem 0;
+
 }
 
 .title{
@@ -22,7 +23,8 @@
     color: var(--faded-grey);
     font-weight: 800;
     padding-bottom: .3rem;
-    padding-right: 3rem;
+    padding-right: 2rem;
+
     outline: none;
     border: none;
     border-bottom: solid #bbbac4b9 2px;

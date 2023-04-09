@@ -4,9 +4,11 @@ import navData from "../../assets/data/navData";
 import logo from "../../assets/brand/envie.svg";
 import KeyboardArrowDownIcon from "@mui/icons-material/KeyboardArrowDown";
 import MoreVertIcon from '@mui/icons-material/MoreVert';
-import { NavLink } from "react-router-dom";
+import { NavLink, useNavigate } from "react-router-dom";
 import { useState, useEffect } from "react";
 import { useSelector } from "react-redux";
+import { useDispatch } from 'react-redux'
+import {userActions} from '../../store/userSlice'
 
 /**
  * Component that renders nav bar
@@ -17,6 +19,8 @@ import { useSelector } from "react-redux";
  * )
  */
 const NavBar = (props) => {
+  const navigate = useNavigate();
+  const dispatch = useDispatch();
   const [user,setUser] = useState(useSelector((state) => state.user))
   const logged = user.token ? true : false;
   const email = logged ? user.email : "";
@@ -37,6 +41,13 @@ const NavBar = (props) => {
       window.removeEventListener("resize", handleWindowResize);
     };
   }, []);
+
+  const handleLogout = () => {
+    dispatch(userActions.logout())
+
+    setTimeout(navigate('/login'), 5000);
+    
+  }
 
   return (
     <div className={classes.nav}>
@@ -66,12 +77,13 @@ const NavBar = (props) => {
                           {element.title}{" "}
                           {element.list && (
                             <KeyboardArrowDownIcon className={classes.arrow} />
-                          )}
+                            )}
                         </div>
                       </div>
                     </NavLink>
 
                     {element.list && (
+                      
                       <ol className={classes.dropDown}>
                         {element.list.map((item, index) => {
                           return (
@@ -141,13 +153,12 @@ const NavBar = (props) => {
                     <ol className={classes.dropDown}>
                       {element.list.map((item, index) => {
                         return (
-                          <li className={classes.navSubItem}>
-                            <NavLink
-                              to={item.route}
-                              activeClassName={classes.activeLink}>
+                          <li className={classes.navSubItem} onClick={item.title === "Log out"? ()=>handleLogout(): undefined}>
+                            <div
+                              className={classes.activeLink}>
                               {" "}
                               {item.title}{" "}
-                            </NavLink>
+                            </div>
                           </li>
                         );
                       })}

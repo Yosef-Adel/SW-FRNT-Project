@@ -155,7 +155,7 @@ const navData = {
           },
           {
             title: "Log out",
-            route: "//balbla",
+            route: "/login",
           },
         ],
       },
