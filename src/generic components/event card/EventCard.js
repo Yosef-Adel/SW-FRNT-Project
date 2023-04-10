@@ -1,5 +1,5 @@
 import classes from "./eventCard.module.css";
-import React from "react";
+import React, { useState } from "react";
 import { HiOutlineUser } from "react-icons/hi";
 import { Link } from "react-router-dom";
 
@@ -20,6 +20,7 @@ import { Link } from "react-router-dom";
  * )
  */
 const EventCard = (props) => {
+  const [followerNo, setFollowersNo] = useState(Math.floor(Math.random() * 100));
   return (
     <Link to={`/user/event/${props.id}`} className={classes.card}>
       <div className={classes.cardImage}>
@@ -30,13 +31,13 @@ const EventCard = (props) => {
         <li className={classes.time}>{props.time}</li>
         <li className={classes.location}>
           <p>{props.location}</p>
-          {props.price ? <p>{props.price}</p> : null}
+          {props.price ? <p>Starts at {props.price} L.E.</p> :<p> Free</p>}
         </li>
         <li className={classes.company}>
           <p>{props.companyName}</p>
           <p>
             {" "}
-            <HiOutlineUser size="13" /> {props.followersNo} followers
+            <HiOutlineUser size="13" /> {followerNo} followers
           </p>
         </li>
       </ul>

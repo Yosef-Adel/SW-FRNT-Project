@@ -48,9 +48,8 @@ const EventList = () => {
             title={card.name}
             time={moment(card.startDate).format("MMMM Do YYYY")}
             location={card.address1}
-            price={card.price}
-            companyName={card.venueName}
-            followersNo={card.followersNo}
+            price={card.postalCode} //Price attribute is not provided by backend response
+            companyName={card.venueName} //Using venue name as the company name, as company name is not required
           />
         ))}
       </div>
