@@ -27,10 +27,10 @@ const EventBanner = ({ image }) => {
         <div
           className={classes.imgbackground}
           style={{
-            backgroundImage: "url(" + event + ")",
+            backgroundImage: "url(" + image + ")",
           }}>
           <div className={classes.eventimgcontainer}>
-            <img className={classes.eventimg} src={event} alt="Event" />
+            <img className={classes.eventimg} src={image} alt="Event" />
           </div>
         </div>
       </div>

@@ -9,6 +9,7 @@ import LocationDetails from "./locationDetails/LocationDetails";
 import axios from "../../requests/axios";
 import routes from "../../requests/routes";
 import BookingPopup from "./bookingPopup/BookingPopup";
+import moment from "moment";
 
 /**
  * Component that returns Event page attendee veiw
@@ -45,12 +46,13 @@ const UserEventPage = () => {
   return (
     <div className={classes.container}>
       <NavBar />
-      <EventBanner />
+      <EventBanner image={event.image}/>
       <div className={classes.eventdatails}>
         <div></div>
         <BookingPopup
-          eventtitle="AfricArena 2023 VC Unconference Weekend in Cairo, Egypt"
-          date="April 29 · 3pm - May 1 · 3pm EET"
+          eventtitle={event.name}
+          date={moment(event.startDate).format("MMMM Do YYYY")}
+          image={event.image}
         />
       </div>
       {/* <LocationDetails /> */}

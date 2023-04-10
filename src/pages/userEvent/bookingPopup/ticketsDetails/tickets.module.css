@@ -27,11 +27,44 @@
   /* max-height:  56rem; */
   max-height: calc(100% - 17rem);
   overflow-y: scroll;
-  border-bottom: 2px solid rgb(238, 237, 242);;
+  border-bottom: 2px solid rgb(238, 237, 242);
+
 }
 .containerticketinfo{
   padding-left: 1.6rem;
   padding-top:1.6rem ;
+}
+
+.promocode{
+  margin: 1.6rem auto;
+  width: 79%;
+}
+
+.promocodebox
+{
+  width: 100%;
+}
+
+.promocodebox:focus
+{
+  border: black !important;
+}
+
+
+.applybtn
+{
+  border: 0;
+  background: none;
+  cursor: default;
+
+}
+
+.applybtnactive
+{
+  border: 0;
+  background: none;
+  cursor: pointer;
+  color: rgb(61,100,255);
 }
 
 .singleticket{

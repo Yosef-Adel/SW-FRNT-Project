@@ -4,23 +4,58 @@ import classes from "./tickets.module.css";
 import { Link, useParams } from "react-router-dom";
 import logo from "../../../../assets/brand/envie.svg";
 import tickets from "../../../../assets/data/dummytickets";
-import Button from "@mui/material/Button";
 import moment from "moment";
+import { TextField } from "@mui/material";
+import InputAdornment from "@mui/material/InputAdornment";
+import { styled } from "@mui/material/styles";
+import axios from "../../../../requests/axios";
+import routes from "../../../../requests/routes";
 
-const TicketsDetails = ({ eventtitle, date, calculateprice }) => {
+const TicketsDetails = ({ eventtitle, date, checkout , summary }) => {
   //   const filledArray = Array(tickets.tickets.length).fill(0);
-  const filledArray = new Array(tickets.tickets.length)
+  let filledArray = new Array(tickets.tickets.length)
     .fill()
     .map((element, index) => ({
       ticketClass: tickets.tickets[index]._id,
       number: 0,
+      name: tickets.tickets[index].name,
+      price: tickets.tickets[index].price,
+      fee: tickets.tickets[index].fee,
     }));
+
+
+  let { _id } = useParams();
 
   //   const [ticketsAmount, setTicketsAmount] = useState(filledArray);
   const [ticketsAmount, setTicketsAmount] = useState(filledArray);
+  const [promocode, setPromocode] = useState(false);
   const [subtotal, setSubtotal] = useState(0.0);
   const [fee, setFee] = useState(0.0);
   const [total, setTotal] = useState(0.0);
+  const [inputValue, setInputValue] = useState("");
+  const [ticketsNum, setTicketsNum] = useState(0);
+  const [errorMsg, setErrorMsg] = useState(false);
+
+  const handleInputChange = (event) => {
+    setInputValue(event.target.value);
+  };
+
+  const handleButtonClick = () => {
+    // do something when the button is clicked
+  };
+
+  const MyTextField = styled(TextField)({
+    "& .MuiOutlinedInput-root:hover .MuiOutlinedInput-notchedOutline": {
+      borderColor: "grey",
+    },
+    "&:focus-within .MuiOutlinedInput-root .MuiOutlinedInput-notchedOutline": {
+      borderColor: "black",
+      borderWidth: "2px",
+    },
+    "&:focus-within .MuiInputLabel-root": {
+      color: "black",
+    },
+  });
 
   function addamount(index) {
     if (
@@ -28,16 +63,14 @@ const TicketsDetails = ({ eventtitle, date, calculateprice }) => {
     ) {
       let amount = ticketsAmount;
       amount[index].number = amount[index].number + 1;
-      setTicketsAmount((ticketsAmount) => [...ticketsAmount, amount]);
-      let sub = subtotal;
-      sub = sub + tickets.tickets[index].price;
-      setSubtotal(sub);
-      let fees = fee;
-      fees = fees + tickets.tickets[index].fee;
-      setFee(fees);
-      let tot = sub + fees;
-      setTotal(tot);
-      calculateprice(sub, fees, tot);
+      setTicketsAmount(amount);
+
+      let count = ticketsNum;
+      count = count + 1;
+      setTicketsNum(count);
+
+      summary(amount,count);
+
     }
   }
 
@@ -45,18 +78,40 @@ const TicketsDetails = ({ eventtitle, date, calculateprice }) => {
     if (ticketsAmount[index].number > 0) {
       let amount = ticketsAmount;
       amount[index].number = amount[index].number - 1;
-      setTicketsAmount((ticketsAmount) => [...ticketsAmount, amount]);
-      let sub = subtotal;
-      sub = sub - tickets.tickets[index].price;
-      setSubtotal(sub);
-      let fees = fee;
-      fees = fees - tickets.tickets[index].fee;
-      setFee(fees);
-      let tot = sub + fees;
-      setTotal(tot);
-      calculateprice(sub, fees, tot);
+      setTicketsAmount(amount);
+
+
+      let count = ticketsNum;
+      count = count - 1;
+      setTicketsNum(count);
+
+      summary(amount,count);
     }
   }
+
+  const applypromocode = () => {
+    async function sendpromo() {
+      try {
+        const response = await axios.get(
+          routes.promocode + "/" + _id + "/checkPromo",
+          { promocode: inputValue }
+        );
+        console.log(response);
+      } catch (err) {
+        console.log(err);
+      }
+    }
+    sendpromo();
+  };
+
+  const handlecheckout = () => {
+    if (ticketsNum == 0) {
+      setErrorMsg(true);
+      console.log("error");
+    } else {
+      checkout(promocode);
+    }
+  };
 
   return (
     <div className={classes.ticketscontainer}>
@@ -64,7 +119,36 @@ const TicketsDetails = ({ eventtitle, date, calculateprice }) => {
         <div id="modal-modal-title">{eventtitle}</div>
         <div className={classes.eventdate}> {date}</div>
       </div>
+
       <div className={classes.tickets}>
+        <div className={classes.promocode}>
+          <TextField
+            className={classes.promocodebox}
+            id="outlined-basic"
+            label="PromoCode"
+            variant="outlined"
+            placeholder="Enter Code"
+            onChange={handleInputChange}
+            InputLabelProps={{ shrink: true }}
+            InputProps={{
+              endAdornment: (
+                <InputAdornment position="end">
+                  <button
+                    disabled={!inputValue}
+                    onClick={applypromocode}
+                    className={
+                      !inputValue ? classes.applybtn : classes.applybtnactive
+                    }>
+                    Apply
+                  </button>
+                </InputAdornment>
+              ),
+            }}
+            error={errorMsg}
+            helperText={errorMsg ? "Sorry, we don’t recognise that code." : " "}
+          />
+        </div>
+
         {tickets.tickets.map((element, index) => {
           return (
             <div className={classes.singleticket}>
@@ -145,12 +229,12 @@ const TicketsDetails = ({ eventtitle, date, calculateprice }) => {
         </div>
       </div>
       <div className={classes.checkoutcontainer}>
-      <div className={classes.summarycontainer}>
-              {total}
-            </div>
+        <div className={classes.summarycontainer}>{total}</div>
         <div className={classes.btn}>
-
-          <button className={classes.button} data-testid="CreateBtn">
+          <button
+            onClick={handlecheckout}
+            className={classes.button}
+            data-testid="CreateBtn">
             Check out
           </button>
         </div>

@@ -8,6 +8,7 @@ import routes from "../../requests/routes";
 import { resolvePath } from "react-router-dom";
 import eventImage1 from "../../assets/imgs/events/event1.png";
 import eventImage2 from "../../assets/imgs/events/event1.png";
+import moment from "moment";
 
 const EventList = () => {
   const [Eventcards,SetEventcards] = useState([]);
@@ -42,14 +43,14 @@ function formatDate(date)
       <div className={classes.list}>
         {Eventcards.map((card) => (
           <EventCard
-            id={card.id}
+            id={card._id}
             key={card.id}
-            img={eventImage1}
+            img={card.image}
             title={card.name}
-            time={formatDate(card.date)}
-            location={card.location}
+            time={moment(card.startDate).format("MMMM Do YYYY")}
+            location={card.address1}
             price={card.price}
-            companyName={card.companyName}
+            companyName={card.venueName}
             followersNo={card.followersNo}
           />
         ))}
