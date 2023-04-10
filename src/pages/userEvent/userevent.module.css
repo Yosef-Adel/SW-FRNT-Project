@@ -5,7 +5,10 @@
     margin:0 auto;
     width: 120rem;;
 }
-
+.aboutEvTitle
+{
+    color: var(--primary-text);
+}
 @media screen and (max-width: 1180px) {
     .eventdatails
     {

@@ -97,7 +97,6 @@ const LoginPage = ({onSubmit}) => {
           setErrorLinkMsg("Create account")
           setErrorLink("/signup")
         }
-
       }
     }
     sendData()
