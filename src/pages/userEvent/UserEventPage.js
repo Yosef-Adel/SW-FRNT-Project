@@ -9,7 +9,6 @@ import axios from "../../requests/axios";
 import routes from "../../requests/routes";
 import BookingPopup from "./bookingPopup/BookingPopup";
 import moment from "moment";
-import { response } from "express";
 
 
 /**
