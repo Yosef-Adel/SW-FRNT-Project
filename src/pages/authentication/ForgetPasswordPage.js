@@ -1,0 +1,139 @@
+import React, { useEffect, useState } from "react";
+import classes from "./auth.module.css";
+import { Formik, Form, Field, ErrorMessage } from "formik";
+import * as Yup from "yup";
+import logo from "../../assets/brand/envie.svg";
+import images from "../../assets/data/loginPhotos";
+import { Link } from "react-router-dom";
+import { FcGoogle } from "react-icons/fc";
+import { GrFacebookOption } from "react-icons/gr";
+import { AiFillApple } from "react-icons/ai";
+import { FaChevronDown } from "react-icons/fa";
+import Footer from "../../layouts/footer/Footer";
+import axios from "../../requests/axios"
+import routes from "../../requests/routes"
+import { useNavigate,useParams } from "react-router-dom";
+import { useDispatch } from 'react-redux'
+import ErrorNotification from "../../generic components/error message/ErrorNotification";
+import { useSelector } from "react-redux";
+import { padding } from "@mui/system";
+
+
+
+/**
+ * Component that renders Login Page
+ * 
+ * @component
+ * @example
+ * return(<LoginPage />)
+*/
+
+const ForgetPasswordPage = ({onSubmit}) => {
+  
+  const navigate = useNavigate();
+  const dispatch = useDispatch();
+  const [user,setUser] = useState(useSelector((state) => state.user))
+  const [randImg, setrandImg] = useState(Math.floor(Math.random() * 3));
+  const [errorMsg, setErrorMsg] = useState('');
+  const [errorLink, setErrorLink] = useState('');
+  const [errorLinkMsg, setErrorLinkMsg] = useState('');
+
+
+
+  
+  //To make sure user can't access login if he is already logged in 
+  useEffect(() => {
+    if(user.loggedIn){
+      navigate("/")
+    }
+  }, []);
+  
+  const initialValues = {
+   
+    password: ""
+  };
+
+  const validationSchema = Yup.object().shape({
+    password: Yup.string().required("Password is required"),
+  });
+
+  /**
+ * Submits the form login data to the server
+ * @namespace onSubmit
+ * @param   {string} password   User password
+ */
+  
+  const {id}= useParams();
+  const handleSubmit = (data, {setErrors}) => {
+   
+    console.log(id)
+    async function sendData(){
+        try{
+           
+            
+            const response = await axios.patch(routes.resetPassword+'/'+id, data)
+            console.log(response)
+            navigate('/login');
+            
+        } catch(err){
+            
+        }
+    }
+    sendData()
+};
+    // onSubmit(data);
+    return (
+        <div data-testid="LoginComponent">
+            <div className={classes.main}>
+                <div className={classes.info} style={{paddingTop:'28rem'}}>
+                    <div className={classes.form}>
+                        <Link to="/" className={classes.logoContainer}>
+                        <div>
+                            <img src={logo} alt="Envie Logo" />
+                        </div>
+                        </Link>
+                        <div className={classes.header} >
+                            <h1>Update your Password</h1>
+                            <p className={classes.passwordp}>Enter your new password below</p>
+                        </div>
+                        {errorMsg?
+                        <ErrorNotification mssg={errorMsg} linkmsg={errorLinkMsg} link={errorLink}/>:null}
+
+                        <Formik
+                            initialValues={initialValues}
+                            validationSchema={validationSchema}
+                            onSubmit={handleSubmit}>
+
+                            {({ values }) => (
+                            <Form>
+                                <div className={classes.boxContainer}>
+                                    <div className={classes.fieldContainer}>
+                                            <label className={classes.label}> Password</label>
+                                            <Field
+                                            className={classes.field}
+                                            name="password"
+                                            type="password"
+                                            autoComplete="off"
+                                            data-testid="LoginFormPasswordInput"
+                                            />
+                                    </div>
+                                    <ErrorMessage name="password" component="span" />
+                                </div>
+                                <div className={classes.validpasswordp}><p style={{paddingTop:'1rem'}}>Your password must be at least 8 characters</p></div>
+                                <div className={classes.btn}>
+                                    <button type="submit" className={classes.button} data-testid="LoginFormSubmitButton">
+                                        Update password
+                                    </button>
+                                </div>
+                            </Form>)}
+                        </Formik>
+                    </div>
+                </div>
+                <div className={classes.image} style={{ backgroundImage: `url(${images[randImg]})` }}></div>
+    
+            </div>
+        </div>
+    );
+};
+
+export default ForgetPasswordPage;
