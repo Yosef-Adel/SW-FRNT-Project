@@ -3,8 +3,9 @@ import HomePage from "./pages/home/homePage";
 import LoginPage from "./pages/authentication/LoginPage";
 import { Routes, Route, BrowserRouter } from "react-router-dom";
 import SignupPage from "./pages/authentication/SignupPage";
-import NavBar from "./layouts/nav/NavBar";
 import UserEventPage from "./pages/userEvent/UserEventPage";
+import CreatorHomePage from "./pages/creator home/CreatorHome";
+
 
 function App() {
   return (
@@ -16,6 +17,7 @@ function App() {
         <Route path="/login" element={<LoginPage />} />
         <Route path="/signup" element={<SignupPage />} />
         <Route path="/user/event/:_id" element={<UserEventPage />} />
+        <Route path="/create" element={<CreatorHomePage />} />
       </Routes>
     </BrowserRouter>
     // </div>

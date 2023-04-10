@@ -1,26 +1,41 @@
 import { createSlice } from "@reduxjs/toolkit";
+
 const userSlice = createSlice({
     name: "user",
     initialState: {
-        login: false,
-        id: sessionStorage.getItem("id"),
-        token: sessionStorage.getItem("token"),
-        email: sessionStorage.getItem("email")
+        loggedIn: false,
+        id: "",
+        token: "",
+        email: "",
+        firstName: "",
+        lastName: "",
+        isCreator: false
     },
     reducers: {
         login: (state, action)=>{
-            state.login = true
+            state.loggedIn = true
             state.id = action.payload.id
             state.token = action.payload.token
             state.email = action.payload.email
-
-            sessionStorage.setItem("id", action.payload.id)
-            sessionStorage.setItem("token", action.payload.token)
-            sessionStorage.setItem("email", action.payload.email)
+            state.firstName = action.payload.firstName
+            state.lastName = action.payload.lastName
+            state.isCreator = action.payload.isCreator
         },
         signup: (state) =>{
-            state.login= false
+            state.loggedIn= false
             state.id = ""
+        },
+        logout: (state) =>{
+            state.loggedIn= false
+            state.id= ""
+            state.token= ""
+            state.email= ""
+            state.firstName= ""
+            state.lastName= ""
+            localStorage.clear()
+        },
+        creator: (state, action)=>{
+            state.isCreator = action.payload.isCreator
         }
     }   
 })

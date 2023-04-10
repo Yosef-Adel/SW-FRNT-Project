@@ -48,7 +48,7 @@ const navData = {
       },
       {
         title: "Create an event",
-        route: "/manage/events/create/",
+        route: "/create",
         color: "blue",
       },
     ],
@@ -68,7 +68,7 @@ const navData = {
     [
       {
         title: "Create an event",
-        route: "/manage/events/create/",
+        route: "/create",
         color: "blue",
         icon: (
           <svg x="0" y="0" viewBox="0 0 24 24">
@@ -155,7 +155,7 @@ const navData = {
           },
           {
             title: "Log out",
-            route: "//balbla",
+            route: "/login",
           },
         ],
       },

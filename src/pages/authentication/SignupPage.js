@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState ,useEffect} from "react";
 import classes from "./auth.module.css";
 import { Formik, Form, Field, ErrorMessage } from "formik";
 import * as Yup from "yup";
@@ -15,7 +15,9 @@ import validator from "validator";
 import Footer from "../../layouts/footer/Footer";
 import axios from "../../requests/axios"
 import routes from "../../requests/routes"
-
+import ErrorNotification from "../../generic components/error message/ErrorNotification";
+import { useSelector } from "react-redux";
+import { useNavigate } from "react-router-dom";
 
 
 /**
@@ -26,11 +28,28 @@ import routes from "../../requests/routes"
  * return(<SignupPage />)
  */
 const SignupPage = () => {
+  const navigate = useNavigate();
+  const [user,setUser] = useState(useSelector((state) => state.user))
+
   const [cont, setContinue] = useState(false);
   const [loader, setLoader] = useState(false);
   const [randImg, setrandImg] = useState(Math.floor(Math.random() * 3));
   const [dropDown, setDropDown] = useState(false);
   const [myEmail, setMyEmail] = useState();
+
+
+  const [errorMsg, setErrorMsg] = useState('');
+  const [errorLink, setErrorLink] = useState('');
+  const [errorLinkMsg, setErrorLinkMsg] = useState('');
+
+
+    //To make sure user can't access signUp if he is already logged in 
+    useEffect(() => {
+      if(user.loggedIn){
+        navigate("/")
+      }
+    }, []);
+
 
   const initialValues = {
     emailAddress: "",
@@ -83,8 +102,10 @@ const SignupPage = () => {
    * @param   {string} email      check if It's avalid email or not 
    */
 
-  const handleSubmit = (data, { resetForm }) => {
-    console.log(data);
+  const handleSubmit = (data) => {
+    setErrorMsg("")
+    setErrorLinkMsg("")
+    setErrorLink("")
 
     async function sendData(){
       try{
@@ -93,10 +114,12 @@ const SignupPage = () => {
         
       } catch(err){
         
-        resetForm()
+        setErrorMsg("There is an account associated with the email.")
+        setErrorLinkMsg("Log in")
+        setErrorLink("/login")
       }
     }
-    //  sendData()  
+     sendData()  
 
     //onSubmit(data);
   };
@@ -119,6 +142,9 @@ const SignupPage = () => {
                 <p className={classes.smallScreenlink}>Log in</p>
               </Link>
             </div>
+
+            {errorMsg?
+            <ErrorNotification mssg={errorMsg} linkmsg={errorLinkMsg} link={errorLink} signUp={true}/>:null}
 
             <Formik
               initialValues={initialValues}

@@ -11,30 +11,29 @@ import eventImage2 from "../../assets/imgs/events/event1.png";
 import moment from "moment";
 
 const EventList = () => {
-  const [Eventcards,SetEventcards] = useState([]);
-  async function getEventCards()
-  {
+  const [Eventcards, SetEventcards] = useState([]);
+
+  async function getEventCards() {
     let response = "";
-    try
-    {
+    try {
       response = await axios.get(routes.events);
       SetEventcards(response.data);
-      return (response.data) ;
-    }
-    catch(error)
-    {
-      if (error.response)
-      {
+      return response.data;
+    } catch (error) {
+      if (error.response) {
         return error.response;
       }
     }
   }
-useEffect(() => {getEventCards(Eventcards);}
-);
-function formatDate(date)
-{
-    return(date?date.slice(0,10):null)
-}
+
+  useEffect(() => {
+    getEventCards();
+  }, []);
+
+  function formatDate(date) {
+    return date ? date.slice(0, 10) : null;
+  }
+
   return (
     <div>
       <div className={classes.secheader}>
@@ -44,7 +43,7 @@ function formatDate(date)
         {Eventcards.map((card) => (
           <EventCard
             id={card._id}
-            key={card.id}
+            key={card._id}
             img={card.image}
             title={card.name}
             time={moment(card.startDate).format("MMMM Do YYYY")}
