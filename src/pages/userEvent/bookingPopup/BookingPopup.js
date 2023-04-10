@@ -19,6 +19,7 @@ const BookingPopup = ({ eventtitle, date, image }) => {
   const [subtotal, setSubtotal] = useState(0.0);
   const [fee, setFee] = useState(0.0);
   const [total, setTotal] = useState(0.0);
+  const [discount, setDiscount] = useState(0.0);
   const [promocode, setPromocode] = useState(false);
   const intialvalues = {
     ticketsBought: [],
@@ -48,20 +49,21 @@ const BookingPopup = ({ eventtitle, date, image }) => {
     let sub = 0;
     let fees = 0;
     let tot = 0;
+    let dis = 0;
     for (let index = 0; index < summ.length; index++) {
-      sub =
-        sub +
-        summ[index].number * summ[index].price -
-        summ[index].number * summ[index].price * summ[index].discountpercent -
+      sub = sub + summ[index].number * summ[index].price;
+      dis =
+        summ[index].number * summ[index].price * summ[index].discountpercent +
         summ[index].number * summ[index].discountamount;
       fees = fees + summ[index].number * summ[index].fee;
     }
 
-    tot = sub + fees;
+    tot = sub + fees - dis;
 
     setSubtotal(sub);
     setFee(fees);
     setTotal(tot);
+    setDiscount(dis);
   }
 
   function checkout(promocode) {
@@ -180,6 +182,12 @@ const BookingPopup = ({ eventtitle, date, image }) => {
                       <div className={classes.ticketcount}>Subtotal</div>
                       <div className={classes.ticketprice}>{subtotal}</div>
                     </div>
+                    {discount != 0 && (
+                      <div className={classes.ticketsummary}>
+                        <div className={classes.ticketcount}>Discount</div>
+                        <div className={classes.ticketprice}> - {discount}</div>
+                      </div>
+                    )}
                     <div className={classes.ticketsummary}>
                       <div className={classes.ticketcount}>
                         Fees
