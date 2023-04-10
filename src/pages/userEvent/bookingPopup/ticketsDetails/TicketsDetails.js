@@ -24,6 +24,7 @@ const TicketsDetails = ({ eventtitle, date, checkout, summary }) => {
       fee: tickets.tickets[index].fee,
       discountpercent: 0,
       discountamount: 0,
+      discount: false,
     }));
 
   let { _id } = useParams();
@@ -93,11 +94,8 @@ const TicketsDetails = ({ eventtitle, date, checkout, summary }) => {
   const applypromocode = () => {
     async function sendpromo() {
       try {
-        let data = { promocode: "Promo 1" };
-        console.log(data);
         const response = await axios.get(
-          routes.promocode + "/" + _id + "/checkPromo",
-          { promocode: "Promo 1" }
+          routes.promocode + "/" + _id + "/" + inputValue + "/checkPromo"
         );
         console.log(response);
         setErrorMsg(false);
@@ -136,6 +134,7 @@ const TicketsDetails = ({ eventtitle, date, checkout, summary }) => {
           );
           array[search].discountpercent = percent;
           array[search].discountamount = mount;
+          array[search].discount = true;
         }
 
         setTicketsAmount(array);
@@ -144,27 +143,25 @@ const TicketsDetails = ({ eventtitle, date, checkout, summary }) => {
         setErrorMsg(true);
         setHelper("Sorry, we don’t recognise that code.");
       }
-
-
     }
     if (!promocode) {
       sendpromo();
     } else {
       let array = ticketsAmount;
 
-      for (let index = 0; index < promocode.promocode.tickets.length; index++) {
+      for (let index = 0; index < promocode.tickets.length; index++) {
         let search = array.findIndex(
-          (ticket) => ticket.ticketClass == promocode.promocode.tickets[index]
+          (ticket) => ticket.ticketClass == promocode.tickets[index]
         );
         array[search].discountpercent = 0;
         array[search].discountamount = 0;
+        array[search].discount = false;
       }
 
       setTicketsAmount(array);
       setPromocode(false);
       setHelper("");
       summary(array, ticketsNum);
-
     }
   };
 
@@ -187,6 +184,7 @@ const TicketsDetails = ({ eventtitle, date, checkout, summary }) => {
       <div className={classes.tickets}>
         <div className={classes.promocode}>
           <TextField
+            disabled={promocode ? true : false}
             className={classes.promocodebox}
             id="outlined-basic"
             label="PromoCode"
@@ -264,7 +262,19 @@ const TicketsDetails = ({ eventtitle, date, checkout, summary }) => {
               </div>
               <div className={classes.containerticketinfo}>
                 <div className={classes.headercontainer}>
-                  <p className={classes.price}>{element.price}</p>
+                  {!ticketsAmount[index].discount && (
+                    <p className={classes.price}>{element.price}</p>
+                  )}
+                  {ticketsAmount[index].discount && (
+                    <pre>
+                      <p className={classes.price}>
+                        {element.price -
+                          element.price * ticketsAmount[index].discountpercent -
+                          ticketsAmount[index].discountamount}{"  "}
+                        <del>{element.price}</del>
+                      </p>
+                    </pre>
+                  )}
                   <p className={classes.sales}>
                     sales end on{" "}
                     {moment(element.salesStart).format("MMMM Do YYYY")}

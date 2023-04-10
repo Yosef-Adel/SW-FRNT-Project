@@ -1,7 +1,6 @@
 import React, { useEffect, useState } from "react";
 import classes from "./userevent.module.css";
 import NavBar from "../../layouts/nav/NavBar";
-
 import Footer from "../../layouts/footer/Footer";
 import { useParams } from "react-router-dom";
 import EventBanner from "./eventBanner/EventBanner";
@@ -10,6 +9,7 @@ import axios from "../../requests/axios";
 import routes from "../../requests/routes";
 import BookingPopup from "./bookingPopup/BookingPopup";
 import moment from "moment";
+
 
 /**
  * Component that returns Event page attendee veiw
@@ -48,7 +48,9 @@ const UserEventPage = () => {
       <NavBar />
       <EventBanner image={event.image}/>
       <div className={classes.eventdatails}>
-        <div></div>
+        <div classname = {classes.aboutEvTitle}>
+          <h3>About This Event</h3>
+        </div>
         <BookingPopup
           eventtitle={event.name}
           date={moment(event.startDate).format("MMMM Do YYYY")}

@@ -147,6 +147,8 @@
   margin-bottom: .5rem;
   color:#39364f;
 }
+del{text-decoration: line-through;}
+
 .sales{
   font-size: 1.4rem;
 }
