@@ -19,6 +19,7 @@ const BookingPopup = ({ eventtitle, date, image }) => {
   const [subtotal, setSubtotal] = useState(0.0);
   const [fee, setFee] = useState(0.0);
   const [total, setTotal] = useState(0.0);
+  const [promocode, setPromocode] = useState(false);
   const intialvalues = {
     ticketsBought: [],
     firstName: "",
@@ -48,7 +49,11 @@ const BookingPopup = ({ eventtitle, date, image }) => {
     let fees = 0;
     let tot = 0;
     for (let index = 0; index < summ.length; index++) {
-      sub = sub + summ[index].number * summ[index].price;
+      sub =
+        sub +
+        summ[index].number * summ[index].price -
+        summ[index].number * summ[index].price * summ[index].discountpercent -
+        summ[index].number * summ[index].discountamount;
       fees = fees + summ[index].number * summ[index].fee;
     }
 
@@ -66,7 +71,7 @@ const BookingPopup = ({ eventtitle, date, image }) => {
       number: singleticket.number,
     }));
     if (promocode) {
-      temporder.promocode = promocode;
+      temporder.promocode = promocode._id;
     }
     setOrderData(temporder);
     setopenForm(true);

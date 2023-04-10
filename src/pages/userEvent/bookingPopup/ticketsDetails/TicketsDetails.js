@@ -7,11 +7,12 @@ import tickets from "../../../../assets/data/dummytickets";
 import moment from "moment";
 import { TextField } from "@mui/material";
 import InputAdornment from "@mui/material/InputAdornment";
+import CheckCircleIcon from "@mui/icons-material/CheckCircle";
 import { styled } from "@mui/material/styles";
 import axios from "../../../../requests/axios";
 import routes from "../../../../requests/routes";
 
-const TicketsDetails = ({ eventtitle, date, checkout , summary }) => {
+const TicketsDetails = ({ eventtitle, date, checkout, summary }) => {
   //   const filledArray = Array(tickets.tickets.length).fill(0);
   let filledArray = new Array(tickets.tickets.length)
     .fill()
@@ -21,8 +22,9 @@ const TicketsDetails = ({ eventtitle, date, checkout , summary }) => {
       name: tickets.tickets[index].name,
       price: tickets.tickets[index].price,
       fee: tickets.tickets[index].fee,
+      discountpercent: 0,
+      discountamount: 0,
     }));
-
 
   let { _id } = useParams();
 
@@ -35,6 +37,7 @@ const TicketsDetails = ({ eventtitle, date, checkout , summary }) => {
   const [inputValue, setInputValue] = useState("");
   const [ticketsNum, setTicketsNum] = useState(0);
   const [errorMsg, setErrorMsg] = useState(false);
+  const [helper, setHelper] = useState("");
 
   const handleInputChange = (event) => {
     setInputValue(event.target.value);
@@ -69,8 +72,7 @@ const TicketsDetails = ({ eventtitle, date, checkout , summary }) => {
       count = count + 1;
       setTicketsNum(count);
 
-      summary(amount,count);
-
+      summary(amount, count);
     }
   }
 
@@ -80,28 +82,90 @@ const TicketsDetails = ({ eventtitle, date, checkout , summary }) => {
       amount[index].number = amount[index].number - 1;
       setTicketsAmount(amount);
 
-
       let count = ticketsNum;
       count = count - 1;
       setTicketsNum(count);
 
-      summary(amount,count);
+      summary(amount, count);
     }
   }
 
   const applypromocode = () => {
     async function sendpromo() {
       try {
+        let data = { promocode: "Promo 1" };
+        console.log(data);
         const response = await axios.get(
           routes.promocode + "/" + _id + "/checkPromo",
-          { promocode: inputValue }
+          { promocode: "Promo 1" }
         );
         console.log(response);
+        setErrorMsg(false);
+        setPromocode(response.data.promocode);
+        let dis = 0;
+        let percent = 0;
+        let mount = 0;
+        let type = "";
+        if (response.data.promocode.percentOff != -1) {
+          dis = response.data.promocode.percentOff;
+          percent = dis;
+          type = "%";
+        } else {
+          dis = response.data.promocode.amountOff;
+          mount = dis;
+          type = "$";
+        }
+        let text =
+          response.data.promocode.name +
+          " is Applied. A " +
+          dis +
+          type +
+          " discount is Applied.";
+        setHelper(text);
+
+        let array = ticketsAmount;
+
+        for (
+          let index = 0;
+          index < response.data.promocode.tickets.length;
+          index++
+        ) {
+          let search = array.findIndex(
+            (ticket) =>
+              ticket.ticketClass == response.data.promocode.tickets[index]
+          );
+          array[search].discountpercent = percent;
+          array[search].discountamount = mount;
+        }
+
+        setTicketsAmount(array);
+        summary(array, ticketsNum);
       } catch (err) {
-        console.log(err);
+        setErrorMsg(true);
+        setHelper("Sorry, we don’t recognise that code.");
       }
+
+
     }
-    sendpromo();
+    if (!promocode) {
+      sendpromo();
+    } else {
+      let array = ticketsAmount;
+
+      for (let index = 0; index < promocode.promocode.tickets.length; index++) {
+        let search = array.findIndex(
+          (ticket) => ticket.ticketClass == promocode.promocode.tickets[index]
+        );
+        array[search].discountpercent = 0;
+        array[search].discountamount = 0;
+      }
+
+      setTicketsAmount(array);
+      setPromocode(false);
+      setHelper("");
+      summary(array, ticketsNum);
+
+    }
   };
 
   const handlecheckout = () => {
@@ -133,19 +197,20 @@ const TicketsDetails = ({ eventtitle, date, checkout , summary }) => {
             InputProps={{
               endAdornment: (
                 <InputAdornment position="end">
+                  {promocode && <CheckCircleIcon color="success" />}
                   <button
-                    disabled={!inputValue}
+                    disabled={!promocode ? !inputValue : false}
                     onClick={applypromocode}
                     className={
                       !inputValue ? classes.applybtn : classes.applybtnactive
                     }>
-                    Apply
+                    {!promocode ? "Apply" : "Remove"}
                   </button>
                 </InputAdornment>
               ),
             }}
             error={errorMsg}
-            helperText={errorMsg ? "Sorry, we don’t recognise that code." : " "}
+            helperText={helper}
           />
         </div>
 

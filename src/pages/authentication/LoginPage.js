@@ -17,6 +17,8 @@ import { useDispatch } from 'react-redux'
 import {userActions} from '../../store/userSlice'
 import ErrorNotification from "../../generic components/error message/ErrorNotification";
 import { useSelector } from "react-redux";
+import GenericModal from "../../generic components/generic modal/GenericModal";
+import {TfiEmail} from "react-icons/tfi";
 
 /**
  * Component that renders Login Page
@@ -34,10 +36,14 @@ const LoginPage = ({onSubmit}) => {
   
   const [randImg, setrandImg] = useState(Math.floor(Math.random() * 3));
   const [dropDown, setDropDown] = useState(false);
+  const [email, setEmail] = useState("");
   
   const [errorMsg, setErrorMsg] = useState('');
   const [errorLink, setErrorLink] = useState('');
   const [errorLinkMsg, setErrorLinkMsg] = useState('');
+
+  const [forgetPasswordModal, setForgetPasswordModal] = useState(false);
+
   
 
   //To make sure user can't access login if he is already logged in 
@@ -71,6 +77,8 @@ const LoginPage = ({onSubmit}) => {
     setErrorMsg("")
     setErrorLinkMsg("")
     setErrorLink("")
+    setEmail(data.emailAddress)
+
     async function sendData(){
       try{
         const response = await axios.post(routes.logIn, data)
@@ -91,6 +99,9 @@ const LoginPage = ({onSubmit}) => {
           setErrorMsg(err.response.data.message)
           setErrors({password:err.response.data.message})
         }
+        else if (err.response.data.message==="Please verify your email first.") {
+          setErrorMsg(err.response.data.message)
+        }
         else {
           setErrorMsg("There is no account associated with the email.")
           setErrors({email:"There is no account associated with the email."})
@@ -104,7 +115,25 @@ const LoginPage = ({onSubmit}) => {
     // onSubmit(data);
   };
 
+  const handleForgetPassword = () => {
+    setForgetPasswordModal(false);
 
+    async function sendData(){
+      try{
+        const response = await axios.post(routes.forgotPassword, {"emailAddress": email})
+        console.log(response)
+
+        setForgetPasswordModal(true);
+
+      } catch(err){
+        console.log(err)
+      }
+    }
+
+    sendData()
+
+
+  }
 
   return (
     <div data-testid="LoginComponent">
@@ -130,7 +159,10 @@ const LoginPage = ({onSubmit}) => {
               initialValues={initialValues}
               validationSchema={validationSchema}
               onSubmit={handleSubmit}>
+
+              {({ values }) => (
               <Form>
+                {setEmail(values.emailAddress)}
                 <div className={classes.boxContainer}>
                   <div className={classes.fieldContainer}>
                     <label className={classes.label}> Email address</label>
@@ -162,9 +194,9 @@ const LoginPage = ({onSubmit}) => {
                     Log in
                   </button>
                 </div>
-              </Form>
+              </Form>)}
             </Formik>
-            <p className={classes.screenLink}>Forgot password?</p>
+            <p className={classes.screenLink} onClick={handleForgetPassword}>Forgot password?</p>
             <div className={classes.splitfield}>
               <hr className={classes.hr_split} />
               <div className={classes.splittext}>or</div>
@@ -210,6 +242,13 @@ const LoginPage = ({onSubmit}) => {
           className={classes.image}
           style={{ backgroundImage: `url(${images[randImg]})` }}></div>
       </div>
+      {forgetPasswordModal&&
+      <GenericModal 
+          header='Check your email to update your password' 
+          details={'We sent a link to ' +`${email}`+ ' to update your password.'}
+          moreDetails='For your security, this link will expire in 15min.'
+          icon={<TfiEmail className={classes.modalicon}/>}
+      />}
       <Footer />
     </div>
   );
