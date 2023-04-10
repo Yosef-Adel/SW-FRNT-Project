@@ -11,9 +11,9 @@ const creatorNavData = {
           route: "/",
         },
         {
-          title: "Logout",
+          title: "Log out",
           icon: <svg x="0" y="0" viewBox="0 0 24 24" ><path fill-rule="evenodd" clip-rule="evenodd" d="M16 6h2v12h-2v2h4V4h-4v2z"></path><path fill-rule="evenodd" clip-rule="evenodd" d="M4 12l5 5 1.4-1.4L7.8 13H16v-2H7.8l2.6-2.6L9 7z"></path></svg>,
-          route: "/",
+          route: "/login",
         },
       ],
 }

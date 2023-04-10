@@ -3,9 +3,11 @@ import classes from "./navbar.module.css";
 import creatorNavData from "../../assets/data/creatorNavData";
 import logo from "../../assets/brand/envie.svg";
 import KeyboardArrowDownIcon from "@mui/icons-material/KeyboardArrowDown";
-import { NavLink } from "react-router-dom";
+import { NavLink, useNavigate } from "react-router-dom";
 import { useState, useEffect } from "react";
 import { useSelector } from "react-redux";
+import { useDispatch } from "react-redux";
+import { userActions } from "../../store/userSlice";
 
 /**
  * Component that renders nav bar in creators view
@@ -16,29 +18,34 @@ import { useSelector } from "react-redux";
  * )
  */
 const CreatorNav = (props) => {
+  const navigate = useNavigate();
+  const dispatch = useDispatch();
   const [user, setUser] = useState(useSelector((state) => state.user));
   const logged = true;
   const email = logged ? user.email : "";
   const list = creatorNavData.list;
 
-
   const [windowWidth, setWindowWidth] = useState(window.innerWidth);
   const display = windowWidth > 940 ? true : false;
-
-
 
   useEffect(() => {
     const handleWindowResize = () => {
       setWindowWidth(window.innerWidth);
     };
 
-    console.log(props.name)
+    console.log(props.name);
     window.addEventListener("resize", handleWindowResize);
 
     return () => {
       window.removeEventListener("resize", handleWindowResize);
     };
   }, []);
+
+  const handleLogout = () => {
+    dispatch(userActions.logout());
+
+    setTimeout(navigate("/login"), 5000);
+  };
 
   return (
     <div className={classes.nav}>
@@ -53,8 +60,11 @@ const CreatorNav = (props) => {
           <li className={`${classes.navItem} ${classes.navItemCreator}`}>
             <div className={`${classes.wrapper} ${classes.wrapperCreator}`}>
               <div className={classes.name}>
-                <span>{user.firstName[0]}{user.lastName[0]}</span>
-                {user.firstName} {user.lastName} 
+                <span>
+                  {user.firstName[0]}
+                  {user.lastName[0]}
+                </span>
+                {user.firstName} {user.lastName}
                 <KeyboardArrowDownIcon className={classes.arrow} />
               </div>
             </div>
@@ -62,7 +72,7 @@ const CreatorNav = (props) => {
             <ol className={classes.dropDown}>
               {list.map((item, index) => {
                 return (
-                  <li className={`${classes.navSubItem} ${classes.dark}`}>
+                  <li className={`${classes.navSubItem} ${classes.dark}`} onClick={item.title === "Log out"? ()=>handleLogout(): undefined}>
                     <NavLink
                       to={item.route}
                       activeClassName={classes.activeLink}
