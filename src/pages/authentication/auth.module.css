@@ -9,6 +9,7 @@
     padding-top: 5rem;
 }
 
+
 .info .form{
     width: 100%;
     width: 38rem;
@@ -31,7 +32,23 @@
 .info .form .logoContainer img{
     width: 100%;
 }
+.passwordp{
+    color:var(--faded-grey);
+    font-size: 1.1rem;
+    font-weight: 600;
+    padding-left: 10px;
+    margin-bottom: 3rem;
+}
+.validpasswordp{
+    border-top:4px solid rgb(236, 235, 235) ;
+    font-size: 1.1rem;
+    width: 95%;
+    margin:  2rem auto;
+    color:var(--moretext);
+    font-weight: 600;
+    
 
+}
 .info .form h1{
     font-size: 4.5rem;
     line-height: 1.2;

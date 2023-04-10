@@ -5,7 +5,7 @@ import { Routes, Route, BrowserRouter } from "react-router-dom";
 import SignupPage from "./pages/authentication/SignupPage";
 import UserEventPage from "./pages/userEvent/UserEventPage";
 import CreatorHomePage from "./pages/creator home/CreatorHome";
-
+import ForgetPasswordPage from "./pages/authentication/ForgetPasswordPage";
 
 function App() {
   return (
@@ -18,6 +18,7 @@ function App() {
         <Route path="/signup" element={<SignupPage />} />
         <Route path="/user/event/:_id" element={<UserEventPage />} />
         <Route path="/create" element={<CreatorHomePage />} />
+        <Route path="/forgetPassword/:id" element={<ForgetPasswordPage/>}/>
       </Routes>
     </BrowserRouter>
     // </div>
