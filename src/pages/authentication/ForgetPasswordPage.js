@@ -5,19 +5,14 @@ import * as Yup from "yup";
 import logo from "../../assets/brand/envie.svg";
 import images from "../../assets/data/loginPhotos";
 import { Link } from "react-router-dom";
-import { FcGoogle } from "react-icons/fc";
-import { GrFacebookOption } from "react-icons/gr";
-import { AiFillApple } from "react-icons/ai";
-import { FaChevronDown } from "react-icons/fa";
-import Footer from "../../layouts/footer/Footer";
 import axios from "../../requests/axios"
 import routes from "../../requests/routes"
 import { useNavigate,useParams } from "react-router-dom";
 import { useDispatch } from 'react-redux'
 import ErrorNotification from "../../generic components/error message/ErrorNotification";
 import { useSelector } from "react-redux";
-import { padding } from "@mui/system";
-
+import GenericModal from "../../generic components/generic modal/GenericModal";
+import {GiConfirmed} from "react-icons/gi";
 
 
 /**
@@ -37,7 +32,7 @@ const ForgetPasswordPage = ({onSubmit}) => {
   const [errorMsg, setErrorMsg] = useState('');
   const [errorLink, setErrorLink] = useState('');
   const [errorLinkMsg, setErrorLinkMsg] = useState('');
-
+  const[confirmform,setconfirmform]=useState(false);
 
 
   
@@ -62,18 +57,21 @@ const ForgetPasswordPage = ({onSubmit}) => {
  * @namespace onSubmit
  * @param   {string} password   User password
  */
-  
+  const loginhandle=()=>{
+    navigate('/login');
+  }
   const {id}= useParams();
   const handleSubmit = (data, {setErrors}) => {
-   
+    setconfirmform(false);
     console.log(id)
     async function sendData(){
         try{
            
             
             const response = await axios.patch(routes.resetPassword+'/'+id, data)
+            setconfirmform(true)
             console.log(response)
-            navigate('/login');
+            
             
         } catch(err){
             
@@ -125,6 +123,14 @@ const ForgetPasswordPage = ({onSubmit}) => {
                                         Update password
                                     </button>
                                 </div>
+                                { confirmform&&(
+                                <GenericModal 
+                                    header='Password reset successfully'
+                                    confirmbtn='Login'
+                                    icon={<GiConfirmed className={classes.modalicon}/>}
+                                    accepthandle={loginhandle}
+                                />
+                                )}
                             </Form>)}
                         </Formik>
                     </div>
