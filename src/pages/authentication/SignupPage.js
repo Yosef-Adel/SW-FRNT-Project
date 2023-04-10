@@ -18,7 +18,9 @@ import routes from "../../requests/routes"
 import ErrorNotification from "../../generic components/error message/ErrorNotification";
 import { useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
-
+import GenericModal from "../../generic components/generic modal/GenericModal";
+import {BiErrorCircle} from "react-icons/bi";
+import {TfiEmail} from "react-icons/tfi";
 
 /**
  * Component that renders Signup page
@@ -41,7 +43,9 @@ const SignupPage = () => {
   const [errorMsg, setErrorMsg] = useState('');
   const [errorLink, setErrorLink] = useState('');
   const [errorLinkMsg, setErrorLinkMsg] = useState('');
-
+  const[stateoftheconditionform,setstateoftheconditionform]=useState(false);
+  const[agreeformstate,setagreeformstate]=useState(false);
+  const[datainfo,setdatainfo]=useState();
 
     //To make sure user can't access signUp if he is already logged in 
     useEffect(() => {
@@ -86,6 +90,7 @@ const SignupPage = () => {
   });
 
 
+
   /**
    * Submits the form signup data to the server
    * @namespace onSubmit 
@@ -95,34 +100,56 @@ const SignupPage = () => {
    * @param   {string} lastName      User valid last name
    * @param   {string} password   User password
    */
+  const openconditionform = () => {
+    setstateoftheconditionform(true);
+    
+  };
+
+
+
+
 
  /**
    * Submits the email and go to another form 
    * @namespace contFn
    * @param   {string} email      check if It's avalid email or not 
    */
+ async function sendData(data){
+  console.log(data);
+  try{
+    const request = await axios.post(routes.signUp, data)
+    setagreeformstate(true);
+    console.log(request)
+    
+    
+  } catch(err){
+    
+    setErrorMsg("There is an account associated with the email.")
+    setErrorLinkMsg("Log in")
+    setErrorLink("/login")
+  }
+}  
 
-  const handleSubmit = (data) => {
-    setErrorMsg("")
-    setErrorLinkMsg("")
-    setErrorLink("")
+const handleSubmit = (data) => {
+  setdatainfo(data);
+  setErrorMsg("")
+  setErrorLinkMsg("")
+  setErrorLink("")
+  
 
-    async function sendData(){
-      try{
-        const request = await axios.post(routes.signUp, data)
-        console.log(request)
-        
-      } catch(err){
-        
-        setErrorMsg("There is an account associated with the email.")
-        setErrorLinkMsg("Log in")
-        setErrorLink("/login")
-      }
-    }
-     sendData()  
+  //onSubmit(data);
+};
+const accepthandle=() =>{
+  console.log(datainfo);
+  setstateoftheconditionform(false);
+  sendData(datainfo);
 
-    //onSubmit(data);
-  };
+}
+const rejecthandle=()=>{
+  setstateoftheconditionform(false);
+  setErrorMsg('To continue you have to accept our Terms and conditions.')
+}
+
 
   return (
     <div>
@@ -256,9 +283,35 @@ const SignupPage = () => {
                       className={classes.btn}
                       style={{ margin: "2rem auto" }}
                     >
-                      <button type="submit" className={classes.button} data-testid="CreateBtn">
+                      <button type="submit" className={classes.button} data-testid="CreateBtn" onClick={openconditionform}>
                         Create account
                       </button>
+                      {stateoftheconditionform &&(
+                        <>
+                           <GenericModal 
+                                header='Terms and conditions'
+                                details='I accept the Envie Terms Of Services,Commuity guidelines and have read the privacy policy'
+                                rejectbtn='Cancel'
+                                confirmbtn='Agree'
+                                icon={<BiErrorCircle className={classes.modalicon}/>}
+                                accepthandle={accepthandle}
+                                rejecthandle={rejecthandle}
+                            />
+
+                        </>
+                      )}
+                      {agreeformstate &&(
+                        <>
+                           <GenericModal 
+                                header='Verification Email has been sent to you'
+                                icon={<TfiEmail className={classes.modalicon}/>}
+                            />
+
+                        </>
+                      )}
+
+
+                      
                     </div>
                   </div>
                 </Form>

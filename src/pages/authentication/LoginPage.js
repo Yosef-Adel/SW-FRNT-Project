@@ -17,6 +17,7 @@ import { useDispatch } from 'react-redux'
 import {userActions} from '../../store/userSlice'
 import ErrorNotification from "../../generic components/error message/ErrorNotification";
 import { useSelector } from "react-redux";
+import GenericModal from "../../generic components/generic modal/GenericModal";
 
 /**
  * Component that renders Login Page
@@ -90,6 +91,9 @@ const LoginPage = ({onSubmit}) => {
         if(err.response.data.message==="Password is incorrect"){
           setErrorMsg(err.response.data.message)
           setErrors({password:err.response.data.message})
+        }
+        else if (err.response.data.message==="Please verify your email first.") {
+          setErrorMsg(err.response.data.message)
         }
         else {
           setErrorMsg("There is no account associated with the email.")
@@ -212,6 +216,7 @@ const LoginPage = ({onSubmit}) => {
           style={{ backgroundImage: `url(${images[randImg]})` }}></div>
       </div>
       <Footer />
+   
     </div>
   );
 };

@@ -49,6 +49,7 @@
   border: none;
   position: relative;
   display: flex;
+  
 }
 
 .bookingmodalclose {
@@ -172,6 +173,7 @@ display: flex;
   align-items: center;
   row-gap: 1.6rem;
   margin: auto;
+  
 }
 .leavecheckoutheader {
   text-align: center;
