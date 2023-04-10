@@ -105,10 +105,6 @@ const SignupPage = () => {
     
   };
 
-
-
-
-
  /**
    * Submits the email and go to another form 
    * @namespace contFn
@@ -287,18 +283,15 @@ const rejecthandle=()=>{
                         Create account
                       </button>
                       {stateoftheconditionform &&(
-                        <>
-                           <GenericModal 
-                                header='Terms and conditions'
-                                details='I accept the Envie Terms Of Services,Commuity guidelines and have read the privacy policy'
-                                rejectbtn='Cancel'
-                                confirmbtn='Agree'
-                                icon={<BiErrorCircle className={classes.modalicon}/>}
-                                accepthandle={accepthandle}
-                                rejecthandle={rejecthandle}
-                            />
-
-                        </>
+                        <GenericModal 
+                            header='Terms and conditions'
+                            details='I accept the Envie Terms Of Services,Commuity guidelines and have read the privacy policy'
+                            rejectbtn='Cancel'
+                            confirmbtn='Agree'
+                            icon={<BiErrorCircle className={classes.modalicon}/>}
+                            accepthandle={accepthandle}
+                            rejecthandle={rejecthandle}
+                        />
                       )}
                       {agreeformstate &&(
                         <>
@@ -309,9 +302,6 @@ const rejecthandle=()=>{
 
                         </>
                       )}
-
-
-                      
                     </div>
                   </div>
                 </Form>

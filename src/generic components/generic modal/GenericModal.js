@@ -1,14 +1,9 @@
 import classes from "./genericModal.module.css";
 import React, { useState } from "react";
-import { Link } from "react-router-dom";
-import {BiInfoCircle} from "react-icons/bi"
 import Box from "@mui/material/Box";
-import Button from "@mui/material/Button";
 import Modal from "@mui/material/Modal";
 import IconButton from "@mui/material/IconButton";
 import CloseIcon from "@mui/icons-material/Close";
-import { maxWidth } from "@mui/system";
-import { Icon } from "@mui/material";
 
 const GenericModal = (props) => {
   const[statebtn,changestatebtn]=useState(true);
@@ -19,12 +14,10 @@ const GenericModal = (props) => {
   
        <Modal
         open={statebtn}
-        // onClose={handleClose}
-        // disableBackdropClick
         aria-labelledby="modal-modal-title"
         aria-describedby="modal-modal-description"
         className={classes.genericmodal}>
-        <Box   sx={{backgroundColor: '#e2e1e6;',borderRadius: 1,width:'70%',maxWidth:800,border:'0px',outline:'none'}} >
+        <Box   sx={{backgroundColor: '#e2e1e6;',borderRadius: 1,width:'70%',maxWidth:600,border:'0px',outline:'none'}} >
             <div className={classes.info}>
                 <IconButton 
                   aria-label="close"
@@ -38,6 +31,8 @@ const GenericModal = (props) => {
               <div className={classes.infoheader}>
                 <h1>{props.header}</h1> 
                 <p>{props.details}</p>
+
+                <p className={classes.moreDetails}>{props.moreDetails}</p>
               </div>
               <div className={classes.modalbuttons}>
               {props.rejectbtn && (

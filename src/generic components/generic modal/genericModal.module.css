@@ -59,33 +59,43 @@
 .infoheader {
   text-align: center;
   font-size: 1.6rem;
-  max-width: 60%;
+  max-width: 80%;
   margin: auto;
   color: var(--moretext);
   line-height: 3rem;
-  padding-bottom: 5rem;
   
 }
 
 .infoheader h1 {
   text-align: center;
   margin: 1.6rem auto;
-  padding-bottom: 0.8rem;
-  line-height: 3rem;
-  color:var( --content-text)
+  padding-bottom: 2rem;
+  padding-top: 1rem;
+  line-height: 4rem;
+  color:var( --content-text);
+  width: 90%;
+
+  font-weight: 800;
+  font-size: 2.8rem;
   
 }
 
-.infobuttons {
-  width: 100%;
-  display: flex;
-  justify-content: space-between;
-  column-gap: 1.6rem;
+.infoheader p {
+  font-size: 1.6rem;
+  margin-bottom: 1rem;
 }
 
+.infoheader .moreDetails{
+
+  font-size: 1.4rem;
+}
+
+
 .btncontainer {
-  width: 50%;
+  width: 60%;
   margin: auto;
+  justify-content: center;
+  display: flex;
 }
 
 .btncontainer button {
@@ -109,6 +119,8 @@
   width:70%;
   margin: auto;
   justify-content: space-between;
+
+
 }
 .staybutton {
   color: #39364f;

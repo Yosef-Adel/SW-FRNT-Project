@@ -4,6 +4,7 @@ const routes = {
     events: "/api/events",
     getUser: "/user",
     userToCreator : "/user/to-creator",
-    promocode:"/promocode"
+    promocode:"/promocode",
+    forgotPassword: "/auth/forgot-password",
 }
 export default routes 
