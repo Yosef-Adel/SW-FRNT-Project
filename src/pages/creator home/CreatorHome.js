@@ -12,13 +12,12 @@ import {useSelector} from 'react-redux';
  * 
  * @component
  * @example
- * return(<HomePage />)
+ * return(<CreatorHomePage />)
  */
 const CreatorHomePage = () => {
   
     const user = useSelector( state => state.user)
-
-    let id = user.id;
+    const id = user.id;
     const [name, setName] = useState([])
     const navigate = useNavigate();
 
@@ -39,8 +38,8 @@ const CreatorHomePage = () => {
       }
 
       const checkCreator = () => {
-        if(user.loggedIn && !user.creator){
-            const resp = switchCreator();
+        if(user.loggedIn && user.isCreator){
+            switchCreator();
         }else{
             navigate("/login");
         }
