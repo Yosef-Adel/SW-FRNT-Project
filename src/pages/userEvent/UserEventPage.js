@@ -10,7 +10,6 @@ import routes from "../../requests/routes";
 import BookingPopup from "./bookingPopup/BookingPopup";
 import moment from "moment";
 
-
 /**
  * Component that returns Event page attendee veiw
  *
@@ -46,9 +45,9 @@ const UserEventPage = () => {
   return (
     <div className={classes.container}>
       <NavBar />
-      <EventBanner image={event.image}/>
+      <EventBanner image={event.image} />
       <div className={classes.eventdatails}>
-        <div classname = {classes.aboutEvTitle}>
+        <div className={classes.aboutEvTitle}>
           <h3>About This Event</h3>
         </div>
         <BookingPopup

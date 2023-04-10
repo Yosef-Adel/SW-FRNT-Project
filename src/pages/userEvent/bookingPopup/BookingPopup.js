@@ -53,6 +53,7 @@ const BookingPopup = ({ eventtitle, date, image }) => {
     for (let index = 0; index < summ.length; index++) {
       sub = sub + summ[index].number * summ[index].price;
       dis =
+        dis +
         summ[index].number * summ[index].price * summ[index].discountpercent +
         summ[index].number * summ[index].discountamount;
       fees = fees + summ[index].number * summ[index].fee;

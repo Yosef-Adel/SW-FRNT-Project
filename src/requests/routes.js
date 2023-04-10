@@ -7,5 +7,6 @@ const routes = {
     promocode:"/promocode",
     forgotPassword: "/auth/forgot-password",
     creatorToUser : "/user/to-attendee",
+    tickets:"/ticket"
 }
 export default routes 
