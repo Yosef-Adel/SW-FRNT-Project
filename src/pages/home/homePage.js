@@ -26,6 +26,8 @@ const HomePage = () => {
   const user = useSelector( state => state.user)
   const id = user.id;    
   const [location, setLocation] = useState([])
+  const [category, setCategory] = useState("")
+
   const dispatch = useDispatch();
 
 
@@ -64,9 +66,9 @@ const HomePage = () => {
       <Banner />
 
       <div className={classes.containerbox}>
-        <FilterTabs setLocation={setLocation}/>
+        <FilterTabs setLocation={setLocation} setCategory={setCategory}/>
         <Categories />
-        <EventList location={location}/>
+        <EventList location={location} category={category}/>
       </div>
       <Footer />
     </div>

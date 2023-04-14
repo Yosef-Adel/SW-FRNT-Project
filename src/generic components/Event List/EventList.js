@@ -27,7 +27,7 @@ const EventList = (props) => {
 
   useEffect(() => {
     getEventCards();
-  }, [props.location]);
+  }, [props.location, props.category]);
 
 
 

@@ -23,12 +23,17 @@ const FilterTabs = (props) => {
 
 
   //for selecting multiple filters ---- to make it usestate of indexclicked([1,0,0,0,0,0])---- if condition (clicked[index]==1)
-  function setclicked(index) {
-    if (clicked[index] == 0) {
-      let clickedcl = clicked;
-      clickedcl[index] = 1;
-      setIndexClicked((clicked) => [...clicked, clickedcl]);
-    }
+  // function setclicked(index) {
+  //   if (clicked[index] == 0) {
+  //     let clickedcl = clicked;
+  //     clickedcl[index] = 1;
+  //     setIndexClicked((clicked) => [...clicked, clickedcl]);
+  //   }
+  // }
+
+  function handleClick(i, title){
+    setIndexClicked(i)
+    props.setCategory(title)
   }
 
   return (
@@ -49,7 +54,7 @@ const FilterTabs = (props) => {
                         className={
                           index == clicked ? classes.clicked : classes.element
                         }
-                        onClick={() => setIndexClicked(index)}
+                        onClick={() => handleClick(index, element.title)}
                       >
                         {element.title}
                       </div>
