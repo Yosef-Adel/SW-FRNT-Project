@@ -56,8 +56,10 @@
     font-weight: 400;
     padding: 0.5rem 0;
     color: var(--secondary-text);
-    white-space: nowrap;
+    display: -webkit-box;
     overflow: hidden;
+    -webkit-box-orient: vertical;
+    -webkit-line-clamp: 1;
 }
 
 .cardContent .company{

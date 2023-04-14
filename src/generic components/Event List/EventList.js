@@ -52,7 +52,7 @@ const EventList = () => {
           />
         ))}
       </div>
-      {loading&&
+      {!loading&&
       <div className={classes.moreBtn}>
         <button type="button">See more</button>
       </div>}
