@@ -8,6 +8,23 @@
 .aboutEvTitle
 {
     color: var(--primary-text);
+    padding-top: 3rem;
+    font-size:medium;
+}
+.aboutEvcontainer
+{
+    display: grid;
+}
+.aboutEvIcons
+{
+    width: 4rem;
+    height: 4rem;
+    border-radius: 10%;
+} 
+.aboutEvSummary
+{
+    color: var(--secondary-text);
+    font-size: 1.8rem;
 }
 @media screen and (max-width: 1180px) {
     .eventdatails
