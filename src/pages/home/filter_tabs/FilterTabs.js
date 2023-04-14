@@ -14,35 +14,13 @@ import routes from "../../../requests/routes";
  * return(<FilterTabs />)
  */
 
-const FilterTabs = () => {
+const FilterTabs = (props) => {
   const page = FilterTabsData.FilterTabsInfo;
   const [clicked, setIndexClicked] = useState(0);
-  const [location, setlocation] = useState([]);
   const [events, setEvents] = useState([]);
 
   const [city, setCity] = useState("");
 
-  async function getLocation(loc) {
-    let response = "";
-    try {
-      if(loc.length>0){
-        response = await axios.get(
-          routes.events + "/nearest?lat=" + loc[0] + "&lng=" + loc[1]
-        );
-        setCity(response.data.city);
-        setEvents(response.data.events)
-        return response.data;
-        }
-    } catch (error) {
-      if (error.response) {
-        return error.response;
-      }
-    }
-  }
-
-  useEffect(() => {
-    getLocation(location);
-  }, [location]);
 
   //for selecting multiple filters ---- to make it usestate of indexclicked([1,0,0,0,0,0])---- if condition (clicked[index]==1)
   function setclicked(index) {
@@ -55,7 +33,7 @@ const FilterTabs = () => {
 
   return (
     <div className={classes.container}>
-      <Location onDetect={setlocation} City={city} />
+      <Location onDetect={props.setLocation} City={city} />
       <div className={classes.Filter}>
         <ul>
           {page[0].map((element, index) => {

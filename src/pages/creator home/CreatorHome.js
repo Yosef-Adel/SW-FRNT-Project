@@ -6,6 +6,8 @@ import axios from "../../requests/axios";
 import routes from "../../requests/routes";
 import { useNavigate } from "react-router-dom";
 import {useSelector} from 'react-redux';
+import { useDispatch } from 'react-redux'
+import {userActions} from '../../store/userSlice'
 
 /**
  * Component that returns Creator's main page
@@ -20,6 +22,8 @@ const CreatorHomePage = () => {
     const id = user.id;
     const [name, setName] = useState([])
     const navigate = useNavigate();
+    const dispatch = useDispatch();
+
 
     async function switchCreator() {
         let response = "";
@@ -27,8 +31,11 @@ const CreatorHomePage = () => {
           response = await axios.get(
             routes.userToCreator+"/"+id
           );
+          dispatch(userActions.creator(
+            { 
+              isCreator: response.data.isCreator 
+            }))
           setName([user.firstName, user.lastName])
-
           return response.data;
         } catch (error) {
           if (error.response) {
@@ -38,7 +45,7 @@ const CreatorHomePage = () => {
       }
 
       const checkCreator = () => {
-        if(user.loggedIn && user.isCreator){
+        if(user.loggedIn && !user.isCreator){
             switchCreator();
         }else{
             navigate("/login");
