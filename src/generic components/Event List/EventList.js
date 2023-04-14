@@ -13,7 +13,7 @@ const EventList = (props) => {
   async function getEventCards() {
     let response = "";
     try {
-      response = await axios.get(routes.events + "?category=" + "" + "&lat=" + props.location[0] + "&lng=" + props.location[1]);
+      response = await axios.get(routes.events + "?category=" + "" + "&lat=" + "&lng=" );
       SetEventcards(response.data.events);
       setLoading(false)
       console.log(response.data)
