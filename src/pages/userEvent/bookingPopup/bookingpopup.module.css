@@ -10,7 +10,7 @@
   justify-content: center;
   /* background-color: black; */
   display: flex;
-  border: 2px solid rgb(238, 237, 242);
+  border: 2px solid var( --border-color);
   border-radius: 8px;
 }
 .btn .button {
@@ -38,7 +38,7 @@
   display: flex;
   align-items: center;
   justify-content: center;
-  background-color: rgba(57, 54, 79, 0.8);
+  background-color: var(--primary-text);
 }
 .bookingbox {
   width: 95%;
@@ -76,7 +76,7 @@
 
 .ticketsformcontainer {
   width: calc(100% - 36rem);
-  border-right: 2px solid rgb(238, 237, 242);
+  border-right: 2px solid var( --border-color);
 }
 
 .summarycontainer {
@@ -124,7 +124,7 @@
 .summary hr{
   width: 100%;
   height: 1px;
-  background-color: #e2e1e6;
+  background-color: rgb(226, 225, 230);
   border: 0;
   
 }
@@ -146,7 +146,7 @@
 {
   display: flex;
   justify-content: space-between;
-  color : rgb(57, 54, 79);
+  color : var(--primary-text);
   /* column-gap: 3.2rem; */
   font-size: 1.4rem;
   line-height: 1.5rem;
@@ -161,7 +161,7 @@ display: flex;
 .ticketcount svg
 {
   width:1.5rem;
-  fill:rgb(57, 54, 79);
+  fill:var(--primary-text);
 }
 
 .leavecheckout {
@@ -219,8 +219,8 @@ display: flex;
 }
 
 .staybutton {
-  color: #39364f;
-  border: 2px solid #a9a8b3;
+  color: var(--primary-text);
+  border: 2px solid var(--faded-grey);
   background: none;
 }
 

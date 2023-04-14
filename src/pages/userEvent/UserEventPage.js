@@ -9,8 +9,7 @@ import axios from "../../requests/axios";
 import routes from "../../requests/routes";
 import BookingPopup from "./bookingPopup/BookingPopup";
 import moment from "moment";
-import {AiOutlineFieldTime} from "react-icons/ai";
-import {TfiTicket} from "react-icons/tfi"
+import EventDetails from "./eventDetails/EventDetails";
 
 /**
  * Component that returns Event page attendee veiw
@@ -43,27 +42,14 @@ const UserEventPage = () => {
   useEffect(() => {
     getEvent();
   }, []);
-  
+
   return (
     <div className={classes.container}>
       <NavBar />
       <EventBanner image={event.image} />
-      <div className={classes.eventdatails}>
-        <div className={classes.aboutEvTitle}>
-          <h2>About this event</h2>
-        </div>
-        <div className={classes.aboutEvcontainer}>
-          <div className={classes.aboutEVIcons}>
-            <AiOutlineFieldTime size={24}/>
-          </div>
-          <div>
-            <TfiTicket size={24}/>
-          </div>
-
-        <div className={classes.aboutEvSummary}>
-            {event.summary}
-        </div>
-        </div>
+      <div className={classes.eventdetailscontainer}>
+        
+        <EventDetails event={event} />
         <BookingPopup
           eventtitle={event.name}
           date={moment(event.startDate).format("MMMM Do YYYY")}

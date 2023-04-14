@@ -1,0 +1,65 @@
+.aboutcontainer
+{
+    display: flex;
+    flex-direction: column;
+    row-gap: 2.5rem;
+    padding: 3rem 0;
+}
+
+.aboutEvTitle {
+  color: var(--content-text);
+
+}
+
+.aboutEvTitle h2 {
+  font-size: 2.5rem;
+  font-weight: 700;
+  /* line-height: 1.75rem; */
+}
+.aboutEvcontainer {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  column-gap: 1.6rem;
+}
+.aboutEvdescriptioncontainer {
+  display: flex;
+  column-gap: 1.6rem;
+}
+.aboutEvdescription {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  color: var(--primary-text);
+  font-size: 1.5rem;
+  font-weight: 600;
+}
+
+.aboutEVIcons {
+  width: 4rem;
+  height: 4rem;
+  border-radius: 10%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background-color: var(--primary-background);
+}
+.aboutEvSummary {
+  color: var(--secondary-text);
+  font-size: 1.8rem;
+}
+
+@media screen and (max-width: 1180px) {
+  .aboutEvcontainer
+  {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+@media screen and (max-width: 760px) {
+  .aboutEvcontainer
+  {
+    grid-template-columns: none;
+    grid-template-rows: repeat(2, 1fr);
+    row-gap: 3.2rem;
+  }
+}

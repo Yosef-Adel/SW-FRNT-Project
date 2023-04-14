@@ -1,44 +1,27 @@
-.eventdatails
+.eventdetailscontainer
 {
     display: flex;
     justify-content: space-between;
     margin:0 auto;
-    width: 120rem;;
+    width: 120rem;
 }
-.aboutEvTitle
-{
-    color: var(--primary-text);
-    padding-top: 3rem;
-    font-size:medium;
-}
-.aboutEvcontainer
-{
-    display: grid;
-}
-.aboutEvIcons
-{
-    width: 4rem;
-    height: 4rem;
-    border-radius: 10%;
-} 
-.aboutEvSummary
-{
-    color: var(--secondary-text);
-    font-size: 1.8rem;
-}
-@media screen and (max-width: 1180px) {
-    .eventdatails
+
+
+
+@media screen and (max-width: 1200px) {
+    .eventdetailscontainer
     {
-        margin:0 2.4rem;
-        width: calc(100% - 4.8rem);
+        margin:0 3.2rem;
+        width: calc(100% - 6.4rem);
     }
   }
 
   @media screen and (max-width: 960px) {
-    .eventdatails
+    /* .eventdetailscontainer
     {
         margin:0 !important;
         width: 100%;
         flex-direction: column;
-    }
+    } */
+
   }

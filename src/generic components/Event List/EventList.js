@@ -14,7 +14,7 @@ const EventList = () => {
     let response = "";
     try {
       response = await axios.get(routes.events);
-      SetEventcards(response.data);
+      SetEventcards(response.data.events);
       setLoading(false)
       return response.data;
     } catch (error) {

@@ -9,9 +9,9 @@
 :root { 
     --primary-background: rgb(248, 247, 250);
     --secondary-background : rgb(255, 255, 255);
-    --primary-text : #39364f;
+    --primary-text : rgb(57, 54, 79);
     --secondary-text: rgb(114, 117, 150); 
-    --content-text: #1e0a3c;
+    --content-text: rgb(30, 10, 60);
     --orange : rgb(209,65,12);
     --bright-blue: rgb(54,89,227);
     --footer: rgb(30, 10, 60); 
@@ -19,8 +19,9 @@
     --errorText: rgb(215, 95, 112);
     --moretext:rgb(81, 79, 101);
     --faded-grey : rgb(169, 168, 179); 
+    --border-color:rgb(238, 237, 242);
     --main-h1: 'Vazirmatn', sans-serif;
-}
+    }
 
 
 * {
