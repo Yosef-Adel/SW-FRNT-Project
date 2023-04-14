@@ -1,23 +1,21 @@
 import React from "react";
 import { useState, useEffect } from "react";
 import EventCard from "../event card/EventCard";
-import CardInfo from "../../assets/data/eventsData";
 import classes from "./eventList.module.css";
 import axios from "../../requests/axios";
 import routes from "../../requests/routes";
-import { resolvePath } from "react-router-dom";
-import eventImage1 from "../../assets/imgs/events/event1.png";
-import eventImage2 from "../../assets/imgs/events/event1.png";
 import moment from "moment";
 
 const EventList = () => {
-  const [Eventcards, SetEventcards] = useState([]);
+  const [Eventcards, SetEventcards] = useState([0,0,0,0]);
+  const [loading,setLoading] = useState(true);
 
   async function getEventCards() {
     let response = "";
     try {
       response = await axios.get(routes.events);
       SetEventcards(response.data);
+      setLoading(false)
       return response.data;
     } catch (error) {
       if (error.response) {
@@ -50,12 +48,14 @@ const EventList = () => {
             location={card.address1}
             price={card.postalCode} //Price attribute is not provided by backend response
             companyName={card.venueName} //Using venue name as the company name, as company name is not required
+            load={loading}
           />
         ))}
       </div>
+      {loading&&
       <div className={classes.moreBtn}>
         <button type="button">See more</button>
-      </div>
+      </div>}
     </div>
   );
 };

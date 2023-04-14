@@ -70,6 +70,18 @@
     padding: 0.2rem 0;
 }
 
+.imgSkeleton{
+    display: flex;
+    margin: auto;
+    margin: 5rem;
+}
+
+.txtSkeleton{
+    width: 80%;
+    margin: auto;
+    margin-bottom: 10rem;
+}
+
 @media screen and (max-width: 768px) {
     .card{
         width: 45rem;

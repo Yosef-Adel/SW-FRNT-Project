@@ -83,7 +83,7 @@ const ForgetPasswordPage = ({onSubmit}) => {
     return (
         <div data-testid="LoginComponent">
             <div className={classes.main}>
-                <div className={classes.info} style={{paddingTop:'28rem'}}>
+                <div className={classes.info} style={{paddingTop:'18rem'}}>
                     <div className={classes.form}>
                         <Link to="/" className={classes.logoContainer}>
                         <div>
@@ -143,3 +143,4 @@ const ForgetPasswordPage = ({onSubmit}) => {
 };
 
 export default ForgetPasswordPage;
+
