@@ -10,6 +10,8 @@ import EventList from "../../generic components/Event List/EventList";
 import axios from "../../requests/axios";
 import routes from "../../requests/routes";
 import {useSelector} from 'react-redux';
+import { useDispatch } from 'react-redux'
+import {userActions} from '../../store/userSlice'
 
 
 
@@ -22,7 +24,12 @@ import {useSelector} from 'react-redux';
  */
 const HomePage = () => {
   const user = useSelector( state => state.user)
-  const id = user.id;
+  const id = user.id;    
+  const [location, setLocation] = useState([])
+  const [category, setCategory] = useState("")
+
+  const dispatch = useDispatch();
+
 
   async function switchCreator() {
     let response = "";
@@ -30,7 +37,10 @@ const HomePage = () => {
       response = await axios.get(
         routes.creatorToUser+"/"+id
       );
-
+        dispatch(userActions.creator(
+        { 
+          isCreator: response.data.isCreator 
+        }))
       return response.data;
     } catch (error) {
       if (error.response) {
@@ -56,9 +66,9 @@ const HomePage = () => {
       <Banner />
 
       <div className={classes.containerbox}>
-        <FilterTabs />
+        <FilterTabs setLocation={setLocation} setCategory={setCategory}/>
         <Categories />
-        <EventList />
+        <EventList location={location} category={category}/>
       </div>
       <Footer />
     </div>

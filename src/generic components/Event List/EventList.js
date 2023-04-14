@@ -6,16 +6,17 @@ import axios from "../../requests/axios";
 import routes from "../../requests/routes";
 import moment from "moment";
 
-const EventList = () => {
+const EventList = (props) => {
   const [Eventcards, SetEventcards] = useState([0,0,0,0]);
   const [loading,setLoading] = useState(true);
 
   async function getEventCards() {
     let response = "";
     try {
-      response = await axios.get(routes.events);
+      response = await axios.get(routes.events + "?category=" + "" + "&lat=" + "&lng=" );
       SetEventcards(response.data.events);
       setLoading(false)
+      console.log(response.data)
       return response.data;
     } catch (error) {
       if (error.response) {
@@ -26,11 +27,9 @@ const EventList = () => {
 
   useEffect(() => {
     getEventCards();
-  }, []);
+  }, [props.location, props.category]);
 
-  function formatDate(date) {
-    return date ? date.slice(0, 10) : null;
-  }
+
 
   return (
     <div>
@@ -52,7 +51,7 @@ const EventList = () => {
           />
         ))}
       </div>
-      {loading&&
+      {!loading&&
       <div className={classes.moreBtn}>
         <button type="button">See more</button>
       </div>}

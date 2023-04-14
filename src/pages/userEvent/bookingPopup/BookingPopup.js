@@ -123,7 +123,7 @@ const BookingPopup = ({ eventtitle, date, image }) => {
             className={classes.bookingcontainer}
             style={{ display: askclose ? "none" : "flex" }}>
             <div className={classes.ticketsformcontainer}>
-              {!openForm && (
+              {openForm? <div> booking here </div> :(
                 <TicketsDetails
                   eventtitle={eventtitle}
                   date={date}

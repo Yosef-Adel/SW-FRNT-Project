@@ -49,7 +49,7 @@ const ForgetPasswordPage = ({onSubmit}) => {
   };
 
   const validationSchema = Yup.object().shape({
-    password: Yup.string().required("Password is required"),
+    password: Yup.string().min(8).required("Password is required"),
   });
 
   /**
@@ -83,14 +83,14 @@ const ForgetPasswordPage = ({onSubmit}) => {
     return (
         <div data-testid="LoginComponent">
             <div className={classes.main}>
-                <div className={classes.info} style={{paddingTop:'18rem'}}>
+                <div className={classes.info} >
                     <div className={classes.form}>
                         <Link to="/" className={classes.logoContainer}>
                         <div>
                             <img src={logo} alt="Envie Logo" />
                         </div>
                         </Link>
-                        <div className={classes.header} >
+                        <div className={classes.forgetPassHeader} >
                             <h1>Update your Password</h1>
                             <p className={classes.passwordp}>Enter your new password below</p>
                         </div>

@@ -122,9 +122,6 @@ const LoginPage = ({onSubmit}) => {
       try{
         const response = await axios.post(routes.forgotPassword, {"emailAddress": email})
         console.log(response)
-        
-        
-
         setForgetPasswordModal(true);
 
       } catch(err){
