@@ -6,12 +6,12 @@
 
 .btn {
   width: 100%;
-  /* margin: auto; */
   justify-content: center;
-  /* background-color: black; */
   display: flex;
   border: 2px solid var( --border-color);
   border-radius: 8px;
+  position: sticky;
+  top: 5rem;
 }
 .btn .button {
   width: 90%;

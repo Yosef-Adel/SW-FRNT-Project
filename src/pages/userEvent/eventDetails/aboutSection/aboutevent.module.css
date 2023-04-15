@@ -46,6 +46,8 @@
 .aboutEvSummary {
   color: var(--secondary-text);
   font-size: 1.8rem;
+  width: 80%;
+  text-justify:distribute;
 }
 
 @media screen and (max-width: 1180px) {
