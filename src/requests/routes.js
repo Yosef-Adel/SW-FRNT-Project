@@ -8,6 +8,7 @@ const routes = {
     forgotPassword: "/auth/forgot-password",
     creatorToUser : "/user/to-attendee",
     resetPassword:"/auth/reset-password",
-    tickets:"/ticket"
+    tickets:"/ticket",
+    placeOrder: "/order",
 }
 export default routes 

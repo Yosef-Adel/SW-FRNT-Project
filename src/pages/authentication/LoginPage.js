@@ -248,7 +248,6 @@ const LoginPage = ({onSubmit}) => {
           moreDetails='For your security, this link will expire in 15min.'
           icon={<TfiEmail className={classes.modalicon}/>}
       />}
-      <Footer />
     </div>
   );
 };

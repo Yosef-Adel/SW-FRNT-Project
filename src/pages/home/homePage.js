@@ -62,7 +62,6 @@ const HomePage = () => {
 
   return (
     <div className={classes.container}>
-      <NavBar />
       <Banner />
 
       <div className={classes.containerbox}>
@@ -70,7 +69,6 @@ const HomePage = () => {
         <Categories />
         <EventList location={location} category={category}/>
       </div>
-      <Footer />
     </div>
   );
 };

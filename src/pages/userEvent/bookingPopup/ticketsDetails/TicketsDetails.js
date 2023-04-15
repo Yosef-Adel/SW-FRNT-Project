@@ -16,8 +16,9 @@ import GenericModal from "../../../../generic components/generic modal/GenericMo
 import {GrLogin} from "react-icons/gr";
 import ErrorNotification from "../../../../generic components/error message/ErrorNotification";
 
+import {MdKeyboardArrowDown} from 'react-icons/md';
 
-const TicketsDetails = ({ eventtitle, date, checkout, summary }) => {
+const TicketsDetails = ({ eventtitle, date, checkout, summary,setOpenSummary, openSummary }) => {
   //   const filledArray = Array(tickets.tickets.length).fill(0);
 
   let { _id } = useParams();
@@ -362,7 +363,7 @@ const TicketsDetails = ({ eventtitle, date, checkout, summary }) => {
           </div>
         </div>
         <div className={classes.checkoutcontainer}>
-          <div className={classes.summarycontainer}>{total}</div>
+          <div className={classes.summarycontainer}> <MdKeyboardArrowDown className={openSummary?classes.upArrow:classes.downArrow} onClick={()=>{setOpenSummary(!openSummary)}}/> {total}</div>
           <div className={classes.btn}>
             <button
               onClick={handlecheckout}

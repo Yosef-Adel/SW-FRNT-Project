@@ -81,7 +81,7 @@ const ForgetPasswordPage = ({onSubmit}) => {
 };
     // onSubmit(data);
     return (
-        <div data-testid="LoginComponent">
+        <div data-testid="ForgetPassComponent">
             <div className={classes.main}>
                 <div className={classes.info} >
                     <div className={classes.form}>

@@ -75,7 +75,9 @@
 .imgSkeleton{
     display: flex;
     margin: auto;
-    margin: 5rem;
+    width: 80%;
+    margin: auto;
+    margin-block: 5rem;
 }
 
 .txtSkeleton{

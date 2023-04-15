@@ -348,7 +348,6 @@ const rejecthandle=()=>{
           style={{ backgroundImage: `url(${images[randImg]})` }}
         ></div>
       </div>
-      <Footer />
     </div>
   );
 };

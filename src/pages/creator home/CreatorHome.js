@@ -8,6 +8,7 @@ import { useNavigate } from "react-router-dom";
 import {useSelector} from 'react-redux';
 import { useDispatch } from 'react-redux'
 import {userActions} from '../../store/userSlice'
+import SideBar from "./Sidebar";
 
 /**
  * Component that returns Creator's main page
@@ -58,9 +59,6 @@ const CreatorHomePage = () => {
 
   return (
     <div className={classes.container}>
-      <CreatorNav name={name}/>
- 
-      <Footer />
     </div>
   );
 };

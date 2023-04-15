@@ -4,23 +4,35 @@ import { useState, useEffect } from "react";
 import classes from "./bookingpopup.module.css";
 import { Link, useParams } from "react-router-dom";
 import tickets from "../../../assets/data/dummytickets";
-
+import BookingForm from "./bookingForm/BookingForm";
 import Box from "@mui/material/Box";
 import Button from "@mui/material/Button";
 import Modal from "@mui/material/Modal";
 import IconButton from "@mui/material/IconButton";
 import CloseIcon from "@mui/icons-material/Close";
 import TicketsDetails from "./ticketsDetails/TicketsDetails";
+import axios from "../../../requests/axios";
+import routes from "../../../requests/routes";
+import {TfiEmail} from "react-icons/tfi";
+
 
 const BookingPopup = ({ eventtitle, date, image }) => {
+  let {_id} = useParams();
+
   const [openModal, setOpenModal] = useState(false);
   const [openForm, setopenForm] = useState(false);
   const [askclose, setAskclose] = useState(false);
+  const [timerClose, setTimerclose] = useState(false);
+  const [registerClose, setRegisterClose] = useState(false);
+
+
   const [subtotal, setSubtotal] = useState(0.0);
   const [fee, setFee] = useState(0.0);
   const [total, setTotal] = useState(0.0);
   const [discount, setDiscount] = useState(0.0);
   const [promocode, setPromocode] = useState(false);
+  const [openSummary, setOpenSummary] = useState(false);
+
   const intialvalues = {
     ticketsBought: [],
     firstName: "",
@@ -30,6 +42,7 @@ const BookingPopup = ({ eventtitle, date, image }) => {
   const [orderData, setOrderData] = useState(intialvalues);
   const [orderSummary, setOrderSummary] = useState([]);
   const [empty, setEmpty] = useState(true);
+
 
   const handleOpen = () => setOpenModal(true);
   const handleClose = () => {
@@ -80,6 +93,34 @@ const BookingPopup = ({ eventtitle, date, image }) => {
     setopenForm(true);
   }
 
+  async function orderRequest(data) {
+    let response = "";
+    try {
+      response = await axios.post(
+        routes.placeOrder + "/" + _id, data
+      );
+      setRegisterClose(true)
+      setAskclose(true)
+      return response.data;
+    } catch (error) {
+      if (error.response) {
+        return error.response;
+      }
+    }
+  }
+
+
+  function register(fName, lName, email){
+    let temporder = orderData;
+    temporder.firstName = fName
+    temporder.lastName = lName
+    temporder.email = email
+    setOrderData(temporder);
+    orderRequest(orderData)
+
+  }
+
+
   function ordersumm(ordertickets, count) {
     // console.log(ordertickets);
     let summ = ordertickets.filter((singleticket) => singleticket.number !== 0);
@@ -93,6 +134,11 @@ const BookingPopup = ({ eventtitle, date, image }) => {
       setFee(0);
       setTotal(0);
     }
+  }
+
+  function handleTimeout(){
+    setAskclose(true)
+    setTimerclose(true)
   }
 
   return (
@@ -111,10 +157,19 @@ const BookingPopup = ({ eventtitle, date, image }) => {
         aria-describedby="modal-modal-description"
         className={classes.bookingmodal}>
         <Box className={classes.bookingbox}>
-          {!askclose && (
+          {(!askclose || timerClose || registerClose) &&(
             <IconButton
               aria-label="close"
-              onClick={() => setAskclose(true)}
+              onClick={() => 
+               { 
+                if(!askclose) setAskclose(true)
+                if(timerClose || registerClose) {
+                setTimerclose(false)
+                setRegisterClose(false) 
+                handleClose()
+                }
+                }
+              }
               className={classes.bookingmodalclose}>
               <CloseIcon />
             </IconButton>
@@ -123,18 +178,20 @@ const BookingPopup = ({ eventtitle, date, image }) => {
             className={classes.bookingcontainer}
             style={{ display: askclose ? "none" : "flex" }}>
             <div className={classes.ticketsformcontainer}>
-              {openForm? <div> booking here </div> :(
+              {openForm? <div> <BookingForm setTimeout={handleTimeout} onRegister={register}/> </div> :(
                 <TicketsDetails
                   eventtitle={eventtitle}
                   date={date}
                   calculateprice={calculateprice}
                   checkout={checkout}
                   summary={ordersumm}
+                  setOpenSummary={setOpenSummary}
+                  openSummary={openSummary}
                 />
               )}
             </div>
 
-            <div className={classes.summarycontainer}>
+            <div className={openSummary?classes.openSummaryContainer:classes.summarycontainer}>
               <div className={classes.cardImage}>
                 <img src={image} alt="event_img" />
               </div>
@@ -229,7 +286,7 @@ const BookingPopup = ({ eventtitle, date, image }) => {
               )}
             </div>
           </div>
-          {askclose && (
+          {askclose && !timerClose && !registerClose &&(
             <div className={classes.leavecheckout}>
               <div className={classes.leavecheckoutheader}>
                 <h1>Leave Checkout?</h1> Are you sure you want to leave
@@ -252,6 +309,21 @@ const BookingPopup = ({ eventtitle, date, image }) => {
               </div>
             </div>
           )}
+          {
+            (timerClose || registerClose) && 
+            <div className={classes.leavecheckout}>
+            {timerClose?
+              <div className={classes.leavecheckoutheader} style={{"font-size": '1.25rem'}}>
+                <h1>Time Limit Reached</h1> Your reservation has been released. Please re-start your purchase.
+              </div>
+              :
+              <div className={classes.leavecheckoutheader} style={{"font-size": '1.25rem'}}>
+                <TfiEmail className={classes.modalicon}/>
+                <h1>Your Order has been placed successfully!!</h1> Check your Email for order summary
+              </div> 
+            }  
+            </div>
+          }
         </Box>
       </Modal>
     </div>

@@ -55,11 +55,11 @@ const navData = {
     [
       {
         title: "Log In",
-        route: "/login/",
+        route: "/login",
       },
       {
         title: "Sign Up",
-        route: "/signup/",
+        route: "/signup",
       },
     ],
   ],

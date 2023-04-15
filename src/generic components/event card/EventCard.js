@@ -26,7 +26,7 @@ const EventCard = (props) => {
     <Link to={`/user/event/${props.id}`} className={classes.card}>
       {props.load?
         <div className={classes.imgSkeleton}>
-          <Skeleton.Image active/>;
+          <Skeleton.Avatar shape={"square"} size={100} active/>;
         </div>: 
         <div className={classes.cardImage}>
           <img src={props.img} alt="event_img" />

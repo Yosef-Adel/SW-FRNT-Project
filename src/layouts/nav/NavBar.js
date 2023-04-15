@@ -4,11 +4,12 @@ import navData from "../../assets/data/navData";
 import logo from "../../assets/brand/envie.svg";
 import KeyboardArrowDownIcon from "@mui/icons-material/KeyboardArrowDown";
 import MoreVertIcon from '@mui/icons-material/MoreVert';
-import { NavLink, useNavigate } from "react-router-dom";
+import { NavLink, useNavigate, useParams } from "react-router-dom";
 import { useState, useEffect } from "react";
 import { useSelector } from "react-redux";
 import { useDispatch } from 'react-redux'
 import {userActions} from '../../store/userSlice'
+import { useLocation} from 'react-router-dom'
 
 /**
  * Component that renders nav bar
@@ -19,18 +20,31 @@ import {userActions} from '../../store/userSlice'
  * )
  */
 const NavBar = (props) => {
+  const location = useLocation();
   const navigate = useNavigate();
   const dispatch = useDispatch();
+  const [showNav, setShowNav] = useState(true);
+  const {tokenId} = useParams();
   const [user,setUser] = useState(useSelector((state) => state.user))
   const logged = user.token ? true : false;
   const email = logged ? user.email : "";
   const page = logged ? navData.homeUser : navData.homeAttendee;
 
+  const pathName = location.pathname.split('/')
   const [windowWidth, setWindowWidth] = useState(window.innerWidth);
   const display = windowWidth > 940 ? true : false;
 
   useEffect(() => {
-    // console.log(user)
+
+    console.log(pathName[1])
+    if (pathName[1] === 'login' || pathName[1] === 'signup' || pathName[1] == 'forgetPassword'){
+      setShowNav(false)
+    }
+    else
+    {
+      setShowNav(true)
+    }
+
     const handleWindowResize = () => {
       setWindowWidth(window.innerWidth);
     };
@@ -40,7 +54,7 @@ const NavBar = (props) => {
     return () => {
       window.removeEventListener("resize", handleWindowResize);
     };
-  }, []);
+  }, [location]);
 
   const handleLogout = () => {
     dispatch(userActions.logout())
@@ -50,6 +64,8 @@ const NavBar = (props) => {
   }
 
   return (
+    <>
+    {showNav &&
     <div className={classes.nav}>
       <NavLink to='/'  activeClassName={classes.activeLink}>
       <div className={classes.logoContainer}>
@@ -170,7 +186,8 @@ const NavBar = (props) => {
           })}
         </ul>
       </div>
-    </div>
+    </div>}
+    </>
   );
 };
 

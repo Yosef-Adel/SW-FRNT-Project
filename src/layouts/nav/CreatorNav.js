@@ -33,7 +33,6 @@ const CreatorNav = (props) => {
       setWindowWidth(window.innerWidth);
     };
 
-    console.log(props.name);
     window.addEventListener("resize", handleWindowResize);
 
     return () => {
