@@ -4,7 +4,7 @@ import { useState, useEffect } from "react";
 import classes from "./bookingpopup.module.css";
 import { Link, useParams } from "react-router-dom";
 import tickets from "../../../assets/data/dummytickets";
-
+import BookingForm from "./bookingForm/BookingForm";
 import Box from "@mui/material/Box";
 import Button from "@mui/material/Button";
 import Modal from "@mui/material/Modal";
@@ -123,7 +123,7 @@ const BookingPopup = ({ eventtitle, date, image }) => {
             className={classes.bookingcontainer}
             style={{ display: askclose ? "none" : "flex" }}>
             <div className={classes.ticketsformcontainer}>
-              {openForm? <div> booking here </div> :(
+              {openForm? <div> <BookingForm/> </div> :(
                 <TicketsDetails
                   eventtitle={eventtitle}
                   date={date}
