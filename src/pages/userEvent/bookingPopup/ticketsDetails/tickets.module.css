@@ -239,6 +239,10 @@ del{text-decoration: line-through;}
   cursor: pointer;
 }
 
+.upArrow{
+  transform: rotate(180deg);
+}
+
 @media screen and (min-width: 791px) {
   .summarycontainer {
     display: none;

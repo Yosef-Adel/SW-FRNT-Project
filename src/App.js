@@ -7,12 +7,24 @@ import UserEventPage from "./pages/userEvent/UserEventPage";
 import CreatorHomePage from "./pages/creator home/CreatorHome";
 import ForgetPasswordPage from "./pages/authentication/ForgetPasswordPage";
 
+import { useSelector } from "react-redux";
+import SideBar from "./pages/creator home/Sidebar";
+import CreatorNav from "./layouts/nav/CreatorNav";
+import NavBar from "./layouts/nav/NavBar";
+import Footer from "./layouts/footer/Footer";
+
 function App() {
+  const user = useSelector((state) => state.user);
   return (
-    // <div>
-    //   <NavBar/>
-    <BrowserRouter>
-      <Routes>
+    <>
+      {user.isCreator&&user.loggedIn && <>
+        <CreatorNav/>
+        <SideBar/></>} 
+      {!user.isCreator&&user.loggedIn && 
+        <NavBar/>
+      }
+ 
+    <Routes>
         <Route path="/" element={<HomePage />} />
         <Route path="/login" element={<LoginPage />} />
         <Route path="/signup" element={<SignupPage />} />
@@ -20,8 +32,9 @@ function App() {
         <Route path="/create" element={<CreatorHomePage />} />
         <Route path="/forgetPassword/:id" element={<ForgetPasswordPage/>}/>
       </Routes>
-    </BrowserRouter>
-    // </div>
+
+      <Footer/>
+    </>
   );
 }
 

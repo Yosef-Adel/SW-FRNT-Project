@@ -45,7 +45,6 @@ const UserEventPage = () => {
 
   return (
     <div className={classes.container}>
-      <NavBar />
       <EventBanner image={event.image} />
       <div className={classes.eventdetailscontainer}>
         
@@ -57,7 +56,6 @@ const UserEventPage = () => {
         />
       </div>
       {/* <LocationDetails /> */}
-      <Footer />
     </div>
   );
 };

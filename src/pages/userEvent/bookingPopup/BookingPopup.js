@@ -21,6 +21,8 @@ const BookingPopup = ({ eventtitle, date, image }) => {
   const [total, setTotal] = useState(0.0);
   const [discount, setDiscount] = useState(0.0);
   const [promocode, setPromocode] = useState(false);
+  const [openSummary, setOpenSummary] = useState(false);
+
   const intialvalues = {
     ticketsBought: [],
     firstName: "",
@@ -130,11 +132,13 @@ const BookingPopup = ({ eventtitle, date, image }) => {
                   calculateprice={calculateprice}
                   checkout={checkout}
                   summary={ordersumm}
+                  setOpenSummary={setOpenSummary}
+                  openSummary={openSummary}
                 />
               )}
             </div>
 
-            <div className={classes.summarycontainer}>
+            <div className={openSummary?classes.openSummaryContainer:classes.summarycontainer}>
               <div className={classes.cardImage}>
                 <img src={image} alt="event_img" />
               </div>
