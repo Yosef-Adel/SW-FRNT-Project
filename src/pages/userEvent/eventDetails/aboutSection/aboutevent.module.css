@@ -5,6 +5,11 @@
     row-gap: 2.5rem;
     padding: 3rem 0;
 }
+.aboutcontainer ul h3
+{
+  padding:0 0 0.3rem 0;
+  margin: 0;
+}
 
 .aboutEvTitle {
   color: var(--content-text);
@@ -48,6 +53,46 @@
   font-size: 1.8rem;
   width: 80%;
   text-justify:distribute;
+}
+.Share 
+{
+  width: 100%;
+  font-size: 1.9rem;
+}
+.Share ul
+{
+  display: flex;
+  flex-direction: row;
+  gap: 0.5rem;
+  padding-top: 1rem;
+  width: fit-content;
+}
+.Share li
+{
+  width: 4rem;
+  height: 4rem;
+  border-radius: 90%;
+  cursor:pointer;
+}
+.Share li:hover
+{
+  background-color: var(--border-color);
+  transition: 1s;
+}
+.Share li div
+{
+  width: 50%;
+  height: 50%;
+  position: relative;
+  top:50%;
+  left:50%;
+  transform: translate(-50%,-50%);
+  border-radius: 10%;
+}
+.shareIcons 
+{
+  width:100%;
+  height: 100%;
 }
 
 @media screen and (max-width: 1180px) {
