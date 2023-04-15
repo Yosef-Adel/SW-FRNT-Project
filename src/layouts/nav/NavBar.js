@@ -37,7 +37,7 @@ const NavBar = (props) => {
   useEffect(() => {
 
     console.log(pathName[1])
-    if (pathName[1] === 'login' || pathName[1] === 'signup' || pathName[1] == 'forgetpassword'){
+    if (pathName[1] === 'login' || pathName[1] === 'signup' || pathName[1] == 'forgetPassword'){
       setShowNav(false)
     }
     else
