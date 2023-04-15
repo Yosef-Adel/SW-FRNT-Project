@@ -20,7 +20,7 @@ function App() {
       {user.isCreator&&user.loggedIn && <>
         <CreatorNav/>
         <SideBar/></>} 
-      {!user.isCreator&&user.loggedIn && 
+      {!user.isCreator && 
         <NavBar/>
       }
  
