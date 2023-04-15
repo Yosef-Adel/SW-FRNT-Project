@@ -230,6 +230,14 @@ display: flex;
   border: none;
 }
 
+.modalicon{
+  width:5rem;
+  height:5rem;
+  margin: auto;
+  align-items: center;
+  color:var(--content-text)
+}
+
 @media screen and (max-width: 660px) {
   .bookingbox {
     width: 100%;
