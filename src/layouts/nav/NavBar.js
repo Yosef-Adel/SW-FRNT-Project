@@ -3,12 +3,12 @@ import classes from "./navbar.module.css";
 import navData from "../../assets/data/navData";
 import logo from "../../assets/brand/envie.svg";
 import KeyboardArrowDownIcon from "@mui/icons-material/KeyboardArrowDown";
-import MoreVertIcon from '@mui/icons-material/MoreVert';
+import MoreVertIcon from "@mui/icons-material/MoreVert";
 import { NavLink, useNavigate } from "react-router-dom";
 import { useState, useEffect } from "react";
 import { useSelector } from "react-redux";
-import { useDispatch } from 'react-redux'
-import {userActions} from '../../store/userSlice'
+import { useDispatch } from "react-redux";
+import { userActions } from "../../store/userSlice";
 
 /**
  * Component that renders nav bar
@@ -42,18 +42,17 @@ const NavBar = (props) => {
   }, []);
 
   const handleLogout = () => {
-    dispatch(userActions.logout())
+    dispatch(userActions.logout());
 
-    setTimeout(navigate('/login'), 5000);
-    
-  }
+    setTimeout(navigate("/login"), 5000);
+  };
 
   return (
     <div className={classes.nav}>
-      <NavLink to='/'  activeClassName={classes.activeLink}>
-      <div className={classes.logoContainer}>
-        <img className={classes.logo} src={logo} alt="logo" />
-      </div>
+      <NavLink to="/" activeClassName={classes.activeLink}>
+        <div className={classes.logoContainer}>
+          <img className={classes.logo} src={logo} alt="logo" />
+        </div>
       </NavLink>
       {/* {console.log(page)} */}
 
@@ -66,31 +65,33 @@ const NavBar = (props) => {
                   <li
                     className={`${classes.navItem} ${
                       element.color ? classes.blue : ""
-                    }`}>
+                    }`}
+                  >
                     <NavLink
                       to={element.route}
-                      activeClassName={classes.activeLink}>
+                      activeClassName={classes.activeLink}
+                    >
                       <div className={classes.wrapper}>
                         {element.icon}
                         <div>
                           {element.title}{" "}
                           {element.list && (
                             <KeyboardArrowDownIcon className={classes.arrow} />
-                            )}
+                          )}
                         </div>
                       </div>
                     </NavLink>
 
                     {element.list && (
-                      
                       <ol className={classes.dropDown}>
                         {element.list.map((item, index) => {
                           return (
                             <li className={classes.navSubItem}>
                               <NavLink
                                 to={item.route}
-                                activeClassName={classes.activeLink}>
-                                {item.title}
+                                activeClassName={classes.activeLink}
+                              >
+                                <div>{item.title}</div>
                               </NavLink>
                             </li>
                           );
@@ -107,17 +108,19 @@ const NavBar = (props) => {
           <ul>
             <div className={classes.list}>
               <li className={`${classes.navItem} ${classes.navcollapse} `}>
-                <MoreVertIcon className={classes.dots}/>
+                <MoreVertIcon className={classes.dots} />
                 <ol className={classes.dropDown}>
                   {page[0].map((item, index) => {
                     return (
                       <li
                         className={`${classes.navSubItem} ${
                           item.color ? classes.blue : ""
-                        }`}>
+                        }`}
+                      >
                         <NavLink
                           to={item.route}
-                          activeClassName={classes.activeLink}>
+                          activeClassName={classes.activeLink}
+                        >
                           {" "}
                           {item.title}{" "}
                         </NavLink>
@@ -136,7 +139,8 @@ const NavBar = (props) => {
                 <li className={classes.navItem}>
                   <NavLink
                     to={element.route}
-                    activeClassName={classes.activeLink}>
+                    activeClassName={classes.activeLink}
+                  >
                     <div className={classes.wrapper}>
                       {element.icon}
                       <div>
@@ -151,13 +155,26 @@ const NavBar = (props) => {
                   {element.list && (
                     <ol className={classes.dropDown}>
                       {element.list.map((item, index) => {
-                        return (
-                          <li className={classes.navSubItem} onClick={item.title === "Log out"? ()=>handleLogout(): undefined}>
-                            <div
-                              className={classes.activeLink}>
+                        return item.title === "Log out" ? (
+                          <li
+                            className={classes.navSubItem}
+                            onClick={() => handleLogout()}
+                          >
+                            <div className={classes.activeLink}>
                               {" "}
                               {item.title}{" "}
                             </div>
+                          </li>
+                        ) : (
+                          <li
+                            className={`${classes.navSubItem} ${
+                              item.color ? classes.blue : ""
+                            }`}>
+                            <NavLink
+                              to={item.route}
+                              activeClassName={classes.activeLink}>
+                              {item.title}
+                            </NavLink>
                           </li>
                         );
                       })}

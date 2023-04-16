@@ -31,12 +31,12 @@ const navData = {
         list: [
           {
             title: "Find your tickets",
-            icon: "//balbla",
+            icon: "/",
             route: "/",
           },
           {
             title: "Contact an event organizer",
-            icon: "//balbla",
+            icon: "/",
             route: "/",
           },
           {
@@ -123,35 +123,35 @@ const navData = {
         list: [
           {
             title: "Browse events",
-            route: "",
+            route: "/",
           },
           {
-            title: "Manage my events",
-            route: "/manage/events/create/",
+            title: "Create an event",
+            route: "/create",
           },
           {
             title: "Tickets",
-            route: "//balbla",
+            route: "/",
           },
           {
             title: "Credits",
-            route: "//balbla",
+            route: "/",
           },
           {
             title: "Liked",
-            route: "//balbla",
+            route: "/",
           },
           {
             title: "Following",
-            route: "//balbla",
+            route: "/",
           },
           {
             title: "Interests",
-            route: "//balbla",
+            route: "/",
           },
           {
             title: "Account Settings",
-            route: "//balbla",
+            route: "/",
           },
           {
             title: "Log out",
