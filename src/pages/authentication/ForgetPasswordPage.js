@@ -112,14 +112,14 @@ const ForgetPasswordPage = ({onSubmit}) => {
                                             name="password"
                                             type="password"
                                             autoComplete="off"
-                                            data-testid="LoginFormPasswordInput"
+                                            data-testid="ForgetPasswordFormPasswordInput"
                                             />
                                     </div>
                                     <ErrorMessage name="password" component="span" />
                                 </div>
                                 <div className={classes.validpasswordp}><p style={{paddingTop:'1rem'}}>Your password must be at least 8 characters</p></div>
                                 <div className={classes.btn}>
-                                    <button type="submit" className={classes.button} data-testid="LoginFormSubmitButton">
+                                    <button type="submit" className={classes.button} data-testid="ForgetPasswordFormSubmitButton">
                                         Update password
                                     </button>
                                 </div>
