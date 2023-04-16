@@ -40,9 +40,14 @@ const CreatorNav = (props) => {
     };
   }, []);
 
+  
+  /**
+ * handles logout by emptying user information in local storage
+ * @namespace handleLogout
+ */
+
   const handleLogout = () => {
     dispatch(userActions.logout());
-
     setTimeout(navigate("/login"), 5000);
   };
 

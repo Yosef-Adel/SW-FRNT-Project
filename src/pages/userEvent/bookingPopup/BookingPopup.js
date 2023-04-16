@@ -13,18 +13,16 @@ import CloseIcon from "@mui/icons-material/Close";
 import TicketsDetails from "./ticketsDetails/TicketsDetails";
 import axios from "../../../requests/axios";
 import routes from "../../../requests/routes";
-import {TfiEmail} from "react-icons/tfi";
-
+import { TfiEmail } from "react-icons/tfi";
 
 const BookingPopup = ({ eventtitle, date, image }) => {
-  let {_id} = useParams();
+  let { _id } = useParams();
 
   const [openModal, setOpenModal] = useState(false);
   const [openForm, setopenForm] = useState(false);
   const [askclose, setAskclose] = useState(false);
   const [timerClose, setTimerclose] = useState(false);
   const [registerClose, setRegisterClose] = useState(false);
-
 
   const [subtotal, setSubtotal] = useState(0.0);
   const [fee, setFee] = useState(0.0);
@@ -42,7 +40,6 @@ const BookingPopup = ({ eventtitle, date, image }) => {
   const [orderData, setOrderData] = useState(intialvalues);
   const [orderSummary, setOrderSummary] = useState([]);
   const [empty, setEmpty] = useState(true);
-
 
   const handleOpen = () => setOpenModal(true);
   const handleClose = () => {
@@ -93,14 +90,18 @@ const BookingPopup = ({ eventtitle, date, image }) => {
     setopenForm(true);
   }
 
+  /**
+   * function that sends the request that submits tickets order data
+   * @namespace orderRequest
+   * @param  {object} data      contains firstname, last name, email, tickets information
+   * 
+   */
   async function orderRequest(data) {
     let response = "";
     try {
-      response = await axios.post(
-        routes.placeOrder + "/" + _id, data
-      );
-      setRegisterClose(true)
-      setAskclose(true)
+      response = await axios.post(routes.placeOrder + "/" + _id, data);
+      setRegisterClose(true);
+      setAskclose(true);
       return response.data;
     } catch (error) {
       if (error.response) {
@@ -109,17 +110,22 @@ const BookingPopup = ({ eventtitle, date, image }) => {
     }
   }
 
-
-  function register(fName, lName, email){
+  /**
+   * function that is triggered on form register, assigns data sent from the form form to orderData
+   * @namespace register
+   * @param   {string} fName      User first name
+   * @param   {string} lName      User last name
+   * @param   {string} email      User valid email
+   *
+   */
+  function register(fName, lName, email) {
     let temporder = orderData;
-    temporder.firstName = fName
-    temporder.lastName = lName
-    temporder.email = email
+    temporder.firstName = fName;
+    temporder.lastName = lName;
+    temporder.email = email;
     setOrderData(temporder);
-    orderRequest(orderData)
-
+    orderRequest(orderData);
   }
-
 
   function ordersumm(ordertickets, count) {
     // console.log(ordertickets);
@@ -136,9 +142,14 @@ const BookingPopup = ({ eventtitle, date, image }) => {
     }
   }
 
-  function handleTimeout(){
-    setAskclose(true)
-    setTimerclose(true)
+  /**
+   * function that is triggered when form session timesout => closes the form and opens modal with indicating message
+   * @namespace timeout
+   *
+   */
+  function timeout() {
+    setAskclose(true);
+    setTimerclose(true);
   }
 
   return (
@@ -155,30 +166,39 @@ const BookingPopup = ({ eventtitle, date, image }) => {
         // disableBackdropClick
         aria-labelledby="modal-modal-title"
         aria-describedby="modal-modal-description"
-        className={classes.bookingmodal}>
+        className={classes.bookingmodal}
+      >
         <Box className={classes.bookingbox}>
-          {(!askclose || timerClose || registerClose) &&(
+          {(!askclose || timerClose || registerClose) && (
             <IconButton
               aria-label="close"
-              onClick={() => 
-               { 
-                if(!askclose) setAskclose(true)
-                if(timerClose || registerClose) {
-                setTimerclose(false)
-                setRegisterClose(false) 
-                handleClose()
+              onClick={() => {
+                if (!askclose) setAskclose(true);
+                if (timerClose || registerClose) {
+                  setTimerclose(false);
+                  setRegisterClose(false);
+                  handleClose();
                 }
-                }
-              }
-              className={classes.bookingmodalclose}>
+              }}
+              className={classes.bookingmodalclose}
+            >
               <CloseIcon />
             </IconButton>
           )}
           <div
             className={classes.bookingcontainer}
-            style={{ display: askclose ? "none" : "flex" }}>
+            style={{ display: askclose ? "none" : "flex" }}
+          >
             <div className={classes.ticketsformcontainer}>
-              {openForm? <div> <BookingForm setTimeout={handleTimeout} onRegister={register}/> </div> :(
+              {openForm ? (
+                <div>
+                  {" "}
+                  <BookingForm
+                    setTimeout={timeout}
+                    onRegister={register}
+                  />{" "}
+                </div>
+              ) : (
                 <TicketsDetails
                   eventtitle={eventtitle}
                   date={date}
@@ -191,7 +211,13 @@ const BookingPopup = ({ eventtitle, date, image }) => {
               )}
             </div>
 
-            <div className={openSummary?classes.openSummaryContainer:classes.summarycontainer}>
+            <div
+              className={
+                openSummary
+                  ? classes.openSummaryContainer
+                  : classes.summarycontainer
+              }
+            >
               <div className={classes.cardImage}>
                 <img src={image} alt="event_img" />
               </div>
@@ -201,16 +227,19 @@ const BookingPopup = ({ eventtitle, date, image }) => {
                     id="cart_svg__eds-icon--cart_svg"
                     x="0"
                     y="0"
-                    viewBox="0 0 24 24">
+                    viewBox="0 0 24 24"
+                  >
                     <path
                       id="cart_svg__eds-icon--cart_base"
                       fill-rule="evenodd"
                       clip-rule="evenodd"
-                      d="M20 14l2-9H9v1h11.9l-1.7 7.1L7 14V2H2v3h4v12h14v-1H7v-1l13-1zM3 3h3v1H3V3z"></path>
+                      d="M20 14l2-9H9v1h11.9l-1.7 7.1L7 14V2H2v3h4v12h14v-1H7v-1l13-1zM3 3h3v1H3V3z"
+                    ></path>
                     <g
                       id="cart_svg__eds-icon--cart_circles"
                       fill-rule="evenodd"
-                      clip-rule="evenodd">
+                      clip-rule="evenodd"
+                    >
                       <path d="M8 18c-1.1 0-2 .9-2 2s.9 2 2 2 2-.9 2-2-.9-2-2-2zm0 3c-.6 0-1-.4-1-1s.4-1 1-1 1 .4 1 1-.4 1-1 1zM18 18c-1.1 0-2 .9-2 2s.9 2 2 2 2-.9 2-2-.9-2-2-2zm0 3c-.6 0-1-.4-1-1s.4-1 1-1 1 .4 1 1-.4 1-1 1z"></path>
                     </g>
                   </svg>
@@ -253,22 +282,26 @@ const BookingPopup = ({ eventtitle, date, image }) => {
                           id="info-chunky_svg__eds-icon--info-chunky_svg"
                           x="0"
                           y="0"
-                          viewBox="0 0 24 24">
+                          viewBox="0 0 24 24"
+                        >
                           <path
                             id="info-chunky_svg__eds-icon--info-chunky_base"
                             fill-rule="evenodd"
                             clip-rule="evenodd"
-                            d="M12 6c3.3 0 6 2.7 6 6s-2.7 6-6 6-6-2.7-6-6 2.7-6 6-6zm0 14c4.4 0 8-3.6 8-8s-3.6-8-8-8-8 3.6-8 8 3.6 8 8 8z"></path>
+                            d="M12 6c3.3 0 6 2.7 6 6s-2.7 6-6 6-6-2.7-6-6 2.7-6 6-6zm0 14c4.4 0 8-3.6 8-8s-3.6-8-8-8-8 3.6-8 8 3.6 8 8 8z"
+                          ></path>
                           <path
                             id="info-chunky_svg__eds-icon--info-chunky_dot"
                             fill-rule="evenodd"
                             clip-rule="evenodd"
-                            d="M11 8h2v2h-2z"></path>
+                            d="M11 8h2v2h-2z"
+                          ></path>
                           <path
                             id="info-chunky_svg__eds-icon--info-chunky_line"
                             fill-rule="evenodd"
                             clip-rule="evenodd"
-                            d="M11 11h2v5h-2z"></path>
+                            d="M11 11h2v5h-2z"
+                          ></path>
                         </svg>
                       </div>
                       <div className={classes.ticketprice}>{fee}</div>
@@ -286,7 +319,7 @@ const BookingPopup = ({ eventtitle, date, image }) => {
               )}
             </div>
           </div>
-          {askclose && !timerClose && !registerClose &&(
+          {askclose && !timerClose && !registerClose && (
             <div className={classes.leavecheckout}>
               <div className={classes.leavecheckoutheader}>
                 <h1>Leave Checkout?</h1> Are you sure you want to leave
@@ -296,7 +329,8 @@ const BookingPopup = ({ eventtitle, date, image }) => {
                 <div className={classes.stayleavebtn}>
                   <button
                     className={classes.staybutton}
-                    onClick={() => setAskclose(false)}>
+                    onClick={() => setAskclose(false)}
+                  >
                     stay
                   </button>
                 </div>
@@ -309,21 +343,28 @@ const BookingPopup = ({ eventtitle, date, image }) => {
               </div>
             </div>
           )}
-          {
-            (timerClose || registerClose) && 
+          {(timerClose || registerClose) && (
             <div className={classes.leavecheckout}>
-            {timerClose?
-              <div className={classes.leavecheckoutheader} style={{"font-size": '1.25rem'}}>
-                <h1>Time Limit Reached</h1> Your reservation has been released. Please re-start your purchase.
-              </div>
-              :
-              <div className={classes.leavecheckoutheader} style={{"font-size": '1.25rem'}}>
-                <TfiEmail className={classes.modalicon}/>
-                <h1>Your Order has been placed successfully!!</h1> Check your Email for order summary
-              </div> 
-            }  
+              {timerClose ? (
+                <div
+                  className={classes.leavecheckoutheader}
+                  style={{ "font-size": "1.25rem" }}
+                >
+                  <h1>Time Limit Reached</h1> Your reservation has been
+                  released. Please re-start your purchase.
+                </div>
+              ) : (
+                <div
+                  className={classes.leavecheckoutheader}
+                  style={{ "font-size": "1.25rem" }}
+                >
+                  <TfiEmail className={classes.modalicon} />
+                  <h1>Your Order has been placed successfully!!</h1> Check your
+                  Email for order summary
+                </div>
+              )}
             </div>
-          }
+          )}
         </Box>
       </Modal>
     </div>

@@ -149,6 +149,16 @@ a {
 
 .name{
   font-weight: 900;
+  margin: 0;
+}
+
+.name>span{
+  color: var(--secondary-background);
+  background-color: var(--bright-blue);
+  padding-block: .7rem;
+  padding-inline: .7rem;
+  border-radius: 100%;
+  font-size: .9rem;
 }
 
 .wrapperCreator{
@@ -156,7 +166,7 @@ a {
   flex-direction: column;
   place-items: center;
   background-color: var(--primary-background);
-  padding: 1rem;
+  padding: .5rem;
   border-radius: 2rem;
 }
 

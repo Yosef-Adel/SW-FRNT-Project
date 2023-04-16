@@ -1,4 +1,4 @@
-import React, {useState, useEffect} from "react";
+import React, { useState, useEffect } from "react";
 import classes from "./home.module.css";
 import NavBar from "../../layouts/nav/NavBar";
 import Categories from "./categories/Categories";
@@ -9,38 +9,38 @@ import FilterTabs from "./filter_tabs/FilterTabs";
 import EventList from "../../generic components/Event List/EventList";
 import axios from "../../requests/axios";
 import routes from "../../requests/routes";
-import {useSelector} from 'react-redux';
-import { useDispatch } from 'react-redux'
-import {userActions} from '../../store/userSlice'
-
-
+import { useSelector } from "react-redux";
+import { useDispatch } from "react-redux";
+import { userActions } from "../../store/userSlice";
 
 /**
  * Component that returns Home Page
- * 
+ *
  * @component
  * @example
  * return(<HomePage />)
  */
 const HomePage = () => {
-  const user = useSelector( state => state.user)
-  const id = user.id;    
-  const [location, setLocation] = useState([])
-  const [category, setCategory] = useState("")
+  const user = useSelector((state) => state.user);
+  const id = user.id;
+  const [location, setLocation] = useState([]);
+  const [category, setCategory] = useState("");
 
   const dispatch = useDispatch();
 
-
-  async function switchCreator() {
+  /**
+   * function that sends the request that switchs user type from creator to user
+   * @namespace switchUSer
+   */
+  async function switchUSer() {
     let response = "";
     try {
-      response = await axios.get(
-        routes.creatorToUser+"/"+id
+      response = await axios.get(routes.creatorToUser + "/" + id);
+      dispatch(
+        userActions.creator({
+          isCreator: response.data.isCreator,
+        })
       );
-        dispatch(userActions.creator(
-        { 
-          isCreator: response.data.isCreator 
-        }))
       return response.data;
     } catch (error) {
       if (error.response) {
@@ -49,15 +49,19 @@ const HomePage = () => {
     }
   }
 
-  const checkCreator = () => {
-    if(user.loggedIn && user.isCreator){
-        switchCreator();
+  /**
+   * function that switches to user type if user type is 'creator'
+   * @namespace checkUser
+   */
+  const checkUser = () => {
+    if (user.loggedIn && user.isCreator) {
+      switchUSer();
     }
-  }
+  };
 
   useEffect(() => {
-    checkCreator();
-    console.log(user)
+    checkUser();
+    console.log(user);
   }, []);
 
   return (
@@ -65,9 +69,9 @@ const HomePage = () => {
       <Banner />
 
       <div className={classes.containerbox}>
-        <FilterTabs setLocation={setLocation} setCategory={setCategory}/>
+        <FilterTabs setLocation={setLocation} setCategory={setCategory} />
         <Categories />
-        <EventList location={location} category={category}/>
+        <EventList location={location} category={category} />
       </div>
     </div>
   );

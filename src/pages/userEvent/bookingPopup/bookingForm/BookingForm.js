@@ -28,10 +28,21 @@ const BookingForm = (props) => {
     firstName: Yup.string().required("First Name is required."),
     surName: Yup.string().required("Surname is required."),
   });
+
+  /**
+   * function that triggers the function passed by the parent when form is submitted
+   * @namespace handleSubmit
+   *
+   */
   function handleSubmit(data) {
     props.onRegister(data.firstName, data.surName, data.email);
   }
 
+  /**
+   * function that triggers the function passed by the parent when timer times out
+   * @namespace handleTimeout
+   *
+   */
   function handleTimeout() {
     props.setTimeout();
   }

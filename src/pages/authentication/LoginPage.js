@@ -66,13 +66,12 @@ const LoginPage = ({onSubmit}) => {
     password: Yup.string().required("Password is required"),
   });
 
-  /**
+/**
  * Submits the form login data to the server
  * @namespace onSubmit
  * @param   {string} email      User valid email
  * @param   {string} password   User password
  */
-
   const handleSubmit = (data, {setErrors}) => {
     setErrorMsg("")
     setErrorLinkMsg("")
