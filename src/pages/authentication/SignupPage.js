@@ -3,16 +3,15 @@ import classes from "./auth.module.css";
 import { Formik, Form, Field, ErrorMessage } from "formik";
 import * as Yup from "yup";
 import logo from "../../assets/brand/envie.svg";
-import DriveFileRenameOutlineIcon from "@mui/icons-material/DriveFileRenameOutline";
 import images from "../../assets/data/loginPhotos";
 import { Link } from "react-router-dom";
 import { TailSpin } from "react-loader-spinner";
 import { FcGoogle } from "react-icons/fc";
 import { GrFacebookOption } from "react-icons/gr";
-import { AiFillApple } from "react-icons/ai";
+// import { AiFillApple } from "react-icons/ai";
 import { FaChevronDown } from "react-icons/fa";
 import validator from "validator";
-import Footer from "../../layouts/footer/Footer";
+// import Footer from "../../layouts/footer/Footer";
 import axios from "../../requests/axios"
 import routes from "../../requests/routes"
 import ErrorNotification from "../../generic components/error message/ErrorNotification";
@@ -31,7 +30,7 @@ import {TfiEmail} from "react-icons/tfi";
  */
 const SignupPage = () => {
   const navigate = useNavigate();
-  const [user,setUser] = useState(useSelector((state) => state.user))
+  const user = useSelector((state) => state.user);
 
   const [cont, setContinue] = useState(false);
   const [loader, setLoader] = useState(false);

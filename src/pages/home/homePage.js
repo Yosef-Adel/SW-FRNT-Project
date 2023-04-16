@@ -4,7 +4,6 @@ import NavBar from "../../layouts/nav/NavBar";
 import Categories from "./categories/Categories";
 // import EventCard from "../../generic components/event card/EventCard";
 import Banner from "./banner/Banner";
-import Footer from "../../layouts/footer/Footer";
 import FilterTabs from "./filter_tabs/FilterTabs";
 import EventList from "../../generic components/Event List/EventList";
 import axios from "../../requests/axios";
@@ -25,6 +24,7 @@ const HomePage = () => {
   const id = user.id;
   const [location, setLocation] = useState([]);
   const [category, setCategory] = useState("");
+  const [city, setCity] = useState("");
 
   const dispatch = useDispatch();
 
@@ -70,9 +70,9 @@ const HomePage = () => {
       <Banner />
 
       <div className={classes.containerbox}>
-        <FilterTabs setLocation={setLocation} setCategory={setCategory} />
+        <FilterTabs setLocation={setLocation} setCategory={setCategory} city={city}/>
         <Categories />
-        <EventList location={location} category={category} />
+        <EventList location={location} category={category} detectCity={setCity}/>
       </div>
     </div>
   );

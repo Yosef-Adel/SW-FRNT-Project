@@ -1,7 +1,6 @@
 import React, { useState, useEffect } from "react";
 import classes from "./creatorHome.module.css";
 import CreatorNav from "../../layouts/nav/CreatorNav";
-import Footer from "../../layouts/footer/Footer";
 import axios from "../../requests/axios";
 import routes from "../../requests/routes";
 import { useNavigate } from "react-router-dom";

@@ -8,7 +8,7 @@ import { Link } from "react-router-dom";
 import axios from "../../requests/axios"
 import routes from "../../requests/routes"
 import { useNavigate,useParams } from "react-router-dom";
-import { useDispatch } from 'react-redux'
+// import { useDispatch } from 'react-redux'
 import ErrorNotification from "../../generic components/error message/ErrorNotification";
 import { useSelector } from "react-redux";
 import GenericModal from "../../generic components/generic modal/GenericModal";
@@ -16,18 +16,18 @@ import {GiConfirmed} from "react-icons/gi";
 
 
 /**
- * Component that renders Login Page
+ * Component that renders forget password page
  * 
  * @component
  * @example
- * return(<LoginPage />)
+ * return(<ForgetPasswordPage />)
 */
 
 const ForgetPasswordPage = ({onSubmit}) => {
   
   const navigate = useNavigate();
-  const dispatch = useDispatch();
-  const [user,setUser] = useState(useSelector((state) => state.user))
+//   const dispatch = useDispatch();
+  const user = useSelector((state) => state.user);
   const [randImg, setrandImg] = useState(Math.floor(Math.random() * 3));
   const [errorMsg, setErrorMsg] = useState('');
   const [errorLink, setErrorLink] = useState('');

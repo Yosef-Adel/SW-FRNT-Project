@@ -121,7 +121,7 @@ const BookingForm = (props) => {
                   </div>
                   <div className={classes.checkbox}>
                     <Field type="checkbox" name="TOSCheckbox" />
-                    <label>I accept the Eventbrite Terms of Service.</label>
+                    <label>I accept the Envie Terms of Service.</label>
                   </div>
                 </div>
                 <div className={classes.registerfooter}>

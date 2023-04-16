@@ -31,7 +31,7 @@ const LoginPage = ({onSubmit}) => {
   
   const navigate = useNavigate();
   const dispatch = useDispatch();
-  const [user,setUser] = useState(useSelector((state) => state.user))
+  const user = useSelector((state) => state.user);
   
   const [randImg, setrandImg] = useState(Math.floor(Math.random() * 3));
   const [dropDown, setDropDown] = useState(false);

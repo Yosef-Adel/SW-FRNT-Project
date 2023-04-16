@@ -1,8 +1,8 @@
 import React, { useState, useEffect, useRef } from "react";
 import classes from "./location.module.css";
 import { FaChevronDown } from "react-icons/fa";
-import axios from "../../../requests/axios";
-import routes from "../../../requests/routes";
+// import axios from "../../../requests/axios";
+// import routes from "../../../requests/routes";
 
 /**
  * Component that renders and detects geolocation section in landing page
@@ -14,7 +14,6 @@ import routes from "../../../requests/routes";
 
 const Location = (props) => {
   const [location, setLocation] = useState([]);
-  const [city, setCity] = useState("");
   const [dropList, setDropList] = useState(false);
   const containerRef = useRef();
 
@@ -25,25 +24,24 @@ const Location = (props) => {
    * @returns {void}
    */
 
-  async function getLocation(loc) {
-    let response = "";
-    try {
-      response = await axios.get(
-        routes.events + "/nearest?lat=" + loc[0] + "&lng=" + loc[1]
-      );
-      setCity(response.data.city)
-      return response.data;
-    } catch (error) {
-      if (error.response) {
-        return error.response;
-      }
-    }
-  }
+  // async function getLocation(loc) {
+  //   let response = "";
+  //   try {
+  //     response = await axios.get(
+  //       routes.events + "/nearest?lat=" + loc[0] + "&lng=" + loc[1]
+  //     );
+  //     setCity(response.data.city)
+  //     return response.data;
+  //   } catch (error) {
+  //     if (error.response) {
+  //       return error.response;
+  //     }
+  //   }
+  // }
 
   const handleLocation = async() => {
     await navigator.geolocation.getCurrentPosition(function (position) {
       props.onDetect([position.coords.latitude, position.coords.longitude])
-      // getLocation([position.coords.latitude, position.coords.longitude]);
     });     
   };
 
@@ -56,17 +54,6 @@ const Location = (props) => {
 
   useEffect(() => {
     window.onclick = (event) => {
-      // console.log(containerRef.current);
-      // console.log(event.target);
-      // console.log(event.target !== containerRef.current);
-      // console.log(event.target.contains(containerRef.current));
-      // console.log(containerRef.current.contains(event.target));
-      // // if (
-      // //   event.target.contains(containerRef.current) &&
-      // //   event.target !== containerRef.current
-      // // ) {
-      // //   setDropList(false);
-      // // } else
       if (containerRef.current) {
         if (containerRef.current.contains(event.target)) {
           setDropList(true);
@@ -93,7 +80,7 @@ const Location = (props) => {
             type="text"
             className={classes.default}
             placeholder={"Choose a location"}
-            value={props.City}
+            value={props.city}
             data-testid="LocationInput"
             onInput={(e) => setLocation(e.target.value)}
           />

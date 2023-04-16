@@ -1,10 +1,10 @@
 import React, { useEffect, useState } from "react";
 import classes from "./userevent.module.css";
 import NavBar from "../../layouts/nav/NavBar";
-import Footer from "../../layouts/footer/Footer";
+// import Footer from "../../layouts/footer/Footer";
 import { useParams } from "react-router-dom";
 import EventBanner from "./eventBanner/EventBanner";
-import LocationDetails from "./locationDetails/LocationDetails";
+// import LocationDetails from "./locationDetails/LocationDetails";
 import axios from "../../requests/axios";
 import routes from "../../requests/routes";
 import BookingPopup from "./bookingPopup/BookingPopup";

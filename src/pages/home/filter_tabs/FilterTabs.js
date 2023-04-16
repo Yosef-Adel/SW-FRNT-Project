@@ -1,10 +1,10 @@
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
 import classes from "./FilterTabs.module.css";
 import FilterTabsData from "../../../assets/data/FilterTabsData";
 import Location from "../location/Location";
 import { NavLink } from "react-router-dom";
-import axios from "../../../requests/axios";
-import routes from "../../../requests/routes";
+// import axios from "../../../requests/axios";
+// import routes from "../../../requests/routes";
 
 /**
  * Component that renders Filter tabs in Landing page
@@ -17,9 +17,9 @@ import routes from "../../../requests/routes";
 const FilterTabs = (props) => {
   const page = FilterTabsData.FilterTabsInfo;
   const [clicked, setIndexClicked] = useState(0);
-  const [events, setEvents] = useState([]);
+  // const [events, setEvents] = useState([]);
 
-  const [city, setCity] = useState("");
+  // const [city, setCity] = useState();
 
 
   //for selecting multiple filters ---- to make it usestate of indexclicked([1,0,0,0,0,0])---- if condition (clicked[index]==1)
@@ -38,7 +38,7 @@ const FilterTabs = (props) => {
 
   return (
     <div className={classes.container}>
-      <Location onDetect={props.setLocation} City={city} />
+      <Location onDetect={props.setLocation} city={props.city} />
       <div className={classes.Filter}>
         <ul>
           {page[0].map((element, index) => {

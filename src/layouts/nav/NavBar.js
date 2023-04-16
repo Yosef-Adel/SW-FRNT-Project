@@ -4,7 +4,7 @@ import navData from "../../assets/data/navData";
 import logo from "../../assets/brand/envie.svg";
 import KeyboardArrowDownIcon from "@mui/icons-material/KeyboardArrowDown";
 import MoreVertIcon from '@mui/icons-material/MoreVert';
-import { NavLink, useNavigate, useParams } from "react-router-dom";
+import { NavLink, useNavigate } from "react-router-dom";
 import { useState, useEffect } from "react";
 import { useSelector } from "react-redux";
 import { useDispatch } from 'react-redux'
@@ -21,7 +21,7 @@ import {userActions} from '../../store/userSlice'
 const NavBar = (props) => {
   const navigate = useNavigate();
   const dispatch = useDispatch();
-  const [user,setUser] = useState(useSelector((state) => state.user))
+  const user = useSelector((state) => state.user);
   const logged = user.token ? true : false;
   const email = logged ? user.email : "";
   const page = logged ? navData.homeUser : navData.homeAttendee;
