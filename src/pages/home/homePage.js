@@ -66,6 +66,7 @@ const HomePage = () => {
 
   return (
     <div className={classes.container}>
+      <NavBar/>
       <Banner />
 
       <div className={classes.containerbox}>

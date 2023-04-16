@@ -8,6 +8,8 @@ import { useState, useEffect } from "react";
 import { useSelector } from "react-redux";
 import { useDispatch } from "react-redux";
 import { userActions } from "../../store/userSlice";
+import {AiOutlineAppstore} from 'react-icons/ai'
+import SideBar from "../../pages/creator home/Sidebar";
 
 /**
  * Component that renders nav bar in creators view
@@ -21,6 +23,7 @@ const CreatorNav = (props) => {
   const navigate = useNavigate();
   const dispatch = useDispatch();
   const [user, setUser] = useState(useSelector((state) => state.user));
+  const [sideBar,showSideBar] = useState(false)
   const logged = true;
   const email = logged ? user.email : "";
   const list = creatorNavData.list;
@@ -53,6 +56,7 @@ const CreatorNav = (props) => {
 
   return (
     <div className={classes.nav}>
+      {sideBar && <SideBar show={sideBar}/>}
       <NavLink to="/" activeClassName={classes.activeLink}>
         <div className={classes.logoContainer}>
           <img className={classes.logo} src={logo} alt="logo" />
@@ -61,10 +65,13 @@ const CreatorNav = (props) => {
 
       <div className={classes.routes}>
         <ul>
+          <div className={classes.iconContainer} onClick={()=>showSideBar(!sideBar)}>
+            <AiOutlineAppstore className={classes.icon}/>
+          </div>
           <li className={`${classes.navItem} ${classes.navItemCreator}`}>
             <div className={`${classes.wrapper} ${classes.wrapperCreator}`}>
               <div className={classes.name}>
-                <span>
+                <span className={classes.initials}>
                   {user.firstName[0]}
                   {user.lastName[0]}
                 </span>

@@ -9,7 +9,6 @@ import { FcGoogle } from "react-icons/fc";
 import { GrFacebookOption } from "react-icons/gr";
 import { AiFillApple } from "react-icons/ai";
 import { FaChevronDown } from "react-icons/fa";
-import Footer from "../../layouts/footer/Footer";
 import axios from "../../requests/axios"
 import routes from "../../requests/routes"
 import { useNavigate } from "react-router-dom";

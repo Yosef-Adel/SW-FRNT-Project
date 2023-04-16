@@ -238,6 +238,17 @@ del{text-decoration: line-through;}
   background-color: var(--hoverButton);
   cursor: pointer;
 }
+.modalicon{
+  width:4rem;
+  height:4rem;
+  margin: auto;
+  align-items: center;
+  color:var( --content-text)
+ 
+}
+.errm{
+  margin-bottom:2rem;
+}
 
 .upArrow{
   transform: rotate(180deg);

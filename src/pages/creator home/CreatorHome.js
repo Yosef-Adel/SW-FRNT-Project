@@ -62,7 +62,14 @@ const CreatorHomePage = () => {
     checkCreator();
   }, []);
 
-  return <div className={classes.container}></div>;
+  return (
+    <>
+      <CreatorNav/>
+      <div className={classes.container}>
+        <SideBar/>
+      </div>
+    </>
+  );
 };
 
 export default CreatorHomePage;
