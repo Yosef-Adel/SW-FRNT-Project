@@ -8,6 +8,8 @@ import { useSelector } from "react-redux";
 import { useDispatch } from "react-redux";
 import { userActions } from "../../store/userSlice";
 import SideBar from "./Sidebar";
+import DashboardSidebar from "../../layouts/dashboard/dashboardSidebar";
+import { DataObjectSharp } from "@mui/icons-material";
 
 /**
  * Component that returns Creator's main page
@@ -66,6 +68,7 @@ const CreatorHomePage = () => {
       <CreatorNav/>
       <div className={classes.container}>
         <SideBar/>
+        <DashboardSidebar/>
       </div>
     </>
   );
