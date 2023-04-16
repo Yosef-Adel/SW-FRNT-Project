@@ -8,22 +8,12 @@ import CreatorHomePage from "./pages/creator home/CreatorHome";
 import ForgetPasswordPage from "./pages/authentication/ForgetPasswordPage";
 
 import { useSelector } from "react-redux";
-import SideBar from "./pages/creator home/Sidebar";
-import CreatorNav from "./layouts/nav/CreatorNav";
-import NavBar from "./layouts/nav/NavBar";
 import Footer from "./layouts/footer/Footer";
 
 function App() {
   const user = useSelector((state) => state.user);
-  return (
+  return ( 
     <>
-      {user.isCreator&&user.loggedIn && <>
-        <CreatorNav/>
-        <SideBar/></>} 
-      {!user.isCreator && 
-        <NavBar/>
-      }
- 
     <Routes>
         <Route path="/" element={<HomePage />} />
         <Route path="/login" element={<LoginPage />} />
@@ -33,7 +23,7 @@ function App() {
         <Route path="/forgetPassword/:id" element={<ForgetPasswordPage/>}/>
       </Routes>
 
-      <Footer/>
+      {!user.isCreator && <Footer/>}
     </>
   );
 }

@@ -58,8 +58,12 @@ const CreatorHomePage = () => {
       }, []);
 
   return (
-    <div className={classes.container}>
-    </div>
+    <>
+      <CreatorNav/>
+      <div className={classes.container}>
+        <SideBar/>
+      </div>
+    </>
   );
 };
 

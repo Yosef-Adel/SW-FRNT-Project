@@ -2,6 +2,7 @@ import React from "react";
 import classes from "./sidebar.module.css";
 import sideBarCreator from "../../assets/data/sideBarCreator";
 import { NavLink } from "react-router-dom";
+import logo from "../../assets/brand/logo.png";
 
 
 /**
@@ -12,11 +13,14 @@ import { NavLink } from "react-router-dom";
  *   <SideBar />
  * )
  */
-const SideBar = () => {
+const SideBar = (props) => {
   const list = sideBarCreator.list;
 
   return (
-    <div className={classes.sideBar}>
+    <div className={props.show?classes.smallScreenSideBar:classes.sideBar}>
+        <div className={classes.logoContainer}>
+            <img src={logo} alt="logo" className={classes.logo}/>
+        </div>
         <ul className={classes.iconsList}>
             {list.map((item) => {
                 return(
