@@ -7,25 +7,17 @@ import routes from "../../requests/routes";
 import moment from "moment";
 
 const EventList = (props) => {
-  const [Eventcards, SetEventcards] = useState([0, 0, 0, 0]);
-  const [loading, setLoading] = useState(true);
+  const [Eventcards, SetEventcards] = useState([0,0,0,0]);
+  const [loading,setLoading] = useState(true);
 
   async function getEventCards() {
     let response = "";
     try {
-      response = await axios.get(
-        routes.events +
-          "?category=" +
-          props.category +
-          "&lat=" +
-          (props.location[0] ? props.location[0] : "") +
-          "&lng=" +
-          (props.location[1] ? props.location[1] : "")
-      );
-      SetEventcards(response.data);
-      setLoading(false);
-      props.detectCity(response.data[0].city);
-      console.log(response.data);
+      response = await axios.get(routes.events + "?category=" +  props.category + "&lat=" + (props.location[0]?props.location[0]: "") + "&lng=" + (props.location[1]?props.location[1]: ""));
+      SetEventcards(response.data.events);
+      setLoading(false)
+      props.detectCity(response.data.city)
+      console.log(response.data)
       return response.data;
     } catch (error) {
       if (error.response) {
@@ -37,6 +29,8 @@ const EventList = (props) => {
   useEffect(() => {
     getEventCards();
   }, [props.location, props.category]);
+
+
 
   return (
     <div>
@@ -58,11 +52,10 @@ const EventList = (props) => {
           />
         ))}
       </div>
-      {!loading && (
-        <div className={classes.moreBtn}>
-          <button type="button">See more</button>
-        </div>
-      )}
+      {!loading&&
+      <div className={classes.moreBtn}>
+        <button type="button">See more</button>
+      </div>}
     </div>
   );
 };
