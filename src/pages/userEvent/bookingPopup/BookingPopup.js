@@ -207,6 +207,7 @@ const BookingPopup = ({ eventtitle, date, image }) => {
                   summary={ordersumm}
                   setOpenSummary={setOpenSummary}
                   openSummary={openSummary}
+                  total = {total}
                 />
               )}
             </div>

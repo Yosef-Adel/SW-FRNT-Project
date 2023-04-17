@@ -18,7 +18,7 @@ import ErrorNotification from "../../../../generic components/error message/Erro
 
 import {MdKeyboardArrowDown} from 'react-icons/md';
 
-const TicketsDetails = ({ eventtitle, date, checkout, summary,setOpenSummary, openSummary }) => {
+const TicketsDetails = ({ eventtitle, date, checkout, summary,setOpenSummary, openSummary,total }) => {
   //   const filledArray = Array(tickets.tickets.length).fill(0);
 
   let { _id } = useParams();
@@ -27,9 +27,6 @@ const TicketsDetails = ({ eventtitle, date, checkout, summary,setOpenSummary, op
   const [tickets, setTickets] = useState(false);
   const [ticketsAmount, setTicketsAmount] = useState([]);
   const [promocode, setPromocode] = useState(false);
-  const [subtotal, setSubtotal] = useState(0.0);
-  const [fee, setFee] = useState(0.0);
-  const [total, setTotal] = useState(0.0);
   const [inputValue, setInputValue] = useState("");
   const [ticketsNum, setTicketsNum] = useState(0);
   const [errorMsg, setErrorMsg] = useState(false);
