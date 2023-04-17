@@ -20,6 +20,7 @@ function App() {
         <Route path="/signup" element={<SignupPage />} />
         <Route path="/user/event/:_id" element={<UserEventPage />} />
         <Route path="/create" element={<CreatorHomePage />} />
+        <Route path="/create/creatorhome" element={<CreatorHomePage />} />
         <Route path="/forgetPassword/:id" element={<ForgetPasswordPage/>}/>
       </Routes>
 

@@ -8,7 +8,7 @@
     position:fixed;
     top: 0;
     left: 0;
-    z-index: -1;
+    z-index: 1;
 }
 
 .logoContainer{
@@ -112,7 +112,7 @@
     }
 
     .smallScreenSideBar{
-        display: block;
+        display: flex;
         position: absolute;
         min-width: 80%;
         top: 8rem;
