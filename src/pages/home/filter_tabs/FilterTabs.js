@@ -34,10 +34,24 @@ const FilterTabs = (props) => {
   function handleClick(i, title){
     setIndexClicked(i)
 
-    const category1 = title.replace("&", "%26")
-    const category2 = category1.split(" ").join("")
+    const temp = title.replace("&", "%26")
+    const filterOutPut = temp.split(" ").join("")
 
-    props.setCategory(category2)
+    if (i==2){
+      props.setCategory("All")
+      props.setTime("")
+      props.setOnline("true")
+    }
+    else if (i == 3 || i==4 || i==5){
+      props.setTime(filterOutPut.toLowerCase())
+      props.setCategory("All")
+      props.setOnline("")
+    }
+    else{
+      props.setCategory(filterOutPut)
+      props.setTime("")
+      props.setOnline("")
+    }
   }
 
   return (

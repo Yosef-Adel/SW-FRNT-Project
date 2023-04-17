@@ -15,8 +15,8 @@ const EventList = (props) => {
     setLoading(true)
     let response = "";
     try {
-      let cat=props.category=="All"?"":props.category;
-      response = await axios.get(routes.events + "?category=" + cat + "&lat=" + (props.location[0]?props.location[0]: "") + "&lng=" + (props.location[1]?props.location[1]: ""));
+      let cat=((props.category=="All")?"":props.category);
+      response = await axios.get(routes.events + "?category=" + cat + "&lat=" + (props.location[0]?props.location[0]: "") + "&lng=" + (props.location[1]?props.location[1]: "") + "&time=" + props.time + "&isOnline=" + props.online);
       SetEventcards(response.data.events);
       setLoading(false)
       props.detectCity(response.data.city)
@@ -24,6 +24,7 @@ const EventList = (props) => {
       return response.data;
     } catch (error) {
       if (error.response) {
+        setLoading(false)
         return error.response;
       }
     }
@@ -31,7 +32,7 @@ const EventList = (props) => {
 
   useEffect(() => {
     getEventCards();
-  }, [props.location, props.category]);
+  }, [props.location, props.category, props.time, props.online]);
 
 
 
