@@ -11,6 +11,8 @@
     overflow: hidden;
     margin:1.6rem;
 
+    max-width: 28rem;
+
 }
 
 .card:hover{
@@ -20,6 +22,7 @@
 
 .cardImage{
     width: 100%;
+    min-height: 13rem;
     background-size: contain;
     background-position: center;
     background-repeat: no-repeat;
@@ -89,5 +92,6 @@
 @media screen and (max-width: 768px) {
     .card{
         width: 45rem;
+        max-width: 50rem;
     }
 }

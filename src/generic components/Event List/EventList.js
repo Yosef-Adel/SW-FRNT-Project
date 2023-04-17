@@ -11,6 +11,8 @@ const EventList = (props) => {
   const [loading,setLoading] = useState(true);
 
   async function getEventCards() {
+    SetEventcards([0,0,0,0])
+    setLoading(true)
     let response = "";
     try {
       let cat=props.category=="All"?"":props.category;
