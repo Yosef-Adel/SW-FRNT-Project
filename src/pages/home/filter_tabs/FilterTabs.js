@@ -33,7 +33,11 @@ const FilterTabs = (props) => {
  
   function handleClick(i, title){
     setIndexClicked(i)
-    props.setCategory(title)
+
+    const category1 = title.replace("&", "%26")
+    const category2 = category1.split(" ").join("")
+
+    props.setCategory(category2)
   }
 
   return (
