@@ -7,7 +7,7 @@ import { useNavigate } from "react-router-dom";
 import { useSelector } from "react-redux";
 import { useDispatch } from "react-redux";
 import { userActions } from "../../store/userSlice";
-import SideBar from "./Sidebar";
+import SideBar from "../../layouts/sideBar/Sidebar";
 import DashboardSidebar from "../../layouts/dashboard/dashboardSidebar";
 import { DataObjectSharp } from "@mui/icons-material";
 
@@ -52,8 +52,11 @@ const CreatorHomePage = () => {
    * @namespace checkCreator
    */
   const checkCreator = () => {
-    if (user.loggedIn && !user.isCreator) {
-      switchCreator();
+    if (user.loggedIn) {
+      if(!user.isCreator)
+      {
+        switchCreator();
+      } 
     } else {
       navigate("/login");
     }
@@ -68,7 +71,6 @@ const CreatorHomePage = () => {
       <CreatorNav/>
       <div className={classes.container}>
         <SideBar/>
-        <DashboardSidebar/>
       </div>
     </>
   );

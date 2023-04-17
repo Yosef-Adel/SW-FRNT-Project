@@ -9,7 +9,7 @@ import { useSelector } from "react-redux";
 import { useDispatch } from "react-redux";
 import { userActions } from "../../store/userSlice";
 import {AiOutlineAppstore} from 'react-icons/ai'
-import SideBar from "../../pages/creator home/Sidebar";
+import SideBar from "../sideBar/Sidebar";
 
 /**
  * Component that renders nav bar in creators view

@@ -62,7 +62,7 @@ const HomePage = () => {
   useEffect(() => {
     checkUser();
     console.log(user);
-  }, []);
+  }, [user]);
 
   return (
     <div className={classes.container}>

@@ -7,7 +7,7 @@ import {BsBank} from 'react-icons/bs'
 import {FiSettings} from 'react-icons/fi'
 import {AiOutlineAppstore} from 'react-icons/ai'
 import {BiHelpCircle} from 'react-icons/bi'
-import classes from "../../pages/creator home/sidebar.module.css";
+import classes from "../../layouts/sideBar/sidebar.module.css"
 
 const sideBarCreator = {
     list: [

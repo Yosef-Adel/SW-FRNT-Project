@@ -9,18 +9,20 @@ import ForgetPasswordPage from "./pages/authentication/ForgetPasswordPage";
 
 import { useSelector } from "react-redux";
 import Footer from "./layouts/footer/Footer";
+import CreatorEvents from "./pages/creator events/CreatorEvents";
 
 function App() {
   const user = useSelector((state) => state.user);
   return ( 
     <>
     <Routes>
-        <Route path="/" element={<HomePage />} />
+        <Route exact path="/" element={<HomePage />} />
         <Route path="/login" element={<LoginPage />} />
         <Route path="/signup" element={<SignupPage />} />
         <Route path="/user/event/:_id" element={<UserEventPage />} />
         <Route path="/create" element={<CreatorHomePage />} />
         <Route path="/create/creatorhome" element={<CreatorHomePage />} />
+        <Route path="/create/events" element={<CreatorEvents />} />
         <Route path="/forgetPassword/:id" element={<ForgetPasswordPage/>}/>
       </Routes>
 
