@@ -7,24 +7,37 @@ import routes from "../../requests/routes";
 import moment from "moment";
 
 const EventList = (props) => {
-  const [Eventcards, SetEventcards] = useState([0,0,0,0]);
-  const [loading,setLoading] = useState(true);
+  const [Eventcards, SetEventcards] = useState([0, 0, 0, 0]);
+  const [loading, setLoading] = useState(true);
 
   async function getEventCards() {
-    SetEventcards([0,0,0,0])
-    setLoading(true)
+    SetEventcards([0, 0, 0, 0]);
+    setLoading(true);
     let response = "";
     try {
-      let cat=((props.category=="All")?"":props.category);
-      response = await axios.get(routes.events + "?category=" + cat + "&lat=" + (props.location[0]?props.location[0]: "") + "&lng=" + (props.location[1]?props.location[1]: "") + "&time=" + props.time + "&isOnline=" + props.online);
+      let cat = props.category == "All" ? "" : props.category;
+      response = await axios.get(
+        routes.events +
+          "?category=" +
+          cat +
+          "&lat=" +
+          (props.location[0] ? props.location[0] : "") +
+          "&lng=" +
+          (props.location[1] ? props.location[1] : "") +
+          "&time=" +
+          props.time +
+          "&isOnline=" +
+          props.online
+      );
       SetEventcards(response.data.events);
-      setLoading(false)
-      props.detectCity(response.data.city)
-      console.log(response.data)
+      setLoading(false);
+      props.detectCity(response.data.city);
+      console.log(response.data);
       return response.data;
     } catch (error) {
       if (error.response) {
-        setLoading(false)
+        SetEventcards([]);
+        setLoading(false);
         return error.response;
       }
     }
@@ -34,32 +47,37 @@ const EventList = (props) => {
     getEventCards();
   }, [props.location, props.category, props.time, props.online]);
 
-
-
   return (
     <div>
       <div className={classes.secheader}>
         <h3>Events in Al Qahirah</h3>
       </div>
       <div className={classes.list}>
-        {Eventcards.map((card) => (
-          <EventCard
-            id={card._id}
-            key={card._id}
-            img={card.image}
-            title={card.name}
-            time={moment(card.startDate).format("MMMM Do YYYY")}
-            location={card.address1}
-            price={card.price} //Price attribute is not provided by backend response
-            companyName={card.venueName} //Using venue name as the company name, as company name is not required
-            load={loading}
-          />
-        ))}
+        {Eventcards.length == 0 ? (
+          <div className={classes.noevents}>
+            <div>No Events on this Category</div>
+          </div>
+        ) : (
+          Eventcards.map((card) => (
+            <EventCard
+              id={card._id}
+              key={card._id}
+              img={card.image}
+              title={card.name}
+              time={moment(card.startDate).format("MMMM Do YYYY")}
+              location={card.address1}
+              price={card.price} //Price attribute is not provided by backend response
+              companyName={card.venueName} //Using venue name as the company name, as company name is not required
+              load={loading}
+            />
+          ))
+        )}
       </div>
-      {!loading&&
-      <div className={classes.moreBtn}>
-        <button type="button">See more</button>
-      </div>}
+      {!loading && Eventcards.length != 0 && (
+        <div className={classes.moreBtn}>
+          <button type="button">See more</button>
+        </div>
+      )}
     </div>
   );
 };
