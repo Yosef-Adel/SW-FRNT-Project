@@ -23,7 +23,7 @@ const HomePage = () => {
   const user = useSelector((state) => state.user);
   const id = user.id;
   const [location, setLocation] = useState([]);
-  const [category, setCategory] = useState("");
+  const [category, setCategory] = useState("All");
   const [city, setCity] = useState("");
 
   const dispatch = useDispatch();

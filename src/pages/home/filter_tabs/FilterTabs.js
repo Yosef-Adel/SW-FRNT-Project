@@ -30,7 +30,7 @@ const FilterTabs = (props) => {
   //     setIndexClicked((clicked) => [...clicked, clickedcl]);
   //   }
   // }
-
+ 
   function handleClick(i, title){
     setIndexClicked(i)
     props.setCategory(title)
