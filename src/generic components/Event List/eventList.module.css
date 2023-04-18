@@ -14,6 +14,11 @@
   font-size: 2rem;
 }
 
+.secheader>h3{
+  font-family: var(--main-h1);
+  color: var(--content-text);
+}
+
 .moreBtn {
   width: 100%;
   justify-content: center;

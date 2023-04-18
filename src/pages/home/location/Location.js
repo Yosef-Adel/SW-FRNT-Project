@@ -23,22 +23,6 @@ const Location = (props) => {
    * @param   {none}
    * @returns {void}
    */
-
-  // async function getLocation(loc) {
-  //   let response = "";
-  //   try {
-  //     response = await axios.get(
-  //       routes.events + "/nearest?lat=" + loc[0] + "&lng=" + loc[1]
-  //     );
-  //     setCity(response.data.city)
-  //     return response.data;
-  //   } catch (error) {
-  //     if (error.response) {
-  //       return error.response;
-  //     }
-  //   }
-  // }
-
   const handleLocation = async() => {
     await navigator.geolocation.getCurrentPosition(function (position) {
       props.onDetect([position.coords.latitude, position.coords.longitude])

@@ -39,7 +39,8 @@ const EventList = (props) => {
   return (
     <div>
       <div className={classes.secheader}>
-        <h3>Events in Al Qahirah</h3>
+      {props.city?<h3>Events in {props.city}</h3> : <h3>Events</h3>}
+        
       </div>
       <div className={classes.list}>
         {Eventcards.map((card) => (

@@ -74,7 +74,7 @@ const HomePage = () => {
       <div className={classes.containerbox}>
         <FilterTabs setLocation={setLocation} setCategory={setCategory} setTime={setTime} setOnline={setOnline} city={city}/>
         <Categories />
-        <EventList location={location} category={category} time={time} online={online} detectCity={setCity}/>
+        <EventList location={location} category={category} time={time} online={online} detectCity={setCity} city={city}/>
       </div>
     </div>
   );
