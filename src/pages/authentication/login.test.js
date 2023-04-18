@@ -53,6 +53,52 @@ describe("should render LoginPage component", () => {
       ).toBeInTheDocument();
     });
   });
+  it("incorrect password", async () => {
+    const handleSubmit = jest.fn();
+
+    render(
+      <MemoryRouter>
+        <LoginPage onSubmit={handleSubmit} />
+      </MemoryRouter>
+    );
+
+    const submitButton = screen.getByTestId("LoginFormSubmitButton");
+    const email = screen.getByTestId("LoginFormEmailInput");
+    const password = screen.getByTestId("LoginFormPasswordInput");
+
+    userEvent.type(email, "abdosayed40060@gmail.com");
+    userEvent.type(password, "123456776543");
+    userEvent.click(submitButton);
+
+    await waitFor(() => {
+      expect(
+        screen.getByText("Password is incorrect")
+      ).toBeInTheDocument();
+    });
+  });
+  it("no account associaed with this email ", async () => {
+    const handleSubmit = jest.fn();
+
+    render(
+      <MemoryRouter>
+        <LoginPage onSubmit={handleSubmit} />
+      </MemoryRouter>
+    );
+
+    const submitButton = screen.getByTestId("LoginFormSubmitButton");
+    const email = screen.getByTestId("LoginFormEmailInput");
+    const password = screen.getByTestId("LoginFormPasswordInput");
+
+    userEvent.type(email, "abdosayed4060@gmail.com");
+    userEvent.type(password, "123456776543");
+    userEvent.click(submitButton);
+
+    await waitFor(() => {
+      expect(
+        screen.getByText("There is no account associated with the email.")
+      ).toBeInTheDocument();
+    });
+  });
 
   it("missing Password Test", async () => {
     const handleSubmit = jest.fn();
