@@ -42,3 +42,16 @@
   cursor: pointer;
   transition: 0.5s;
 }
+
+.noevents {
+  display: flex;
+  height: 12rem;
+
+}
+
+.noevents div {
+  text-align: center;
+  font-size: 3rem;
+  margin: auto;
+  font-weight: 600;
+}
