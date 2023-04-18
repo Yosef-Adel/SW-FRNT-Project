@@ -59,7 +59,7 @@ const DashboardSidebar= (props) =>
                     eventManagementList.map((menutitle)=>
                     {
                         return(
-                            <li><div>{menutitle.title}</div><div className={classes.dashboardimg}><MdKeyboardArrowDown size={25}/></div></li>
+                            <li><div className={classes.dashboardmenu}>{menutitle.title}</div><div className={classes.dashboardimg}><MdKeyboardArrowDown size={22}/></div></li>
                             )})}
                     </ul>
                 </div>
