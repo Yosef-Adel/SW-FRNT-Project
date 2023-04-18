@@ -1,10 +1,16 @@
 import React from "react";
 import classes from "./dashboardsidebar.module.css";
-import {BiChevronLeft} from "react-icons/bi"
-import {BsBoxArrowUpRight} from "react-icons/bs"
+import {BiChevronLeft} from "react-icons/bi";
+import {BsBoxArrowUpRight} from "react-icons/bs";
+import dashboardSidebarData from "../../assets/data/dashboardSidebarData";
+import {MdKeyboardArrowDown} from "react-icons/md";
 
 const DashboardSidebar= (props) =>
 {
+    const eventdetailsList = dashboardSidebarData.eventDetails;
+    const eventManagementList= dashboardSidebarData.eventManagement;
+    console.log(dashboardSidebarData);
+    console.log(eventdetailsList);
     return(
         <div className={classes.main}>
             <div className={classes.eventDescription}> 
@@ -29,11 +35,17 @@ const DashboardSidebar= (props) =>
             <div>
                 <div>
                     <ol className={classes.eventMenu}>
-                        <li><div className={classes.circle}> 1 </div>Basic Info</li>
-                        <li><div className={classes.circle}> 2 </div>Details</li>
-                        <li><div className={classes.circle}> 3 </div>Online Event Page</li>
-                        <li><div className={classes.circle}> 4 </div>Tickets</li>
-                        <li><div className={classes.circle}> 5 </div>Publish</li>
+                        {eventdetailsList.map((eventdata,index)=>{
+                            return(
+                                <li>
+                                    <div className={classes.circle}>
+                                        {index+1}
+                                    </div>
+                                    {eventdata.title}
+                                </li>
+                                )
+                                }
+                            )}
                     </ol>
                 </div>
             </div>
@@ -41,27 +53,15 @@ const DashboardSidebar= (props) =>
                 <div className={classes.dashboardbtn}>
                     Dashboard
                 </div>
-                <div className={classes.dropDown}> 
-                  <button className={classes.dropDownBtn}></button>
-                  <div></div>
-                </div>
                 <div>
-                <ol className={classes.eventMenu}>
-                        <li><div className={classes.circle}> 1 </div>Basic Info</li>
-                        <li><div className={classes.circle}> 2 </div>Details</li>
-                        <li><div className={classes.circle}> 3 </div>Online Event Page</li>
-                        <li><div className={classes.circle}> 4 </div>Tickets</li>
-                        <li><div className={classes.circle}> 5 </div>Publish</li>
-                    </ol>
-                </div>
-                <div>
-                <ol className={classes.eventMenu}>
-                        <li><div className={classes.circle}> 1 </div>Basic Info</li>
-                        <li><div className={classes.circle}> 2 </div>Details</li>
-                        <li><div className={classes.circle}> 3 </div>Online Event Page</li>
-                        <li><div className={classes.circle}> 4 </div>Tickets</li>
-                        <li><div className={classes.circle}> 5 </div>Publish</li>
-                    </ol>
+                <ul className={classes.eventMenu}>
+                    {
+                    eventManagementList.map((menutitle)=>
+                    {
+                        return(
+                            <li><div>{menutitle.title}</div><div className={classes.dashboardimg}><MdKeyboardArrowDown size={25}/></div></li>
+                            )})}
+                    </ul>
                 </div>
             </div>
         </div>
