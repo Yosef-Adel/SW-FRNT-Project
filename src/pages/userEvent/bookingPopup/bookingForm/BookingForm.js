@@ -20,6 +20,8 @@ import ErrorNotification from "../../../../generic components/error message/Erro
 
 const BookingForm = (props) => {
   const [startTime, setTime] = useState(Date.now());
+  const [tos, setTos] = useState(false);
+
 
   const initialValues = {
     firstName: "",
@@ -45,7 +47,12 @@ const BookingForm = (props) => {
    *
    */
   function handleSubmit(data) {
+    if(!data.TOSCheckbox) {
+      setTos(true)
+    }
+    else{
       props.onRegister(data.firstName, data.surName, data.email);
+    }
   }
 
   /**
@@ -64,6 +71,8 @@ const BookingForm = (props) => {
         <Timer start={startTime} onFinish={handleTimeout} />
       </div>
       <div className={classes.contactInfo}>
+        {tos? <ErrorNotification mssg="You must accept Envies' terms of service to complete this purchase"/> : null}
+
         <h2>Contact Information</h2>
         <div className={classes.form}>
           <Formik
