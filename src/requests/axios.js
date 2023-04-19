@@ -14,7 +14,7 @@ const url =
   process.env.API_URL || "http://ec2-3-219-197-102.compute-1.amazonaws.com/";
 
 let instance = "";
-
+if (user) {
   instance = axios.create({
     baseURL: url,
     headers: {
@@ -25,6 +25,6 @@ let instance = "";
       ID: user.id,
     },
   });
-
+}
 
 export default instance;
