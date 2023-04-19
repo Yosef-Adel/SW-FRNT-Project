@@ -3,6 +3,15 @@ import React from "react";
 import { Link } from "react-router-dom";
 import {BiInfoCircle} from "react-icons/bi"
 
+
+/**
+ * Component that renders Error message
+ * 
+ * @component
+ * @example
+ * return(<ErrorNotification mssg={errorMsg} linkmsg={errorLinkMsg} link={errorLink}/>)
+*/
+
 const ErrorNotification = (props) => {
   return (
     <div className={classes.container}>

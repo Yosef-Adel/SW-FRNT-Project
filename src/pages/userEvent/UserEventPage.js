@@ -40,6 +40,7 @@ const UserEventPage = () => {
   }
 
   useEffect(() => {
+    window.scrollTo(0, 0)
     getEvent();
   }, []);
 

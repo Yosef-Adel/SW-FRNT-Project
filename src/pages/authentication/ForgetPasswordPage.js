@@ -53,7 +53,7 @@ const ForgetPasswordPage = ({onSubmit}) => {
   });
 
   /**
- * Submits the form login data to the server
+ * Submits the new password data to the server
  * @namespace onSubmit
  * @param   {string} password   User password
  */
@@ -61,7 +61,7 @@ const ForgetPasswordPage = ({onSubmit}) => {
     navigate('/login');
   }
   const {id}= useParams();
-  const handleSubmit = (data, {setErrors}) => {
+  const handleSubmit = (data) => {
     setconfirmform(false);
     console.log(id)
     async function sendData(){

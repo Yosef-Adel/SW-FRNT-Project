@@ -5,6 +5,19 @@ import Modal from "@mui/material/Modal";
 import IconButton from "@mui/material/IconButton";
 import CloseIcon from "@mui/icons-material/Close";
 
+/**
+ * Component that renders generic modal used to confirm actions
+ * 
+ * @component
+ * @example
+ * return(<GenericModal 
+            header='Password reset successfully'
+            confirmbtn='Login'
+            icon={<GiConfirmed className={classes.modalicon}/>}
+            accepthandle={loginhandle}
+        />)
+*/
+
 const GenericModal = (props) => {
   const[statebtn,changestatebtn]=useState(true);
   const handleClose = () => {
