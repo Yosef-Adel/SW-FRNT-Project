@@ -27,9 +27,25 @@ describe("should render Booking Modal component", () => {
     const gettickets = screen.getByTestId("GetTicketsButton");
 
     userEvent.click(gettickets);
+    
+    // const AddTicketBtn = screen.getByTestId("AddTicketBtn");
+    // const checkoutBtn =screen.getByTestId("checkoutBtn");
+    // userEvent.click(AddTicketBtn);
+    // userEvent.click(checkoutBtn);
+
+    // const RegisterBtn = screen.getByTestId('RegisterBtn');
+    // const email = screen.getByTestId('EmailInput');
+    // const FirstNamefield = screen.getByTestId('FirstNameInput');
+    // const SurNamefield = screen.getByTestId('SurNameInput');
+    // const EmailCheckbox = screen.getByTestId('EmailCheckbox');
+    // userEvent.type(FirstNamefield,"Amr");        
+    // userEvent.type(SurNamefield,"Ahmed");
+    // userEvent.type(email,"amr@gmail.com");
+    // userEvent.click(RegisterBtn);
 
     await waitFor(() => {
-      expect(screen.getByTestId("checkoutBtn")).toBeInTheDocument();
+      // expect(screen.getByTestId("checkoutBtn")).toBeInTheDocument();
+      expect(screen.getByText("Your Order has been placed successfully!!")).toBeInTheDocument();
     });
   });
 });

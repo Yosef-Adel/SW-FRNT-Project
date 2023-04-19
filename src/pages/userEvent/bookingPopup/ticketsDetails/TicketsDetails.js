@@ -319,6 +319,7 @@ const TicketsDetails = ({
                   <div className={classes.singleticketname}>{element.name}</div>
                   <div className={classes.addremoveticket}>
                     <div
+                    data-testid="AddTicketBtn"
                       className={
                         ticketsAmount[index].number ==
                         element.maxQuantityPerOrder

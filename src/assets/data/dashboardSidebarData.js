@@ -16,5 +16,4 @@ const dashboardSidebarData =
         {title:"Manage Attendees"},
     ],
 }
-
 export default dashboardSidebarData;
