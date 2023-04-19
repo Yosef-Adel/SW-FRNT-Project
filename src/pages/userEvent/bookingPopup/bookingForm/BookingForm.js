@@ -5,6 +5,18 @@ import classes from "./bookingform.module.css";
 import * as Yup from "yup";
 import logo from "../../../../assets/brand/envie.svg";
 import Timer from "../timer/timer";
+import ErrorNotification from "../../../../generic components/error message/ErrorNotification";
+
+/**
+ * Component that renders Booking Popup contains tickets and Info form
+ * 
+ * @component
+ * @example
+* return( <BookingForm
+          setTimeout={timeout}
+          onRegister={register}
+          />)
+*/
 
 const BookingForm = (props) => {
   const [startTime, setTime] = useState(Date.now());
@@ -24,6 +36,7 @@ const BookingForm = (props) => {
       .required("Please enter a valid email"),
     firstName: Yup.string().required("First Name is required."),
     surName: Yup.string().required("Surname is required."),
+    TOSCheckbox:Yup.bool().required("You must accept Envie's terms of service to complete this purchase.")
   });
 
   /**
@@ -32,7 +45,7 @@ const BookingForm = (props) => {
    *
    */
   function handleSubmit(data) {
-    props.onRegister(data.firstName, data.surName, data.email);
+      props.onRegister(data.firstName, data.surName, data.email);
   }
 
   /**
@@ -69,6 +82,7 @@ const BookingForm = (props) => {
                         name="firstName"
                         autoComplete="off"
                         className={classes.Field}
+                        data-testid="FirstNameInput"
                       />
                     </div>
                     <ErrorMessage name="firstName" component="span" />
@@ -81,6 +95,7 @@ const BookingForm = (props) => {
                         name="surName"
                         autoComplete="off"
                         className={classes.Field}
+                        data-testid="SurNameInput"
                       />
                     </div>
                     <ErrorMessage name="surName" component="span" />
@@ -95,6 +110,7 @@ const BookingForm = (props) => {
                         name="email"
                         autoComplete="off"
                         className={classes.Field}
+                        data-testid="EmailInput"
                       />
                     </div>
                     <ErrorMessage name="email" component="span" />
@@ -102,7 +118,7 @@ const BookingForm = (props) => {
                 </div>
                 <div className={classes.checkboxContainer}>
                   <div className={classes.checkbox}>
-                    <Field type="checkbox" name="updateCheckbox" />
+                    <Field type="checkbox" name="updateCheckbox" data-testid="UpdateCheckbox"/>
                     <label onClick={props.checked}>
                       {" "}
                       Keep me updated on more events and news from this event
@@ -110,14 +126,14 @@ const BookingForm = (props) => {
                     </label>
                   </div>
                   <div className={classes.checkbox}>
-                    <Field type="checkbox" name="emailCheckbox" />
+                    <Field type="checkbox" name="emailCheckbox" data-testid="EmailCheckbox"/>
                     <label>
                       Send me emails about the best events happening nearby or
                       online.
                     </label>
                   </div>
                   <div className={classes.checkbox}>
-                    <Field type="checkbox" name="TOSCheckbox" />
+                    <Field type="checkbox" name="TOSCheckbox" data-testid="TOSCheckbox"/>
                     <label>I accept the Envie Terms of Service.</label>
                   </div>
                 </div>
@@ -127,7 +143,7 @@ const BookingForm = (props) => {
                 </div>
                 <div className={classes.registercontainer}>
                   <div className={classes.btn}>
-                    <button type="submit" className={classes.button}>
+                    <button type="submit" className={classes.button} data-testid="RegisterBtn">
                       Register
                     </button>
                   </div>

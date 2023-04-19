@@ -1,7 +1,7 @@
 import React from "react";
 import { useState, useEffect } from "react";
 import classes from "./tickets.module.css";
-import { Link, useParams ,useNavigate} from "react-router-dom";
+import { Link, useParams, useNavigate } from "react-router-dom";
 import logo from "../../../../assets/brand/envie.svg";
 // import tickets from "../../../../assets/data/dummytickets";
 import moment from "moment";
@@ -11,14 +11,39 @@ import CheckCircleIcon from "@mui/icons-material/CheckCircle";
 import { styled } from "@mui/material/styles";
 import axios from "../../../../requests/axios";
 import routes from "../../../../requests/routes";
-import {useSelector} from 'react-redux';
+import { useSelector } from "react-redux";
 import GenericModal from "../../../../generic components/generic modal/GenericModal";
-import {GrLogin} from "react-icons/gr";
+import { GrLogin } from "react-icons/gr";
 import ErrorNotification from "../../../../generic components/error message/ErrorNotification";
 
-import {MdKeyboardArrowDown} from 'react-icons/md';
+import { MdKeyboardArrowDown } from "react-icons/md";
 
-const TicketsDetails = ({ eventtitle, date, checkout, summary,setOpenSummary, openSummary,total }) => {
+/**
+ * Component that renders tickets details
+ * 
+ * @component
+ * @example
+ * return(<TicketsDetails
+                  eventtitle="event name"
+                  date="date"
+                  calculateprice={calculateprice}
+                  checkout={checkout}
+                  summary={ordersumm}
+                  setOpenSummary={setOpenSummary}
+                  openSummary={openSummary}
+                  total={total}
+                />)
+*/
+
+const TicketsDetails = ({
+  eventtitle,
+  date,
+  checkout,
+  summary,
+  setOpenSummary,
+  openSummary,
+  total,
+}) => {
   //   const filledArray = Array(tickets.tickets.length).fill(0);
 
   let { _id } = useParams();
@@ -31,11 +56,10 @@ const TicketsDetails = ({ eventtitle, date, checkout, summary,setOpenSummary, op
   const [ticketsNum, setTicketsNum] = useState(0);
   const [errorMsg, setErrorMsg] = useState(false);
   const [helper, setHelper] = useState("");
-  const[logginform,setloginform]=useState(false);
-  const [errorMsg1, setErrorMsg1] = useState('');
-  const [errorLink, setErrorLink] = useState('');
-  const [errorLinkMsg, setErrorLinkMsg] = useState('');
-
+  const [logginform, setloginform] = useState(false);
+  const [errorMsg1, setErrorMsg1] = useState("");
+  const [errorLink, setErrorLink] = useState("");
+  const [errorLinkMsg, setErrorLinkMsg] = useState("");
 
   const MyTextField = styled(TextField)({
     "& .MuiOutlinedInput-root:hover .MuiOutlinedInput-notchedOutline": {
@@ -49,6 +73,12 @@ const TicketsDetails = ({ eventtitle, date, checkout, summary,setOpenSummary, op
       color: "black",
     },
   });
+
+  /**
+   * function that is triggered to get tickets
+   * @function getTickets
+
+   */
 
   async function getTickets() {
     try {
@@ -85,6 +115,13 @@ const TicketsDetails = ({ eventtitle, date, checkout, summary,setOpenSummary, op
     setInputValue(event.target.value);
   };
 
+  /**
+   * function that is triggered to add ticket
+   * @function addamount
+   * @param {number} index  index of the ticket
+
+   */
+
   function addamount(index) {
     if (
       ticketsAmount[index].number < tickets.tickets[index].maxQuantityPerOrder
@@ -101,6 +138,13 @@ const TicketsDetails = ({ eventtitle, date, checkout, summary,setOpenSummary, op
     }
   }
 
+  /**
+   * function that is triggered to remove ticket
+   * @function removeamount
+   * @param {number} index  index of the ticket
+
+   */
+
   function removeamount(index) {
     if (ticketsAmount[index].number > 0) {
       let amount = ticketsAmount;
@@ -115,6 +159,11 @@ const TicketsDetails = ({ eventtitle, date, checkout, summary,setOpenSummary, op
     }
   }
 
+  /**
+   * function that is triggered to apply promocode
+   * @function applypromocode
+
+   */
   const applypromocode = () => {
     async function sendpromo() {
       try {
@@ -196,27 +245,23 @@ const TicketsDetails = ({ eventtitle, date, checkout, summary,setOpenSummary, op
       setInputValue("");
     }
   };
-  const user = useSelector( state => state.user)
+  const user = useSelector((state) => state.user);
   const handlecheckout = () => {
     setloginform(false);
     const userloggedin = user.loggedIn;
-    if (ticketsNum != 0)
-    {
-      if (userloggedin){
+    if (ticketsNum != 0) {
+      if (userloggedin) {
         checkout(promocode);
-      }
-      else
-      {
+      } else {
         setloginform(true);
       }
-    }
-    else {
-      setErrorMsg1("please take at least 1 ticket")
+    } else {
+      setErrorMsg1("please take at least 1 ticket");
     }
   };
-  const loginhandle=()=>{
-    navigate('/login');
-  }
+  const loginhandle = () => {
+    navigate("/login");
+  };
 
   return (
     tickets != false && (
@@ -225,13 +270,17 @@ const TicketsDetails = ({ eventtitle, date, checkout, summary,setOpenSummary, op
           <div id="modal-modal-title">{eventtitle}</div>
           <div className={classes.eventdate}> {date}</div>
         </div>
-        
 
         <div className={classes.tickets}>
           <div className={classes.promocode}>
-            <div  className={classes.errm}>
-              {errorMsg1?
-                <ErrorNotification mssg={errorMsg1} linkmsg={errorLinkMsg} link={errorLink}/>:null}
+            <div className={classes.errm}>
+              {errorMsg1 ? (
+                <ErrorNotification
+                  mssg={errorMsg1}
+                  linkmsg={errorLinkMsg}
+                  link={errorLink}
+                />
+              ) : null}
             </div>
             <TextField
               value={inputValue}
@@ -270,6 +319,7 @@ const TicketsDetails = ({ eventtitle, date, checkout, summary,setOpenSummary, op
                   <div className={classes.singleticketname}>{element.name}</div>
                   <div className={classes.addremoveticket}>
                     <div
+                    data-testid="AddTicketBtn"
                       className={
                         ticketsAmount[index].number ==
                         element.maxQuantityPerOrder
@@ -360,24 +410,33 @@ const TicketsDetails = ({ eventtitle, date, checkout, summary,setOpenSummary, op
           </div>
         </div>
         <div className={classes.checkoutcontainer}>
-          <div className={classes.summarycontainer}> <MdKeyboardArrowDown className={openSummary?classes.upArrow:classes.downArrow} onClick={()=>{setOpenSummary(!openSummary)}}/> {total}</div>
+          <div className={classes.summarycontainer}>
+            {" "}
+            <MdKeyboardArrowDown
+              className={openSummary ? classes.upArrow : classes.downArrow}
+              onClick={() => {
+                setOpenSummary(!openSummary);
+              }}
+            />{" "}
+            {total}
+          </div>
           <div className={classes.btn}>
             <button
               onClick={handlecheckout}
               className={classes.button}
-              data-testid="CreateBtn">
+              data-testid="checkoutBtn">
               Check out
             </button>
           </div>
         </div>
-        {logginform&&(
-              <GenericModal 
-                  header='Please login first'
-                  confirmbtn='Login'
-                  icon={<GrLogin className={classes.modalicon}/>}
-                  accepthandle={loginhandle}
-              />
-         )}
+        {logginform && (
+          <GenericModal
+            header="Please login first"
+            confirmbtn="Login"
+            icon={<GrLogin className={classes.modalicon} />}
+            accepthandle={loginhandle}
+          />
+        )}
       </div>
     )
   );

@@ -10,15 +10,15 @@ else
 {
     user = "";
 }
-// console.log(user)
-const url = process.env.API_URL || "https://sw-backend-project.vercel.app/"
+
+const url = process.env.API_URL || "http://ec2-3-219-197-102.compute-1.amazonaws.com/"
 
 let instance = "";
 if (user){
     instance  = axios.create({
         baseURL: url,
         headers: {
-            Authorization: "Bearer "+ user.token,
+            Authorization: "Bearer "+ JSON.parse(JSON.parse(window.localStorage.getItem('persist:root')).user).token,
             ID: user.id
         }
     })

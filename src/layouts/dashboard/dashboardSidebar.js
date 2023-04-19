@@ -9,8 +9,6 @@ const DashboardSidebar= (props) =>
 {
     const eventdetailsList = dashboardSidebarData.eventDetails;
     const eventManagementList= dashboardSidebarData.eventManagement;
-    console.log(dashboardSidebarData);
-    console.log(eventdetailsList);
     return(
         <div className={classes.main}>
             <div className={classes.eventDescription}> 
