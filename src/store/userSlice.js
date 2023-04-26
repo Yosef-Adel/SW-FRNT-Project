@@ -20,6 +20,7 @@ const userSlice = createSlice({
             state.firstName = action.payload.firstName
             state.lastName = action.payload.lastName
             state.isCreator = action.payload.isCreator
+            sessionStorage.setItem("token", action.payload.token);
         },
         signup: (state) =>{
             state.loggedIn= false

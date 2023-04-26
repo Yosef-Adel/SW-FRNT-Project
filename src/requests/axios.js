@@ -16,12 +16,10 @@ const url =
 let instance = "";
 if (user) {
   instance = axios.create({
-    baseURL: url,
+    baseURL: "https://sw-backend-project.vercel.app/",
     headers: {
       Authorization:
-        "Bearer " +
-        JSON.parse(JSON.parse(window.localStorage.getItem("persist:root")).user)
-          .token,
+        "Bearer " + sessionStorage.getItem("token"),
       ID: user.id,
     },
   });
