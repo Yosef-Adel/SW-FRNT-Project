@@ -1,5 +1,6 @@
 import axios from "axios";
 
+
 let user = "";
 // To get the values of token and id from local storage
 if (window.localStorage.getItem("persist:root")) {
@@ -10,6 +11,8 @@ if (window.localStorage.getItem("persist:root")) {
   user = "";
 }
 
+console.log(sessionStorage.getItem("token"))
+
 const url =
   process.env.API_URL || "http://ec2-3-219-197-102.compute-1.amazonaws.com/";
 
@@ -19,7 +22,7 @@ if (user) {
     baseURL: "https://sw-backend-project.vercel.app/",
     headers: {
       Authorization:
-        "Bearer " + sessionStorage.getItem("token"),
+        "Bearer " + user.token,
       ID: user.id,
     },
   });
