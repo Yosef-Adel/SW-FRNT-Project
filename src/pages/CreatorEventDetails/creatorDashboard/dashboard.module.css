@@ -1,3 +1,174 @@
 .container{
     width: 100%;
 }
+
+.dashboard
+{
+    padding:0 9rem ;
+}
+
+.header
+{
+    font-size: 4.5rem;
+    font-weight: 800;
+    color: var(--content-text);
+    margin: 2.8rem 0 1.4rem 1.2rem;
+}
+
+.content
+{
+    display: grid;
+    grid-template-columns: calc((2/3)*100%) calc((1/3)*100%);
+    
+
+}
+
+.cards
+{
+    display: flex;
+}
+
+.recommended
+{
+    margin:1.4rem 0 1.4rem 1.2rem;
+    display: flex;
+    flex-direction: column;
+    row-gap: 3rem;
+
+}
+
+.secsectionheader
+{
+    color: var(--primary-text);
+    font-size: 1.8rem;
+    letter-spacing: 0.05rem;
+    font-weight: 600;
+    
+}
+
+.reclistContainer
+{
+    display: flex;
+    flex-direction: column;
+    row-gap: 2rem;
+}
+
+.recitemContainer
+{
+    display: flex;
+    column-gap: 1.5rem;
+}
+
+.iconContainer
+{
+    display: flex;
+    justify-content: center;
+}
+
+.iconContainer svg{
+    width: 1.6rem;
+   height: 1.6rem;
+   fill: var(--secondary-text);
+}
+
+.reclistdata
+{
+    display: flex;
+    flex-direction: column;
+    row-gap: 0.8rem;
+}
+
+.reclistdtitle
+{
+    color: var(--primary-text);
+    font-size: 1.4rem;
+    letter-spacing: 0.05rem;
+    font-weight: 500;
+}
+
+.hyperlink
+{
+    color: var(--bright-blue);
+    font-size: 1.3rem;
+    letter-spacing: 0.05rem;
+    font-weight: 600;
+    cursor: pointer;
+}
+
+.hyperlink:hover
+{
+    text-decoration: underline;
+}
+
+
+.share
+{
+    margin:1.4rem 0 1.4rem 1.2rem;
+    display: flex;
+    flex-direction: column;
+    row-gap: 3rem;
+}
+
+.mainsectionheader
+{
+    font-size: 2.5rem;
+    font-weight: 600;
+    color: var(--content-text);
+}
+
+.eventurl
+{
+    color: var(--primary-text);
+    font-size: 1.3rem;
+    letter-spacing: 0.05rem;
+    font-weight: 600;
+}
+
+.eventurlheader
+{
+    margin-bottom: 0.5rem;
+}
+
+.shareicons
+{
+  font-size: 1.9rem;
+  color: var(--content-text);
+  font-family: var(--main-h1);
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-end;
+  margin:1.4rem 0 1.4rem 1.2rem;
+}
+.shareicons ul
+{
+  display: flex;
+  flex-direction: row;
+  padding-top: 0.5rem;
+  gap: 2.5rem;
+  width: fit-content;
+}
+.shareicons li
+{
+  width: 2rem;
+  height: 2rem;
+  border-radius: 90%;
+  cursor:pointer;
+}
+.shareicons li:hover
+{
+  background-color: var(--border-color);
+  transition: 1s;
+}
+
+.shareIcon 
+{
+  width:100%;
+  height: 100%;
+  color: var(--icons);
+}
+
+hr{
+    width: 100%;
+    border-top: 1px solid #eeedf2;
+    margin: 3rem 0;
+}

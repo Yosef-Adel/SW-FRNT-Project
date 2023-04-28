@@ -1,0 +1,35 @@
+.container {
+  margin: 1.2rem;
+  padding: 1.2rem 2rem;
+  box-shadow: 0 4px 4px #dbdae3;
+  border-radius: 6px;
+  width: 50%;
+  display: flex;
+  flex-direction: column;
+  row-gap: 1rem;
+}
+
+.title
+{
+    color: var(--primary-text);
+    font-size: 1.4rem;
+    letter-spacing: 0.05rem;
+    font-weight: 500;
+}
+
+.amountandtotal {
+  display: flex;
+  align-items: end;
+  column-gap: 0.1rem;
+}
+
+.amount {
+  font-size: 3.5rem;
+  font-weight: 600;
+}
+
+.total {
+  font-size: 1.8rem;
+  font-weight: 400;
+  margin-bottom: 0.5rem;
+}
