@@ -9,12 +9,11 @@
   row-gap: 1rem;
 }
 
-.title
-{
-    color: var(--primary-text);
-    font-size: 1.4rem;
-    letter-spacing: 0.05rem;
-    font-weight: 500;
+.title {
+  color: var(--primary-text);
+  font-size: 1.4rem;
+  letter-spacing: 0.05rem;
+  font-weight: 500;
 }
 
 .amountandtotal {
@@ -32,4 +31,10 @@
   font-size: 1.8rem;
   font-weight: 400;
   margin-bottom: 0.5rem;
+}
+
+@media screen and (max-width: 480px) {
+  .container {
+    min-width: 27rem;
+  }
 }

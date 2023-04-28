@@ -41,40 +41,43 @@ const CreatorDashboard = () => {
               })}
             </div>
           </div>
-          <div className={classes.share}>
-            <div className={classes.mainsectionheader}>Share</div>
+        </div>
+        <div className={classes.share}>
+          <div className={classes.mainsectionheader}>Share</div>
+          <div className={classes.content}>
             <div className={classes.eventurl}>
               <div className={classes.eventurlheader}>Event URL</div>
               <div className={classes.url}>
                 https://www.eventbrite.com/e/the-design-show-egypt-tickets-372686233557?aff=ebdssbcitybrowse
               </div>
             </div>
-          </div>
 
-          <div className={classes.shareicons}>
-            <div className={classes.secsectionheader}>Share On</div>
-            <ul>
-              <li>
-                <FaFacebookF className={classes.shareIcon} />
-              </li>
-              <li>
-                <FaFacebookMessenger className={classes.shareIcon} />
-              </li>
-              <li>
-                <FaTwitter className={classes.shareIcon} />
-              </li>
-              <li>
-                <MdEmail className={classes.shareIcon} />
-              </li>
-              <li>
-                <FaLinkedinIn className={classes.shareIcon} />
-              </li>
-              <li>
-                <FaWhatsapp className={classes.shareIcon} />
-              </li>
-            </ul>
+            <div className={classes.shareicons}>
+              <div>Share On</div>
+              <ul>
+                <li>
+                  <FaFacebookF className={classes.shareIcon} />
+                </li>
+                <li>
+                  <FaFacebookMessenger className={classes.shareIcon} />
+                </li>
+                <li>
+                  <FaTwitter className={classes.shareIcon} />
+                </li>
+                <li>
+                  <MdEmail className={classes.shareIcon} />
+                </li>
+                <li>
+                  <FaLinkedinIn className={classes.shareIcon} />
+                </li>
+                <li>
+                  <FaWhatsapp className={classes.shareIcon} />
+                </li>
+              </ul>
+            </div>
           </div>
         </div>
+
         <hr />
       </div>
     </div>
