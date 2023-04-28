@@ -1,12 +1,14 @@
 import DashboardCards from "./DashboardCards/DashBoardCards";
+import SalesByTicket from "./salesBYticket/SalesByTicket";
 import classes from "./dashboard.module.css";
-import dashboardrecommend from "../../../assets/data/dashboardrecommend";
+import dashboarddata from "../../../assets/data/dashboarddata";
 import { FaFacebookF } from "react-icons/fa";
 import { FaFacebookMessenger } from "react-icons/fa";
 import { FaLinkedinIn } from "react-icons/fa";
 import { FaTwitter } from "react-icons/fa";
 import { MdEmail } from "react-icons/md";
 import { FaWhatsapp } from "react-icons/fa";
+import { Link } from "react-router-dom";
 
 /**
  * Component that returns Creator's Dashboard page
@@ -28,7 +30,7 @@ const CreatorDashboard = () => {
           <div className={classes.recommended}>
             <div className={classes.secsectionheader}>Recommended</div>
             <div className={classes.reclistContainer}>
-              {dashboardrecommend.list.map((item) => {
+              {dashboarddata.recommended.map((item) => {
                 return (
                   <li key={item.key} className={classes.recitemContainer}>
                     <div className={classes.iconContainer}> {item.icon}</div>
@@ -53,7 +55,7 @@ const CreatorDashboard = () => {
             </div>
 
             <div className={classes.shareicons}>
-              <div>Share On</div>
+              <div className={classes.thirsectionheader}>Share On</div>
               <ul>
                 <li>
                   <FaFacebookF className={classes.shareIcon} />
@@ -79,6 +81,31 @@ const CreatorDashboard = () => {
         </div>
 
         <hr />
+
+        <div className={classes.content}>
+          <SalesByTicket />
+          <div className={classes.recommended}>
+            <div className={classes.thirsectionheader}>
+              Other Attendee Actions
+            </div>
+            <div className={classes.reclistContainer}>
+              {dashboarddata.attendee.map((item) => {
+                return (
+                  <li key={item.key} className={classes.recitemContainer}>
+                    <div className={classes.acticonContainer}> {item.icon}</div>
+                    <div className={classes.reclistdata}>
+                      <Link to={"/"}>
+                        <div className={classes.hyperlink}>
+                          {item.hyperlink}
+                        </div>
+                      </Link>
+                    </div>
+                  </li>
+                );
+              })}
+            </div>
+          </div>
+        </div>
       </div>
     </div>
   );
