@@ -8,7 +8,6 @@ import { useSelector } from "react-redux";
 import { useDispatch } from "react-redux";
 import { userActions } from "../../store/userSlice";
 import SideBar from "../../layouts/sideBar/Sidebar";
-import DashboardSidebar from "../../layouts/dashboard/dashboardSidebar";
 
 /**
  * Component that returns Creator's main page
@@ -70,7 +69,6 @@ const CreatorEvents = () => {
       <CreatorNav/>
       <div className={classes.container}>
         <SideBar/>
-        <DashboardSidebar/>
       </div>
     </>
   );

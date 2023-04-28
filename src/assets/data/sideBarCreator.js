@@ -15,13 +15,13 @@ const sideBarCreator = {
           key: "0",  
           title: "Home",
           icon: <HiOutlineHome className={classes.icon}/>,
-          route: "/create/creatorhome",
+          route: "/create",
         },
         {
           key: "1",
           title: "Events",
           icon: <BsCalendarDate className={classes.icon}/>,
-          route: "/create/events",
+          route: "/events",
         },
         {
           key: "2",

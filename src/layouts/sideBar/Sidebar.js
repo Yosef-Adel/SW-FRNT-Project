@@ -25,7 +25,7 @@ const SideBar = (props) => {
             {list.map((item) => {
                 return(
                     <li key={item.key} className={classes.iconContainer}>
-                        <NavLink exact to={item.route} className={({ isActive }) => isActive ? `${classes.activeLink}` : `${classes.normalLink}`}>
+                        <NavLink end to={item.route} className={({ isActive }) => isActive ? `${classes.activeLink}` : `${classes.normalLink}`}>
                             <li className={classes.iconItem}>
                                 {item.icon}
                             </li>

@@ -3,10 +3,12 @@ import classes from "./creatorHome.module.css";
 import CreatorNav from "../../layouts/nav/CreatorNav";
 import axios from "../../requests/axios";
 import routes from "../../requests/routes";
-import { useNavigate } from "react-router-dom";
+import { NavLink, useNavigate } from "react-router-dom";
 import { useSelector } from "react-redux";
 import { useDispatch } from "react-redux";
 import { userActions } from "../../store/userSlice";
+import KeyboardArrowDownIcon from "@mui/icons-material/KeyboardArrowDown";
+
 import SideBar from "../../layouts/sideBar/Sidebar";
 
 
@@ -68,9 +70,12 @@ const CreatorHomePage = () => {
   return (
     <>
       <CreatorNav/>
-      <div className={classes.container}>
+      <NavLink to="/events">
+        <a className={classes.events}> <KeyboardArrowDownIcon/> Events</a>
+      </NavLink>
+      {/* <div className={classes.container}>
         <SideBar/>
-      </div>
+      </div> */}
     </>
   );
 };
