@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import classes from "./FilterTabs.module.css";
-import FilterTabsData from "../../../assets/data/FilterTabsData";
+
 import Location from "../location/Location";
 import { NavLink } from "react-router-dom";
 // import axios from "../../../requests/axios";
@@ -15,7 +15,7 @@ import { NavLink } from "react-router-dom";
  */
 
 const FilterTabs = (props) => {
-  const page = FilterTabsData.FilterTabsInfo;
+  const page = props.FilterTabsData.FilterTabsInfo;
   const [clicked, setIndexClicked] = useState(0);
   // const [events, setEvents] = useState([]);
 

@@ -11,7 +11,7 @@ const CreatorTickets = () => {
 
   return (
     <div className={classes.container}>
-      TICKETSSS
+      
     </div>
   );
 };

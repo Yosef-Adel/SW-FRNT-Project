@@ -11,6 +11,7 @@ import routes from "../../requests/routes";
 import { useSelector } from "react-redux";
 import { useDispatch } from "react-redux";
 import { userActions } from "../../store/userSlice";
+import FilterTabsData from"../../assets/data/FilterTabsData";
 
 /**
  * Component that returns Home Page
@@ -72,7 +73,7 @@ const HomePage = () => {
       <Banner />
 
       <div className={classes.containerbox}>
-        <FilterTabs setLocation={setLocation} setCategory={setCategory} setTime={setTime} setOnline={setOnline} city={city}/>
+        <FilterTabs setLocation={setLocation} setCategory={setCategory} setTime={setTime} setOnline={setOnline} city={city} FilterTabsData={FilterTabsData}/>
         <Categories />
         <EventList location={location} category={category} time={time} online={online} detectCity={setCity} city={city}/>
       </div>
