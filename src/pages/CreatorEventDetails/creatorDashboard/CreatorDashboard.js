@@ -1,7 +1,7 @@
 import DashboardCards from "./DashboardCards/DashBoardCards";
-import SalesByTicket from "./salesBYticket/SalesByTicket";
 import classes from "./dashboard.module.css";
 import dashboarddata from "../../../assets/data/dashboarddata";
+import salesbyticket from "../../../assets/data/dummysalesbyticket";
 import { FaFacebookF } from "react-icons/fa";
 import { FaFacebookMessenger } from "react-icons/fa";
 import { FaLinkedinIn } from "react-icons/fa";
@@ -9,6 +9,9 @@ import { FaTwitter } from "react-icons/fa";
 import { MdEmail } from "react-icons/md";
 import { FaWhatsapp } from "react-icons/fa";
 import { Link } from "react-router-dom";
+import SalesCards from "./salesCards/SalesCards";
+import SalesByTicket from "./salesBYticket/SalesByTicket";
+import RecentOrders from "./recentOrders/RecentOrders";
 
 /**
  * Component that returns Creator's Dashboard page
@@ -82,28 +85,55 @@ const CreatorDashboard = () => {
 
         <hr />
 
-        <div className={classes.content}>
-          <SalesByTicket />
-          <div className={classes.recommended}>
-            <div className={classes.thirsectionheader}>
-              Other Attendee Actions
+        <div>
+          <div className={classes.mainsectionheader}>Sales Summary</div>
+
+          <div className={classes.salescards}>
+            <SalesCards
+              title="Gross Sales"
+              amount={salesbyticket.sales.grossSales}
+            />
+            <SalesCards
+              title="Net Sales"
+              amount={salesbyticket.sales.netSales}
+            />
+            <SalesCards
+              title="Tickets + Add-Ons Sold"
+              amount={salesbyticket.sales.totalSoldTickets}
+            />
+            <SalesCards
+              title="Orders"
+              amount={salesbyticket.sales.totalOrders}
+            />
+          </div>
+          <div className={classes.content}>
+            <SalesByTicket />
+            <div className={classes.recommended}>
+              <div className={classes.thirsectionheader}>
+                Other Attendee Actions
+              </div>
+              <div className={classes.reclistContainer}>
+                {dashboarddata.attendee.map((item) => {
+                  return (
+                    <li key={item.key} className={classes.recitemContainer}>
+                      <div className={classes.acticonContainer}>
+                        {item.icon}
+                      </div>
+                      <div className={classes.reclistdata}>
+                        <Link to={"/"}>
+                          <div className={classes.hyperlink}>
+                            {item.hyperlink}
+                          </div>
+                        </Link>
+                      </div>
+                    </li>
+                  );
+                })}
+              </div>
             </div>
-            <div className={classes.reclistContainer}>
-              {dashboarddata.attendee.map((item) => {
-                return (
-                  <li key={item.key} className={classes.recitemContainer}>
-                    <div className={classes.acticonContainer}> {item.icon}</div>
-                    <div className={classes.reclistdata}>
-                      <Link to={"/"}>
-                        <div className={classes.hyperlink}>
-                          {item.hyperlink}
-                        </div>
-                      </Link>
-                    </div>
-                  </li>
-                );
-              })}
-            </div>
+          </div>
+          <div className={classes.content}>
+            <RecentOrders />
           </div>
         </div>
       </div>
