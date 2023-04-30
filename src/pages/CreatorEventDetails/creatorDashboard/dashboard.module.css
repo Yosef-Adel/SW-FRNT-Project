@@ -108,7 +108,7 @@
   margin: 1.4rem 0 1.4rem 1.2rem;
 }
 
-.thirsectionheader{
+.thirsectionheader {
   margin-bottom: 0.8rem;
   font-size: 1.4rem;
   letter-spacing: 0.05rem;
@@ -153,9 +153,17 @@ hr {
   fill: var(--bright-blue);
 }
 
+.salescards {
+  display: flex;
+  column-gap: 2rem;
+  row-gap: 2rem;
+  margin: 2.8rem 0 2.8rem 1.2rem;
+  flex-wrap: wrap;
+}
+
 @media screen and (max-width: 1400px) {
   .dashboard {
-    padding: 0
+    padding: 0;
   }
 }
 
@@ -163,13 +171,10 @@ hr {
   .content {
     display: grid;
     grid-template-columns: 100%;
-
   }
-
 }
 
 @media screen and (max-width: 480px) {
-
   .cards {
     overflow-x: scroll;
   }

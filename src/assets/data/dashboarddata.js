@@ -57,7 +57,7 @@ const dashboarddata = {
             d="M3 21v-5.9l2.8-2.4c.4.3.8.4 1.2.4.6 0 1.1-.3 1.5-.7l2.5 1.3v.4c0 1.1.9 2 2 2s2-.9 2-2c0-.3-.1-.6-.2-.9l3-2.5c.3.2.7.4 1.2.4 1.1 0 2-.9 2-2s-.9-2-2-2-2 .9-2 2c0 .3.1.6.2.9l-3 2.5c-.3-.2-.7-.4-1.2-.4-.6 0-1.1.3-1.5.7L9 11.5v-.4c0-1.1-.9-2-2-2s-2 .9-2 2c0 .3.1.6.2.9L3 13.8V2H2v20h20v-1H3zM19 8.1c.6 0 1 .4 1 1s-.4 1-1 1-1-.4-1-1c0-.5.4-1 1-1zm-6 5c.6 0 1 .4 1 1s-.4 1-1 1-1-.4-1-1c0-.5.4-1 1-1zm-6-3c.6 0 1 .4 1 1s-.4 1-1 1-1-.4-1-1c0-.5.4-1 1-1z"></path>
         </svg>
       ),
-      route:"/",
+      route: "/",
     },
     {
       key: "1",
@@ -77,9 +77,11 @@ const dashboarddata = {
           </g>
         </svg>
       ),
-      route:"/",
+      route: "/",
     },
   ],
+  salesheader: ["Ticket type", "Price", "Sold"],
+  recentordersheader:["Order #",	"Name"	,"Quantity",	"Price",	"Date"],
 };
 
 export default dashboarddata;

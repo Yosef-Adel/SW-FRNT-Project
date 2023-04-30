@@ -1,5 +1,6 @@
 import classes from "./salesbyticke.module.css";
 import salesbyticket from "../../../../assets/data/dummysalesbyticket";
+import dashboarddata from "../../../../assets/data/dashboarddata";
 
 /**
  * Component that returns table of sales by ticket type of Creator's Dashboard page
@@ -16,13 +17,13 @@ const SalesByTicket = () => {
         <table>
           <thead>
             <tr>
-              {salesbyticket.header.map((item) => {
+              {dashboarddata.salesheader.map((item) => {
                 return <td>{item}</td>;
               })}
             </tr>
           </thead>
           <tbody>
-            {salesbyticket.Report.map((item) => {
+            {salesbyticket.salesReport.map((item) => {
               return <tr>
                 <td>{item.ticketType}</td>
                 <td>{item.Price}</td>
