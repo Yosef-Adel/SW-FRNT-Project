@@ -4,7 +4,7 @@ import salesbyticket from "../../../../assets/data/dummysalesbyticket";
 import moment from "moment";
 
 /**
- * Component that returns table of sales by ticket type of Creator's Dashboard page
+ * Component that returns table of recent orders of Creator's Dashboard page
  *
  * @component
  * @example
@@ -25,13 +25,15 @@ const RecentOrders = () => {
           </thead>
           <tbody>
             {salesbyticket.recentordersReport.map((item) => {
-              return <tr>
-                <td className={classes.sold}>{item.orderNumber}</td>
-                <td>{item.name}</td>
-                <td>{item.quantity}</td>
-                <td>{item.price}</td>
-                <td>{moment(item.date).format('L')}</td>
-              </tr>;
+              return (
+                <tr>
+                  <td className={classes.sold}>{item.orderNumber}</td>
+                  <td>{item.name}</td>
+                  <td>{item.quantity}</td>
+                  <td>{item.price}</td>
+                  <td>{moment(item.date).format("L")}</td>
+                </tr>
+              );
             })}
           </tbody>
         </table>

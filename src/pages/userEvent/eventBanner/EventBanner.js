@@ -19,18 +19,29 @@ import mobimgs from "../../../assets/data/BannerLabImgs";
 const EventBanner = ({ image }) => {
   return (
     <div
+      id="EventPageBannerContainer"
       className={classes.eventbannercontainer}
       style={{
         backgroundImage: "url(" + bannercurve + ")",
       }}>
-      <div className={classes.imgbackgroundcontainer}>
+      <div
+        id="EventPageBannerBackgroundContainer"
+        className={classes.imgbackgroundcontainer}>
         <div
+          id="EventPageBannerBackground"
           className={classes.imgbackground}
           style={{
             backgroundImage: "url(" + image + ")",
           }}>
-          <div className={classes.eventimgcontainer}>
-            <img className={classes.eventimg} src={image} alt="Event" />
+          <div
+            id="EventPageBannerImgContainer"
+            className={classes.eventimgcontainer}>
+            <img
+              id="EventPageBannerImg"
+              className={classes.eventimg}
+              src={image}
+              alt="Event"
+            />
           </div>
         </div>
       </div>
