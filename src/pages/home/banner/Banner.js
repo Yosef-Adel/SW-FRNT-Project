@@ -37,6 +37,7 @@ const Banner = () => {
 
   return (
     <div
+      id="HomePageBannerContainer"
       className={classes.bannercontainer}
       style={{
         backgroundPosition: "top",
@@ -46,13 +47,26 @@ const Banner = () => {
         //     url("small-landscape-750x536.jpg") 1x,
         //     url("large-landscape-2048x1536.jpg") 2x)",
       }}>
-      <div className={classes.bannerheadercontainer}>
-        <div className={classes.bannerheaderimg}>
-          <img src={header} alt="Now Is Your Time" />
+      <div
+        id="HomePageBannerHeaderContainer"
+        className={classes.bannerheadercontainer}>
+        <div
+          id="HomePageBannerHeaderImgContainer"
+          className={classes.bannerheaderimg}>
+          <img
+            id="HomePageBannerHeaderImg"
+            src={header}
+            alt="Now Is Your Time"
+          />
         </div>
-        <div className={classes.bannerheaderbtn}>
-          <Link to="/" className={classes.bannerheaderlink}>
-            <div> Find Your Next Event</div>
+        <div
+          id="HomePageBannerHeaderBtnContainer"
+          className={classes.bannerheaderbtn}>
+          <Link
+            id="HomePageBannerHeaderBtn"
+            to="/"
+            className={classes.bannerheaderlink}>
+            <div id="HomePageBannerHeaderBtnDiv"> Find Your Next Event</div>
           </Link>
         </div>
       </div>

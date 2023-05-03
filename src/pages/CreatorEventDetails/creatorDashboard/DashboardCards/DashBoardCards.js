@@ -5,16 +5,46 @@ import classes from "./dashboaradcards.module.css";
  *
  * @component
  * @example
- * return(<DashboardCards title="title" amount="amount" total="total"/>)
+ * return(<DashboardCards title="title" amount="amount" total="total" free="free" paid="paid"/>)
  */
-const DashboardCards = ({ title, amount, total }) => {
+const DashboardCards = ({ title, amount, total, free, paid }) => {
   return (
-    <div className={classes.container}>
-      <div className={classes.title}>{title}</div>
-      <div className={classes.amountandtotal}>
-        <div className={classes.amount}>{amount}</div>
-        {total && <div className={classes.total}>/{total}</div>}
+    <div id="CreatorDashBoardPageCardContainer" className={classes.container}>
+      <div id="CreatorDashBoardPageCardTitle" className={classes.title}>
+        {title}
       </div>
+      <div
+        id="CreatorDashBoardPageCardAmountAndTotal"
+        className={classes.amountandtotal}>
+        <div id="CreatorDashBoardPageCardAmount" className={classes.amount}>
+          {amount}
+        </div>
+        {total && (
+          <div id="CreatorDashBoardPageCardTotal" className={classes.total}>
+            /{total}
+          </div>
+        )}
+      </div>
+      {free && (
+        <div
+          id="CreatorDashBoardPageCardFreeAndPaidTickets"
+          className={classes.type}>
+          <div
+            id="CreatorDashBoardPageCardPaidTickets"
+            className={classes.paid}>
+            <strong>{paid}</strong> paid
+          </div>
+          <div id="CreatorDashBoardPageCardFreeTickets">
+            <strong>{free}</strong> free
+          </div>
+        </div>
+      )}
+
+      {!free && (
+        <div id="CreatorDashBoardPageCardView" className={classes.type}>
+          4 from Eventbrite
+        </div>
+      )}
     </div>
   );
 };

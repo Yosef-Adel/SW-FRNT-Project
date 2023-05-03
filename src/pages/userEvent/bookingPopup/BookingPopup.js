@@ -1,9 +1,9 @@
 import React from "react";
-import { useState, useEffect } from "react";
+import { useState} from "react";
 
 import classes from "./bookingpopup.module.css";
-import { Link, useParams } from "react-router-dom";
-import tickets from "../../../assets/data/dummytickets";
+import {useParams } from "react-router-dom";
+// import tickets from "../../../assets/data/dummytickets";
 import BookingForm from "./bookingForm/BookingForm";
 import Box from "@mui/material/Box";
 import Button from "@mui/material/Button";
@@ -186,9 +186,14 @@ const BookingPopup = ({ eventtitle, date, image }) => {
   }
 
   return (
-    <div className={classes.bookingpopscontainer}>
-      <div className={classes.btn}>
+    <div
+      id="EventPageBookingPopsContainer"
+      className={classes.bookingpopscontainer}>
+      <div
+        id="EventPageBookingPopUpTicketsBtnContainer"
+        className={classes.btn}>
         <Button
+          id="EventPageBookingPopUpTicketsBtn"
           className={classes.button}
           onClick={handleOpen}
           data-testid="GetTicketsButton">
@@ -197,15 +202,17 @@ const BookingPopup = ({ eventtitle, date, image }) => {
       </div>
 
       <Modal
+        id="EventPageBookingPopUpModal"
         open={openModal}
         // onClose={handleClose}
         // disableBackdropClick
         aria-labelledby="modal-modal-title"
         aria-describedby="modal-modal-description"
         className={classes.bookingmodal}>
-        <Box className={classes.bookingbox}>
+        <Box id="EventPageBookingPopUpModalBox" className={classes.bookingbox}>
           {(!askclose || timerClose || registerClose) && (
             <IconButton
+              id="EventPageBookingPopUpCloseBtnContainer"
               aria-label="close"
               onClick={() => {
                 if (!askclose) setAskclose(true);
@@ -216,13 +223,16 @@ const BookingPopup = ({ eventtitle, date, image }) => {
                 }
               }}
               className={classes.bookingmodalclose}>
-              <CloseIcon />
+              <CloseIcon id="EventPageBookingPopUpCloseBtn" />
             </IconButton>
           )}
           <div
+            id="EventPageBookingPopUp"
             className={classes.bookingcontainer}
             style={{ display: askclose ? "none" : "flex" }}>
-            <div className={classes.ticketsformcontainer}>
+            <div
+              id="EventPageBookingPopUpFormContainer"
+              className={classes.ticketsformcontainer}>
               {openForm ? (
                 <div>
                   {" "}
@@ -246,16 +256,25 @@ const BookingPopup = ({ eventtitle, date, image }) => {
             </div>
 
             <div
+              id="EventPageBookingPopUpSummaryContainer"
               className={
                 openSummary
                   ? classes.openSummaryContainer
                   : classes.summarycontainer
               }>
-              <div className={classes.cardImage}>
-                <img src={image} alt="event_img" />
+              <div
+                id="EventPageBookingPopUpSummaryImgContainer"
+                className={classes.cardImage}>
+                <img
+                  id="EventPageBookingPopUpSummaryImg"
+                  src={image}
+                  alt="event_img"
+                />
               </div>
               {empty && (
-                <div className={classes.emptycart}>
+                <div
+                  id="EventPageBookingPopUpSummaryEmptyCartContainer"
+                  className={classes.emptycart}>
                   <svg
                     id="cart_svg__eds-icon--cart_svg"
                     x="0"
@@ -277,16 +296,35 @@ const BookingPopup = ({ eventtitle, date, image }) => {
               )}
 
               {!empty && (
-                <div className={classes.summary}>
-                  <div className={classes.summaryheader}>Order Summary</div>
-                  <div className={classes.summarytickets}>
+                <div
+                  id="EventPageBookingPopUpSummary"
+                  className={classes.summary}>
+                  <div
+                    id="EventPageBookingPopUpSummaryHeader"
+                    className={classes.summaryheader}>
+                    Order Summary
+                  </div>
+                  <div
+                    id="EventPageBookingPopUpSummaryTicketsContainer"
+                    className={classes.summarytickets}>
                     {orderSummary.map((singleticket, index) => {
                       return (
-                        <div className={classes.ticketsummary}>
-                          <div className={classes.ticketcount}>
+                        <div
+                          key={"EventPageBookingPopUpSummaryTicket" + index}
+                          id={"EventPageBookingPopUpSummaryTicket" + index}
+                          className={classes.ticketsummary}>
+                          <div
+                            id={
+                              "EventPageBookingPopUpSummaryTicketCount" + index
+                            }
+                            className={classes.ticketcount}>
                             {singleticket.number} x {singleticket.name}
                           </div>
-                          <div className={classes.ticketprice}>
+                          <div
+                            id={
+                              "EventPageBookingPopUpSummaryTicketPrice" + index
+                            }
+                            className={classes.ticketprice}>
                             {singleticket.number * singleticket.price}
                           </div>
                         </div>
@@ -294,19 +332,46 @@ const BookingPopup = ({ eventtitle, date, image }) => {
                     })}
                   </div>
                   <hr />
-                  <div className={classes.summarytickets}>
-                    <div className={classes.ticketsummary}>
-                      <div className={classes.ticketcount}>Subtotal</div>
-                      <div className={classes.ticketprice}>{subtotal}</div>
+                  <div
+                    id="EventPageBookingPopUpSummaryTicketsSubTotalContainer"
+                    className={classes.summarytickets}>
+                    <div
+                      id="EventPageBookingPopUpSummaryTicketsSubTotalPriceContainer"
+                      className={classes.ticketsummary}>
+                      <div
+                        id="EventPageBookingPopUpSummaryTicketsSubTotalHeader"
+                        className={classes.ticketcount}>
+                        Subtotal
+                      </div>
+                      <div
+                        id="EventPageBookingPopUpSummaryTicketsSubTotalPrice"
+                        className={classes.ticketprice}>
+                        {subtotal}
+                      </div>
                     </div>
                     {discount != 0 && (
-                      <div className={classes.ticketsummary}>
-                        <div className={classes.ticketcount}>Discount</div>
-                        <div className={classes.ticketprice}> - {discount}</div>
+                      <div
+                        id="EventPageBookingPopUpSummaryTicketsDiscountContainer"
+                        className={classes.ticketsummary}>
+                        <div
+                          id="EventPageBookingPopUpSummaryTicketsDiscountHeader"
+                          className={classes.ticketcount}>
+                          Discount
+                        </div>
+                        <div
+                          id="EventPageBookingPopUpSummaryTicketsDiscount"
+                          className={classes.ticketprice}>
+                          {" "}
+                          - {discount}
+                        </div>
                       </div>
                     )}
-                    <div className={classes.ticketsummary}>
-                      <div className={classes.ticketcount}>
+                    <div
+                      id="EventPageBookingPopUpSummaryTicketsFeesContainer"
+                      className={classes.ticketsummary}>
+                      <div
+                        id="EventPageBookingPopUpSummaryTicketsFeesHeader"
+                        className={classes.ticketcount}>
                         Fees
                         <svg
                           id="info-chunky_svg__eds-icon--info-chunky_svg"
@@ -330,15 +395,31 @@ const BookingPopup = ({ eventtitle, date, image }) => {
                             d="M11 11h2v5h-2z"></path>
                         </svg>
                       </div>
-                      <div className={classes.ticketprice}>{fee}</div>
+                      <div
+                        id="EventPageBookingPopUpSummaryTicketsFeesPrice"
+                        className={classes.ticketprice}>
+                        {fee}
+                      </div>
                     </div>
                   </div>
                   <hr />
 
-                  <div className={classes.summaryheader}>
-                    <div className={classes.ticketsummary}>
-                      <div className={classes.ticketcount}>Total</div>
-                      <div className={classes.ticketprice}>{total}</div>
+                  <div
+                    id="EventPageBookingPopUpSummaryTicketsTotalContainer"
+                    className={classes.summaryheader}>
+                    <div
+                      id="EventPageBookingPopUpSummaryTicketsTotalPriceContainer"
+                      className={classes.ticketsummary}>
+                      <div
+                        id="EventPageBookingPopUpSummaryTicketsTotalPriceHeader"
+                        className={classes.ticketcount}>
+                        Total
+                      </div>
+                      <div
+                        id="EventPageBookingPopUpSummaryTicketsTotalPrice"
+                        className={classes.ticketprice}>
+                        {total}
+                      </div>
                     </div>
                   </div>
                 </div>
@@ -346,22 +427,36 @@ const BookingPopup = ({ eventtitle, date, image }) => {
             </div>
           </div>
           {askclose && !timerClose && !registerClose && (
-            <div className={classes.leavecheckout}>
-              <div className={classes.leavecheckoutheader}>
+            <div
+              id="EventPageBookingPopUpLeaveCheckOutContainer"
+              className={classes.leavecheckout}>
+              <div
+                id="EventPageBookingPopUpLeaveCheckOutHeader"
+                className={classes.leavecheckoutheader}>
                 <h1>Leave Checkout?</h1> Are you sure you want to leave
                 checkout? The items you've selected may not be available later.
               </div>
-              <div className={classes.leavecheckoutbuttons}>
-                <div className={classes.stayleavebtn}>
+              <div
+                id="EventPageBookingPopUpLeaveCheckOutBtnsContainer"
+                className={classes.leavecheckoutbuttons}>
+                <div
+                  id="EventPageBookingPopUpLeaveCheckOutStayBtnContainer"
+                  className={classes.stayleavebtn}>
                   <button
+                    id="EventPageBookingPopUpLeaveCheckOutStayBtn"
                     className={classes.staybutton}
                     onClick={() => setAskclose(false)}>
                     stay
                   </button>
                 </div>
 
-                <div className={classes.stayleavebtn}>
-                  <button className={classes.leavebutton} onClick={handleClose}>
+                <div
+                  id="EventPageBookingPopUpLeaveCheckOutLeaveBtnContainer"
+                  className={classes.stayleavebtn}>
+                  <button
+                    id="EventPageBookingPopUpLeaveCheckOutLeaveBtn"
+                    className={classes.leavebutton}
+                    onClick={handleClose}>
                     Leave
                   </button>
                 </div>
@@ -369,9 +464,12 @@ const BookingPopup = ({ eventtitle, date, image }) => {
             </div>
           )}
           {(timerClose || registerClose) && (
-            <div className={classes.leavecheckout}>
+            <div
+              id="EventPageBookingPopUpTimerLimitContainer"
+              className={classes.leavecheckout}>
               {timerClose ? (
                 <div
+                  id="EventPageBookingPopUpTimerLimitHeader"
                   className={classes.leavecheckoutheader}
                   style={{ "font-size": "1.25rem" }}>
                   <h1>Time Limit Reached</h1> Your reservation has been
@@ -379,6 +477,7 @@ const BookingPopup = ({ eventtitle, date, image }) => {
                 </div>
               ) : (
                 <div
+                  id="EventPageBookingPopUpOrderDoneHeader"
                   className={classes.leavecheckoutheader}
                   style={{ "font-size": "1.25rem" }}>
                   <TfiEmail className={classes.modalicon} />

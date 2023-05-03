@@ -1,7 +1,7 @@
 import React from "react";
 import { useState, useEffect } from "react";
 import classes from "./tickets.module.css";
-import { Link, useParams, useNavigate } from "react-router-dom";
+import {  useParams, useNavigate } from "react-router-dom";
 import logo from "../../../../assets/brand/envie.svg";
 // import tickets from "../../../../assets/data/dummytickets";
 import moment from "moment";
@@ -61,18 +61,18 @@ const TicketsDetails = ({
   const [errorLink, setErrorLink] = useState("");
   const [errorLinkMsg, setErrorLinkMsg] = useState("");
 
-  const MyTextField = styled(TextField)({
-    "& .MuiOutlinedInput-root:hover .MuiOutlinedInput-notchedOutline": {
-      borderColor: "grey",
-    },
-    "&:focus-within .MuiOutlinedInput-root .MuiOutlinedInput-notchedOutline": {
-      borderColor: "black",
-      borderWidth: "2px",
-    },
-    "&:focus-within .MuiInputLabel-root": {
-      color: "black",
-    },
-  });
+  // const MyTextField = styled(TextField)({
+  //   "& .MuiOutlinedInput-root:hover .MuiOutlinedInput-notchedOutline": {
+  //     borderColor: "grey",
+  //   },
+  //   "&:focus-within .MuiOutlinedInput-root .MuiOutlinedInput-notchedOutline": {
+  //     borderColor: "black",
+  //     borderWidth: "2px",
+  //   },
+  //   "&:focus-within .MuiInputLabel-root": {
+  //     color: "black",
+  //   },
+  // });
 
   /**
    * function that is triggered to get tickets
@@ -265,15 +265,30 @@ const TicketsDetails = ({
 
   return (
     tickets != false && (
-      <div className={classes.ticketscontainer}>
-        <div className={classes.bookingheader}>
+      <div
+        id="EventPageBookingPopUpTicketsDetailsContainer"
+        className={classes.ticketscontainer}>
+        <div
+          id="EventPageBookingPopUpTicketsDetailsHeaderContainer"
+          className={classes.bookingheader}>
           <div id="modal-modal-title">{eventtitle}</div>
-          <div className={classes.eventdate}> {date}</div>
+          <div
+            id="EventPageBookingPopUpTicketsDetailsHeaderDate"
+            className={classes.eventdate}>
+            {" "}
+            {date}
+          </div>
         </div>
 
-        <div className={classes.tickets}>
-          <div className={classes.promocode}>
-            <div className={classes.errm}>
+        <div
+          id="EventPageBookingPopUpTicketsDetailsTicketsContainer"
+          className={classes.tickets}>
+          <div
+            id="EventPageBookingPopUpTicketsDetailsPromoCodeContainer"
+            className={classes.promocode}>
+            <div
+              id="EventPageBookingPopUpTicketsDetailsPromoCodeError"
+              className={classes.errm}>
               {errorMsg1 ? (
                 <ErrorNotification
                   mssg={errorMsg1}
@@ -294,9 +309,12 @@ const TicketsDetails = ({
               InputLabelProps={{ shrink: true }}
               InputProps={{
                 endAdornment: (
-                  <InputAdornment position="end">
+                  <InputAdornment
+                    id="EventPageBookingPopUpTicketsDetailsPromoCodeBtnContainer"
+                    position="end">
                     {promocode && <CheckCircleIcon color="success" />}
                     <button
+                      id="EventPageBookingPopUpTicketsDetailsPromoCodeBtn"
                       disabled={!promocode ? !inputValue : false}
                       onClick={applypromocode}
                       className={
@@ -314,12 +332,37 @@ const TicketsDetails = ({
 
           {tickets.tickets.map((element, index) => {
             return (
-              <div className={classes.singleticket}>
-                <div className={classes.singleticketnamecontainer}>
-                  <div className={classes.singleticketname}>{element.name}</div>
-                  <div className={classes.addremoveticket}>
+              <div
+                key={
+                  "EventPageBookingPopUpTicketsDetailsTicketContainer" + index
+                }
+                id={
+                  "EventPageBookingPopUpTicketsDetailsTicketContainer" + index
+                }
+                className={classes.singleticket}>
+                <div
+                  id={
+                    "EventPageBookingPopUpTicketsDetailsTicketNameContainer" +
+                    index
+                  }
+                  className={classes.singleticketnamecontainer}>
+                  <div
+                    id={"EventPageBookingPopUpTicketsDetailsTicketName" + index}
+                    className={classes.singleticketname}>
+                    {element.name}
+                  </div>
+                  <div
+                    id={
+                      "EventPageBookingPopUpTicketsDetailsAddRemoveTicketBtnsContainer" +
+                      index
+                    }
+                    className={classes.addremoveticket}>
                     <div
-                    data-testid="AddTicketBtn"
+                      id={
+                        "EventPageBookingPopUpTicketsDetailsAddTicketBtn" +
+                        index
+                      }
+                      data-testid="AddTicketBtn"
                       className={
                         ticketsAmount[index].number ==
                         element.maxQuantityPerOrder
@@ -343,6 +386,10 @@ const TicketsDetails = ({
                       {ticketsAmount[index].number}
                     </div>
                     <div
+                      id={
+                        "EventPageBookingPopUpTicketsDetailsRemoveTicketBtn" +
+                        index
+                      }
                       className={
                         ticketsAmount[index].number == 0
                           ? classes.addremove
@@ -362,37 +409,96 @@ const TicketsDetails = ({
                     </div>
                   </div>
                 </div>
-                <div className={classes.containerticketinfo}>
-                  <div className={classes.headercontainer}>
+                <div
+                  id={
+                    "EventPageBookingPopUpTicketsDetailsTicketInfoContainer" +
+                    index
+                  }
+                  className={classes.containerticketinfo}>
+                  <div
+                    id={
+                      "EventPageBookingPopUpTicketsDetailsTicketInfoHeaderContainer" +
+                      index
+                    }
+                    className={classes.headercontainer}>
                     {!ticketsAmount[index].discount && (
-                      <p className={classes.price}>{element.price}</p>
+                      <p
+                        id={
+                          "EventPageBookingPopUpTicketsDetailsTicketPrice" +
+                          index
+                        }
+                        className={classes.price}>
+                        {element.price}
+                      </p>
                     )}
                     {ticketsAmount[index].discount && (
                       <pre>
-                        <p className={classes.price}>
+                        <p
+                          id={
+                            "EventPageBookingPopUpTicketsDetailsTicketPriceDiscountContainer" +
+                            index
+                          }
+                          className={classes.price}>
                           {element.price -
                             element.price *
                               ticketsAmount[index].discountpercent -
                             ticketsAmount[index].discountamount}
                           {"  "}
-                          <del>{element.price}</del>
+                          <del
+                            id={
+                              "EventPageBookingPopUpTicketsDetailsTicketPriceDiscount" +
+                              index
+                            }>
+                            {element.price}
+                          </del>
                         </p>
                       </pre>
                     )}
-                    <p className={classes.sales}>
+                    <p
+                      id={
+                        "EventPageBookingPopUpTicketsDetailsTicketSalesDate" +
+                        index
+                      }
+                      className={classes.sales}>
                       sales end on{" "}
                       {moment(element.salesStart).format("MMMM Do YYYY")}
                     </p>
                   </div>
-                  <div className={classes.aboutticket}>
-                    <p className={classes.includedpr}>
+                  <div
+                    id={
+                      "EventPageBookingPopUpTicketsDetailsAboutTicketContainer" +
+                      index
+                    }
+                    className={classes.aboutticket}>
+                    <p
+                      id={
+                        "EventPageBookingPopUpTicketsDetailsAboutTicketHeader" +
+                        index
+                      }
+                      className={classes.includedpr}>
                       WHAT IS INCLUDED IN YOUR TICKET?{" "}
                     </p>
                     {element.about && (
-                      <ul className={classes.aboutsection}>
-                        {element.about.map((item, index) => {
+                      <ul
+                        id={
+                          "EventPageBookingPopUpTicketsDetailsAboutTicketInfo" +
+                          index
+                        }
+                        className={classes.aboutsection}>
+                        {element.about.map((item, index2) => {
                           return (
-                            <li className={classes.Detailsabout}>
+                            <li
+                              key={
+                                "EventPageBookingPopUpTicketsDetailsAboutTicketInfo" +
+                                index +
+                                index2
+                              }
+                              id={
+                                "EventPageBookingPopUpTicketsDetailsAboutTicketInfo" +
+                                index +
+                                index2
+                              }
+                              className={classes.Detailsabout}>
                               {item.name}
                             </li>
                           );
@@ -409,10 +515,15 @@ const TicketsDetails = ({
             <img className={classes.logo} src={logo} alt="logo" />
           </div>
         </div>
-        <div className={classes.checkoutcontainer}>
-          <div className={classes.summarycontainer}>
+        <div
+          id="EventPageBookingPopUpTicketsDetailsFooterContainer"
+          className={classes.checkoutcontainer}>
+          <div
+            id="EventPageBookingPopUpTicketsDetailsFooterSummaryContainer"
+            className={classes.summarycontainer}>
             {" "}
             <MdKeyboardArrowDown
+              id="EventPageBookingPopUpTicketsDetailsFooterSummaryBtn"
               className={openSummary ? classes.upArrow : classes.downArrow}
               onClick={() => {
                 setOpenSummary(!openSummary);
@@ -420,8 +531,11 @@ const TicketsDetails = ({
             />{" "}
             {total}
           </div>
-          <div className={classes.btn}>
+          <div
+            id="EventPageBookingPopUpTicketsDetailsFooterCheckoutBtnContainer"
+            className={classes.btn}>
             <button
+              id="EventPageBookingPopUpTicketsDetailsFooterCheckoutBtn"
               onClick={handlecheckout}
               className={classes.button}
               data-testid="checkoutBtn">

@@ -11,29 +11,63 @@ import dashboarddata from "../../../../assets/data/dashboarddata";
  */
 const SalesByTicket = () => {
   return (
-    <div className={classes.container}>
-      <div className={classes.mainsectionheader}>Sales by ticket type</div>
-      <div className={classes.salestable}>
-        <table>
-          <thead>
-            <tr>
-              {dashboarddata.salesheader.map((item) => {
-                return <td>{item}</td>;
+    <div
+      id="CreatorDashBoardPageSalesByTicketContainer"
+      className={classes.container}>
+      <div
+        id="CreatorDashBoardPageSalesByTicketHeader"
+        className={classes.mainsectionheader}>
+        Sales by ticket type
+      </div>
+      <div
+        id="CreatorDashBoardPageSalesByTicketTableContainer"
+        className={classes.salestable}>
+        <table id="CreatorDashBoardPageSalesByTicketTable">
+          <thead id="CreatorDashBoardPageSalesByTicketTableHead">
+            <tr id="CreatorDashBoardPageSalesByTicketTableHeadRow">
+              {dashboarddata.salesheader.map((item, index) => {
+                return (
+                  <td
+                    key={
+                      "CreatorDashBoardPageSalesByTicketTableHeadData" + index
+                    }
+                    id={
+                      "CreatorDashBoardPageSalesByTicketTableHeadData" + index
+                    }>
+                    {item}
+                  </td>
+                );
               })}
             </tr>
           </thead>
-          <tbody>
-            {salesbyticket.salesReport.map((item) => {
-              return <tr>
-                <td>{item.ticketType}</td>
-                <td>{item.Price}</td>
-                <td className={classes.sold}>{item.sold}/{item.total}</td>
-              </tr>;
+          <tbody id="CreatorDashBoardPageSalesByTicketTableBody">
+            {salesbyticket.salesReport.map((item, index) => {
+              return (
+                <tr
+                  key={"CreatorDashBoardPageSalesByTicketTableBodyRow" + index}
+                  id={"CreatorDashBoardPageSalesByTicketTableBodyRow" + index}>
+                  <td id="CreatorDashBoardPageSalesByTicketTableBodyTicketType">
+                    {item.ticketType}
+                  </td>
+                  <td id="CreatorDashBoardPageSalesByTicketTableBodyPrice">
+                    {item.Price}
+                  </td>
+                  <td
+                    id="CreatorDashBoardPageSalesByTicketTableBodySold"
+                    className={classes.sold}>
+                    {item.sold}/{item.total}
+                  </td>
+                </tr>
+              );
             })}
           </tbody>
         </table>
       </div>
-      <div className={classes.hyperlink}>Go to all ticket sales</div>
+      <div
+        id="CreatorDashBoardPageSalesByTicketHyperLink"
+        className={classes.hyperlink}>
+        Go to all ticket sales
+      </div>
     </div>
   );
 };
