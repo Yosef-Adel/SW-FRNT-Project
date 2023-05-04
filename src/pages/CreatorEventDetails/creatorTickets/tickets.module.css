@@ -3,10 +3,19 @@
     background-color: #fff;
     max-width: 960px;
     margin-top:5rem;
-    margin-left: 27rem;
+    margin:  9rem;
+    width: 100%;
+
    
     
    
+}
+.namep{
+    padding-left:8px;
+    padding-top: 1rem;
+    font-size: 1.3rem;
+   
+    color:#39364f;
 }
 .ticketp{
 color:#1e0a3c;
