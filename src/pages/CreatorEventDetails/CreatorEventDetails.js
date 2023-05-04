@@ -9,7 +9,6 @@ import CreatorPublish from "./creatorPublish/CreatorPublish";
 import CreatorDashboard from "./creatorDashboard/CreatorDashboard";
 import CreatorAddAttendee from "./creatorAddAttendee/CreatorAddAttendee";
 
-
 /**
  * Component that returns Creator's Event Details page
  *
@@ -18,24 +17,23 @@ import CreatorAddAttendee from "./creatorAddAttendee/CreatorAddAttendee";
  * return(<CreatorEventDetails />)
  */
 const CreatorEventDetails = () => {
-    const path = useResolvedPath('').pathname;
-    console.log(path)
+  const path = useResolvedPath("").pathname;
+  console.log(path);
   return (
     <>
-      <CreatorNav/>
+      <CreatorNav />
       <div className={classes.container}>
-        <SideBar/>
-        <DashboardSidebar/>
+        <SideBar />
+        <DashboardSidebar />
         <div className={classes.content}>
           <Routes>
-              <Route path="/basicinfo" element={<CreatorBasicInfo />} />
-              <Route path="/tickets" element={<CreatorTickets />} />
-              <Route path="/publish" element={<CreatorPublish />} />
-              <Route path="/dashboard" element={<CreatorDashboard />} />
-              <Route path="/addattendee" element={<CreatorAddAttendee />} />
-          </Routes>  
+            <Route path="/basicinfo" element={<CreatorBasicInfo />} />
+            <Route path="/tickets" element={<CreatorTickets />} />
+            <Route path="/publish" element={<CreatorPublish />} />
+            <Route path="/dashboard" element={<CreatorDashboard />} />
+            <Route path="/addattendee" element={<CreatorAddAttendee />} />
+          </Routes>
         </div>
-        
       </div>
     </>
   );

@@ -19,13 +19,13 @@ const DashboardCards = ({ title, amount, total, free, paid }) => {
         <div id="CreatorDashBoardPageCardAmount" className={classes.amount}>
           {amount}
         </div>
-        {total && (
+        {total !== false && (
           <div id="CreatorDashBoardPageCardTotal" className={classes.total}>
-            /{total}
+            {"/" + total}
           </div>
         )}
       </div>
-      {free && (
+      {free !== false && (
         <div
           id="CreatorDashBoardPageCardFreeAndPaidTickets"
           className={classes.type}>
@@ -40,9 +40,9 @@ const DashboardCards = ({ title, amount, total, free, paid }) => {
         </div>
       )}
 
-      {!free && (
+      {free === false && (
         <div id="CreatorDashBoardPageCardView" className={classes.type}>
-          4 from Eventbrite
+          4 from Envie
         </div>
       )}
     </div>

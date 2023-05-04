@@ -12,6 +12,9 @@ import { Link } from "react-router-dom";
 import SalesCards from "./salesCards/SalesCards";
 import SalesByTicket from "./salesBYticket/SalesByTicket";
 import RecentOrders from "./recentOrders/RecentOrders";
+import { useEffect, useState } from "react";
+import axios from "axios";
+import routes from "../../../requests/routes";
 
 /**
  * Component that returns Creator's Dashboard page
@@ -20,7 +23,73 @@ import RecentOrders from "./recentOrders/RecentOrders";
  * @example
  * return(<CreatorDashboard />)
  */
-const CreatorDashboard = () => {
+const CreatorDashboard = ({ eventID }) => {
+  const [soldTickets, setSoldTickets] = useState(0);
+  const [totalTickets, setTotalTickets] = useState(0);
+  const [freeTickets, setFreeTickets] = useState(0);
+  const [paidTickets, setPaidTickets] = useState(0);
+  const [grossSales, setGrossSales] = useState(0);
+  const [netSales, setNetSales] = useState(0);
+  const [totalOrders, setTotalOrders] = useState(0);
+  const [eventURL, setEventURL] = useState("https://www.eventbrite.com/e/rana-trial-tickets-629586930457");
+
+  /**
+   * function gets the event tickets sold from the server by ID
+   * @function getTotalTicketsSold
+   */
+  async function getTotalTicketsSold() {
+    // console.log(routes.events + "/" + eventID + "/getTicketsSoldForEvent");
+    try {
+      const response = await axios.get(
+        routes.events + "/" + eventID + routes.eventSoldTickets
+      );
+      setSoldTickets(response.data.soldTickets);
+      setTotalTickets(response.data.totalCapacity);
+      setFreeTickets(response.data.freeTicketsSold);
+      setPaidTickets(response.data.paidTicketsSold);
+    } catch (err) {
+      console.log(err);
+    }
+  }
+
+  /**
+   * function gets the event sales summary report from the server by ID
+   * @function getSalesSummary
+   */
+  async function getSalesSummary() {
+    try {
+      const response = await axios.get(
+        routes.events + "/" + eventID + routes.eventSalesSummary
+      );
+      setGrossSales(response.data.grossSales);
+      setNetSales(response.data.netSales);
+      setTotalOrders(response.data.totalOrders);
+    } catch (err) {
+      console.log(err);
+    }
+  }
+
+  /**
+   * function gets the event URL from the server by ID
+   * @function getEventURL
+   */
+  async function getEventURL() {
+    try {
+      const response = await axios.get(
+        routes.events + "/" + eventID + routes.eventURL
+      );
+      setEventURL(response.data.url);
+    } catch (err) {
+      console.log(err);
+    }
+  }
+
+  useEffect(() => {
+    window.scrollTo(0, 0);
+    getTotalTicketsSold();
+    getSalesSummary();
+  }, []);
+
   return (
     <div id="CreatorDashBoardPageContainer" className={classes.container}>
       <div id="CreatorDashBoardContainer" className={classes.dashboard}>
@@ -35,10 +104,10 @@ const CreatorDashboard = () => {
             className={classes.cards}>
             <DashboardCards
               title="Tickets Sold"
-              amount="7"
-              total="30"
-              free="3"
-              paid="4"
+              amount={soldTickets}
+              total={totalTickets}
+              free={freeTickets}
+              paid={paidTickets}
             />
             <DashboardCards
               title="Page Views"
@@ -116,7 +185,7 @@ const CreatorDashboard = () => {
                 Event URL
               </div>
               <div id="CreatorDashBoardPageShareURL" className={classes.url}>
-                https://www.eventbrite.com/e/the-design-show-egypt-tickets-372686233557?aff=ebdssbcitybrowse
+                {eventURL}
               </div>
             </div>
 
@@ -164,22 +233,10 @@ const CreatorDashboard = () => {
           <div
             id="CreatorDashBoardPageSalesCardsContainer"
             className={classes.salescards}>
-            <SalesCards
-              title="Gross Sales"
-              amount={salesbyticket.sales.grossSales}
-            />
-            <SalesCards
-              title="Net Sales"
-              amount={salesbyticket.sales.netSales}
-            />
-            <SalesCards
-              title="Tickets + Add-Ons Sold"
-              amount={salesbyticket.sales.totalSoldTickets}
-            />
-            <SalesCards
-              title="Orders"
-              amount={salesbyticket.sales.totalOrders}
-            />
+            <SalesCards title="Gross Sales" amount={grossSales} />
+            <SalesCards title="Net Sales" amount={netSales} />
+            <SalesCards title="Tickets + Add-Ons Sold" amount={soldTickets} />
+            <SalesCards title="Orders" amount={totalOrders} />
           </div>
           <div
             id="CreatorDashBoardPageSalesContent"
