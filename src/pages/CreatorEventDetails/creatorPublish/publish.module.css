@@ -1,3 +1,89 @@
 .container{
     width: 100%;
 }
+
+.publish{
+    padding: 5rem 8rem;
+    font-family: var(--main-font);
+}
+
+.header{
+    font-size: 3rem;
+    font-weight: 600;
+    color: var(--content-text);
+}
+
+.footer{
+    width: 100%;
+    position: fixed;
+    margin-bottom: 2rem;
+    bottom: 0;
+    background-color: white;
+}
+
+.btn{
+    background-color: var(--orange);
+    color: white;
+    border: none;
+    border-radius: .4rem;
+    padding: 1rem 2.5rem;
+    font-size: 1.5rem;
+    transition: ease .5s;
+    cursor: pointer;
+    align-self: left;
+    margin-left: 107rem;
+}
+
+.btn:hover{
+    opacity: .8;
+}
+
+.section2{
+    display: flex;
+}
+
+.tipsHeader{
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    font-size: 2rem;
+    font-weight: 400;
+}
+
+.tipsHeader>svg{
+    background-color: #fff58c;
+    border-radius: 100%;
+    width: 3rem;
+    height: 3rem;
+    padding: .5rem;
+
+}
+
+.options{
+    background-color: var(--primary-background);
+    padding: 2rem 4rem;
+    margin: 2rem 0;
+}
+
+.options>p{
+    display: flex;
+    align-items: center;
+    color: var(--bright-blue);
+    gap: 1rem;
+    font-size: 1.4rem;
+    font-weight: 500;
+    margin-block: 1rem;
+    transition: ease .5s;
+}
+
+.options>p:hover{
+    text-decoration: underline;
+    cursor: pointer;
+    gap: 1.4rem;
+}
+
+.options>p>svg{
+    width: 1.5rem;
+    height: 1.5rem;
+    fill: var(--bright-blue);
+}
