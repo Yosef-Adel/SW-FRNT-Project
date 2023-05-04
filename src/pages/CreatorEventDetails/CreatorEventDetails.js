@@ -5,7 +5,6 @@ import SideBar from "../../layouts/sideBar/Sidebar";
 import DashboardSidebar from "../../layouts/dashboard/dashboardSidebar";
 import CreatorBasicInfo from "./creatorBasicInfo/CreatorBasicInfo";
 import CreatorTickets from "./creatorTickets/CreatorTickets";
-import PromoCode from "./creatorTickets/Promocode/PromoCode";
 import CreatorPublish from "./creatorPublish/CreatorPublish";
 import CreatorDashboard from "./creatorDashboard/CreatorDashboard";
 import CreatorAddAttendee from "./creatorAddAttendee/CreatorAddAttendee";
@@ -29,7 +28,7 @@ const CreatorEventDetails = () => {
         <div className={classes.content}>
           <Routes>
             <Route path="/basicinfo" element={<CreatorBasicInfo />} />
-            <Route path="/tickets" element={<PromoCode />} />
+            <Route path="/tickets" element={<CreatorTickets />} />
             <Route path="/publish" element={<CreatorPublish />} />
             <Route path="/dashboard" element={<CreatorDashboard />} />
             <Route path="/addattendee" element={<CreatorAddAttendee />} />

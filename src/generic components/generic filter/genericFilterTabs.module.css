@@ -1,49 +1,47 @@
-.Filter{
+.Filter {
   padding-left: 4px;
-  
+
   border-bottom: 2px solid whitesmoke;
 }
-.Filter ul{
+.Filter ul {
   display: flex;
- 
+
   gap: 5rem;
   width: 90%;
-
 }
-.FilterItem{ 
+.FilterItem {
   width: fit-content;
   font-family: var(--main-h1);
   font-weight: 600;
   font-size: 1.5rem;
-  letter-spacing: .05rem;
+  letter-spacing: 0.05rem;
   white-space: nowrap;
 }
-.FilterItem hr{
-  display:none;
+.FilterItem hr {
+  display: none;
 }
-.element
-{
+.element {
   color: var(--secondary-text);
 }
 
-.FilterItem .element:hover{
-   
-  color:var(--primary-color); 
-  padding-bottom: .6rem;
+.FilterItem .element:hover {
+  color: var(--primary-color);
+  padding-bottom: 0.6rem;
   border-bottom: 2px black solid;
 }
 
-.clicked
-{
-    padding-bottom: .7rem !important;
-    border-bottom: 2px blue solid !important;
-    color: var(--bright-blue) !important;
+.FilterItem div div:hover {
+  cursor: pointer;
 }
 
+.clicked {
+  padding-bottom: 0.7rem !important;
+  border-bottom: 2px blue solid !important;
+  color: var(--bright-blue) !important;
+}
 
-@media  screen and (max-width:1150px) {
-  .Filter{
-    overflow-x:scroll;
+@media screen and (max-width: 1150px) {
+  .Filter {
+    overflow-x: scroll;
   }
 }
-  

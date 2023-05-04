@@ -5,20 +5,20 @@ import { NavLink } from "react-router-dom";
 // import routes from "../../../requests/routes";
 
 /**
- * Component that renders Filter tabs in Landing page
+ * Component that renders generic Filter tabs
  *
  * @component
  * @example
- * return(<FilterTabs />)
+ * return(<GenericFilterTabs />)
  */
 
 const GenericFilterTabs = (props) => {
   const page = props.FilterTabsData.FilterTabsInfo;
   const [clicked, setIndexClicked] = useState(0);
 
- 
-  function handleClick(i, title){
-    setIndexClicked(i)
+  function handleClick(i, title) {
+    setIndexClicked(i);
+    props.clickedItem(i);
   }
 
   return (
@@ -29,21 +29,20 @@ const GenericFilterTabs = (props) => {
             return (
               <div>
                 <li className={`${classes.FilterItem}`}>
-                  <NavLink
+                  {/* <NavLink
                     to={element.route}
                     activeClassName={classes.activeLink}
-                  >
-                    <div>
-                      <div
-                        className={
-                          index == clicked ? classes.clicked : classes.element
-                        }
-                        onClick={() => handleClick(index, element.title)}
-                      >
-                        {element.title}
-                      </div>
+                  > */}
+                  <div>
+                    <div
+                      className={
+                        index == clicked ? classes.clicked : classes.element
+                      }
+                      onClick={() => handleClick(index, element.title)}>
+                      {element.title}
                     </div>
-                  </NavLink>
+                  </div>
+                  {/* </NavLink> */}
                 </li>
               </div>
             );
