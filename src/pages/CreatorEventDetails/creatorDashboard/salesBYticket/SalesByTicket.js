@@ -1,5 +1,4 @@
 import classes from "./salesbyticke.module.css";
-import salesbyticket from "../../../../assets/data/dummysalesbyticket";
 import dashboarddata from "../../../../assets/data/dashboarddata";
 
 /**
@@ -7,9 +6,9 @@ import dashboarddata from "../../../../assets/data/dashboarddata";
  *
  * @component
  * @example
- * return(<SalesByTicket />)
+ * return(<SalesByTicket salesReport={salesReport} is_paginated={true} handlePagination={handlePagination} />)
  */
-const SalesByTicket = () => {
+const SalesByTicket = ({ salesReport, is_paginated, handlePagination }) => {
   return (
     <div
       id="CreatorDashBoardPageSalesByTicketContainer"
@@ -41,7 +40,7 @@ const SalesByTicket = () => {
             </tr>
           </thead>
           <tbody id="CreatorDashBoardPageSalesByTicketTableBody">
-            {salesbyticket.salesReport.map((item, index) => {
+            {salesReport.map((item, index) => {
               return (
                 <tr
                   key={"CreatorDashBoardPageSalesByTicketTableBodyRow" + index}
@@ -65,8 +64,9 @@ const SalesByTicket = () => {
       </div>
       <div
         id="CreatorDashBoardPageSalesByTicketHyperLink"
-        className={classes.hyperlink}>
-        Go to all ticket sales
+        className={classes.hyperlink}
+        onClick={handlePagination}>
+        {is_paginated ? "Go to all ticket sales" : "See Less"}
       </div>
     </div>
   );
