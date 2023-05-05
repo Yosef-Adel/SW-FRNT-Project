@@ -1,3 +1,6 @@
+.box{
+  height: 100%;
+}
 
 .btn {
   justify-content: center;
@@ -54,6 +57,7 @@
 .forminfo {
   /* margin-top: 3rem; */
   width: 100%;
+  height: calc(100% - 10rem);
   overflow-y: scroll;
 }
 .typeofform {
@@ -203,20 +207,18 @@
   margin: 0;
 }
 
-.insidep
-{
-    margin: auto;
-    text-align: center;
-    font-size: 1.4rem;
-    color: var(--content-text);
-    width:1rem
+.insidep {
+  margin: auto;
+  text-align: center;
+  font-size: 1.4rem;
+  color: var(--content-text);
+  width: 1rem;
 }
 
-.headercontainer2
-{
-    font-size: 1.5rem;
-    color: var(--content-text);
-    margin-bottom: 1rem;
+.headercontainer2 {
+  font-size: 1.5rem;
+  color: var(--content-text);
+  margin-bottom: 1rem;
 }
 
 .class {

@@ -11,12 +11,13 @@ import Radio from "@mui/material/Radio";
 import RadioGroup from "@mui/material/RadioGroup";
 import FormControlLabel from "@mui/material/FormControlLabel";
 import FormControl from "@mui/material/FormControl";
-import FormLabel from "@mui/material/FormLabel";
 import dayjs from "dayjs";
 import { DemoContainer, DemoItem } from "@mui/x-date-pickers/internals/demo";
 import { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayjs";
 import { LocalizationProvider } from "@mui/x-date-pickers/LocalizationProvider";
 import { DatePicker } from "@mui/x-date-pickers/DatePicker";
+import moment from "moment";
+import Time from "../../../../../assets/data/TimeOptions";
 
 const AddPromocodeForm = () => {
   const initialValues = {
@@ -24,8 +25,6 @@ const AddPromocodeForm = () => {
     amountOff: "",
     percentOff: "",
     limit: "",
-    startDate: "",
-    endDate: "",
     starttime: "",
     endtime: "",
   };
@@ -34,7 +33,6 @@ const AddPromocodeForm = () => {
       .max(50, "Name must be at most 50 characters")
 
       .required("Please enter a name"),
-    availablequantity: Yup.string().required("Quantity is required"),
   });
 
   const [state, setState] = React.useState({
@@ -45,10 +43,14 @@ const AddPromocodeForm = () => {
   const [selectedValuelimit, setSelectedValuelimit] = useState("Unlimited");
   const [scheduleopen, setscheduleopen] = useState(false);
   const [selectedValuestart, setSelectedValuestart] = useState("Now");
+  const [dateValuestart, setdateValuestart] = useState("");
   const [scheduleopenend, setscheduleopenend] = useState(false);
   const [selectedValueend, setSelectedValueend] = useState(
     "When ticket sales end"
   );
+  const [dateValueend, setdateValueend] = useState("");
+
+  const[tickets,setTickets] = useState([]);
 
   const handleSelectedlimit = (selected) => {
     setSelectedValuelimit(selected);
@@ -68,6 +70,14 @@ const AddPromocodeForm = () => {
     }
   };
 
+  const handlestartDatechange = (date) => {
+    // console.log(moment(date.$d , "YYYY-MM-DD").format("YYYY-MM-DD"));
+    // const tdate = new Date(moment(date.$d , "YYYY-MM-DD").format("YYYY-MM-DD"));
+    setdateValuestart(moment(date.$d, "YYYY-MM-DD").format("YYYY-MM-DD"));
+    // console.log(tdate.toISOString());
+    // console.log(typeof(tdate.toISOString()));
+  };
+
   const handleSelectedend = (selected) => {
     setSelectedValueend(selected);
     if (selected == "When ticket sales end") {
@@ -77,8 +87,12 @@ const AddPromocodeForm = () => {
     }
   };
 
-  const handleSubmit = (data, { setErrors }) => {
-    
+  const handleendDatechange = (date) => {
+    setdateValueend(moment(date.$d, "YYYY-MM-DD").format("YYYY-MM-DD"));
+  };
+
+  const handleSubmit = (data) => {
+    console.log(data)
   };
 
   const toggleDrawer = (anchor, open) => (event) => {
@@ -92,6 +106,14 @@ const AddPromocodeForm = () => {
     setState({ ...state, [anchor]: open });
   };
 
+  
+
+  useEffect(() => {
+    console.log(dayjs("2022-04-17"));
+    // console.log(moment('03/04/2008 10:45 PM', 'DD/MM/YYYY HH:mm:ss a').format());
+    // const date = new Date("03/04/2008 10:45 PM");
+    // console.log(date.toISOString())
+  }, []);
   return (
     <div>
       <div className={classes.btn}>
@@ -111,7 +133,7 @@ const AddPromocodeForm = () => {
           invisible: true,
         }}
         PaperProps={{
-          style: { height: "1000px", marginTop: 60, marginRight: 20 },
+          style: { height: "100%", marginTop: 60, marginRight: 20 },
         }}>
         <Box className={classes.box} sx={{ width: 407 }}>
           <div className={classes.headercontainer}>
@@ -122,7 +144,7 @@ const AddPromocodeForm = () => {
               initialValues={initialValues}
               validationSchema={validationSchema}
               onSubmit={handleSubmit}>
-              {({ values, setFieldValue }) => (
+              {({ values}) => (
                 <Form>
                   <div className={classes.boxContainer}>
                     <div className={classes.fieldContainer}>
@@ -275,6 +297,7 @@ const AddPromocodeForm = () => {
                               <DemoItem>
                                 <DatePicker
                                   defaultValue={dayjs("2022-04-17")}
+                                  onChange={(e) => handlestartDatechange(e)}
                                   sx={{
                                     "& .MuiInputBase-input": {
                                       height: "2rem",
@@ -298,54 +321,16 @@ const AddPromocodeForm = () => {
                               className={classes.field}
                               name="starttime"
                               component="select">
-                              <option>12:00 AM</option>
-                              <option>12:30 AM</option>
-                              <option>1:00 AM</option>
-                              <option>1:30 AM</option>
-                              <option>2:00 AM</option>
-                              <option>2:30 AM</option>
-                              <option>3:00 AM</option>
-                              <option>3:30 AM</option>
-                              <option>4:00 AM</option>
-                              <option>4:30 AM</option>
-                              <option>5:00 AM</option>
-                              <option>5:30 AM</option>
-                              <option>6:00 AM</option>
-                              <option>6:30 AM</option>
-                              <option>7:00 AM</option>
-                              <option>7:30 AM</option>
-                              <option>8:00 AM</option>
-                              <option>8:30 AM</option>
-                              <option>9:00 AM</option>
-                              <option>9:30 AM</option>
-                              <option>10:00 AM</option>
-                              <option>10:30 AM</option>
-                              <option>11:00 AM</option>
-                              <option>11:30 AM</option>
-                              <option>12:00 PM</option>
-                              <option>12:30 PM</option>
-                              <option>1:00 PM</option>
-                              <option>1:30 PM</option>
-                              <option>2:00 PM</option>
-                              <option>2:30 PM</option>
-                              <option>3:00 PM</option>
-                              <option>3:30 PM</option>
-                              <option>4:00 PM</option>
-                              <option>4:30 PM</option>
-                              <option>5:00 PM</option>
-                              <option>5:30 PM</option>
-                              <option>6:00 PM</option>
-                              <option>6:30 PM</option>
-                              <option>7:00 PM</option>
-                              <option>7:30 PM</option>
-                              <option>8:00 PM</option>
-                              <option>8:30 PM</option>
-                              <option>9:00 PM</option>
-                              <option>9:30 PM</option>
-                              <option>10:00 PM</option>
-                              <option>10:30 PM</option>
-                              <option>11:00 PM</option>
-                              <option>11:30 PM</option>
+                              {Time.options.map((item, index) => {
+                                return (
+                                  <option
+                                    key={"AddPromoCodeStartTime" + index}
+                                    id={"AddPromoCodeStartTime" + index}
+                                    value={item}>
+                                    {item}
+                                  </option>
+                                );
+                              })}
                             </Field>
                           </div>
                         </div>
@@ -408,6 +393,7 @@ const AddPromocodeForm = () => {
                               <DemoItem>
                                 <DatePicker
                                   defaultValue={dayjs("2022-04-17")}
+                                  onChange={(e) => handleendDatechange(e)}
                                   sx={{
                                     "& .MuiInputBase-input": {
                                       height: "2rem",
@@ -433,60 +419,23 @@ const AddPromocodeForm = () => {
                               className={classes.field}
                               name="endtime"
                               component="select">
-                              <option>12:00 AM</option>
-                              <option>12:30 AM</option>
-                              <option>1:00 AM</option>
-                              <option>1:30 AM</option>
-                              <option>2:00 AM</option>
-                              <option>2:30 AM</option>
-                              <option>3:00 AM</option>
-                              <option>3:30 AM</option>
-                              <option>4:00 AM</option>
-                              <option>4:30 AM</option>
-                              <option>5:00 AM</option>
-                              <option>5:30 AM</option>
-                              <option>6:00 AM</option>
-                              <option>6:30 AM</option>
-                              <option>7:00 AM</option>
-                              <option>7:30 AM</option>
-                              <option>8:00 AM</option>
-                              <option>8:30 AM</option>
-                              <option>9:00 AM</option>
-                              <option>9:30 AM</option>
-                              <option>10:00 AM</option>
-                              <option>10:30 AM</option>
-                              <option>11:00 AM</option>
-                              <option>11:30 AM</option>
-                              <option>12:00 PM</option>
-                              <option>12:30 PM</option>
-                              <option>1:00 PM</option>
-                              <option>1:30 PM</option>
-                              <option>2:00 PM</option>
-                              <option>2:30 PM</option>
-                              <option>3:00 PM</option>
-                              <option>3:30 PM</option>
-                              <option>4:00 PM</option>
-                              <option>4:30 PM</option>
-                              <option>5:00 PM</option>
-                              <option>5:30 PM</option>
-                              <option>6:00 PM</option>
-                              <option>6:30 PM</option>
-                              <option>7:00 PM</option>
-                              <option>7:30 PM</option>
-                              <option>8:00 PM</option>
-                              <option>8:30 PM</option>
-                              <option>9:00 PM</option>
-                              <option>9:30 PM</option>
-                              <option>10:00 PM</option>
-                              <option>10:30 PM</option>
-                              <option>11:00 PM</option>
-                              <option>11:30 PM</option>
+                              {Time.options.map((item, index) => {
+                                return (
+                                  <option
+                                    key={"AddPromoCodeendTime" + index}
+                                    id={"AddPromoCodeendTime" + index}
+                                    value={item}>
+                                    {item}
+                                  </option>
+                                );
+                              })}
                             </Field>
                           </div>
                         </div>
                       </div>
                     </div>
                   ) : null}
+
                 </Form>
               )}
             </Formik>
