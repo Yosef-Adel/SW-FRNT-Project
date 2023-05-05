@@ -14,11 +14,15 @@
 }
 
 .footer{
-    width: 100%;
+    width: calc(100% - 55rem);
     position: fixed;
     margin-bottom: 2rem;
     bottom: 0;
     background-color: white;
+    display: flex;
+    height: fit-content;
+    flex-direction: column;
+    border: none;
 }
 
 .btn{
@@ -30,8 +34,8 @@
     font-size: 1.5rem;
     transition: ease .5s;
     cursor: pointer;
-    align-self: left;
-    margin-left: 107rem;
+    width: fit-content;
+    margin-left: auto;
 }
 
 .btn:hover{
@@ -39,7 +43,8 @@
 }
 
 .section2{
-    display: flex;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
 }
 
 .tipsHeader{
@@ -86,4 +91,86 @@
     width: 1.5rem;
     height: 1.5rem;
     fill: var(--bright-blue);
+}
+
+.form{
+    width: 100%;
+}
+.boxContainer{
+    /* font-family: var(--main-font); */
+    color: var(--primary-text);
+}
+
+.fieldContainer{
+    display: flex;
+    flex-direction: column;
+    margin-block: 3rem;
+}
+
+.fieldContainer>label{
+    font-size: 1.4rem;
+}                       
+
+.fieldContainer>input{
+    background-color: red;
+}
+
+.fieldContainer>label>p{
+    font-size: 1.4rem;
+    color: var(--moretext);
+}
+
+.fieldTitle{
+    font-size: 1.7rem;
+    font-weight: 600;
+}
+
+.containerstart{
+    display: flex;
+    gap:10px;
+}
+
+.field::placeholder {
+    color: transparent;
+}
+
+.fieldContainer .field{
+
+    border: none;
+    outline: 0;
+    font-size: 1.4rem;
+    color: var( --primary-tex);
+    background-color: transparent;
+    z-index: 2;
+}
+.fieldContainer:has(.field:focus) {
+    border: solid 2px var( --bright-blue);
+    border-left: solid 3.5px var( --bright-blue);
+    transition: 1ms;
+}
+
+.fieldContainer::placeholder{
+ color:black;
+}
+
+.fieldContainer:has(.field) .label{
+    top: 0;
+    font-size: 1.2rem;
+}
+
+
+
+@media screen and (max-width:789px) {
+    .publish{
+        padding: 0;
+    }
+    .footer{
+        width: 60%;
+    }
+    .btn{
+        width: 100%;
+    }
+    .section2{
+        grid-template-columns: 1fr;
+    }
 }
