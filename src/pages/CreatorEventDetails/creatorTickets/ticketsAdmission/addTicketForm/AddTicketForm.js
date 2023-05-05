@@ -143,7 +143,6 @@ const AddTicketForm = () => {
                         className={classes.field}
                         name="availablequantity"
                         autoComplete="off"
-                        data-testid="LoginFormPasswordInput"
                       />
                     </div>
                   </div>

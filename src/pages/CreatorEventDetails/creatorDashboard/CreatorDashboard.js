@@ -31,7 +31,23 @@ const CreatorDashboard = ({ eventID }) => {
   const [grossSales, setGrossSales] = useState(0);
   const [netSales, setNetSales] = useState(0);
   const [totalOrders, setTotalOrders] = useState(0);
-  const [eventURL, setEventURL] = useState("https://www.eventbrite.com/e/rana-trial-tickets-629586930457");
+  const [eventURL, setEventURL] = useState(
+    "https://www.eventbrite.com/e/rana-trial-tickets-629586930457"
+  );
+  const [salesByTicketReport, setSalesByTicketReport] = useState(
+    salesbyticket.salesReport
+  );
+  const [recentordersReport, setrecentordersReport] = useState(
+    salesbyticket.recentordersReport
+  );
+  const [isPaginated, setIsPaginated] = useState(true);
+
+  const intialSalesRequest =
+    routes.events +
+    "/" +
+    eventID +
+    routes.eventSalesByTicketType +
+    "?page=1&limit=3";
 
   /**
    * function gets the event tickets sold from the server by ID
@@ -84,10 +100,65 @@ const CreatorDashboard = ({ eventID }) => {
     }
   }
 
+  /**
+   * function gets the event sales by ticket type report from the server by ID
+   * @function getRecentOrders
+   */
+  async function getRecentOrders() {
+    // console.log(routes.events + "/" + eventID + "/getTicketsSoldForEvent");
+    try {
+      const response = await axios.get(
+        routes.events + "/" + eventID + routes.eventRecentOrder
+      );
+      setrecentordersReport(response.data.Report);
+    } catch (err) {
+      console.log(err);
+    }
+  }
+
+  /**
+   * function gets the event sales by ticket type report from the server by ID
+   * @function getSalesByTicketType
+   */
+  async function getSalesByTicketType(request) {
+    // console.log(routes.events + "/" + eventID + "/getTicketsSoldForEvent");
+    try {
+      const response = await axios.get(request);
+      setSalesByTicketReport(response.data.Report);
+    } catch (err) {
+      console.log(err);
+    }
+  }
+
+  /**
+   * function handles pagination of sales by ticket type
+   * @function handlePagination
+   */
+  function handlePagination() {
+    if (isPaginated) {
+      setIsPaginated(false);
+      const request =
+        routes.events + "/" + eventID + routes.eventSalesByTicketType;
+      getSalesByTicketType(request);
+    } else {
+      setIsPaginated(true);
+      const request =
+        routes.events +
+        "/" +
+        eventID +
+        routes.eventSalesByTicketType +
+        "?page=1&limit=3";
+
+      getSalesByTicketType(request);
+    }
+  }
+
   useEffect(() => {
     window.scrollTo(0, 0);
     getTotalTicketsSold();
     getSalesSummary();
+    getSalesByTicketType(intialSalesRequest);
+    getRecentOrders();
   }, []);
 
   return (
@@ -241,7 +312,11 @@ const CreatorDashboard = ({ eventID }) => {
           <div
             id="CreatorDashBoardPageSalesContent"
             className={classes.content}>
-            <SalesByTicket />
+            <SalesByTicket
+              salesReport={salesByTicketReport}
+              is_paginated={isPaginated}
+              handlePagination={handlePagination}
+            />
             <div
               id="CreatorDashBoardPageSalesHyperlinksContainer"
               className={classes.recommended}>
@@ -294,7 +369,7 @@ const CreatorDashboard = ({ eventID }) => {
           <div
             id="CreatorDashBoardPageSalesRecentOrdersContent"
             className={classes.content}>
-            <RecentOrders />
+            <RecentOrders recentordersReport={recentordersReport} />
           </div>
         </div>
       </div>

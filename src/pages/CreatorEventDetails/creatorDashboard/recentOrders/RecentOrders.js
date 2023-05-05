@@ -1,6 +1,5 @@
 import classes from "../salesBYticket/salesbyticke.module.css";
 import dashboarddata from "../../../../assets/data/dashboarddata";
-import salesbyticket from "../../../../assets/data/dummysalesbyticket";
 import moment from "moment";
 
 /**
@@ -10,7 +9,7 @@ import moment from "moment";
  * @example
  * return(<RecentOrders />)
  */
-const RecentOrders = () => {
+const RecentOrders = ({recentordersReport}) => {
   return (
     <div
       id="CreatorDashBoardPageSalesRecentOrdersContainer"
@@ -44,7 +43,7 @@ const RecentOrders = () => {
             </tr>
           </thead>
           <tbody id="CreatorDashBoardPageSalesRecentOrdersTableBody">
-            {salesbyticket.recentordersReport.map((item, index) => {
+            {recentordersReport.map((item, index) => {
               return (
                 <tr
                   key={

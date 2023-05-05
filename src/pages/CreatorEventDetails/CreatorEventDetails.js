@@ -30,7 +30,7 @@ const CreatorEventDetails = () => {
             <Route path="/basicinfo" element={<CreatorBasicInfo />} />
             <Route path="/tickets" element={<CreatorTickets />} />
             <Route path="/publish" element={<CreatorPublish />} />
-            <Route path="/dashboard" element={<CreatorDashboard />} />
+            <Route path="/dashboard" element={<CreatorDashboard eventID="64331c1e1d3382d35d5b3a43" />} />
             <Route path="/addattendee" element={<CreatorAddAttendee />} />
           </Routes>
         </div>
