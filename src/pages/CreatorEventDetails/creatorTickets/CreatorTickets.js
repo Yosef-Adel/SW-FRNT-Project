@@ -1,5 +1,6 @@
 import classes from "./tickets.module.css";
 import GenericFilterTabs from "../../../generic components/generic filter/GenericFilterTabs";
+import TicketsModal from "../../../generic components/ticketsModal/TicketsModal";
 import TicketsFilterTabs from "../../../assets/data/TicketsFilterTabs";
 import { useState, useEffect } from "react";
 import * as React from "react";
@@ -32,7 +33,7 @@ const CreatorTickets = () => {
           FilterTabsData={TicketsFilterTabs}
           clickedItem={handleClickedItem}
         />
-        {addmisionclicked ? <AddTicketForm /> : <AddPromocodeForm />}
+        {addmisionclicked ? <TicketsModal /> : <AddPromocodeForm />}
       </div>
     </div>
   );
