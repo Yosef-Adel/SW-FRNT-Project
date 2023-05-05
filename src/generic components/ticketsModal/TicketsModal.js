@@ -14,44 +14,45 @@ const TicketModal = (props) => {
   const [selectedall, setselectall] = useState(false);
 
   let n = ticketsmap[0].length;
-  let myArray = Array(n + 3).fill(2);
-  console.log(Object.values(myArray));
-  const [selectedticket, setselected] = useState([true,true,true]);
-  console.log(selectedticket[0]);
-  // setselected((selected) => [...selected, myArray]);
-
-  //   let selectednum = 0;
+  let myArray = Array(n)
+    .fill()
+    .map((element, index) => ({
+      checked: 0,
+    }));
+  console.log(myArray);
+  const [selected, setselected] = useState(myArray);
+  let selectednum = 0;
 
   function selectall() {
-    // selectednum = n;
-    // if (selectedall == true) {
-    //   let newselected = Array(n).fill(0);
-    //   setselectall(!selectedall);
-    //   setselected((selected) => [...selected, newselected]);
-    //   console.log(selected);
-    // } else {
-    //   setselectall(!selectedall);
-    //   let newselected = Array(n).fill(1);
-    //   setselected((selected) => [...selected, newselected]);
-    //   console.log(selected);
-    // }
+    selectednum = n;
+    if (selectedall == true) {
+      let newselected = Array(n).fill(0);
+      setselectall(!selectedall);
+      setselected((selected) => [...selected, newselected]);
+      console.log(selected);
+    } else {
+      setselectall(!selectedall);
+      let newselected = Array(n).fill(1);
+      setselected(newselected);
+      console.log(selected);
+    }
   }
   function handleClick(index) {
-    // console.log(selected);
-    // console.log(index);
-    // if (selected[index] == 0) {
-    //   let newselected = selected;
-    //   newselected[index] = 1;
-    //   setselected((selected) => [...selected, newselected]);
-    //   console.log(selected);
-    //   selectednum = selectednum + 1;
-    // }
-    // if (selected[index] == 1) {
-    //   let newselected = selected;
-    //   newselected[index] = 0;
-    //   setselected((selected) => [...selected, newselected]);
-    //   console.log(selected);
-    // }
+    console.log(selected);
+    console.log(index);
+    if (selected[index] == 0) {
+      let newselected = selected;
+      newselected[index] = 1;
+      setselected(newselected);
+      console.log(selected);
+      selectednum = selectednum + 1;
+    }
+    if (selected[index] == 1) {
+      let newselected = selected;
+      newselected[index] = 0;
+      setselected(newselected);
+      console.log(selected);
+    }
   }
   return (
     <Modal
@@ -92,14 +93,14 @@ const TicketModal = (props) => {
                 <div className={classes.staticheaderticket}>
                   <div
                     className={
-                      (selectedticket[index] = 1
+                      (selected[index] = 1
                         ? classes.radiobutton
                         : classes.selected)
                     }
                     onClick={() => handleClick(index)}
                   >
                     {
-                      (selectedticket[index] = 1 ? (
+                      (selected[index] = 1 ? (
                         <>
                           <AiOutlineCheck className={classes.icon} />
                         </>
