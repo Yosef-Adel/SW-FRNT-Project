@@ -21,7 +21,7 @@ import Time from "../../../../../assets/data/TimeOptions";
 import axios from "../../../../../requests/axios";
 import routes from "../../../../../requests/routes";
 
-const AddPromocodeForm = ({ eventID }) => {
+const AddPromocodeForm = ({ eventID, edit }) => {
   const formikRef = React.useRef(null);
 
   const [state, setState] = React.useState({
@@ -90,7 +90,7 @@ const AddPromocodeForm = ({ eventID }) => {
   };
 
   const handleSubmit = (data) => {
-    console.log(tickets)
+    console.log(tickets);
     let datasent = data;
     if (!amountformopen) {
       delete datasent.limit;
@@ -168,8 +168,25 @@ const AddPromocodeForm = ({ eventID }) => {
     }
   }
 
+  // /**
+  //  * function that is triggered to get tickets
+  //  * @function getPromoCode
+
+  //  */
+
+  // async function getPromoCode() {
+  //   if (edit) {
+  //     try {
+  //       const response = await axios.get(
+  //         routes.tickets + "/" + eventID + "/allTickets"
+  //       );
+  //     } catch (err) {}
+  //   }
+  // }
+
   useEffect(() => {
     getTickets();
+    // getPromoCode();
   }, []);
 
   const initialValues = {
@@ -223,14 +240,26 @@ const AddPromocodeForm = ({ eventID }) => {
 
   return (
     <div>
-      <div className={classes.btn}>
-        <Button
-          className={classes.button}
-          onClick={toggleDrawer("right", true)}
-          data-testid="AddTicketButton">
-          Create promo code
-        </Button>
+      <div className={classes.modalbtns}>
+        <div className={classes.btn}>
+          <select
+            className={classes.selbutton}
+            // onClick={toggleDrawer("right", true)}
+            data-testid="AddTicketButton">
+            <option value="Upload">Upload PromoCode.CSV</option>
+            <option value="Delete">Delete unused codes</option>
+          </select>
+        </div>
+        <div className={classes.btn}>
+          <Button
+            className={classes.button}
+            onClick={toggleDrawer("right", true)}
+            data-testid="AddTicketButton">
+            Create promo code
+          </Button>
+        </div>
       </div>
+
       <SwipeableDrawer
         anchor={"right"}
         open={state["right"]}
@@ -302,11 +331,14 @@ const AddPromocodeForm = ({ eventID }) => {
                           <div className={classes.boxContainer}>
                             <div className={classes.fieldContainer}>
                               <label className={classes.label}>Amount</label>
-                              <Field
-                                className={classes.field}
-                                name="limit"
-                                autoComplete="off"
-                              />
+                              <div className={classes.presuffix}>
+                                <Field
+                                  className={classes.field}
+                                  name="limit"
+                                  autoComplete="off"
+                                />
+                                <p>tickets</p>
+                              </div>
                             </div>
                             <ErrorMessage name="limit" component="span" />
                           </div>
