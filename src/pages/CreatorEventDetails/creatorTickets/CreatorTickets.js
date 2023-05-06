@@ -14,7 +14,7 @@ import AddPromocodeForm from "./tickestPromocodes/addPromoCodeForm/AddPromocodeF
  * return(<CreatorTickets />)
  */
 
-const CreatorTickets = () => {
+const CreatorTickets = ({eventID}) => {
   const [addmisionclicked, setAddmisionclicked] = useState(true);
   function handleClickedItem(i) {
     if (i === 2) {
@@ -32,7 +32,7 @@ const CreatorTickets = () => {
           FilterTabsData={TicketsFilterTabs}
           clickedItem={handleClickedItem}
         />
-        {addmisionclicked ? <AddTicketForm /> : <AddPromocodeForm />}
+        {addmisionclicked ? <AddTicketForm /> : <AddPromocodeForm eventID={eventID}/>}
       </div>
     </div>
   );

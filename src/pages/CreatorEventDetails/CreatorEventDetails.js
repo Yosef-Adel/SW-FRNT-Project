@@ -28,9 +28,12 @@ const CreatorEventDetails = () => {
         <div className={classes.content}>
           <Routes>
             <Route path="/basicinfo" element={<CreatorBasicInfo />} />
-            <Route path="/tickets" element={<CreatorTickets />} />
+            <Route path="/tickets" element={<CreatorTickets eventID="645415818d0b47c6a89b390e"/>} />
             <Route path="/publish" element={<CreatorPublish />} />
-            <Route path="/dashboard" element={<CreatorDashboard eventID="64331c1e1d3382d35d5b3a43" />} />
+            <Route
+              path="/dashboard"
+              element={<CreatorDashboard eventID="645415818d0b47c6a89b390e" />}
+            />
             <Route path="/addattendee" element={<CreatorAddAttendee />} />
           </Routes>
         </div>

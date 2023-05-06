@@ -5,7 +5,7 @@ import * as React from "react";
 import Box from "@mui/material/Box";
 import SwipeableDrawer from "@mui/material/SwipeableDrawer";
 import Button from "@mui/material/Button";
-import { Formik, Form, Field } from "formik";
+import { Formik, Form, Field, ErrorMessage } from "formik";
 import * as Yup from "yup";
 import Radio from "@mui/material/Radio";
 import RadioGroup from "@mui/material/RadioGroup";
@@ -18,22 +18,11 @@ import { LocalizationProvider } from "@mui/x-date-pickers/LocalizationProvider";
 import { DatePicker } from "@mui/x-date-pickers/DatePicker";
 import moment from "moment";
 import Time from "../../../../../assets/data/TimeOptions";
+import axios from "../../../../../requests/axios";
+import routes from "../../../../../requests/routes";
 
-const AddPromocodeForm = () => {
-  const initialValues = {
-    name: "",
-    amountOff: "",
-    percentOff: "",
-    limit: "",
-    starttime: "",
-    endtime: "",
-  };
-  const validationSchema = Yup.object().shape({
-    name: Yup.string()
-      .max(50, "Name must be at most 50 characters")
-
-      .required("Please enter a name"),
-  });
+const AddPromocodeForm = ({ eventID }) => {
+  const formikRef = React.useRef(null);
 
   const [state, setState] = React.useState({
     right: false,
@@ -50,7 +39,11 @@ const AddPromocodeForm = () => {
   );
   const [dateValueend, setdateValueend] = useState("");
 
-  const[tickets,setTickets] = useState([]);
+  const [tickets, setTickets] = useState([]);
+  const [selectedvaluetickets, setselectedvaluetickets] = useState(
+    "All visible tickets"
+  );
+  const [alltickets, setAlltickets] = useState(true);
 
   const handleSelectedlimit = (selected) => {
     setSelectedValuelimit(selected);
@@ -71,11 +64,7 @@ const AddPromocodeForm = () => {
   };
 
   const handlestartDatechange = (date) => {
-    // console.log(moment(date.$d , "YYYY-MM-DD").format("YYYY-MM-DD"));
-    // const tdate = new Date(moment(date.$d , "YYYY-MM-DD").format("YYYY-MM-DD"));
     setdateValuestart(moment(date.$d, "YYYY-MM-DD").format("YYYY-MM-DD"));
-    // console.log(tdate.toISOString());
-    // console.log(typeof(tdate.toISOString()));
   };
 
   const handleSelectedend = (selected) => {
@@ -91,8 +80,62 @@ const AddPromocodeForm = () => {
     setdateValueend(moment(date.$d, "YYYY-MM-DD").format("YYYY-MM-DD"));
   };
 
+  const handleTickets = (choose) => {
+    setselectedvaluetickets(choose);
+    if (choose == "All visible tickets") {
+      setAlltickets(true);
+    } else {
+      setAlltickets(false);
+    }
+  };
+
   const handleSubmit = (data) => {
-    console.log(data)
+    console.log(tickets)
+    let datasent = data;
+    if (!amountformopen) {
+      delete datasent.limit;
+    } else {
+      datasent.limit = Number(datasent.limit);
+    }
+
+    if (data.amountOff == "") {
+      delete datasent.amountOff;
+      datasent.percentOff = Number(datasent.percentOff);
+    } else {
+      delete datasent.percentOff;
+      datasent.amountOff = Number(datasent.amountOff);
+    }
+
+    if (scheduleopen) {
+      let sDate = new Date(dateValuestart + " " + data.starttime);
+      let startDate = sDate.toISOString();
+      datasent.startDate = startDate;
+    } else {
+      let sDate = new Date();
+      let startDate = sDate.toISOString();
+      datasent.startDate = startDate;
+    }
+
+    delete datasent.starttime;
+
+    if (scheduleopenend) {
+      let eDate = new Date(dateValueend + " " + data.endtime);
+      let endDate = eDate.toISOString();
+      datasent.endDate = endDate;
+    } else {
+    }
+
+    delete datasent.endtime;
+
+    if (alltickets) {
+      let filledArray = new Array(tickets.length)
+        .fill()
+        .map((element, index) => tickets[index]._id);
+      datasent.tickets = filledArray;
+    }
+
+    console.log(datasent);
+    formikRef.current.resetForm();
   };
 
   const toggleDrawer = (anchor, open) => (event) => {
@@ -104,16 +147,80 @@ const AddPromocodeForm = () => {
     }
 
     setState({ ...state, [anchor]: open });
+    formikRef.current.resetForm();
   };
 
-  
+  /**
+   * function that is triggered to get tickets
+   * @function getTickets
+
+   */
+
+  async function getTickets() {
+    try {
+      const response = await axios.get(
+        routes.tickets + "/" + eventID + "/allTickets"
+      );
+
+      setTickets(response.data.tickets);
+    } catch (err) {
+      console.log(err);
+    }
+  }
 
   useEffect(() => {
-    console.log(dayjs("2022-04-17"));
-    // console.log(moment('03/04/2008 10:45 PM', 'DD/MM/YYYY HH:mm:ss a').format());
-    // const date = new Date("03/04/2008 10:45 PM");
-    // console.log(date.toISOString())
+    getTickets();
   }, []);
+
+  const initialValues = {
+    name: "",
+    amountOff: "",
+    percentOff: "",
+    limit: "",
+    starttime: "",
+    endtime: "",
+    tickets: [],
+  };
+
+  const getValidationSchema = () => {
+    let schema = Yup.object().shape({
+      name: Yup.string()
+        .max(50, "Name must be at most 50 characters")
+
+        .required("Provide a code name"),
+      amountOff: Yup.number().test(
+        "one-required",
+        "Discount amount or percentage required",
+        function (value) {
+          return this.parent.percentOff || value;
+        }
+      ),
+      percentOff: Yup.number().test(
+        "one-required",
+        "Discount amount or percentage required",
+        function (value) {
+          return this.parent.amountOff || value;
+        }
+      ),
+    });
+    if (amountformopen) {
+      schema = schema.shape({
+        limit: Yup.number().required("Limit Amount is required"),
+      });
+    }
+    if (scheduleopen) {
+      schema = schema.shape({
+        starttime: Yup.string().required("Start Time is required"),
+      });
+    }
+    if (scheduleopenend) {
+      schema = schema.shape({
+        endtime: Yup.string().required("Start Time is required"),
+      });
+    }
+    return schema;
+  };
+
   return (
     <div>
       <div className={classes.btn}>
@@ -127,25 +234,31 @@ const AddPromocodeForm = () => {
       <SwipeableDrawer
         anchor={"right"}
         open={state["right"]}
-        onClose={toggleDrawer("right", false)}
+        // onClose={toggleDrawer("right", false)}
         onOpen={toggleDrawer("right", true)}
         BackdropProps={{
           invisible: true,
         }}
         PaperProps={{
-          style: { height: "100%", marginTop: 60, marginRight: 20 },
+          style: {
+            height: "calc(100% - 60px)",
+            marginTop: 60,
+            marginRight: 20,
+          },
         }}>
         <Box className={classes.box} sx={{ width: 407 }}>
           <div className={classes.headercontainer}>
             <p className={classes.ticketp}>Add code</p>
           </div>
-          <div className={classes.forminfo}>
-            <Formik
-              initialValues={initialValues}
-              validationSchema={validationSchema}
-              onSubmit={handleSubmit}>
-              {({ values}) => (
-                <Form>
+          {/* <div > */}
+          <Formik
+            innerRef={formikRef}
+            initialValues={initialValues}
+            validationSchema={getValidationSchema()}
+            onSubmit={handleSubmit}>
+            {({ values }) => (
+              <Form className={classes.form}>
+                <div className={classes.forminfo}>
                   <div className={classes.boxContainer}>
                     <div className={classes.fieldContainer}>
                       <label className={classes.label}>Code name</label>
@@ -157,6 +270,8 @@ const AddPromocodeForm = () => {
                         placeholder="General Admission"
                       />
                     </div>
+
+                    <ErrorMessage name="name" component="span" />
 
                     <div className={classes.namep}>
                       Customers can also access this code via custom URL
@@ -193,6 +308,7 @@ const AddPromocodeForm = () => {
                                 autoComplete="off"
                               />
                             </div>
+                            <ErrorMessage name="limit" component="span" />
                           </div>
                         </>
                       ) : null}
@@ -210,16 +326,17 @@ const AddPromocodeForm = () => {
                     <div className={classes.containerstart2}>
                       <div className={classes.boxContainer}>
                         <div className={classes.fieldContainer}>
-                          <div className={classes.container2}>
-                            <span className={classes.dollar}>$</span>
-                            <Field
-                              className={classes.field}
-                              name="amountOff"
-                              placeholder="0.00"
-                              type="text"
-                              autoComplete="off"
-                            />
-                          </div>
+                          {/* <div className={classes.container2}> */}
+                          {/* <span className={classes.dollar}>$</span> */}
+                          <Field
+                            className={classes.field}
+                            name="amountOff"
+                            placeholder="0.00"
+                            type="text"
+                            autoComplete="off"
+                            disabled={values.percentOff !== ""}
+                          />
+                          {/* </div> */}
                         </div>
                       </div>
 
@@ -227,19 +344,22 @@ const AddPromocodeForm = () => {
 
                       <div className={classes.boxContainer}>
                         <div className={classes.fieldContainer}>
-                          <div className={classes.container2}>
-                            <span className={classes.dollar}>$</span>
-                            <Field
-                              className={classes.field}
-                              name="percentOff"
-                              placeholder="0.00"
-                              type="text"
-                              autoComplete="off"
-                            />
-                          </div>
+                          {/* <div className={classes.container2}> */}
+                          {/* <span className={classes.dollar}>$</span> */}
+                          <Field
+                            className={classes.field}
+                            name="percentOff"
+                            placeholder="0.00"
+                            type="text"
+                            autoComplete="off"
+                            disabled={values.amountOff !== ""}
+                          />
+                          {/* </div> */}
                         </div>
                       </div>
                     </div>
+
+                    <ErrorMessage name="percentOff" component="span" />
                   </div>
 
                   <div className={classes.limitcontainer}>
@@ -435,11 +555,83 @@ const AddPromocodeForm = () => {
                       </div>
                     </div>
                   ) : null}
+                  <hr className={classes.promohr} />
+                  <div className={classes.limitcontainer}>
+                    <div className={classes.headercontainer2}>
+                      Apply code to :
+                    </div>
+                    <FormControl>
+                      <RadioGroup
+                        aria-labelledby="demo-controlled-radio-buttons-group"
+                        name="controlled-radio-buttons-group"
+                        value={selectedvaluetickets}
+                        onChange={(e) => handleTickets(e.target.value)}>
+                        <FormControlLabel
+                          value="All visible tickets"
+                          control={<Radio />}
+                          label="All visible tickets"
+                          sx={{
+                            "& .MuiSvgIcon-root": {
+                              fontSize: 20,
+                            },
+                            "& .MuiTypography-root": {
+                              fontSize: 13,
+                              fontWeight: 4,
+                              color: "rgb(57, 54, 79)",
+                            },
+                          }}
+                        />
+                        <div className={classes.radiobtntickets}>
+                          <FormControlLabel
+                            value="Only certain visible tickets"
+                            control={<Radio />}
+                            label="Only certain visible tickets"
+                            sx={{
+                              "& .MuiSvgIcon-root": {
+                                fontSize: 20,
+                              },
+                              "& .MuiTypography-root": {
+                                fontSize: 13,
+                                fontWeight: 4,
+                                color: "rgb(57, 54, 79)",
+                              },
+                            }}
+                          />
+                          {!alltickets && <button>Apply</button>}
+                        </div>
+                      </RadioGroup>
+                    </FormControl>
+                  </div>
+                </div>
+                <div
+                  id="EventPageBookingPopUpLeaveCheckOutBtnsContainer"
+                  className={classes.leavecheckoutbuttons}>
+                  <div
+                    id="EventPageBookingPopUpLeaveCheckOutStayBtnContainer"
+                    className={classes.stayleavebtn}>
+                    <button
+                      id="EventPageBookingPopUpLeaveCheckOutStayBtn"
+                      className={classes.staybutton}
+                      onClick={toggleDrawer("right", false)}>
+                      Cancel
+                    </button>
+                  </div>
 
-                </Form>
-              )}
-            </Formik>
-          </div>
+                  <div
+                    id="EventPageBookingPopUpLeaveCheckOutLeaveBtnContainer"
+                    className={classes.stayleavebtn}>
+                    <button
+                      type="submit"
+                      id="EventPageBookingPopUpLeaveCheckOutLeaveBtn"
+                      className={classes.leavebutton}>
+                      Save
+                    </button>
+                  </div>
+                </div>
+              </Form>
+            )}
+          </Formik>
+          {/* </div> */}
         </Box>
       </SwipeableDrawer>
     </div>
