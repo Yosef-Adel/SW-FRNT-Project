@@ -14,7 +14,8 @@ import { DemoContainer, DemoItem } from "@mui/x-date-pickers/internals/demo";
 import { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayjs";
 import { LocalizationProvider } from "@mui/x-date-pickers/LocalizationProvider";
 import { DatePicker } from "@mui/x-date-pickers/DatePicker";
-
+import ArrowBackIosNewIcon from "@mui/icons-material/ArrowBackIosNew";
+import Checkbox from "@mui/material/Checkbox";
 const AddTicketForm = () => {
   const initialValues = {
     name: "General Admission",
@@ -24,6 +25,8 @@ const AddTicketForm = () => {
     salesend: null,
     starttime: "",
     endtime: "",
+    minimumquantity: "1",
+    maximumquantity: "1",
   };
   const validationSchema = Yup.object().shape({
     name: Yup.string()
@@ -32,7 +35,10 @@ const AddTicketForm = () => {
       .required("Please enter a name"),
     availablequantity: Yup.string().required("Quantity is required"),
   });
-
+  const [advancedopen, setadvancedopen] = useState(false);
+  function handleclick2() {
+    setadvancedopen(!advancedopen);
+  }
   const [value, setValue] = React.useState(dayjs("2022-04-17"));
 
   const [state, setState] = React.useState({
@@ -41,7 +47,11 @@ const AddTicketForm = () => {
   const [paidclicked, setpaidClicked] = useState(true);
   const [freeclicked, setfreeClicked] = useState(false);
   const [donationclicked, setdonationClicked] = useState(false);
+  const [checked, setChecked] = React.useState(true);
 
+  const handleChange = (event) => {
+    setChecked(event.target.checked);
+  };
   function handlepaidclicked() {
     setfreeClicked(false);
     setpaidClicked(true);
@@ -76,7 +86,8 @@ const AddTicketForm = () => {
         <Button
           className={classes.button}
           onClick={toggleDrawer("right", true)}
-          data-testid="AddTicketButton">
+          data-testid="AddTicketButton"
+        >
           Add Ticket
         </Button>
       </div>
@@ -89,39 +100,53 @@ const AddTicketForm = () => {
           invisible: true,
         }}
         PaperProps={{
-          style: { height: "1000px", marginTop: 60, marginRight: 20 },
-        }}>
-        <Box className={classes.box} sx={{ width: 407 }}>
+          style: {
+            height: "calc(100% - 60px)",
+            marginTop: 60,
+            marginRight: 20,
+          },
+        }}
+      >
+        <Box className={classes.box} sx={{ width: 420, height: "100%" }}>
           <div className={classes.headercontainer}>
             <p className={classes.ticketp}>Add tickets</p>
             <a>Learn more</a>
           </div>
-          <div className={classes.forminfo}>
-            <div className={classes.typeofform}>
-              <div
-                onClick={handlepaidclicked}
-                className={paidclicked ? classes.clickeditem : classes.item}>
-                Paid
-              </div>
-              <div
-                onClick={handlefreeclicked}
-                className={freeclicked ? classes.clickeditem : classes.item}>
-                Free
-              </div>
-              <div
-                onClick={handledonationclicked}
-                className={
-                  donationclicked ? classes.clickeditem : classes.item
-                }>
-                Donation
-              </div>
-            </div>
-            <Formik
-              initialValues={initialValues}
-              validationSchema={validationSchema}
-              onSubmit={handleSubmit}>
-              {({ values, setFieldValue }) => (
-                <Form>
+
+          <Formik
+            initialValues={initialValues}
+            validationSchema={validationSchema}
+            onSubmit={handleSubmit}
+          >
+            {({ values, setFieldValue }) => (
+              <Form className={classes.form}>
+                <div className={classes.forminfo}>
+                  <div className={classes.typeofform}>
+                    <div
+                      onClick={handlepaidclicked}
+                      className={
+                        paidclicked ? classes.clickeditem : classes.item
+                      }
+                    >
+                      Paid
+                    </div>
+                    <div
+                      onClick={handlefreeclicked}
+                      className={
+                        freeclicked ? classes.clickeditem : classes.item
+                      }
+                    >
+                      Free
+                    </div>
+                    <div
+                      onClick={handledonationclicked}
+                      className={
+                        donationclicked ? classes.clickeditem : classes.item
+                      }
+                    >
+                      Donation
+                    </div>
+                  </div>
                   <div className={classes.boxContainer}>
                     <div className={classes.fieldContainer}>
                       <label className={classes.label}>Name</label>
@@ -150,7 +175,8 @@ const AddTicketForm = () => {
                     <div className={classes.fieldContainer}>
                       <label
                         className={classes.label}
-                        style={{ paddingLeft: "20px" }}>
+                        style={{ paddingLeft: "20px" }}
+                      >
                         Price
                       </label>
                       <div className={classes.container2}>
@@ -174,7 +200,8 @@ const AddTicketForm = () => {
                       <Field
                         className={classes.field}
                         name="ticketavailable"
-                        component="select">
+                        component="select"
+                      >
                         <option>Data & time</option>
                         <option>When sales end for...</option>
                       </Field>
@@ -207,7 +234,8 @@ const AddTicketForm = () => {
                         <Field
                           className={classes.field}
                           name="starttime"
-                          component="select">
+                          component="select"
+                        >
                           <option>12:00 AM</option>
                           <option>12:30 AM</option>
                           <option>1:00 AM</option>
@@ -289,7 +317,8 @@ const AddTicketForm = () => {
                         <Field
                           className={classes.field}
                           name="endtime"
-                          component="select">
+                          component="select"
+                        >
                           <option>12:00 AM</option>
                           <option>12:30 AM</option>
                           <option>1:00 AM</option>
@@ -342,10 +371,121 @@ const AddTicketForm = () => {
                       </div>
                     </div>
                   </div>
-                </Form>
-              )}
-            </Formik>
-          </div>
+                  <div className={classes.advancedsettings}>
+                    <div className={classes.advancedp}>Advanced settings</div>
+                    <div
+                      onClick={handleclick2}
+                      className={
+                        advancedopen ? classes.icondown : classes.iconup
+                      }
+                    >
+                      <ArrowBackIosNewIcon />
+                    </div>
+                  </div>
+                  {advancedopen ? (
+                    <>
+                      <div className={classes.containercheckbutton}>
+                        <div className={classes.checkbutton}>
+                          <Checkbox
+                            checked={checked}
+                            onChange={handleChange}
+                            inputProps={{ "aria-label": "controlled" }}
+                            sx={{ "& .MuiSvgIcon-root": { fontSize: 28 } }}
+                          />
+                        </div>
+                        <div className={classes.checkbuttonp}>
+                          Show tickets sale end dates and sale status at
+                          checkout
+                        </div>
+                      </div>
+                      <div className={classes.boxContainer}>
+                        <div className={classes.fieldContainer}>
+                          <label className={classes.label}>desciption</label>
+                          <Field
+                            className={classes.field}
+                            name="desciption"
+                            placeholder="Tell attendess more about this ticket"
+                          />
+                        </div>
+                      </div>
+                      <div className={classes.boxContainer}>
+                        <div className={classes.fieldContainer}>
+                          <label className={classes.label}>Start time</label>
+                          <Field
+                            className={classes.field}
+                            name="starttime"
+                            component="select"
+                          >
+                            <option>Visible</option>
+                            <option>Hidden</option>
+                            <option>Hidden when not on sale</option>
+                            <option>Custom schedule</option>
+                          </Field>
+                        </div>
+                      </div>
+                      <div className={classes.ticketperorder}>
+                        Tickets per order
+                      </div>
+                      <div className={classes.containerstart}>
+                        <div className={classes.boxContainer}>
+                          <div className={classes.fieldContainer}>
+                            <label className={classes.label}>
+                              Minimum quantity
+                            </label>
+                            <Field
+                              className={classes.field}
+                              name="minimumquantity"
+                            ></Field>
+                          </div>
+                        </div>
+
+                        <div className={classes.boxContainer}>
+                          <div className={classes.fieldContainer}>
+                            <label className={classes.label}>
+                              Maximum quantity
+                            </label>
+                            <Field
+                              className={classes.field}
+                              name="maximumquantity"
+                            ></Field>
+                          </div>
+                        </div>
+                      </div>
+                      <div className={classes.boxContainer} style={{marginBottom:"5rem"}}>
+                        <div className={classes.fieldContainer}>
+                          <label className={classes.label}>Sales channel</label>
+                          <Field
+                            className={classes.field}
+                            name="saleschannel"
+                            component="select"
+                          >
+                            <option>Online only</option>
+                          
+                          </Field>
+                        </div>
+                      </div>
+                    </>
+                  ) : null}
+                </div>
+                <div className={classes.leavecheckoutbuttons}>
+                  <div className={classes.stayleavebtn}>
+                    <button
+                      className={classes.staybutton}
+                      onClick={toggleDrawer("right", false)}
+                    >
+                      Cancel
+                    </button>
+                  </div>
+
+                  <div className={classes.stayleavebtn}>
+                    <button type="submit" className={classes.leavebutton}>
+                      Save
+                    </button>
+                  </div>
+                </div>
+              </Form>
+            )}
+          </Formik>
         </Box>
       </SwipeableDrawer>
     </div>

@@ -33,7 +33,7 @@ const CreatorTickets = () => {
           FilterTabsData={TicketsFilterTabs}
           clickedItem={handleClickedItem}
         />
-        {addmisionclicked ? <TicketsModal /> : <AddPromocodeForm />}
+        {addmisionclicked ? <AddTicketForm /> : <AddPromocodeForm />}
       </div>
     </div>
   );
