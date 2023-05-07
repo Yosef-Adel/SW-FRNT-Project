@@ -8,6 +8,7 @@ import { DemoContainer, DemoItem } from "@mui/x-date-pickers/internals/demo";
 import { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayjs";
 import { LocalizationProvider } from "@mui/x-date-pickers/LocalizationProvider";
 import { DatePicker } from "@mui/x-date-pickers/DatePicker";
+import { useState } from "react";
 
 /**
  * Component that returns Creator's Publish Event page
@@ -17,8 +18,13 @@ import { DatePicker } from "@mui/x-date-pickers/DatePicker";
  * return(<CreatorPublish />)
  */
 const CreatorPublish = () => {
+  const [isPrivate, setIsPrivate] = useState(false)
+  const [disable, setDisable] = useState(true)
+  const [buttonContent, setButtonContent] = useState("Publish")
+
+
   const initialValues = {
-    isPrivate: "1",
+    isPrivate: "false",
     publishDate: "1",
     starttime: "",
   };
@@ -57,34 +63,53 @@ const CreatorPublish = () => {
           followers="120"
         />
         <div className={classes.section2}>
-          <Formik className={classes.form} initialValues={initialValues}>
+          <Formik className={classes.form} initialValues={initialValues} enableReinitialize>
             <Form>
               <div className={classes.boxContainer}>
                 <div className={classes.fieldContainer} role="group">
                   <p className={classes.fieldTitle}>Who can see your event?</p>
                   <label>
-                    <Field type="radio" name="isPrivate" value="1" />
-                    Public
-                    <p>Shared on Eventbrite and search engines</p>
-                  </label>
+                    <Field type="radio" name="isPrivate" value="false" onClick = {() => setIsPrivate(false)}/>
+                    <span>
+                      Public
+                      <p className={classes.fieldDesc}>Shared on Eventbrite and search engines</p>
+                    </span>
+                  </label>  
+                  
                   <label>
-                    <Field type="radio" name="isPrivate" value="2" />
-                    Private
-                    <p>Only available to a selected audience</p>
+                    <Field type="radio" name="isPrivate" value="true" onClick = {() => setIsPrivate(true)}/>
+                    <span>
+                      Private
+                      <p className={classes.fieldDesc}>Only available to a selected audience</p>
+                    </span>
                   </label>
                 </div>
 
+                {isPrivate && <div className={classes.fieldContainer} >
+                  <p className={classes.fieldTitle}>Choose your audience</p>
+                  <label className={classes.dropDown} role="group">
+                        <span>Audience</span>
+                        <Field
+                          className={classes.field}
+                          name="starttime"
+                          component="select">
+                          <option>Anyone with link</option>
+                          <option>Only people with password</option>                        
+                        </Field>
+                  </label>
+                </div>}
+
                 <div className={classes.fieldContainer} role="group">
                   <p className={classes.fieldTitle}>
-                    When should we publish your event?
+                  Will this event ever be public?
                   </p>
                   <label>
-                    <Field type="radio" name="publishDate" value="1" />
-                    Publish Now
+                    <Field type="radio" name="publishDate" value="1" onClick = {() =>{ setDisable(true);  setButtonContent("Publish");}}/>
+                    No, keep it private
                   </label>
                   <label>
-                    <Field type="radio" name="publishDate" value="2" />
-                    Schedule for later
+                    <Field type="radio" name="publishDate" value="2" onClick = {() =>{ setDisable(false); setButtonContent("Schedule");}}/>
+                    Yes, schedule to share publicly
                   </label>
                 </div>
 
@@ -92,9 +117,11 @@ const CreatorPublish = () => {
                   <div className={classes.datacontainer}>
                     <LocalizationProvider dateAdapter={AdapterDayjs}>
                       <DemoContainer components={[]}>
-                        <DemoItem>
+                        <DemoItem >
                           <DatePicker
+                            className={`${disable && classes.disabled}`}
                             defaultValue={dayjs("2022-04-17")}
+                            disabled = {disable}
                             sx={{
                               "& .MuiInputBase-input": {
                                 height: "17px",
@@ -109,61 +136,14 @@ const CreatorPublish = () => {
                     </LocalizationProvider>
                   </div>
 
-                  <div className={classes.fieldContainer}>
+                  <div className={`${classes.fieldContainerDate} ${disable && classes.disabled} ${disable && classes.disabledBorder}`}>
                     <label className={classes.label}>Start time</label>
                     <Field
                       className={classes.field}
                       name="starttime"
-                      component="select"
+                      type="time"
+                      disabled = {disable}
                     >
-                      <option>12:00 AM</option>
-                      <option>12:30 AM</option>
-                      <option>1:00 AM</option>
-                      <option>1:30 AM</option>
-                      <option>2:00 AM</option>
-                      <option>2:30 AM</option>
-                      <option>3:00 AM</option>
-                      <option>3:30 AM</option>
-                      <option>4:00 AM</option>
-                      <option>4:30 AM</option>
-                      <option>5:00 AM</option>
-                      <option>5:30 AM</option>
-                      <option>6:00 AM</option>
-                      <option>6:30 AM</option>
-                      <option>7:00 AM</option>
-                      <option>7:30 AM</option>
-                      <option>8:00 AM</option>
-                      <option>8:30 AM</option>
-                      <option>9:00 AM</option>
-                      <option>9:30 AM</option>
-                      <option>10:00 AM</option>
-                      <option>10:30 AM</option>
-                      <option>11:00 AM</option>
-                      <option>11:30 AM</option>
-                      <option>12:00 PM</option>
-                      <option>12:30 PM</option>
-                      <option>1:00 PM</option>
-                      <option>1:30 PM</option>
-                      <option>2:00 PM</option>
-                      <option>2:30 PM</option>
-                      <option>3:00 PM</option>
-                      <option>3:30 PM</option>
-                      <option>4:00 PM</option>
-                      <option>4:30 PM</option>
-                      <option>5:00 PM</option>
-                      <option>5:30 PM</option>
-                      <option>6:00 PM</option>
-                      <option>6:30 PM</option>
-                      <option>7:00 PM</option>
-                      <option>7:30 PM</option>
-                      <option>8:00 PM</option>
-                      <option>8:30 PM</option>
-                      <option>9:00 PM</option>
-                      <option>9:30 PM</option>
-                      <option>10:00 PM</option>
-                      <option>10:30 PM</option>
-                      <option>11:00 PM</option>
-                      <option>11:30 PM</option>
                     </Field>
                   </div>
                 </div>
@@ -190,7 +170,7 @@ const CreatorPublish = () => {
 
         <div className={classes.footer}>
           <hr></hr>
-          <button className={classes.btn}>Publish</button>
+          <button className={classes.btn}>{buttonContent}</button>
         </div>
       </div>
     </div>
