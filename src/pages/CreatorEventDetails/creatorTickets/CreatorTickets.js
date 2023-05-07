@@ -1,10 +1,12 @@
 import classes from "./tickets.module.css";
 import GenericFilterTabs from "../../../generic components/generic filter/GenericFilterTabs";
+import TicketsModal from "../../../generic components/ticketsModal/TicketsModal";
 import TicketsFilterTabs from "../../../assets/data/TicketsFilterTabs";
 import { useState, useEffect } from "react";
 import * as React from "react";
 import AddTicketForm from "./ticketsAdmission/addTicketForm/AddTicketForm";
 import AddPromocodeForm from "./tickestPromocodes/addPromoCodeForm/AddPromocodeForm";
+import PromoCodesList from "./tickestPromocodes/promocodesListView/PromoCodesList";
 
 /**
  * Component that returns Creator's Manage Tickets page
@@ -14,7 +16,7 @@ import AddPromocodeForm from "./tickestPromocodes/addPromoCodeForm/AddPromocodeF
  * return(<CreatorTickets />)
  */
 
-const CreatorTickets = () => {
+const CreatorTickets = ({eventID}) => {
   const [addmisionclicked, setAddmisionclicked] = useState(true);
   function handleClickedItem(i) {
     if (i === 2) {
@@ -32,7 +34,8 @@ const CreatorTickets = () => {
           FilterTabsData={TicketsFilterTabs}
           clickedItem={handleClickedItem}
         />
-        {addmisionclicked ? <AddTicketForm /> : <AddPromocodeForm />}
+        {addmisionclicked ? <AddTicketForm /> : <AddPromocodeForm eventID={eventID} edit={false}/>}
+        <PromoCodesList eventID={eventID} />
       </div>
     </div>
   );

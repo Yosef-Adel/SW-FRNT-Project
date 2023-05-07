@@ -13,7 +13,7 @@ import SalesCards from "./salesCards/SalesCards";
 import SalesByTicket from "./salesBYticket/SalesByTicket";
 import RecentOrders from "./recentOrders/RecentOrders";
 import { useEffect, useState } from "react";
-import axios from "axios";
+import axios from "../../../requests/axios";
 import routes from "../../../requests/routes";
 
 /**
@@ -159,6 +159,7 @@ const CreatorDashboard = ({ eventID }) => {
     getSalesSummary();
     getSalesByTicketType(intialSalesRequest);
     getRecentOrders();
+    getEventURL();
   }, []);
 
   return (

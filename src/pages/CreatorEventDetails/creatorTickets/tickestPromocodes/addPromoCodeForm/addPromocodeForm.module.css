@@ -1,4 +1,4 @@
-.box{
+.box {
   height: 100%;
 }
 
@@ -28,6 +28,34 @@
   cursor: pointer;
 }
 
+.selbutton
+{
+  min-width: 15%;
+  color: var(--primary-text);
+  border: 2px solid var(--faded-grey);
+  background: none;
+  font-size: 1.3rem;
+  font-weight: 600;
+  border-radius: 4px;
+  margin-top: 2rem;
+  margin-left: auto;
+  height: 4.5rem;
+  padding: 0 30px 1px;
+  text-align: center;
+}
+
+.selbutton p {
+  text-align: center;
+}
+.selbutton:hover {
+  background-color: var(--primary-background);
+  cursor: pointer;
+}
+
+.selbutton option{
+  padding: 3rem;
+}
+
 .headercontainer p {
   font-size: 1.8rem;
 
@@ -54,11 +82,23 @@
   justify-content: space-between;
   border-bottom: 1px solid rgb(235, 233, 233);
 }
+
+.form {
+  width: 100%;
+  height: calc(100% - 6rem);
+}
+
 .forminfo {
   /* margin-top: 3rem; */
   width: 100%;
-  height: calc(100% - 10rem);
+  height: calc(100% - 6rem);
   overflow-y: scroll;
+  /* position: relative; */
+}
+
+.submitbutton {
+  /* position: absolute;
+  bottom: 0; */
 }
 .typeofform {
   padding-left: 2.1rem;
@@ -232,4 +272,123 @@
   margin-top: 1rem;
   font-size: 1.2rem;
   color: var(--primary-text);
+}
+
+.promohr {
+  width: 90%;
+  border-top: 1px solid #eeedf2;
+  margin: 3rem auto !important;
+}
+
+.leavecheckoutbuttons {
+  width: 80%;
+  height: 6.5rem;
+  display: flex;
+  justify-content: space-around;
+  margin: auto;
+  column-gap: 0.5rem;
+}
+
+.stayleavebtn {
+  width: 45%;
+  margin: auto;
+}
+
+.stayleavebtn button {
+  width: 100%;
+  font-size: 1.4rem;
+  padding: 1.2rem 0;
+
+  font-weight: 600;
+  border-radius: 3px;
+}
+.stayleavebtn button p {
+  text-align: center;
+}
+.stayleavebtn button:hover {
+  cursor: pointer;
+}
+
+.staybutton {
+  color: var(--primary-text);
+  border: 2px solid var(--faded-grey);
+  background: none;
+}
+
+.leavebutton {
+  background-color: var(--orange);
+  color: white;
+  border: none;
+}
+
+.boxContainer:has(span) .fieldContainer {
+  border: solid 1px #db6d7c;
+  border-bottom: solid 2px #db6d7c;
+  transition: 1ms;
+}
+
+.boxContainer:has(span) .fieldContainer .label {
+  color: var(--errorText);
+  top: 0px;
+  font-size: 1.2rem;
+}
+
+.boxContainer span {
+  font-size: 1.4rem;
+  /* margin-left: 1rem; */
+  color: var(--errorText);
+}
+
+.limitcontainer:has(span) > .containerstart2 > .boxContainer > .fieldContainer {
+  border: solid 1px #db6d7c;
+  border-bottom: solid 2px #db6d7c;
+  transition: 1ms;
+}
+
+.limitcontainer:has(span)
+  > .containerstart2
+  > .boxContainer
+  > .fieldContainer
+  > .label {
+  color: var(--errorText);
+  top: 0px;
+  font-size: 1.2rem;
+}
+
+.limitcontainer > span {
+  font-size: 1.4rem;
+  /* margin-left: 1rem; */
+  color: var(--errorText);
+}
+
+.presuffix
+{
+  display: flex;
+  column-gap: 0.5rem;
+}
+
+.presuffix .field
+{
+  width :70%
+}
+
+.modalbtns
+{
+  display: flex;
+  column-gap: 2rem;
+  justify-content: end;
+}
+
+
+
+@media screen and (max-width: 480px) {
+  .css-1160xiw-MuiPaper-root-MuiDrawer-paper
+  {
+    width: 100%;
+    margin:0;
+    height:100%
+  }
+  .box {
+    width: 100%;
+  }
 }
