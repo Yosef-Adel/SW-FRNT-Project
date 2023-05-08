@@ -205,7 +205,7 @@
   cursor: pointer;
 }
 
-input[type="radio"] {
+.choosebtn input[type="radio"] {
   display: none;
   visibility: hidden;
 }

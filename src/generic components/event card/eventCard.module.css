@@ -23,6 +23,7 @@
 .cardImage{
     width: 100%;
     min-height: 13rem;
+    max-height: 14rem;
     background-size: contain;
     background-position: center;
     background-repeat: no-repeat;

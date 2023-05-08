@@ -21,9 +21,12 @@
     --faded-grey : rgb(169, 168, 179); 
     --border-color:rgb(238, 237, 242);
     --icons:rgb(75,77,99);
-    --main-h1: 'Vazirmatn', sans-serif;
     --blue-faded: rgb(235, 238, 252);
-    }
+
+    --table: rgb(248, 247, 250);
+    
+    --main-h1: 'Vazirmatn', sans-serif;
+  }
 
 
 * {

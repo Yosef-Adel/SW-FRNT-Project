@@ -3,7 +3,7 @@ import classes from "./sidebar.module.css";
 import sideBarCreator from "../../assets/data/sideBarCreator";
 import { NavLink } from "react-router-dom";
 import logo from "../../assets/brand/logo.png";
-
+import { useLocation } from 'react-router-dom';
 
 /**
  * Component that renders creator side bar
@@ -14,7 +14,9 @@ import logo from "../../assets/brand/logo.png";
  * )
  */
 const SideBar = (props) => {
-  const list = sideBarCreator.list;
+
+    const { pathname } = useLocation();
+    const list = sideBarCreator.list;
 
   return (
     <div className={props.show?classes.smallScreenSideBar:classes.sideBar}>
@@ -25,7 +27,10 @@ const SideBar = (props) => {
             {list.map((item) => {
                 return(
                     <li key={item.key} className={classes.iconContainer}>
-                        <NavLink end to={item.route} className={({ isActive }) => isActive ? `${classes.activeLink}` : `${classes.normalLink}`}>
+                        <NavLink 
+                            to={item.route} className={({ isActive }) => isActive ? `${classes.activeLink}` : `${classes.normalLink}`}
+                            isActive={() => ['/events', '/events/:id'].includes(pathname)} 
+                            >
                             <li className={classes.iconItem}>
                                 {item.icon}
                             </li>
