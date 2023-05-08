@@ -10,11 +10,32 @@ import { useSelector } from "react-redux";
 import Footer from "./layouts/footer/Footer";
 import CreatorEvents from "./pages/creator events/CreatorEvents";
 import CreatorEventDetails from "./pages/CreatorEventDetails/CreatorEventDetails";
+import addNotification from 'react-push-notification';
+import { Notifications } from 'react-push-notification';
+import { useEffect } from "react";
 
 function App() {
   const user = useSelector((state) => state.user);
+  
+  const handleNotification = () => {
+    addNotification({
+        title: 'Warning',
+        subtitle: 'This is a subtitle',
+        message: 'This is a very long message',
+        theme: 'darkblue',
+        native: true
+    });
+} ;
+
+  // useEffect(() => {
+  //   const interval = setInterval(() => handleNotification(), 1000);
+  //   return () => clearInterval(interval);
+  // }, []);
+
+
   return ( 
     <>
+      <Notifications />
       <Routes>
         <Route exact path="/" element={<HomePage />} />
         <Route path="/login" element={<LoginPage />} />
