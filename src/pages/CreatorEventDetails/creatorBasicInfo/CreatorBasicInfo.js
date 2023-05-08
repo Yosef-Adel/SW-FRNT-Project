@@ -52,6 +52,7 @@ const CreatorBasicInfo = () => {
     address1: "",
     country: "",
     postalCode: "",
+    category: "",
     image:
       "https://res.cloudinary.com/dv2ei7dxk/image/upload/v1681137937/DEV/ca7lxvsjologe9h46n99.jpg",
 

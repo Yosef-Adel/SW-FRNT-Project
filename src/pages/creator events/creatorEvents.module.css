@@ -30,7 +30,7 @@
     margin-top: 2rem;
 }
 
-.eventTableHeader, .event{
+.eventTableHeader{
     display: grid;
     grid-template-columns: 5fr 1fr 1fr 1fr 1fr;
     column-gap: 1rem;
@@ -38,14 +38,9 @@
     border-radius: 0.5rem;
 }
 
-.event{
-    background-color: white;
-}
-
 .eventTableHeader li:first-child{
     padding-left: 3rem;
 }
-
 
 .eventTableHeader li{
     list-style: none;
@@ -57,9 +52,3 @@
     text-align: left;
 }
 
-.eventDetails{
-    margin-left: 3rem;
-    display: flex;
-    flex-direction: row;
-    gap: 0.5rem;
-}

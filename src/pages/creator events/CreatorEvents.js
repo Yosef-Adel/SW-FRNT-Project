@@ -8,6 +8,7 @@ import { useSelector } from "react-redux";
 import { useDispatch } from "react-redux";
 import { userActions } from "../../store/userSlice";
 import SideBar from "../../layouts/sideBar/Sidebar";
+import EventListCard from "./eventListCard";
 
 /**
  * Component that returns Creator's main page
@@ -22,6 +23,7 @@ const CreatorEvents = () => {
   const [name, setName] = useState([]);
   const navigate = useNavigate();
   const dispatch = useDispatch();
+  const [eventList, setEventList] = useState([]);
 
   /**
    * function that sends the request that switchs user type from user to creator
@@ -64,6 +66,24 @@ const CreatorEvents = () => {
     checkCreator();
   }, []);
 
+
+  async function getEvents() {
+    try {
+      const request = await axios.get(routes.getAllEventsCreator + user.id + "/all-events");
+      setEventList(request.data.events);
+    } catch (err) {
+
+    }
+  }
+
+  useEffect(() => {
+    console.log(eventList);
+  },[eventList]);
+
+  useEffect(() => {
+    getEvents();
+  }, []);
+
   return (
     <>
       <CreatorNav/>
@@ -81,31 +101,7 @@ const CreatorEvents = () => {
               <li>Status</li>
             </ul>
             <div className={classes.eventTable}>
-              <div className={classes.event}>
-                <div className={classes.eventDetails}>
-                  <div className={classes.eventDate}>
-                    <p className={classes.month}>Jun</p>
-                    <p className={classes.day}>17</p>
-                  </div>
-                  <div className={classes.eventImgContainer}>
-                    <img src="https://picsum.photos/200/300" alt="" />
-                  </div>
-                  <div className={classes.eventInfo}>
-                    <p className={classes.eventName}>Event Name</p>
-                    <p className={classes.eventLocation}>Location</p>
-                    <p className={classes.eventTime}>Saturday June</p>
-                  </div>
-                </div>
-                <div className={classes.eventStats}>
-                  <p className={classes.eventSold}>0</p>
-                </div>
-                <div className={classes.eventStats}>
-                  <p>0</p>
-                </div>
-                <div className={classes.eventStats}>
-                  <p>0</p>
-                </div>
-              </div>
+              {eventList.map((event,index)=>(<EventListCard event={event}/>))}
             </div>
           </div>
         </div>
