@@ -7,7 +7,7 @@ import * as React from "react";
 import Box from "@mui/material/Box";
 import SwipeableDrawer from "@mui/material/SwipeableDrawer";
 import Button from "@mui/material/Button";
-import { Formik, Form, Field } from "formik";
+import { Formik, Form, Field, ErrorMessage } from "formik";
 import * as Yup from "yup";
 import dayjs from "dayjs";
 import { DemoContainer, DemoItem } from "@mui/x-date-pickers/internals/demo";
@@ -34,6 +34,7 @@ const AddTicketForm = () => {
 
       .required("Please enter a name"),
     availablequantity: Yup.string().required("Quantity is required"),
+    price: Yup.string().required("  Price is required to make a paid ticket"),
   });
   const [advancedopen, setadvancedopen] = useState(false);
   function handleclick2() {
@@ -153,12 +154,15 @@ const AddTicketForm = () => {
                       <Field
                         className={classes.field}
                         name="name"
+                        type="text"
                         autoComplete="off"
                         data-testid="LoginFormEmailInput"
                         placeholder="General Admission"
                       />
                     </div>
+                    <ErrorMessage name="name" component="span" />
                   </div>
+
                   <div className={classes.boxContainer}>
                     <div className={classes.fieldContainer}>
                       <label className={classes.label}>
@@ -168,11 +172,19 @@ const AddTicketForm = () => {
                         className={classes.field}
                         name="availablequantity"
                         autoComplete="off"
+                        type="number"
                       />
                     </div>
+                    <ErrorMessage name="availablequantity" component="span" />
                   </div>
                   <div className={classes.boxContainer}>
-                    <div className={classes.fieldContainer}>
+                    <div
+                      className={
+                        freeclicked || donationclicked
+                          ? classes.fielddisable
+                          : classes.fieldContainer
+                      }
+                    >
                       <label
                         className={classes.label}
                         style={{ paddingLeft: "20px" }}
@@ -180,17 +192,21 @@ const AddTicketForm = () => {
                         Price
                       </label>
                       <div className={classes.container2}>
-                        <span className={classes.dollar}>$</span>
+                        <p className={classes.dollar}>$</p>
                         <Field
+                          disabled={freeclicked || donationclicked}
                           className={classes.field}
                           name="price"
                           placeholder="0.00"
-                          type="text"
-                          autoComplete="off"
-                          data-testid="LoginFormPasswordInput"
+                          type="number"
                         />
                       </div>
                     </div>
+                    {paidclicked ? (
+                      <>
+                        <ErrorMessage name="price" component="span" />
+                      </>
+                    ) : null}
                   </div>
                   <div className={classes.boxContainer}>
                     <div className={classes.fieldContainer}>
@@ -428,7 +444,10 @@ const AddTicketForm = () => {
                       </div>
                       <div className={classes.containerstart}>
                         <div className={classes.boxContainer}>
-                          <div className={classes.fieldContainer} style={{width:"77%"}}>
+                          <div
+                            className={classes.fieldContainer}
+                            style={{ width: "77%" }}
+                          >
                             <label className={classes.label}>
                               Minimum quantity
                             </label>
@@ -440,7 +459,10 @@ const AddTicketForm = () => {
                         </div>
 
                         <div className={classes.boxContainer}>
-                          <div className={classes.fieldContainer} style={{width:"77%"}}>
+                          <div
+                            className={classes.fieldContainer}
+                            style={{ width: "77%" }}
+                          >
                             <label className={classes.label}>
                               Maximum quantity
                             </label>
@@ -451,7 +473,10 @@ const AddTicketForm = () => {
                           </div>
                         </div>
                       </div>
-                      <div className={classes.boxContainer} style={{marginBottom:"5rem"}}>
+                      <div
+                        className={classes.boxContainer}
+                        style={{ marginBottom: "5rem" }}
+                      >
                         <div className={classes.fieldContainer}>
                           <label className={classes.label}>Sales channel</label>
                           <Field
@@ -460,7 +485,6 @@ const AddTicketForm = () => {
                             component="select"
                           >
                             <option>Online only</option>
-                          
                           </Field>
                         </div>
                       </div>

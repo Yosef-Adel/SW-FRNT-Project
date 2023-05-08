@@ -1,121 +1,18 @@
-const tickets = {
-  tickets: [
+const tickets1 = {
+  tickets2: [
     {
-      _id: "64342bd138dbb03de6ab446c",
-      event: "64146257eb241c2fbea7e5ca",
-      name: "Deluxe (2 nights | Tache Boutique Hotel or equiv.)",
-      type: "Paid",
-      price: 21,
-      fee: 3.18,
-      capacity: 90,
-      minQuantityPerOrder: 1,
-      maxQuantityPerOrder: 10,
-      salesStart: "2023-03-18T00:00:00.000Z",
-      salesEnd: " Apr 26, 2023",
-      createdAt: "2023-04-04T21:27:38.723Z",
-      updatedAt: "2023-04-04T21:27:38.723Z",
-      __v: 0,
-      about: [
-        { name: "- 2 Nights of Accommodation at the Tache Boutique Hotel" },
-        { name: "- Meals, beverages and activities" },
-        {
-          name: "- Entry and Participation at the AfricArena Cairo Growth Stage Summit 2023",
-        },
-      ],
+   
     },
     {
-      _id: "642c964ace6507aec1eec4fd",
-      event: "64146257eb241c2fbea7e5ca",
-      name: "Deluxe (2 nights | Tache Boutique Hotel or equiv.)",
-      type: "Paid",
-      price: 21,
-      fee: 3.18,
-      capacity: 90,
-      minQuantityPerOrder: 1,
-      maxQuantityPerOrder: 10,
-      salesStart: "2023-03-18T00:00:00.000Z",
-      salesEnd: " Apr 26, 2023",
-      createdAt: "2023-04-04T21:27:38.723Z",
-      updatedAt: "2023-04-04T21:27:38.723Z",
-      __v: 0,
-      about: [
-        { name: "- 2 Nights of Accommodation at the Tache Boutique Hotel" },
-        { name: "- Meals, beverages and activities" },
-        {
-          name: "- Entry and Participation at the AfricArena Cairo Growth Stage Summit 2023",
-        },
-      ],
+
     },
     {
-      _id: "642c964ace6507aec1eec4fd",
-      event: "64146257eb241c2fbea7e5ca",
-      name: "Deluxe (2 nights | Tache Boutique Hotel or equiv.)",
-      type: "Paid",
-      price: 21,
-      fee: 3.18,
-      capacity: 90,
-      minQuantityPerOrder: 1,
-      maxQuantityPerOrder: 10,
-      salesStart: "2023-03-18T00:00:00.000Z",
-      salesEnd: " Apr 26, 2023",
-      createdAt: "2023-04-04T21:27:38.723Z",
-      updatedAt: "2023-04-04T21:27:38.723Z",
-      __v: 0,
-      about: [
-        { name: "- 2 Nights of Accommodation at the Tache Boutique Hotel" },
-        { name: "- Meals, beverages and activities" },
-        {
-          name: "- Entry and Participation at the AfricArena Cairo Growth Stage Summit 2023",
-        },
-      ],
+    
     },
     {
-      _id: "642c964ace6507aec1eec4fd",
-      event: "64146257eb241c2fbea7e5ca",
-      name: "Deluxe (2 nights | Tache Boutique Hotel or equiv.)",
-      type: "Paid",
-      price: 21,
-      fee: 3.18,
-      capacity: 90,
-      minQuantityPerOrder: 1,
-      maxQuantityPerOrder: 10,
-      salesStart: "2023-03-18T00:00:00.000Z",
-      salesEnd: " Apr 26, 2023",
-      createdAt: "2023-04-04T21:27:38.723Z",
-      updatedAt: "2023-04-04T21:27:38.723Z",
-      __v: 0,
-      about: [
-        { name: "- 2 Nights of Accommodation at the Tache Boutique Hotel" },
-        { name: "- Meals, beverages and activities" },
-        {
-          name: "- Entry and Participation at the AfricArena Cairo Growth Stage Summit 2023",
-        },
-      ],
-    },
-    {
-      _id: "642c964ace6507aec1eec4fd",
-      event: "64146257eb241c2fbea7e5ca",
-      name: "Deluxe (2 nights | Tache Boutique Hotel or equiv.)",
-      type: "Paid",
-      price: 21,
-      fee: 3.18,
-      capacity: 90,
-      minQuantityPerOrder: 1,
-      maxQuantityPerOrder: 10,
-      salesStart: "2023-03-18T00:00:00.000Z",
-      salesEnd: " Apr 26, 2023",
-      createdAt: "2023-04-04T21:27:38.723Z",
-      updatedAt: "2023-04-04T21:27:38.723Z",
-      __v: 0,
-      about: [
-        { name: "- 2 Nights of Accommodation at the Tache Boutique Hotel" },
-        { name: "- Meals, beverages and activities" },
-        {
-          name: "- Entry and Participation at the AfricArena Cairo Growth Stage Summit 2023",
-        },
-      ],
+      
     },
   ],
 };
 
-export default tickets;
+export default tickets1;

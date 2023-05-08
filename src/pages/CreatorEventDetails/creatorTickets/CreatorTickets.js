@@ -7,6 +7,7 @@ import * as React from "react";
 import AddTicketForm from "./ticketsAdmission/addTicketForm/AddTicketForm";
 import AddPromocodeForm from "./tickestPromocodes/addPromoCodeForm/AddPromocodeForm";
 import PromoCodesList from "./tickestPromocodes/promocodesListView/PromoCodesList";
+import TicketsView from "./ticketsAdmission/ticketsListView/TicketsView";
 
 /**
  * Component that returns Creator's Manage Tickets page
@@ -35,7 +36,7 @@ const CreatorTickets = ({eventID}) => {
           clickedItem={handleClickedItem}
         />
         {addmisionclicked ? <AddTicketForm /> : <AddPromocodeForm eventID={eventID} edit={false}/>}
-        <PromoCodesList eventID={eventID} />
+        {addmisionclicked? <TicketsView eventID={eventID} />:<PromoCodesList eventID={eventID} />}
       </div>
     </div>
   );
