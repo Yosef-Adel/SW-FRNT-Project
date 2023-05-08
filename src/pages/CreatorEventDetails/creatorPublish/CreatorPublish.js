@@ -18,15 +18,14 @@ import { useState } from "react";
  * return(<CreatorPublish />)
  */
 const CreatorPublish = () => {
-  const [isPrivate, setIsPrivate] = useState(false)
-  const [disable, setDisable] = useState(true)
-  const [buttonContent, setButtonContent] = useState("Publish")
-
+  const [disable, setDisable] = useState(true);
+  const [buttonContent, setButtonContent] = useState("Publish");
 
   const initialValues = {
     isPrivate: "false",
     publishDate: "1",
     starttime: "",
+    link: "link",
   };
 
   const tipsIcon = (
@@ -51,6 +50,7 @@ const CreatorPublish = () => {
     </svg>
   );
   return (
+    <>
     <div className={classes.container}>
       <div className={classes.publish}>
         <h1 className={classes.header}>Publish Your Event</h1>
@@ -63,52 +63,102 @@ const CreatorPublish = () => {
           followers="120"
         />
         <div className={classes.section2}>
-          <Formik className={classes.form} initialValues={initialValues} enableReinitialize>
+          <Formik
+            className={classes.form}
+            initialValues={initialValues}
+            enableReinitialize
+          >
+          {({ values }) => (
             <Form>
               <div className={classes.boxContainer}>
                 <div className={classes.fieldContainer} role="group">
                   <p className={classes.fieldTitle}>Who can see your event?</p>
                   <label>
-                    <Field type="radio" name="isPrivate" value="false" onClick = {() => setIsPrivate(false)}/>
+                    <Field
+                      type="radio"
+                      name="isPrivate"
+                      value="false"
+                    />
                     <span>
                       Public
-                      <p className={classes.fieldDesc}>Shared on Eventbrite and search engines</p>
+                      <p className={classes.fieldDesc}>
+                        Shared on Eventbrite and search engines
+                      </p>
                     </span>
-                  </label>  
-                  
+                  </label>
+
                   <label>
-                    <Field type="radio" name="isPrivate" value="true" onClick = {() => setIsPrivate(true)}/>
+                    <Field
+                      type="radio"
+                      name="isPrivate"
+                      value="true"
+                    />
                     <span>
                       Private
-                      <p className={classes.fieldDesc}>Only available to a selected audience</p>
+                      <p className={classes.fieldDesc}>
+                        Only available to a selected audience
+                      </p>
                     </span>
                   </label>
                 </div>
 
-                {isPrivate && <div className={classes.fieldContainer} >
-                  <p className={classes.fieldTitle}>Choose your audience</p>
-                  <label className={classes.dropDown} role="group">
-                        <span>Audience</span>
+                {values.isPrivate === "true" && (
+                  <>
+                  <div className={classes.fieldContainer}>
+                    <p className={classes.fieldTitle}>Choose your audience</p>
+                    <label className={classes.dropDown} role="group">
+                      <span className={classes.span}>Audience</span>
+                      <Field
+                        className={classes.field}
+                        name="link"
+                        component="select"
+                      >
+                        <option value="link">Anyone with link</option>
+                        <option value="pass" >Only people with password</option>
+                      </Field>
+                    </label>
+                  </div>
+                  {values.link === "pass" && 
+                    <div className={classes.boxContainerInput}>
+                      <div className={classes.fieldContainerInput}>
+                        <label className={classes.label}>Password</label>
                         <Field
                           className={classes.field}
-                          name="starttime"
-                          component="select">
-                          <option>Anyone with link</option>
-                          <option>Only people with password</option>                        
-                        </Field>
-                  </label>
-                </div>}
+                          name="password"
+                          placeholder="password"
+                        />
+                      </div>
+                    </div>
+                  }
+                  </>
+                )}
 
                 <div className={classes.fieldContainer} role="group">
                   <p className={classes.fieldTitle}>
-                  Will this event ever be public?
+                    Will this event ever be public?
                   </p>
                   <label>
-                    <Field type="radio" name="publishDate" value="1" onClick = {() =>{ setDisable(true);  setButtonContent("Publish");}}/>
+                    <Field
+                      type="radio"
+                      name="publishDate"
+                      value="1"
+                      onClick={() => {
+                        setDisable(true);
+                        setButtonContent("Publish");
+                      }}
+                    />
                     No, keep it private
                   </label>
                   <label>
-                    <Field type="radio" name="publishDate" value="2" onClick = {() =>{ setDisable(false); setButtonContent("Schedule");}}/>
+                    <Field
+                      type="radio"
+                      name="publishDate"
+                      value="2"
+                      onClick={() => {
+                        setDisable(false);
+                        setButtonContent("Schedule");
+                      }}
+                    />
                     Yes, schedule to share publicly
                   </label>
                 </div>
@@ -117,11 +167,11 @@ const CreatorPublish = () => {
                   <div className={classes.datacontainer}>
                     <LocalizationProvider dateAdapter={AdapterDayjs}>
                       <DemoContainer components={[]}>
-                        <DemoItem >
+                        <DemoItem>
                           <DatePicker
                             className={`${disable && classes.disabled}`}
                             defaultValue={dayjs("2022-04-17")}
-                            disabled = {disable}
+                            disabled={disable}
                             sx={{
                               "& .MuiInputBase-input": {
                                 height: "17px",
@@ -136,19 +186,24 @@ const CreatorPublish = () => {
                     </LocalizationProvider>
                   </div>
 
-                  <div className={`${classes.fieldContainerDate} ${disable && classes.disabled} ${disable && classes.disabledBorder}`}>
+                  <div
+                    className={`${classes.fieldContainerDate} ${
+                      disable && classes.disabled
+                    } ${disable && classes.disabledBorder}`}
+                  >
                     <label className={classes.label}>Start time</label>
                     <Field
                       className={classes.field}
                       name="starttime"
                       type="time"
-                      disabled = {disable}
-                    >
-                    </Field>
+                      disabled={disable}
+                    ></Field>
                   </div>
                 </div>
               </div>
             </Form>
+          )}
+            
           </Formik>
           <div className={classes.tips}>
             <h3 className={classes.tipsHeader}>
@@ -167,13 +222,15 @@ const CreatorPublish = () => {
             </div>
           </div>
         </div>
-
-        <div className={classes.footer}>
-          <hr></hr>
-          <button className={classes.btn}>{buttonContent}</button>
-        </div>
       </div>
+      
     </div>
+    
+    <div className={classes.footer}>
+      <hr></hr>
+      <button className={classes.btn}>{buttonContent}</button>
+    </div>
+  </>
   );
 };
 
