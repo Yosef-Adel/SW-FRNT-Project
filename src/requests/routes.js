@@ -15,5 +15,6 @@ const routes = {
   eventURL: "/getEventUrl",
   eventSalesByTicketType: "/getSalesByTicketTypeDashboard",
   eventRecentOrder: "/getOrderSummaryReportMostRecent",
+  createEvent: "/api/events"
 };
 export default routes;

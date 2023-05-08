@@ -10,6 +10,7 @@ import { userActions } from "../../store/userSlice";
 import KeyboardArrowDownIcon from "@mui/icons-material/KeyboardArrowDown";
 
 import SideBar from "../../layouts/sideBar/Sidebar";
+import CreatorBasicInfo from "../CreatorEventDetails/creatorBasicInfo/CreatorBasicInfo";
 
 
 /**
@@ -73,9 +74,9 @@ const CreatorHomePage = () => {
       <NavLink to="/events">
         <a className={classes.events}> <KeyboardArrowDownIcon/> Events</a>
       </NavLink>
-      {/* <div className={classes.container}>
-        <SideBar/>
-      </div> */}
+      <div className={classes.container}>
+        <CreatorBasicInfo/>
+      </div>
     </>
   );
 };
