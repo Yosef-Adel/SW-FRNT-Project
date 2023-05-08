@@ -138,3 +138,9 @@
     cursor: pointer;
     background-color:#f5f1f1
 }
+.loading{
+    margin-top: 20rem;
+    display: flex;
+    justify-content: center;
+  
+}

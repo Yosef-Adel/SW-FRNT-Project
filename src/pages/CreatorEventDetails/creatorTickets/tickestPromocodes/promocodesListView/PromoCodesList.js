@@ -6,9 +6,11 @@ import routes from "../../../../../requests/routes";
 import data from "../../../../../assets/data/dummyData";
 import tableheader from "../../../../../assets/data/promocodes";
 import moment from "moment";
+import CircularProgress from "@mui/material/CircularProgress";
 
 const PromoCodesList = ({ eventID }) => {
   const [promocodes, setPromocodes] = useState(data.promocodes);
+  const [loading, setloading] = useState(false);
   const now = moment();
 
   /**
@@ -18,8 +20,10 @@ const PromoCodesList = ({ eventID }) => {
      */
   async function getPromoCodes() {
     try {
+      setloading(true);
       const response = await axios.get(routes.promocode + "/" + eventID);
       setPromocodes(response.data.promocodes);
+      setloading(false);
     } catch (err) {
       console.log(err);
     }
@@ -29,7 +33,17 @@ const PromoCodesList = ({ eventID }) => {
     getPromoCodes();
   }, []);
 
+ 
   return (
+
+    <div>
+      {loading?
+      <>
+        <div className={classes.loading}>
+        <CircularProgress color="success" size={80} />
+      </div>
+
+      </> :
     <div
       id="CreatorTicketsPagePromoCodesContainer"
       className={classes.container}>
@@ -107,6 +121,9 @@ const PromoCodesList = ({ eventID }) => {
         </table>
       </div>
     </div>
+      }
+      </div>
+   
   );
 };
 

@@ -27,10 +27,10 @@ function App() {
     });
 } ;
 
-  // useEffect(() => {
-  //   const interval = setInterval(() => handleNotification(), 1000);
-  //   return () => clearInterval(interval);
-  // }, []);
+  useEffect(() => {
+   const interval = setInterval(() => handleNotification(), 1000);
+   return () => clearInterval(interval);
+  }, []);
 
 
   return ( 
