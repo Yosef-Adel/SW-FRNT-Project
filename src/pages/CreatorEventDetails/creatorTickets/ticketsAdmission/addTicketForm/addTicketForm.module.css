@@ -56,23 +56,34 @@ color:#39364f;
     border-bottom:1px solid rgb(235, 233, 233);
 }
 .forminfo{
-    margin-top: 3rem;
-    width: 90%;
+   
+    width: 100%;
+    height: calc(100% - 6rem);
+   
+ 
+  overflow-y: scroll;
 }
+.form{
+   
+    height: calc(100% - 6rem);
+  } 
+
 .typeofform{
-    padding-left: 2.1rem;
-    
+    margin-top: 3rem !important;
+ 
+    width: 89%;
     display: flex;
-    justify-content: space-between;
+   
     margin: auto;
     gap:1.6rem;
+
 }
 .typeofform .item{
     font-size: 1.3rem;
-   
+    width:calc((100%-3.3rem)/3);
     border:1px solid #dbdae3;
     border-radius: 5px;
-    padding: 4.5% 10.5%;
+    padding: 4.5% 0%;
     cursor: pointer;
     text-align: center;
    
@@ -80,7 +91,8 @@ color:#39364f;
 }
 .clickeditem{
     font-size: 1.3rem;
-    padding: 4.5% 10.5%;
+    padding: 4.5% 0%;
+    width:calc((100%-3.3rem)/3);
     border-radius: 5px;
     cursor: pointer;
     text-align: center;
@@ -92,10 +104,11 @@ color:#39364f;
     width: 90%;
     margin: auto;
     
+    
 }
 
 .fieldContainer{
-    width: 100%;
+    width: 90%;
     margin: auto;
     display: flex;
     flex-direction: column;
@@ -125,9 +138,7 @@ color:#39364f;
     z-index: 1;
 }
 
-.field::placeholder {
-    color: transparent;
-}
+
 
 .fieldContainer .field{
     border: none;
@@ -145,9 +156,7 @@ color:#39364f;
     transition: 1ms;
 }
 
-.fieldContainer::placeholder{
- color:black;
-}
+
 
 .fieldContainer:has(.field) .label{
     top: 0;
@@ -181,22 +190,23 @@ color:#39364f;
 .containerstart{
     width:88%;
     margin: auto;
-    padding-left:5px;
     display: flex;
     gap:10px;
-
 }
 .containerstart .boxContainer
 {
-    width:50%;
+    width:calc((100%-10px)/2);
 }
 .containerstart .datacontainer{
-    width:50%;
+    width:calc((100%-10px)/2);
     height:100%;
    font-size: 2rem;
    padding-top: 20px;
 
  
+}
+.containerstart  .boxContainer  .fieldContainer{
+   width:82%
 }
 .class{
     background-color: red;
@@ -204,3 +214,78 @@ color:#39364f;
     padding: 100px;
     display: flex;
 }
+.advancedsettings{
+    display: flex;
+    justify-content: space-between;
+
+    width: 90%;
+    margin: 2rem auto;
+    position: relative;
+    left:10px;
+    padding-bottom: .5rem;
+    border-bottom: 1px solid #cdcdcf;
+
+}
+.ticketperorder{
+    width:85%;
+    margin: auto;
+    font-size: 1.4rem;
+    position: relative;
+    top:2rem;
+}
+.advancedp{
+    font-size: 1.4rem;
+    color:#737374;
+    font-weight: 600;
+}
+.containercheckbutton{
+    display:flex;
+    width:95%;
+    margin: auto;
+    margin-left: 3rem;
+}
+.checkbuttonp{
+    font-size: 1.4rem;
+    padding-top: .7rem;
+}
+.leavecheckoutbuttons {
+    width: 80%;
+    height: 6.5rem;
+    display: flex;
+    justify-content: space-around;
+    margin: auto;
+    column-gap: 0.5rem;
+    margin-top: 3rem;
+  }
+  
+  .stayleavebtn {
+    width: 45%;
+    margin: auto;
+  }
+  
+  .stayleavebtn button {
+    width: 100%;
+    font-size: 1.4rem;
+    padding: 1.2rem 0;
+  
+    font-weight: 600;
+    border-radius: 3px;
+  }
+  .stayleavebtn button p {
+    text-align: center;
+  }
+  .stayleavebtn button:hover {
+    cursor: pointer;
+  }
+  
+  .staybutton {
+    color: var(--primary-text);
+    border: 2px solid var(--faded-grey);
+    background: none;
+  }
+  
+  .leavebutton {
+    background-color: var(--orange);
+    color: white;
+    border: none;
+  }
