@@ -428,7 +428,7 @@ const AddTicketForm = () => {
                       </div>
                       <div className={classes.containerstart}>
                         <div className={classes.boxContainer}>
-                          <div className={classes.fieldContainer}>
+                          <div className={classes.fieldContainer} style={{width:"77%"}}>
                             <label className={classes.label}>
                               Minimum quantity
                             </label>
@@ -440,7 +440,7 @@ const AddTicketForm = () => {
                         </div>
 
                         <div className={classes.boxContainer}>
-                          <div className={classes.fieldContainer}>
+                          <div className={classes.fieldContainer} style={{width:"77%"}}>
                             <label className={classes.label}>
                               Maximum quantity
                             </label>
