@@ -92,11 +92,7 @@ const TicketModal = ({ tickets, modalopen, setticketsmodalopen,ticketsmodal }) =
               className={Selectedall ? classes.selected : classes.radiobutton}
               onClick={handleSelectAll}
             >
-              {Selectedall ? (
-                <>
-                  <AiOutlineCheck className={classes.icon} size="13" />
-                </>
-              ) : null}
+            
             </div>
             <div className={classes.staticheader2}>Ticket Type </div>
             <div className={classes.pricep}>Price</div>
@@ -114,12 +110,7 @@ const TicketModal = ({ tickets, modalopen, setticketsmodalopen,ticketsmodal }) =
                     }
                     onClick={() => handleClick(index)}
                   >
-                    {(updatedTickets[index] &&
-                      updatedTickets[index].selected2) == 1 ? (
-                      <>
-                        <AiOutlineCheck className={classes.icon} />
-                      </>
-                    ) : null}
+                    
                   </div>
                   <div className={classes.staticheader2}>{element.name}</div>
                   <div className={classes.pricep}>{element.type}</div>
