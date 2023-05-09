@@ -55,7 +55,7 @@ const DashboardSidebar = (props) => {
         </div>
         <div className={classes.eventDescriptionText}>
           <h2>{event.eventTitle}</h2>
-          <p>Thu, May 25, 2023, 7:00 PM</p>
+          <p>{event.dayName}, {event.eventMonthAbr} {event.eventDay}, {event.year}</p>
           <div className={classes.viewevent}>
             <div className>View your event</div> <BsBoxArrowUpRight size={16} />
           </div>

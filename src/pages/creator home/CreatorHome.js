@@ -75,7 +75,7 @@ const CreatorHomePage = () => {
         <a className={classes.events}> <KeyboardArrowDownIcon/> Events</a>
       </NavLink>
       <div className={classes.container}>
-        <CreatorBasicInfo/>
+        <CreatorBasicInfo disable={false}/>
       </div>
     </>
   );
