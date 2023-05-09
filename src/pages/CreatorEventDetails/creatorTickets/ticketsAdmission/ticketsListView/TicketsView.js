@@ -12,10 +12,10 @@ import { Formik, Form, Field, ErrorMessage } from "formik";
 import SwipeableDrawer from "@mui/material/SwipeableDrawer";
 import * as Yup from "yup";
 import Box from "@mui/material/Box";
-
-const TicketsView = ({ticketsnew,eventID,dummydata}) => {
+import { useSelector } from "react-redux";
+const TicketsView = ({ ticketsnew, dummydata }) => {
   const now = moment();
-
+  const eventi = useSelector((state) => state.event);
   const [loading, setloading] = useState(false);
   const [tickets, setTickets] = useState(tickets1.tickets2);
   const [fullcapacity, setfullcapacity] = useState(0);
@@ -40,10 +40,10 @@ const TicketsView = ({ticketsnew,eventID,dummydata}) => {
     try {
       setloading(true);
       const response = await axios.get(
-        routes.tickets + "/" + eventID+ "/" + "allTickets"
+        routes.tickets + "/" + eventi.eventId + "/" + "allTickets"
       );
       setTickets(response.data.tickets);
-      ticketsnew(response.data.tickets)
+      ticketsnew(response.data.tickets);
       setloading(false);
       let totalCapacity = 0;
       let totalSold = 0;
@@ -64,11 +64,11 @@ const TicketsView = ({ticketsnew,eventID,dummydata}) => {
 
   async function getevent() {
     try {
-      const response = await axios.get(routes.createEvent + "/" + eventID);
+      const response = await axios.get(routes.createEvent + "/" + eventi.eventId);
       console.log(response.data);
       seteventdata(response.data);
-      setfullcapacity(response.data.capacity)
-      initialValues.capacity=response.data.capacity
+      setfullcapacity(response.data.capacity);
+      initialValues.capacity = response.data.capacity;
     } catch (err) {
       console.log(err);
     }
@@ -78,9 +78,8 @@ const TicketsView = ({ticketsnew,eventID,dummydata}) => {
   }, []);
   async function editcap(data) {
     try {
-      const response = await axios.put(routes.events + "/" + eventID,data);
+      const response = await axios.put(routes.events + "/" + eventi.eventId, data);
       console.log(response.data);
-  
     } catch (err) {
       console.log(err);
     }
@@ -88,7 +87,7 @@ const TicketsView = ({ticketsnew,eventID,dummydata}) => {
   const initialValues = {
     capacity: event.capacity,
   };
- 
+
   const toggleDrawer = (anchor, open) => (event) => {
     if (
       event.type === "keydown" &&
@@ -134,7 +133,7 @@ const TicketsView = ({ticketsnew,eventID,dummydata}) => {
                     <div className={classes.nameanddate}>
                       <div>{Element.name}</div>
 
-                     {now.diff(moment(Element.salesEnd)) > 0 ? (
+                      {now.diff(moment(Element.salesEnd)) > 0 ? (
                         <div className={classes.enddatecontainer}>
                           <div className={classes.iconended}></div>
 
@@ -142,25 +141,22 @@ const TicketsView = ({ticketsnew,eventID,dummydata}) => {
                             Ended {moment(Element.salesEnd).format("ll")}
                           </div>
                         </div>
-                      ) : (now.diff(moment(Element.salesStart))) < 0 ?(
+                      ) : now.diff(moment(Element.salesStart)) < 0 ? (
                         <div className={classes.enddatecontainer}>
                           <div className={classes.iconewaiting}></div>
 
                           <div className={classes.enddate}>
-                           Sales hasn't started yet 
+                            Sales hasn't started yet
                           </div>
                         </div>
-
-                      ):(Element.sold >= Element.capacity) ? (
+                      ) : Element.sold >= Element.capacity ? (
                         <div className={classes.enddatecontainer}>
                           <div className={classes.iconended}></div>
 
-                          <div className={classes.enddate}>
-                           Sold out
-                          </div>
+                          <div className={classes.enddate}>Sold out</div>
                         </div>
-                      ) :(<div className={classes.enddatecontainer}>
-              
+                      ) : (
+                        <div className={classes.enddatecontainer}>
                           <div className={classes.iconactive}></div>
 
                           <div className={classes.enddate}>
@@ -169,8 +165,6 @@ const TicketsView = ({ticketsnew,eventID,dummydata}) => {
                           </div>
                         </div>
                       )}
-                     
-                 
                     </div>
                   </div>
                   <div className={classes.capacityandtypecontainer}>
@@ -245,7 +239,11 @@ const TicketsView = ({ticketsnew,eventID,dummydata}) => {
                   <div className={classes.boxContainer}>
                     <div className={classes.fieldContainer}>
                       <label className={classes.label}>Capacity</label>
-                      <Field className={classes.field} name="capacity" value={values.capacity}/>
+                      <Field
+                        className={classes.field}
+                        name="capacity"
+                        value={values.capacity}
+                      />
                     </div>
                     <ErrorMessage name="capacity" component="span" />
                   </div>
@@ -261,7 +259,11 @@ const TicketsView = ({ticketsnew,eventID,dummydata}) => {
                   </div>
 
                   <div className={classes.stayleavebtn}>
-                    <button type="submit" className={classes.leavebutton} onClick={toggleDrawer("right", false)}>
+                    <button
+                      type="submit"
+                      className={classes.leavebutton}
+                      onClick={toggleDrawer("right", false)}
+                    >
                       Save
                     </button>
                   </div>

@@ -20,8 +20,9 @@ import Time from "../../../../../assets/data/TimeOptions";
 import moment from "moment";
 import axios from "../../../../../requests/axios";
 import routes from "../../../../../requests/routes";
+import { useSelector } from "react-redux";
 
-const AddTicketForm = ({ ticket, eventID,setdummydata }) => {
+const AddTicketForm = ({ ticket, setdummydata }) => {
   const initialValues = {
     name: "General Admission",
     availablequantity: "",
@@ -66,6 +67,7 @@ const AddTicketForm = ({ ticket, eventID,setdummydata }) => {
   function handleclick2() {
     setadvancedopen(!advancedopen);
   }
+  const event = useSelector((state) => state.event);
   const [value, setValue] = React.useState(dayjs("2022-04-17"));
 
   const [state, setState] = React.useState({
@@ -117,7 +119,7 @@ const AddTicketForm = ({ ticket, eventID,setdummydata }) => {
   async function addevent(data) {
     try {
       const response = await axios.post(
-        routes.tickets + "/" + eventID + "/createTicket",
+        routes.tickets + "/" + event.eventId + "/createTicket",
         data
       );
       setdummydata(false);
@@ -134,7 +136,7 @@ const AddTicketForm = ({ ticket, eventID,setdummydata }) => {
     let sDate = new Date(data.salesend + " " + data.endtime);
     let endDate1 = sDate.toISOString();
     datasent.salesEnd = endDate1;
-    datasent.event = eventID;
+    datasent.event = event.eventId;
     if (paidclicked) {
       datasent.type = "paid";
       datasent.price = Number(data.price);
@@ -168,7 +170,6 @@ const AddTicketForm = ({ ticket, eventID,setdummydata }) => {
     delete datasent.ticketoption;
     console.log(datasent);
     addevent(datasent);
-
   };
 
   return (
