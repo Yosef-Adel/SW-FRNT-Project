@@ -11,21 +11,24 @@ if (window.localStorage.getItem("persist:root")) {
   user = "";
 }
 
-console.log(sessionStorage.getItem("token"))
+let token = "";
+let id = "";
+if(user){
+  token = user.token;
+  id = user.id;
+}
 
 const url =
   process.env.API_URL || "http://ec2-3-219-197-102.compute-1.amazonaws.com/";
 
 let instance = "";
-if (user) {
   instance = axios.create({
     baseURL: "https://sw-backend-project.vercel.app/",
     headers: {
       Authorization:
-        "Bearer " + user.token,
-      ID: user.id,
+        "Bearer " + token,
+      ID: id,
     },
   });
-}
 
 export default instance;

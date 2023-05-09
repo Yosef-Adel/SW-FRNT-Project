@@ -4,9 +4,10 @@ import {BiChevronLeft} from "react-icons/bi";
 import {BsBoxArrowUpRight} from "react-icons/bs";
 import dashboardSidebarData from "../../assets/data/dashboardSidebarData";
 import {MdKeyboardArrowDown} from "react-icons/md";
+import { useSelector } from "react-redux";
 
-const DashboardSidebar= (props) =>
-{
+const DashboardSidebar= (props) =>{
+    const event = useSelector((state) => state.event);
     const eventdetailsList = dashboardSidebarData.eventDetails;
     const eventManagementList= dashboardSidebarData.eventManagement;
     return(
@@ -23,7 +24,7 @@ const DashboardSidebar= (props) =>
                 </select>
                 </div>
                 <div className={classes.eventDescriptionText}>
-                    <h2>Test</h2>
+                    <h2>{event.eventTitle}</h2>
                     <p>Thu, May 25, 2023, 7:00 PM</p>
                     <div className={classes.viewevent}>
                         <div className>View your event</div> <BsBoxArrowUpRight size={16}/>
