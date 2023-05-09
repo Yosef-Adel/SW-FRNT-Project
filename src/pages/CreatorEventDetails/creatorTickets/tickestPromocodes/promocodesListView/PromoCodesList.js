@@ -7,8 +7,10 @@ import data from "../../../../../assets/data/dummyData";
 import tableheader from "../../../../../assets/data/promocodes";
 import moment from "moment";
 import CircularProgress from "@mui/material/CircularProgress";
+import { useSelector } from "react-redux";
 
-const PromoCodesList = ({ eventID }) => {
+const PromoCodesList = () => {
+  const event = useSelector((state) => state.event);
   const [promocodes, setPromocodes] = useState(data.promocodes);
   const [loading, setloading] = useState(false);
   const now = moment();
@@ -21,7 +23,7 @@ const PromoCodesList = ({ eventID }) => {
   async function getPromoCodes() {
     try {
       setloading(true);
-      const response = await axios.get(routes.promocode + "/" + eventID);
+      const response = await axios.get(routes.promocode + "/" + event.eventId);
       setPromocodes(response.data.promocodes);
       setloading(false);
     } catch (err) {
@@ -47,79 +49,81 @@ const PromoCodesList = ({ eventID }) => {
     <div
       id="CreatorTicketsPagePromoCodesContainer"
       className={classes.container}>
-      <div
-        id="CreatorTicketsPagePromoCodesTableContainer"
-        className={classes.salestable}>
-        <table id="CreatorTicketsPagePromoCodesTable">
-          <thead id="CreatorTicketsPagePromoCodesTableHead">
-            <tr
-              className={classes.tableheader}
-              id="CreatorTicketsPagePromoCodesTableHeadRow">
-              {tableheader.header.map((item, index) => {
+      {promocodes.length !== 0 ? (
+        <div
+          id="CreatorTicketsPagePromoCodesTableContainer"
+          className={classes.salestable}>
+          <table id="CreatorTicketsPagePromoCodesTable">
+            <thead id="CreatorTicketsPagePromoCodesTableHead">
+              <tr
+                className={classes.tableheader}
+                id="CreatorTicketsPagePromoCodesTableHeadRow">
+                {tableheader.header.map((item, index) => {
+                  return (
+                    <td
+                      key={"CreatorTicketsPagePromoCodesTableHeadData" + index}
+                      id={"CreatorTicketsPagePromoCodesTableHeadData" + index}
+                      className={classes.tableheaderitem}>
+                      {item}
+                    </td>
+                  );
+                })}
+                <td className={classes.tableheaderitemempty}></td>
+              </tr>
+            </thead>
+            <tbody id="CreatorTicketsPagePromoCodesTableBody">
+              {promocodes.map((item, index) => {
                 return (
-                  <td
-                    key={"CreatorTicketsPagePromoCodesTableHeadData" + index}
-                    id={"CreatorTicketsPagePromoCodesTableHeadData" + index}
-                    className={classes.tableheaderitem}>
-                    {item}
-                  </td>
+                  <tr
+                    key={"CreatorTicketsPagePromoCodesTableBodyRow" + index}
+                    id={"CreatorTicketsPagePromoCodesTableBodyRow" + index}
+                    className={classes.tablebodyrow}>
+                    <td id="CreatorTicketsPagePromoCodesTableBodypromoname">
+                      {item.name}
+                    </td>
+                    <td id="CreatorTicketsPagePromoCodesTableBodypromotype">
+                      Applies discount
+                    </td>
+                    <td id="CreatorTicketsPagePromoCodesTableBodypromodiscount">
+                      {item.amountOff == -1
+                        ? item.percentOff + " %"
+                        : "E£ " + item.amountOff}
+                    </td>
+                    <td id="CreatorTicketsPagePromoCodesTableBodypromouses">
+                      {item.used + " / " + item.limit}
+                    </td>
+                    <td id="CreatorTicketsPagePromoCodesTableBodypromostatus">
+                      <div className={classes.status}>
+                        <div
+                          className={
+                            now.diff(moment(item.endDate)) > 0
+                              ? classes.statusicon
+                              : classes.statusiconactive
+                          }></div>
+                        {now.diff(moment(item.endDate)) > 0 ? (
+                          <div className={classes.statusdesc}>
+                            <div>Ended</div>
+                            <div className={classes.statustitle}>
+                              Event has ended
+                            </div>
+                          </div>
+                        ) : (
+                          <div className={classes.statusdesc}>
+                            <div>Active</div>
+                            <div className={classes.statustitle}>
+                              Ends:{moment(item.endDate).format("ll")}
+                            </div>
+                          </div>
+                        )}
+                      </div>
+                    </td>
+                  </tr>
                 );
               })}
-              <td className={classes.tableheaderitemempty}></td>
-            </tr>
-          </thead>
-          <tbody id="CreatorTicketsPagePromoCodesTableBody">
-            {promocodes.map((item, index) => {
-              return (
-                <tr
-                  key={"CreatorTicketsPagePromoCodesTableBodyRow" + index}
-                  id={"CreatorTicketsPagePromoCodesTableBodyRow" + index}
-                  className={classes.tablebodyrow}>
-                  <td id="CreatorTicketsPagePromoCodesTableBodypromoname">
-                    {item.name}
-                  </td>
-                  <td id="CreatorTicketsPagePromoCodesTableBodypromotype">
-                    Applies discount
-                  </td>
-                  <td id="CreatorTicketsPagePromoCodesTableBodypromodiscount">
-                    {item.amountOff == -1
-                      ? item.percentOff + " %"
-                      : "E£ " + item.amountOff}
-                  </td>
-                  <td id="CreatorTicketsPagePromoCodesTableBodypromouses">
-                    {item.used + " / " + item.limit}
-                  </td>
-                  <td id="CreatorTicketsPagePromoCodesTableBodypromostatus">
-                    <div className={classes.status}>
-                      <div
-                        className={
-                          now.diff(moment(item.endDate)) > 0
-                            ? classes.statusicon
-                            : classes.statusiconactive
-                        }></div>
-                      {now.diff(moment(item.endDate)) > 0 ? (
-                        <div className={classes.statusdesc}>
-                          <div>Ended</div>
-                          <div className={classes.statustitle}>
-                            Event has ended
-                          </div>
-                        </div>
-                      ) : (
-                        <div className={classes.statusdesc}>
-                          <div>Active</div>
-                          <div className={classes.statustitle}>
-                            Ends:{moment(item.endDate).format("ll")}
-                          </div>
-                        </div>
-                      )}
-                    </div>
-                  </td>
-                </tr>
-              );
-            })}
-          </tbody>
-        </table>
-      </div>
+            </tbody>
+          </table>
+        </div>
+      ) : null}
     </div>
       }
       </div>
