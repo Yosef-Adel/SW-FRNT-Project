@@ -51,6 +51,7 @@ const EventListCard = (props) => {
         isPrivate: event.isPrivate,
         isOnline: event.isOnline,
         isPublished: event.isPublished,
+        isScheduled: event.isScheduled,
         venueName: event.venueName,
         city: event.city,
         address1: event.address1,

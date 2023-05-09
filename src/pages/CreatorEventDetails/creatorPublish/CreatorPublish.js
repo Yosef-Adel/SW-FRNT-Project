@@ -29,13 +29,12 @@ const CreatorPublish = () => {
 
   const [buttonContent, setButtonContent] = useState("Publish");
 
-  // const [radioContent, setRadioContent] = useState("Publish");
 
   const initialValues = {
     isPrivate: (event.isPrivate).toString(),
     isScheduled: (event.isScheduled).toString(),
     isPublished: (event.isPublished).toString(),
-    publishDate: event.publishDate,
+    publishDate: moment().format("YYYY-MM-DD"),
     starttime: "",
     password: "",
     link: "link",
@@ -53,11 +52,20 @@ const CreatorPublish = () => {
     } catch (err) {}
   }
 
+  function compare(data){
+    console.log(data)
+    console.log(initialValues)
+
+    if(data != initialValues) setDisableSubmit(false)
+    // else setDisableSubmit(true)
+  }
+
   const handleSubmit = (data) => {
     // console.log(data);
 
     let start = moment(data.publishDate).format("YYYY-MM-DD");
-    console.log(start + "T" + data.sTime);
+    let sDate = new Date(start + " " + data.starttime);
+    let startDate = sDate.toISOString();
     const formData = new FormData();
     formData.append("isPrivate", data.isPrivate === "true");
     formData.append("isScheduled", data.isScheduled === "true");
@@ -65,9 +73,9 @@ const CreatorPublish = () => {
       "isPublished",
       data.isScheduled === "false" && data.isPrivate === "false"
     );
-    //if published event
-    if (!(data.isScheduled === "false" && data.isPrivate === "false"))
-      formData.append("publishDate", start + "T" + data.starttime);
+    //if published event => public and scheduled
+    if ((data.isScheduled === "true"))
+      formData.append("publishDate", startDate);
     if (data.link === "pass") formData.append("password", data.password);
     publishData(formData);
   };
@@ -114,7 +122,7 @@ const CreatorPublish = () => {
               enableReinitialize
 
             >
-              {({ values }) => (
+              {({ values, setFieldValue }) => (
                 <Form data-testid="PublishForm">
                   <div className={classes.boxContainer}>
                     <div className={classes.fieldContainer} role="group">
@@ -122,7 +130,7 @@ const CreatorPublish = () => {
                         Who can see your event?
                       </p>
                       <label>
-                        <Field type="radio" name="isPrivate" value="false" data-testid="PublishRadioPublic"/>
+                        <Field type="radio" name="isPrivate" value="false" data-testid="PublishRadioPublic" onClick={()=>compare(values)}/>
                         <span data-testid="PublishRadioPublicContent">
                           Public
                           <p className={classes.fieldDesc} >
@@ -132,7 +140,7 @@ const CreatorPublish = () => {
                       </label>
 
                       <label>
-                        <Field type="radio" name="isPrivate" value="true" data-testid="PublishRadioPrivate"/>
+                        <Field type="radio" name="isPrivate" value="true" data-testid="PublishRadioPrivate" onClick={()=>compare(values)}/>
                         <span data-testid="PublishRadioPrivateContent">
                           Private
                           <p className={classes.fieldDesc}>
@@ -155,6 +163,7 @@ const CreatorPublish = () => {
                               name="link"
                               component="select"
                               data-testid="PublishDropDown"
+                              onClick={()=>compare(values)}
                             >
                               <option value="link" data-testid="PublishDropOption1">Anyone with link</option>
                               <option value="pass" data-testid="PublishDropOption2">
@@ -172,6 +181,7 @@ const CreatorPublish = () => {
                                 name="password"
                                 placeholder="password"
                                 data-testid="PublishPasswordField"
+                                onClick={()=>compare(values)}
                               />
                             </div>
                           </div>
@@ -255,7 +265,7 @@ const CreatorPublish = () => {
                                 <DemoItem>
                                   <DatePicker
                                     className={`${disable && classes.disabled}`}
-                                    defaultValue={dayjs("2022-04-17")}
+                                    defaultValue={dayjs(moment().format("YYYY-MM-DD"))}
                                     disabled={disable}
                                     name="publishDate"
                                     sx={{
@@ -266,6 +276,14 @@ const CreatorPublish = () => {
                                         paddingTop: "18px",
                                       },
                                     }}
+                                    onChange={(date) => {
+                                        setFieldValue(
+                                          "salesstart",
+                                          moment(date.$d, "YYYY-MM-DD").format(
+                                            "YYYY-MM-DD"
+                                          )
+                                        ); // Update formik state directly
+                                      }}
                                     data-testid="PublishDatePicker"
 
                                   />
