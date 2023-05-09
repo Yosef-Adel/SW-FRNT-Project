@@ -41,9 +41,8 @@
     color: var( --primary-tex);
     background-color: transparent;
     z-index: 2;
-
     padding-left: 0.4rem;
-    width: 25rem;
+    width:fit-content;
 }
 
 .NameField label{
@@ -56,7 +55,7 @@
     display: block;
     transition: 0.2s;
     z-index: 1;
-
+    width:27rem;
     padding-left: 0.4rem;
 }
 .NameField
@@ -211,4 +210,7 @@ align-items: center;
   {
     margin-bottom: 4rem;
   }
-
+  .Namecontainer .boxContainer
+  {
+    width:48%;
+  }

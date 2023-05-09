@@ -26,8 +26,8 @@
     display: flex;
     flex-direction: column;
     width: 100%;
-    margin: auto;
     margin-top: 2rem;
+    margin-bottom: 5rem;
 }
 
 .eventTableHeader{
@@ -52,3 +52,22 @@
     text-align: left;
 }
 
+.export {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    font-size: 1.8rem;
+    justify-content: flex-start;
+    color: var(--bright-blue);
+    cursor: pointer;
+    text-decoration: underline;
+  }
+  
+  .exportDisabled{
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    font-size: 1.8rem;
+    justify-content: flex-start;
+    color: grey;
+  }

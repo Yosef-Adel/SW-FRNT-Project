@@ -28,7 +28,7 @@ const CreatorEventDetails = () => {
         <DashboardSidebar />
         <div className={classes.content}>
           <Routes>
-            <Route path="/basicinfo" element={<CreatorBasicInfo />} />
+            <Route path="/basicinfo" element={<CreatorBasicInfo disable={true}/>} />
             <Route path="/details" element={<CreatorDetails />} />
             <Route
               path="/tickets"

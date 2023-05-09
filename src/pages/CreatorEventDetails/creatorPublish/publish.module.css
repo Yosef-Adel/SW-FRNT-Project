@@ -43,6 +43,12 @@
     margin-right: 8rem;
 }
 
+.btnDisabled{
+    background-color: var(--primary-background);
+    color: var(--faded-grey);
+    cursor: unset;
+}
+
 .btn:hover{
     opacity: .8;
 }
