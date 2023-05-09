@@ -74,7 +74,7 @@ const EventListCard = (props) => {
           <p>{eventDay}</p>
         </div>
         <div className={classes.eventImgContainer}>
-          <img src="https://picsum.photos/200/300" alt="" />
+          <img src={props.event.image} alt="" />
         </div>
         <div className={classes.eventInfo}>
           <h4>{props.event.name}</h4>

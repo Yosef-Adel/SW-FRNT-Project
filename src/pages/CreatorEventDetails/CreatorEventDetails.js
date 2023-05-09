@@ -8,6 +8,7 @@ import CreatorTickets from "./creatorTickets/CreatorTickets";
 import CreatorPublish from "./creatorPublish/CreatorPublish";
 import CreatorDashboard from "./creatorDashboard/CreatorDashboard";
 import CreatorAddAttendee from "./creatorAddAttendee/CreatorAddAttendee";
+import CreatorDetails from "./creatorDetails/CreatorDetails";
 
 /**
  * Component that returns Creator's Event Details page
@@ -28,6 +29,7 @@ const CreatorEventDetails = () => {
         <div className={classes.content}>
           <Routes>
             <Route path="/basicinfo" element={<CreatorBasicInfo />} />
+            <Route path="/details" element={<CreatorDetails />} />
             <Route
               path="/tickets"
               element={<CreatorTickets eventID="64331c1e1d3382d35d5b3a43" />}
