@@ -8,6 +8,7 @@ import AddTicketForm from "./ticketsAdmission/addTicketForm/AddTicketForm";
 import AddPromocodeForm from "./tickestPromocodes/addPromoCodeForm/AddPromocodeForm";
 import PromoCodesList from "./tickestPromocodes/promocodesListView/PromoCodesList";
 import TicketsView from "./ticketsAdmission/ticketsListView/TicketsView";
+import tickets1 from "../../../assets/data/dummytickets";
 
 /**
  * Component that returns Creator's Manage Tickets page
@@ -19,6 +20,7 @@ import TicketsView from "./ticketsAdmission/ticketsListView/TicketsView";
 
 const CreatorTickets = ({eventID}) => {
   const [addmisionclicked, setAddmisionclicked] = useState(true);
+  const[ticketlist,setticketlist]=useState(tickets1.tickets2)
   function handleClickedItem(i) {
     if (i === 2) {
       setAddmisionclicked(false);
@@ -35,8 +37,8 @@ const CreatorTickets = ({eventID}) => {
           FilterTabsData={TicketsFilterTabs}
           clickedItem={handleClickedItem}
         />
-        {addmisionclicked ? <AddTicketForm /> : <AddPromocodeForm eventID={eventID} edit={false}/>}
-        {addmisionclicked? <TicketsView eventID={eventID} />:<PromoCodesList eventID={eventID} />}
+        {addmisionclicked ? <AddTicketForm ticket={ticketlist} /> : <AddPromocodeForm eventID={eventID} edit={false}/>}
+        {addmisionclicked? <TicketsView ticketsnew={setticketlist} eventID={eventID} />:<PromoCodesList eventID={eventID} />}
       </div>
     </div>
   );

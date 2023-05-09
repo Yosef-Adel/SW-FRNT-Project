@@ -16,25 +16,45 @@ import { LocalizationProvider } from "@mui/x-date-pickers/LocalizationProvider";
 import { DatePicker } from "@mui/x-date-pickers/DatePicker";
 import ArrowBackIosNewIcon from "@mui/icons-material/ArrowBackIosNew";
 import Checkbox from "@mui/material/Checkbox";
-const AddTicketForm = () => {
+import Time from "../../../../../assets/data/TimeOptions";
+const AddTicketForm = ({ ticket }) => {
   const initialValues = {
     name: "General Admission",
     availablequantity: "",
     price: "",
-    salesstart: null,
-    salesend: null,
+    ticketoption:"",
+    salesstart: "",
+    salesend: "",
     starttime: "",
     endtime: "",
     minimumquantity: "1",
     maximumquantity: "1",
+    description:""
   };
+
+  function handleKeyPress(event) {
+    const keyCode = event.keyCode || event.which;
+    const keyValue = String.fromCharCode(keyCode);
+
+    // Only allow numeric values
+    if (/[^0-9]/.test(keyValue)) {
+      event.preventDefault();
+    }
+  }
+
   const validationSchema = Yup.object().shape({
     name: Yup.string()
       .max(50, "Name must be at most 50 characters")
 
-      .required("Please enter a name"),
-    availablequantity: Yup.string().required("Quantity is required"),
-    price: Yup.string().required("  Price is required to make a paid ticket"),
+      .required("Name is required."),
+    availablequantity: Yup.number()
+      .min(1, "Quantity must be between 1 and 500,000")
+      .max(500000, "Quantity must be between 1 and 500,000")
+      .required("Quantity is required"),
+    price: Yup.number()
+      .max(1000000, "Price must be less than $1,000,000")
+      .min(1, "Price must be greater than 0")
+      .required("  Price is required to make a paid ticket"),
   });
   const [advancedopen, setadvancedopen] = useState(false);
   function handleclick2() {
@@ -49,6 +69,7 @@ const AddTicketForm = () => {
   const [freeclicked, setfreeClicked] = useState(false);
   const [donationclicked, setdonationClicked] = useState(false);
   const [checked, setChecked] = React.useState(true);
+  const [datetime, SetDatetime] = useState(true);
 
   const handleChange = (event) => {
     setChecked(event.target.checked);
@@ -68,6 +89,13 @@ const AddTicketForm = () => {
     setpaidClicked(false);
     setdonationClicked(false);
     console.log(freeclicked);
+  }
+  function handlechangetimeorsalesend(e) {
+    if (e.target.value === "Data & time") {
+      SetDatetime(true);
+    } else {
+      SetDatetime(false);
+    }
   }
   const toggleDrawer = (anchor, open) => (event) => {
     if (
@@ -157,7 +185,7 @@ const AddTicketForm = () => {
                         type="text"
                         autoComplete="off"
                         data-testid="LoginFormEmailInput"
-                        placeholder="General Admission"
+                        placeholder="Ticket name"
                       />
                     </div>
                     <ErrorMessage name="name" component="span" />
@@ -172,7 +200,7 @@ const AddTicketForm = () => {
                         className={classes.field}
                         name="availablequantity"
                         autoComplete="off"
-                        type="number"
+                        onKeyPress={handleKeyPress}
                       />
                     </div>
                     <ErrorMessage name="availablequantity" component="span" />
@@ -198,7 +226,7 @@ const AddTicketForm = () => {
                           className={classes.field}
                           name="price"
                           placeholder="0.00"
-                          type="number"
+                          onKeyPress={handleKeyPress}
                         />
                       </div>
                     </div>
@@ -217,93 +245,78 @@ const AddTicketForm = () => {
                         className={classes.field}
                         name="ticketavailable"
                         component="select"
+                        onChange={handlechangetimeorsalesend}
                       >
                         <option>Data & time</option>
                         <option>When sales end for...</option>
                       </Field>
                     </div>
                   </div>
-                  <div className={classes.containerstart}>
-                    <div className={classes.datacontainer}>
-                      <LocalizationProvider dateAdapter={AdapterDayjs}>
-                        <DemoContainer components={[]}>
-                          <DemoItem>
-                            <DatePicker
-                              defaultValue={dayjs("2022-04-17")}
-                              sx={{
-                                "& .MuiInputBase-input": {
-                                  height: "17px",
-                                  fontSize: 13,
-                                  paddingBottom: "18px",
-                                  paddingTop: "18px",
-                                },
-                              }}
-                            />
-                          </DemoItem>
-                        </DemoContainer>
-                      </LocalizationProvider>
-                    </div>
 
+                  {datetime ? (
+                    <>
+                      <div className={classes.containerstart}>
+                        <div className={classes.datacontainer}>
+                          <LocalizationProvider dateAdapter={AdapterDayjs}>
+                            <DemoContainer components={[]}>
+                              <DemoItem>
+                                <DatePicker
+                                  defaultValue={dayjs("2022-04-17")}
+                                  sx={{
+                                    "& .MuiInputBase-input": {
+                                      height: "17px",
+                                      fontSize: 13,
+                                      paddingBottom: "18px",
+                                      paddingTop: "18px",
+                                    },
+                                  }}
+                                />
+                              </DemoItem>
+                            </DemoContainer>
+                          </LocalizationProvider>
+                        </div>
+
+                        <div className={classes.boxContainer}>
+                          <div className={classes.fieldContainer}>
+                            <label className={classes.label}>Start time</label>
+                            <Field
+                              className={classes.field}
+                              name="starttime"
+                              component="select"
+                            >
+                              {Time.options.map((item, index) => {
+                                return (
+                                  <option
+                                    key={"AddPromoCodeStartTime" + index}
+                                    id={"AddPromoCodeStartTime" + index}
+                                    value={item}
+                                  >
+                                    {item}
+                                  </option>
+                                );
+                              })}
+                            </Field>
+                          </div>
+                        </div>
+                      </div>
+                    </>
+                  ) : (
                     <div className={classes.boxContainer}>
                       <div className={classes.fieldContainer}>
-                        <label className={classes.label}>Start time</label>
+                        <label className={classes.label}>Ticket options</label>
                         <Field
                           className={classes.field}
-                          name="starttime"
+                          name="ticketoption"
                           component="select"
+                          onChange={handlechangetimeorsalesend}
                         >
-                          <option>12:00 AM</option>
-                          <option>12:30 AM</option>
-                          <option>1:00 AM</option>
-                          <option>1:30 AM</option>
-                          <option>2:00 AM</option>
-                          <option>2:30 AM</option>
-                          <option>3:00 AM</option>
-                          <option>3:30 AM</option>
-                          <option>4:00 AM</option>
-                          <option>4:30 AM</option>
-                          <option>5:00 AM</option>
-                          <option>5:30 AM</option>
-                          <option>6:00 AM</option>
-                          <option>6:30 AM</option>
-                          <option>7:00 AM</option>
-                          <option>7:30 AM</option>
-                          <option>8:00 AM</option>
-                          <option>8:30 AM</option>
-                          <option>9:00 AM</option>
-                          <option>9:30 AM</option>
-                          <option>10:00 AM</option>
-                          <option>10:30 AM</option>
-                          <option>11:00 AM</option>
-                          <option>11:30 AM</option>
-                          <option>12:00 PM</option>
-                          <option>12:30 PM</option>
-                          <option>1:00 PM</option>
-                          <option>1:30 PM</option>
-                          <option>2:00 PM</option>
-                          <option>2:30 PM</option>
-                          <option>3:00 PM</option>
-                          <option>3:30 PM</option>
-                          <option>4:00 PM</option>
-                          <option>4:30 PM</option>
-                          <option>5:00 PM</option>
-                          <option>5:30 PM</option>
-                          <option>6:00 PM</option>
-                          <option>6:30 PM</option>
-                          <option>7:00 PM</option>
-                          <option>7:30 PM</option>
-                          <option>8:00 PM</option>
-                          <option>8:30 PM</option>
-                          <option>9:00 PM</option>
-                          <option>9:30 PM</option>
-                          <option>10:00 PM</option>
-                          <option>10:30 PM</option>
-                          <option>11:00 PM</option>
-                          <option>11:30 PM</option>
+                          {ticket.map((Element, index) => {
+                            return <option>{Element.name}</option>;
+                          })}
                         </Field>
                       </div>
                     </div>
-                  </div>
+                  )}
                   <div className={classes.containerstart}>
                     <div className={classes.datacontainer}>
                       <LocalizationProvider dateAdapter={AdapterDayjs}>
@@ -335,58 +348,22 @@ const AddTicketForm = () => {
                           name="endtime"
                           component="select"
                         >
-                          <option>12:00 AM</option>
-                          <option>12:30 AM</option>
-                          <option>1:00 AM</option>
-                          <option>1:30 AM</option>
-                          <option>2:00 AM</option>
-                          <option>2:30 AM</option>
-                          <option>3:00 AM</option>
-                          <option>3:30 AM</option>
-                          <option>4:00 AM</option>
-                          <option>4:30 AM</option>
-                          <option>5:00 AM</option>
-                          <option>5:30 AM</option>
-                          <option>6:00 AM</option>
-                          <option>6:30 AM</option>
-                          <option>7:00 AM</option>
-                          <option>7:30 AM</option>
-                          <option>8:00 AM</option>
-                          <option>8:30 AM</option>
-                          <option>9:00 AM</option>
-                          <option>9:30 AM</option>
-                          <option>10:00 AM</option>
-                          <option>10:30 AM</option>
-                          <option>11:00 AM</option>
-                          <option>11:30 AM</option>
-                          <option>12:00 PM</option>
-                          <option>12:30 PM</option>
-                          <option>1:00 PM</option>
-                          <option>1:30 PM</option>
-                          <option>2:00 PM</option>
-                          <option>2:30 PM</option>
-                          <option>3:00 PM</option>
-                          <option>3:30 PM</option>
-                          <option>4:00 PM</option>
-                          <option>4:30 PM</option>
-                          <option>5:00 PM</option>
-                          <option>5:30 PM</option>
-                          <option>6:00 PM</option>
-                          <option>6:30 PM</option>
-                          <option>7:00 PM</option>
-                          <option>7:30 PM</option>
-                          <option>8:00 PM</option>
-                          <option>8:30 PM</option>
-                          <option>9:00 PM</option>
-                          <option>9:30 PM</option>
-                          <option>10:00 PM</option>
-                          <option>10:30 PM</option>
-                          <option>11:00 PM</option>
-                          <option>11:30 PM</option>
+                          {Time.options.map((item, index) => {
+                            return (
+                              <option
+                                key={"AddPromoCodeStartTime" + index}
+                                id={"AddPromoCodeStartTime" + index}
+                                value={item}
+                              >
+                                {item}
+                              </option>
+                            );
+                          })}
                         </Field>
                       </div>
                     </div>
                   </div>
+
                   <div className={classes.advancedsettings}>
                     <div className={classes.advancedp}>Advanced settings</div>
                     <div
@@ -414,22 +391,22 @@ const AddTicketForm = () => {
                           checkout
                         </div>
                       </div>
-                      <div className={classes.boxContainer}>
-                        <div className={classes.fieldContainer}>
+                      <div className={classes.boxContainer}  >
+                        <div className={classes.fieldContainer} >
                           <label className={classes.label}>desciption</label>
-                          <Field
+                          <Field 
                             className={classes.field}
-                            name="desciption"
+                            name="description"
                             placeholder="Tell attendess more about this ticket"
                           />
                         </div>
                       </div>
                       <div className={classes.boxContainer}>
                         <div className={classes.fieldContainer}>
-                          <label className={classes.label}>Start time</label>
+                          <label className={classes.label}>Visibility</label>
                           <Field
                             className={classes.field}
-                            name="starttime"
+                            name="Visibility"
                             component="select"
                           >
                             <option>Visible</option>
