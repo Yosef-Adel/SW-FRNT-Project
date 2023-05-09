@@ -15,6 +15,8 @@ import RecentOrders from "./recentOrders/RecentOrders";
 import { useEffect, useState } from "react";
 import axios from "../../../requests/axios";
 import routes from "../../../requests/routes";
+import { useSelector } from "react-redux";
+
 
 /**
  * Component that returns Creator's Dashboard page
@@ -24,6 +26,9 @@ import routes from "../../../requests/routes";
  * return(<CreatorDashboard />)
  */
 const CreatorDashboard = ({ eventID }) => {
+  const event = useSelector((state) => state.event);
+
+
   const [soldTickets, setSoldTickets] = useState(0);
   const [totalTickets, setTotalTickets] = useState(0);
   const [freeTickets, setFreeTickets] = useState(0);
@@ -351,7 +356,7 @@ const CreatorDashboard = ({ eventID }) => {
                             "CreatorDashBoardPageSalesHyperlinkTitleLink" +
                             index
                           }
-                          to={"/atendeeSummary"}>
+                          to={"/attendeeSummary" + "/" + event.eventId}>
                           <div
                             id={
                               "CreatorDashBoardPageSalesHyperlinkTitle" + index

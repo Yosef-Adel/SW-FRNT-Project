@@ -75,7 +75,7 @@ function App() {
         <Route path="/events" element={<CreatorEvents />} />
         <Route path="/events/:id/*" element={<CreatorEventDetails />} />
         <Route path="/forgetPassword/:id" element={<ForgetPasswordPage/>}/>
-        <Route path="/atendeeSummary/:id" element={<AtendeeSummary/>}/>
+        <Route path="/attendeeSummary/:id" element={<AtendeeSummary/>}/>
       </Routes>
 
       {!user.isCreator && <Footer/>}
