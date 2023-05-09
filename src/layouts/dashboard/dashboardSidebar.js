@@ -45,7 +45,9 @@ const DashboardSidebar = (props) => {
             {" "}
             <BiChevronLeft size={24} />
           </div>
-          <Link to="/events" className={classes.backbuttontext} >Events</Link>
+          <Link to="/events" className={classes.backbuttontext}>
+            Events
+          </Link>
         </div>
         <div className={classes.selector}>
           <select>
@@ -55,7 +57,7 @@ const DashboardSidebar = (props) => {
         </div>
         <div className={classes.eventDescriptionText}>
           <h2>{event.eventTitle}</h2>
-          <p>Thu, May 25, 2023, 7:00 PM</p>
+          <p>{event.dayName}, {event.eventMonthAbr} {event.eventDay}, {event.year}</p>
           <div className={classes.viewevent}>
             <div className>View your event</div> <BsBoxArrowUpRight size={16} />
           </div>
@@ -66,7 +68,9 @@ const DashboardSidebar = (props) => {
           <ol className={classes.eventMenu}>
             {eventdetailsList.map((eventdata, index) => {
               return (
-                <li onClick={() => handleroute(eventdata.route)}>
+                <li
+                  className={classes.eventmenuitems}
+                  onClick={() => handleroute(eventdata.route)}>
                   <div className={classes.circle}>{index + 1}</div>
                   {eventdata.title}
                 </li>
@@ -83,15 +87,35 @@ const DashboardSidebar = (props) => {
         </div>
         <div>
           <ul className={classes.eventMenu}>
-            {eventManagementList.map((menutitle,index) => {
+            {eventManagementList.map((menutitle, index) => {
               return (
-                
-                <li>
-                  <div className={classes.dashboardmenu}>{menutitle.title}</div>
-                  <div className={classes.dashboardimg}>
-                    <MdKeyboardArrowDown size={22} />
-                  </div>
-                </li>
+                <div>
+                  <li
+                    onClick={() => handlelist(menutitle)}
+                    className={classes.eventmenuitems}>
+                    <div className={classes.dashboardmenu}>
+                      {menutitle.title}
+                    </div>
+                    <div className={classes.dashboardimg}>
+                      <MdKeyboardArrowDown size={22} />
+                    </div>
+                  </li>
+                  {menutitle.list &&
+                    openlist &&
+                    menutitle.list.map((listitem, index2) => {
+                      return (
+                        <div>
+                          <li
+                            onClick={() => handleroute(listitem.route)}
+                            className={classes.eventmenuitems}>
+                            <div className={classes.dashboardmenu}>
+                              {listitem.title}
+                            </div>
+                          </li>
+                        </div>
+                      );
+                    })}
+                </div>
               );
             })}
           </ul>

@@ -18,50 +18,57 @@ const SalesByTicket = ({ salesReport, is_paginated, handlePagination }) => {
         className={classes.mainsectionheader}>
         Sales by ticket type
       </div>
-      <div
-        id="CreatorDashBoardPageSalesByTicketTableContainer"
-        className={classes.salestable}>
-        <table id="CreatorDashBoardPageSalesByTicketTable">
-          <thead id="CreatorDashBoardPageSalesByTicketTableHead">
-            <tr id="CreatorDashBoardPageSalesByTicketTableHeadRow">
-              {dashboarddata.salesheader.map((item, index) => {
+      {salesReport.length !== 0 ? (
+        <div
+          id="CreatorDashBoardPageSalesByTicketTableContainer"
+          className={classes.salestable}>
+          <table id="CreatorDashBoardPageSalesByTicketTable">
+            <thead id="CreatorDashBoardPageSalesByTicketTableHead">
+              <tr id="CreatorDashBoardPageSalesByTicketTableHeadRow">
+                {dashboarddata.salesheader.map((item, index) => {
+                  return (
+                    <td
+                      key={
+                        "CreatorDashBoardPageSalesByTicketTableHeadData" + index
+                      }
+                      id={
+                        "CreatorDashBoardPageSalesByTicketTableHeadData" + index
+                      }>
+                      {item}
+                    </td>
+                  );
+                })}
+              </tr>
+            </thead>
+            <tbody id="CreatorDashBoardPageSalesByTicketTableBody">
+              {salesReport.map((item, index) => {
                 return (
-                  <td
+                  <tr
                     key={
-                      "CreatorDashBoardPageSalesByTicketTableHeadData" + index
+                      "CreatorDashBoardPageSalesByTicketTableBodyRow" + index
                     }
                     id={
-                      "CreatorDashBoardPageSalesByTicketTableHeadData" + index
+                      "CreatorDashBoardPageSalesByTicketTableBodyRow" + index
                     }>
-                    {item}
-                  </td>
+                    <td id="CreatorDashBoardPageSalesByTicketTableBodyTicketType">
+                      {item.ticketType}
+                    </td>
+                    <td id="CreatorDashBoardPageSalesByTicketTableBodyPrice">
+                      {item.Price}
+                    </td>
+                    <td
+                      id="CreatorDashBoardPageSalesByTicketTableBodySold"
+                      className={classes.sold}>
+                      {item.sold}/{item.total}
+                    </td>
+                  </tr>
                 );
               })}
-            </tr>
-          </thead>
-          <tbody id="CreatorDashBoardPageSalesByTicketTableBody">
-            {salesReport.map((item, index) => {
-              return (
-                <tr
-                  key={"CreatorDashBoardPageSalesByTicketTableBodyRow" + index}
-                  id={"CreatorDashBoardPageSalesByTicketTableBodyRow" + index}>
-                  <td id="CreatorDashBoardPageSalesByTicketTableBodyTicketType">
-                    {item.ticketType}
-                  </td>
-                  <td id="CreatorDashBoardPageSalesByTicketTableBodyPrice">
-                    {item.Price}
-                  </td>
-                  <td
-                    id="CreatorDashBoardPageSalesByTicketTableBodySold"
-                    className={classes.sold}>
-                    {item.sold}/{item.total}
-                  </td>
-                </tr>
-              );
-            })}
-          </tbody>
-        </table>
-      </div>
+            </tbody>
+          </table>
+        </div>
+      ) : null}
+
       <div
         id="CreatorDashBoardPageSalesByTicketHyperLink"
         className={classes.hyperlink}

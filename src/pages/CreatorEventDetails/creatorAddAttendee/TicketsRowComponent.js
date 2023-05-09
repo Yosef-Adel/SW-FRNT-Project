@@ -15,7 +15,7 @@ const TicketsRowComponent = (props) => {
     const [faceValue,setfaceValue] = useState(0);
     const [Quantity,setQuantity] = useState(0);
     const [Price,setPrice]=useState(props.price);
-    Quantity!==null&&props.index!==null && props.price!==null &&console.log("Ticket type["+props.index+"] price:"+props.price+"And its face value is:"+faceValue);
+    // Quantity!==null&&props.index!==null && props.price!==null &&console.log("Ticket type["+props.index+"] price:"+props.price+"And its face value is:"+faceValue);
     useEffect(() => {setQuanArr();setfaceValue(Price*Quantity)}, [Quantity]);
     useEffect(() => {
         const newfaceValues = [...props.faceValues];

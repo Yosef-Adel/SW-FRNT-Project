@@ -35,18 +35,23 @@ const AddPromocodeForm = ({  edit,setmodalopen }) => {
   const [selectedValuelimit, setSelectedValuelimit] = useState("Unlimited");
   const [scheduleopen, setscheduleopen] = useState(false);
   const [selectedValuestart, setSelectedValuestart] = useState("Now");
-  const [dateValuestart, setdateValuestart] = useState("");
+  const [dateValuestart, setdateValuestart] = useState(
+    moment().format("YYYY-MM-DD")
+  );
   const [scheduleopenend, setscheduleopenend] = useState(false);
   const [selectedValueend, setSelectedValueend] = useState(
     "When ticket sales end"
   );
-  const [dateValueend, setdateValueend] = useState("");
+  const [dateValueend, setdateValueend] = useState(
+    moment().format("YYYY-MM-DD")
+  );
 
   const [tickets, setTickets] = useState([]);
   const [selectedvaluetickets, setselectedvaluetickets] = useState(
     "All visible tickets"
   );
   const [alltickets, setAlltickets] = useState(true);
+  const [csvfile, setCsvfile] = useState("");
 
   const handleSelectedlimit = (selected) => {
     setSelectedValuelimit(selected);
@@ -92,21 +97,47 @@ const AddPromocodeForm = ({  edit,setmodalopen }) => {
     }
   };
 
+  async function sendData(data) {
+    console.log(data);
+    try {
+      const request = await axios.post(
+        routes.promocode + "/" + event.eventId,
+        data
+      );
+      console.log(request);
+    } catch (err) {}
+  }
+
+  async function uploadData(data) {
+    console.log(data);
+    try {
+      const request = await axios.post(
+        routes.promocode + "/" + event.eventId + "/upload",
+        data
+      );
+      console.log(request);
+    } catch (err) {}
+  }
+
   const handleSubmit = (data) => {
     console.log(tickets);
     let datasent = data;
+    const formData = new FormData();
     if (!amountformopen) {
       delete datasent.limit;
     } else {
       datasent.limit = Number(datasent.limit);
+      formData.append("limit", datasent.limit);
     }
 
     if (data.amountOff == "") {
       delete datasent.amountOff;
       datasent.percentOff = Number(datasent.percentOff);
+      formData.append("percentOff", datasent.percentOff);
     } else {
       delete datasent.percentOff;
       datasent.amountOff = Number(datasent.amountOff);
+      formData.append("amountOff", datasent.amountOff);
     }
 
     if (scheduleopen) {
@@ -119,6 +150,8 @@ const AddPromocodeForm = ({  edit,setmodalopen }) => {
       datasent.startDate = startDate;
     }
 
+    formData.append("startDate", datasent.startDate);
+
     delete datasent.starttime;
 
     if (scheduleopenend) {
@@ -127,8 +160,9 @@ const AddPromocodeForm = ({  edit,setmodalopen }) => {
       datasent.endDate = endDate;
     } else {
       //get event end time
+      datasent.endDate = event.endDate;
     }
-
+    formData.append("endDate", datasent.endDate);
     delete datasent.endtime;
 
     if (alltickets) {
@@ -136,17 +170,26 @@ const AddPromocodeForm = ({  edit,setmodalopen }) => {
         .fill()
         .map((element, index) => tickets[index]._id);
       datasent.tickets = filledArray;
+      formData.append("tickets", filledArray);
     } else {
       //get selected tickets
     }
 
     if (csv) {
       // convert them to form data
+      // --form 'file=@"/E:/projects/eventbrite/SW-BACKEND-Project/test.csv"' \
+      let input2 = document.getElementById("input");
+      console.log(input2.files[0]);
+      if (input2.files[0]) {
+        formData.append("file", input2.files[0]);
+        uploadData(formData);
+      }
+    } else {
+      console.log(datasent);
+      sendData(datasent);
     }
 
-    console.log(datasent);
-
-    formikRef.current.resetForm();
+    // formikRef.current.resetForm();
   };
 
   const toggleDrawer = (anchor, open, csv) => (event) => {
@@ -180,25 +223,8 @@ const AddPromocodeForm = ({  edit,setmodalopen }) => {
     }
   }
 
-  // /**
-  //  * function that is triggered to get tickets
-  //  * @function getPromoCode
-
-  //  */
-
-  // async function getPromoCode() {
-  //   if (edit) {
-  //     try {
-  //       const response = await axios.get(
-  //         routes.tickets + "/" + event.eventId + "/allTickets"
-  //       );
-  //     } catch (err) {}
-  //   }
-  // }
-
   useEffect(() => {
     getTickets();
-    // getPromoCode();
   }, []);
 
   const initialValues = {
@@ -206,8 +232,8 @@ const AddPromocodeForm = ({  edit,setmodalopen }) => {
     amountOff: "",
     percentOff: "",
     limit: "",
-    starttime: "",
-    endtime: "",
+    starttime: "10:00 AM",
+    endtime: "10:00 PM",
     tickets: [],
   };
 
@@ -303,7 +329,7 @@ const AddPromocodeForm = ({  edit,setmodalopen }) => {
             {({ values }) => (
               <Form className={classes.form}>
                 <div className={classes.forminfo}>
-                  {!csv && (
+                  {!csv ? (
                     <div className={classes.boxContainer}>
                       <div className={classes.fieldContainer}>
                         <label className={classes.label}>Code name</label>
@@ -320,6 +346,25 @@ const AddPromocodeForm = ({  edit,setmodalopen }) => {
 
                       <div className={classes.namep}>
                         Customers can also access this code via custom URL
+                      </div>
+                    </div>
+                  ) : (
+                    <div>
+                      {/* <div>
+                        Upload up to 500 codes from a .csv or .txt file.
+                        <br />
+                        Separate codes with commas, or list them on separate
+                        lines.
+                        <br />
+                        Spaces, apostrophes, and special characters (except: -_
+                        , @ . ) are not allowed.
+                      </div> */}
+                      <div className={classes.uploadBtn}>
+                        <input
+                          id="input"
+                          type="file"
+                          className={classes.customfileinput}
+                        />
                       </div>
                     </div>
                   )}
@@ -465,7 +510,9 @@ const AddPromocodeForm = ({  edit,setmodalopen }) => {
                             <DemoContainer components={[]}>
                               <DemoItem>
                                 <DatePicker
-                                  defaultValue={dayjs("2022-04-17")}
+                                  defaultValue={dayjs(
+                                    moment().format("YYYY-MM-DD")
+                                  )}
                                   onChange={(e) => handlestartDatechange(e)}
                                   sx={{
                                     "& .MuiInputBase-input": {
@@ -561,7 +608,9 @@ const AddPromocodeForm = ({  edit,setmodalopen }) => {
                             <DemoContainer components={[]}>
                               <DemoItem>
                                 <DatePicker
-                                  defaultValue={dayjs("2022-04-17")}
+                                  defaultValue={dayjs(
+                                    moment().format("YYYY-MM-DD")
+                                  )}
                                   onChange={(e) => handleendDatechange(e)}
                                   sx={{
                                     "& .MuiInputBase-input": {

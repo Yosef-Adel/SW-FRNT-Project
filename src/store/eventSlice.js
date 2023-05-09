@@ -14,6 +14,7 @@ const eventSlice = createSlice({
         hostedBy: "",
         isPrivate: false,
         isOnline: false,
+        isScheduled: false,
         isPublished: false,
         venueName: "",
         city: "",
@@ -25,6 +26,11 @@ const eventSlice = createSlice({
         category: "",
         numberOfTicketsCapacity: 0,
         numberOfTicketsSold: 0,
+
+        eventMonthAbr: "",
+        eventDay: "",
+        dayName: "",
+        year: "",
     },
     reducers: {
         default: (state, action)=>{
@@ -40,6 +46,7 @@ const eventSlice = createSlice({
             state.isPrivate= action.payload.isPrivate
             state.isOnline= action.payload.isOnline
             state.isPublished= action.payload.isPublished
+            state.isScheduled= action.payload.isScheduled
             state.venueName= action.payload.venueName
             state.city= action.payload.city
             state.address1= action.payload.address1
@@ -50,6 +57,12 @@ const eventSlice = createSlice({
             state.category= action.payload.category
             state.numberOfTicketsCapacity= action.payload.numberOfTicketsCapacity
             state.numberOfTicketsSold= action.payload.numberOfTicketsSold
+        },
+        dateInfo: (state, action)=>{
+            state.eventMonthAbr= action.payload.eventMonthAbr
+            state.eventDay= action.payload.eventDay
+            state.dayName= action.payload.dayName
+            state.year= action.payload.year
         }
     }   
 })

@@ -8,11 +8,10 @@ import {RxCalendar} from "react-icons/rx";
 import axios from "../../../requests/axios";
 import routes from "../../../requests/routes";
 import ErrorNotification from "../../../generic components/error message/ErrorNotification";
-import { useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import categoryList from "../../../assets/data/dropDownCategory.js";
 import moment from "moment/moment";
-
+import { useSelector } from "react-redux";
 
 /**
  * Component that returns Creator's BAsic Info page
@@ -22,10 +21,12 @@ import moment from "moment/moment";
  * return(<CreatorBasicInfo />)
  */
 
-const CreatorBasicInfo = () => {
+const CreatorBasicInfo = (props) => {
   const navigate = useNavigate();
   const user = useSelector((state) => state.user);
+  const event = useSelector((state) => state.event);
 
+  const [disabled, setDisabled] = useState(props.disable);
   const [cont, setContinue] = useState(false);
   const [startDate, setStartDate] = useState();
   const [endDate, setEndDate] = useState();
@@ -39,11 +40,10 @@ const CreatorBasicInfo = () => {
 
   const initialValues = {
     name: "",
-    description: "Hard coded description",
+    description: "",
     startDate: "",
     endDate: "",
-    summary: "Hard coded summary",
-    capacity: 100,
+    summary: "This is hard Coded",
     tickets: [],
     hostedBy: "",
     isPrivate: false,
@@ -53,8 +53,7 @@ const CreatorBasicInfo = () => {
     country: "",
     postalCode: "",
     category: "",
-    image:
-      "https://res.cloudinary.com/dv2ei7dxk/image/upload/v1681137937/DEV/ca7lxvsjologe9h46n99.jpg",
+    image:"",
 
     // Not used
     organizer: "",
@@ -111,7 +110,6 @@ const CreatorBasicInfo = () => {
     formData.append("address1", data.address1);
     formData.append("country", data.country);
     formData.append("postalCode", data.postalCode);
-    formData.append("capacity", data.capacity);
 
     sendData(formData);
   };
@@ -155,8 +153,8 @@ const CreatorBasicInfo = () => {
                     id="name"
                     name="name"
                     autoComplete="off"
-                    disabled={cont}
-                    data-testid="EmailFieldInput"
+                    disabled={disabled}
+                    data-testid="nameFieldInput"
                     placeholder="Be clear and descriptive"
                   />
                 </div>
@@ -179,6 +177,8 @@ const CreatorBasicInfo = () => {
                     className={classes.field}
                     name="category"
                     component="select"
+                    disabled={disabled}
+                    data-testid="categoryFieldInput"
                   >
                     <option disabled selected value>
                       Select a category
@@ -211,6 +211,7 @@ const CreatorBasicInfo = () => {
                     type="radio"
                     name="Locationpicked"
                     value="Venue"
+                    data-testid="venueRadioInput"
                   />
                   <p>Venue</p>
                 </label>
@@ -219,6 +220,7 @@ const CreatorBasicInfo = () => {
                     type="radio"
                     name="Locationpicked"
                     value="Online Events"
+                    data-testid="onlineEventsRadioInput"
                   />
                   <p>Online Events</p>
                 </label>
@@ -227,6 +229,7 @@ const CreatorBasicInfo = () => {
                     type="radio"
                     name="Locationpicked"
                     value="To be announced"
+                    data-testid="locationRadioInput"
                   />
                   <p>To be announced</p>
                 </label>
@@ -247,8 +250,8 @@ const CreatorBasicInfo = () => {
                     id="venueName"
                     name="venueName"
                     autoComplete="off"
-                    disabled={cont}
-                    data-testid="EmailFieldInput"
+                    disabled={disabled}
+                    data-testid="venueNameFieldInput"
                     placeholder="eg: Madison Square Garden"
                   />
                 </div>
@@ -266,8 +269,8 @@ const CreatorBasicInfo = () => {
                       id="address1"
                       name="address1"
                       autoComplete="off"
-                      disabled={cont}
-                      data-testid="EmailFieldInput"
+                      disabled={disabled}
+                      data-testid="address1FieldInput"
                       placeholder="eg: 155 5th street"
                     />
                   </div>
@@ -282,8 +285,8 @@ const CreatorBasicInfo = () => {
                       id="address2"
                       name="address2"
                       autoComplete="off"
-                      disabled={cont}
-                      data-testid="EmailFieldInput"
+                      disabled={disabled}
+                      data-testid="address2FieldInput"
                       placeholder="eg: Apt, Suite, Bldg (optional)"
                     />
                   </div>
@@ -300,8 +303,8 @@ const CreatorBasicInfo = () => {
                       id="city"
                       name="city"
                       autoComplete="off"
-                      disabled={cont}
-                      data-testid="EmailFieldInput"
+                      disabled={disabled}
+                      data-testid="cityFieldInput"
                       placeholder="eg: New York"
                     />
                   </div>
@@ -319,8 +322,8 @@ const CreatorBasicInfo = () => {
                       id="state"
                       name="state"
                       autoComplete="off"
-                      disabled={cont}
-                      data-testid="EmailFieldInput"
+                      disabled={disabled}
+                      data-testid="stateFieldInput"
                       placeholder="eg: California"
                     />
                   </div>
@@ -339,8 +342,8 @@ const CreatorBasicInfo = () => {
                       id="postalCode"
                       name="postalCode"
                       autoComplete="off"
-                      disabled={cont}
-                      data-testid="EmailFieldInput"
+                      disabled={disabled}
+                      data-testid="postalCodeFieldInput"
                       placeholder="eg: 9431"
                     />
                   </div>
@@ -357,8 +360,8 @@ const CreatorBasicInfo = () => {
                       id="country"
                       name="country"
                       autoComplete="off"
-                      disabled={cont}
-                      data-testid="EmailFieldInput"
+                      disabled={disabled}
+                      data-testid="countryFieldInput"
                       placeholder="eg: New York"
                     />
                   </div>
@@ -387,6 +390,7 @@ const CreatorBasicInfo = () => {
                     type="radio"
                     name="Datepicked"
                     value="Single Event"
+                    data-testid="singleEventRadioInput"
                   />
                   <p>Single Event</p>
                 </label>
@@ -395,6 +399,7 @@ const CreatorBasicInfo = () => {
                     type="radio"
                     name="Datepicked"
                     value="Reccurring Event"
+                    data-testid="reccuringEventRadioInput"
                   />
                   <p>Reccurring Event</p>
                 </label>
@@ -415,8 +420,8 @@ const CreatorBasicInfo = () => {
                       className={classes.field}
                       name="startDate"
                       type="date"
-                      asp-for="MyDate"
-                      asp-format="{0:yyyy-MM-dd}"
+                      disabled={disabled}
+                      data-testid="startDateFieldInput"
                     />
                   </div>
                   <ErrorMessage name="startDate" component="span" />
@@ -425,7 +430,12 @@ const CreatorBasicInfo = () => {
                 <div className={classes.boxContainer} style={{ width: "45%" }}>
                   <div className={classes.fieldContainer}>
                     <label className={classes.label}>Start time</label>
-                    <Field className={classes.field} name="sTime" type="time" />
+                    <Field className={classes.field} 
+                      name="sTime" 
+                      type="time"
+                      disabled={disabled}
+                      data-testid="sTimeFieldInput" 
+                    />
                   </div>
                   <ErrorMessage name="sTime" component="span" />
                 </div>
@@ -439,8 +449,8 @@ const CreatorBasicInfo = () => {
                       className={classes.field}
                       name="endDate"
                       type="date"
-                      asp-for="MyDate"
-                      asp-format="{0:yyyy-MM-dd}"
+                      disabled={disabled}
+                      data-testid="endDateFieldInput"
                     />
                   </div>
                   <ErrorMessage name="endDate" component="span" />
@@ -449,7 +459,12 @@ const CreatorBasicInfo = () => {
                 <div className={classes.boxContainer} style={{ width: "45%" }}>
                   <div className={classes.fieldContainer}>
                     <label className={classes.label}>End time</label>
-                    <Field className={classes.field} name="eTime" type="time" />
+                    <Field className={classes.field} 
+                      name="eTime" 
+                      type="time"
+                      disabled={disabled}
+                      data-testid="eTimeFieldInput" 
+                    />
                   </div>
                   <ErrorMessage name="eTime" component="span" />
                 </div>
@@ -462,6 +477,7 @@ const CreatorBasicInfo = () => {
                     type="checkbox"
                     name="SDCheckbox"
                     data-testid="TOSCheckbox"
+                    disabled={disabled}
                   />
                   <label>
                     <h5>Display start time.</h5>
@@ -473,6 +489,7 @@ const CreatorBasicInfo = () => {
                     type="checkbox"
                     name="EDCheckbox"
                     data-testid="TOSCheckbox"
+                    disabled={disabled}
                   />
                   <label>
                     <h5>Display end time.</h5>
@@ -484,6 +501,7 @@ const CreatorBasicInfo = () => {
               <div className={classes.horizontal} >
                 <hr />
               </div>
+              {!disabled&&
               <div className={classes.btn} style={{ margin: "2rem auto" }}>
                 <button
                   type="submit"
@@ -492,7 +510,7 @@ const CreatorBasicInfo = () => {
                 >
                   Save & Continue
                 </button>
-              </div>
+              </div>}
             </Form>
           )}
         </Formik>
