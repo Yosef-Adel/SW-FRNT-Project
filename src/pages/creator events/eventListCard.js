@@ -3,6 +3,8 @@ import React, { useState } from "react";
 import { useDispatch } from "react-redux";
 import { eventActions } from "../../store/eventSlice";
 import { useNavigate } from "react-router-dom";
+import moment from "moment";
+import monthDic from "../../assets/data/monthDictionary";
 
 /**
  * Component that renders the event card in user view
@@ -25,11 +27,20 @@ const EventListCard = (props) => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
 
+  const eventMonthAbr= monthDic[0][moment(props.event.startDate).format('MM')];
+  const eventMonth= monthDic[1][moment(props.event.startDate).format('MM')];
+  const eventDay= moment(props.event.startDate).format('DD');
+
+  var days = ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'];
+  var d = new Date(moment(props.event.startDate).format('YYYY-MM-DD'));
+  var dayName = days[d.getDay()];
+
   const handleEventClicked = (event) => {
     dispatch(
       eventActions.default({
+        eventId: event._id,
         eventTitle: event.name,
-        description: event.name,
+        description: event.description,
         startDate: event.startDate,
         endDate: event.endDate,
         summary: event.summary,
@@ -59,16 +70,20 @@ const EventListCard = (props) => {
     >
       <div className={classes.eventDetails}>
         <div className={classes.eventDate}>
-          <h4>Jun</h4>
-          <p>17</p>
+          <h4>{eventMonthAbr}</h4>
+          <p>{eventDay}</p>
         </div>
         <div className={classes.eventImgContainer}>
           <img src="https://picsum.photos/200/300" alt="" />
         </div>
         <div className={classes.eventInfo}>
-          <h4>Event Name</h4>
-          <p>Location</p>
-          <p>Saturday June</p>
+          <h4>{props.event.name}</h4>
+          {props.event.isOnline ? 
+            <p>Online Event</p> : 
+            <>
+              <p>{props.event.address1}</p>
+              <p>{dayName}, {eventMonth} </p>
+            </>}
         </div>
       </div>
       <div className={classes.eventStats}>
