@@ -45,7 +45,7 @@ const DashboardSidebar = (props) => {
             {" "}
             <BiChevronLeft size={24} />
           </div>
-          <div className={classes.backbuttontext}>Events</div>
+          <Link to="/events" className={classes.backbuttontext} >Events</Link>
         </div>
         <div className={classes.selector}>
           <select>
