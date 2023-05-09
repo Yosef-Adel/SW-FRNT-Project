@@ -4,6 +4,8 @@ import BookingForm from "../../userEvent/bookingPopup/bookingForm/BookingForm";
 import TicketsRowComponent from "./TicketsRowComponent";
 import axios from "../../../requests/axios";
 import routes from "../../../requests/routes";
+import { useSelector } from "react-redux";
+
 
 
 /**
@@ -15,13 +17,37 @@ import routes from "../../../requests/routes";
  */
 
   const CreatorAddAttendee = () => {
+  const event = useSelector((state) => state.event);
+  const user = useSelector((state) => state.user);
+
+
 
   const [timerClose, setTimerclose] = useState(false);
   const [ticketTypes,setTicketTypes] = useState(Array(100).fill(null));
   const [btnclick,setBtnClick]= useState(false);
   const [totalPrice,setTotalPrice] = useState(0);
+  const [ticketsSubmit,setTicketsSubmit] = useState([]);
+
   const [faceValues,setfaceValues] = useState(Array(100).fill(null));
   const [QuantityArr,setQuantityArr] = useState(Array(100).fill(null));//Quantity Array will be used to store the quantity of each ticket type (sent to each row as a prop)
+  
+  
+
+  async function addAttendee(data) {
+    let response = "";
+    try {
+      response = await axios.post(routes.getAllEventsCreator + event.eventId + "/" + user.id + "/attendees", data);
+
+      return response.data;
+    } catch (error) {
+      if (error.response) {
+        return error.response;
+      }
+    }
+  }
+
+
+
   let ticketsBought=[];
   function setTotalTickets()
   { 
@@ -29,14 +55,25 @@ import routes from "../../../requests/routes";
     while (QuantityArr[index]!==null)
     {
       let ticket={}; 
-      ticket.quantity=QuantityArr[index];
+      ticket.number=QuantityArr[index];
       ticket.ticketClass = ticketTypes[index]._id;
       ticket.faceValue = faceValues[index];
-      ticketsBought.push(ticket);
+      ticketsBought.push(ticket)
+      // setTicketsBought([...ticketsBought, ticket])
       index++;
     }
     console.log(ticketsBought);
   }
+
+  function register(fName, lName, email){
+    let obj = {}
+    obj.ticketsBought=ticketsSubmit
+    obj.firstName = fName
+    obj.lastName = lName
+    obj.email = email
+    addAttendee(obj)
+  }
+
   useEffect(() => {
     let totPrice = 0;
     for(let i=0;i<faceValues.length;i++)
@@ -55,9 +92,7 @@ import routes from "../../../requests/routes";
       try {
         response = await axios.get(routes.tickets +"/643c95f238d25b145a747a90/availableTickets");
         setTicketTypes(response.data.tickets);
-        console.log(response);
       } catch (error) {
-        console.log(error);
       }
     }
 
@@ -77,7 +112,7 @@ import routes from "../../../requests/routes";
           </div> 
           <div className={classes.regContainer}>
           <div className={classes.RegForm}>
-            <BookingForm setTimeout={timeout} ticketsBought={ticketsBought}/>
+            <BookingForm setTimeout={timeout} ticketsBought={ticketsBought} onRegister={register}/>
           </div>
           <div className={classes.regSummary}>
             <div className={classes.regSummarytext}>
@@ -150,7 +185,7 @@ import routes from "../../../requests/routes";
       </div>
       <div>
       <div className={classes.btn}>
-        <button  onClick={()=>setBtnClick(true)} type="submit" className={classes.button} data-testid="ContinueBtn">
+        <button  onClick={()=>{setBtnClick(true); setTicketsSubmit(ticketsBought)}}  className={classes.button} data-testid="ContinueBtn">
           Continue
         </button>
       </div>
