@@ -41,8 +41,9 @@ const CreatorPublish = () => {
 
   async function publishData(data) {
     console.log(data);
+    console.log(event.eventId)
     try {
-      const request = await axios.put(routes.createEvent + "/" + event.id, data);
+      const request = await axios.put(routes.createEvent + "/" + event.eventId, data);
       console.log(request);
     } catch (err) {}
   }
@@ -56,10 +57,9 @@ const CreatorPublish = () => {
     formData.append("isPrivate", data.isPrivate === "true");
     formData.append("isScheduled", data.isScheduled === "true");
     formData.append("isPublished", data.isScheduled === "false" && data.isPrivate === "false");
-    formData.append("startDate", start + "T" + data.starttime);
+    //if published event
+    if(!(data.isScheduled === "false" && data.isPrivate === "false")) formData.append("publishDate", start + "T" + data.starttime);
     if(data.password !== "") formData.append("password", data.password);
-
-    console.log(formData)
     publishData(formData);
   };
 
@@ -90,11 +90,11 @@ const CreatorPublish = () => {
         <div className={classes.publish}>
           <h1 className={classes.header}>Publish Your Event</h1>
           <CreatorEventCard
-            image={image}
-            title="Rana Trial"
-            date="Monday, June 12, 2023 at 7:00 PM EET"
-            type="Online Event"
-            tickets="15"
+            image={event.image}
+            title={event.eventTitle}
+            date={event.startDate}
+            type={!event.isOnline? event.venueName : "Online Event"}
+            tickets={event.tickets.length}
             followers="120"
           />
           <div className={classes.section2}>
@@ -240,6 +240,7 @@ const CreatorPublish = () => {
                                 className={`${disable && classes.disabled}`}
                                 defaultValue={dayjs("2022-04-17")}
                                 disabled={disable}
+                                name="publishDate"
                                 sx={{
                                   "& .MuiInputBase-input": {
                                     height: "17px",
