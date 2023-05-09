@@ -32,9 +32,9 @@ const CreatorPublish = () => {
   // const [radioContent, setRadioContent] = useState("Publish");
 
   const initialValues = {
-    isPrivate: (event.isPrivate)? (event.isPrivate).toString(): "false",
-    isScheduled: (event.isScheduled)?(event.isScheduled).toString():"false",
-    isPublished: (event.isPublished)?(event.isPublished).toString(): "false",
+    isPrivate: (event.isPrivate).toString(),
+    isScheduled: (event.isScheduled).toString(),
+    isPublished: (event.isPublished).toString(),
     publishDate: event.publishDate,
     starttime: "",
     password: "",

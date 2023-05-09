@@ -14,6 +14,7 @@ const eventSlice = createSlice({
         hostedBy: "",
         isPrivate: false,
         isOnline: false,
+        isScheduled: false,
         isPublished: false,
         venueName: "",
         city: "",
@@ -40,6 +41,7 @@ const eventSlice = createSlice({
             state.isPrivate= action.payload.isPrivate
             state.isOnline= action.payload.isOnline
             state.isPublished= action.payload.isPublished
+            state.isScheduled= action.payload.isScheduled
             state.venueName= action.payload.venueName
             state.city= action.payload.city
             state.address1= action.payload.address1
