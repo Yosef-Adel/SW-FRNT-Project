@@ -165,5 +165,4 @@ const BookingForm = (props) => {
     </div>
   );
 };
-
 export default BookingForm;
