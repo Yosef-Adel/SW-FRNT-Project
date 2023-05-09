@@ -46,7 +46,7 @@ const CreatorDetails = () => {
    */
 
   async function sendData(data) {
-    console.log(data);
+    // console.log(data);
     try {
       const request = await axios.put(routes.updateEvent + event.eventId, data);
       console.log(request);
@@ -73,8 +73,8 @@ const CreatorDetails = () => {
   },[input])
 
   const handleSubmit = (data) => {
-    console.log(data);
-    console.log(uploadImg)
+    // console.log(data);
+    // console.log(uploadImg)
     const formData = new FormData();
     if(uploadImg){
       formData.append("image", uploadImg);
@@ -85,7 +85,6 @@ const CreatorDetails = () => {
     if(data.description){
       formData.append("description", data.description);
     }
-
 
     sendData(formData);
   };
@@ -112,8 +111,8 @@ const CreatorDetails = () => {
                   </p>
                 </div>
               </div>
-              <div>
-                <img id="img" src="choose.png" height={500}/>
+              <div className={classes.imageContainer}>
+                <img id="img" src="choose.png"/>
               </div>
               <div className={classes.uploadBtn}>
                 <input id="input" type="file" className={classes.customfileinput}/>

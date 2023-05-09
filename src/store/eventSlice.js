@@ -26,6 +26,11 @@ const eventSlice = createSlice({
         category: "",
         numberOfTicketsCapacity: 0,
         numberOfTicketsSold: 0,
+
+        eventMonthAbr: "",
+        eventDay: "",
+        dayName: "",
+        year: "",
     },
     reducers: {
         default: (state, action)=>{
@@ -52,6 +57,12 @@ const eventSlice = createSlice({
             state.category= action.payload.category
             state.numberOfTicketsCapacity= action.payload.numberOfTicketsCapacity
             state.numberOfTicketsSold= action.payload.numberOfTicketsSold
+        },
+        dateInfo: (state, action)=>{
+            state.eventMonthAbr= action.payload.eventMonthAbr
+            state.eventDay= action.payload.eventDay
+            state.dayName= action.payload.dayName
+            state.year= action.payload.year
         }
     }   
 })

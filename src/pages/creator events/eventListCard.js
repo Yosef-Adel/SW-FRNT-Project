@@ -30,6 +30,7 @@ const EventListCard = (props) => {
   const eventMonthAbr= monthDic[0][moment(props.event.startDate).format('MM')];
   const eventMonth= monthDic[1][moment(props.event.startDate).format('MM')];
   const eventDay= moment(props.event.startDate).format('DD');
+  const year = moment(props.event.startDate).format('YYYY');
 
   var days = ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'];
   var d = new Date(moment(props.event.startDate).format('YYYY-MM-DD'));
@@ -60,6 +61,14 @@ const EventListCard = (props) => {
         category: event.category,
         numberOfTicketsCapacity: event.numberOfTicketsCapacity,
         numberOfTicketsSold: event.numberOfTicketsSold,
+      })
+    );
+    dispatch(
+      eventActions.dateInfo({
+        eventMonthAbr: eventMonthAbr,
+        eventDay: eventDay,
+        dayName: dayName,
+        year: year,
       })
     );
     navigate("/events/" + event._id + "/basicinfo");
