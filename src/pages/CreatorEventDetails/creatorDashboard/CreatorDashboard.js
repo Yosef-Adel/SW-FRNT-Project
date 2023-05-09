@@ -34,13 +34,13 @@ const CreatorDashboard = () => {
   const [netSales, setNetSales] = useState(0);
   const [totalOrders, setTotalOrders] = useState(0);
   const [eventURL, setEventURL] = useState(
-    "https://www.eventbrite.com/e/rana-trial-tickets-629586930457"
+    ""
   );
-  const [salesByTicketReport, setSalesByTicketReport] = useState(
-    salesbyticket.salesReport
+  const [salesByTicketReport, setSalesByTicketReport] = useState([]
+    // salesbyticket.salesReport
   );
-  const [recentordersReport, setrecentordersReport] = useState(
-    salesbyticket.recentordersReport
+  const [recentordersReport, setrecentordersReport] = useState([]
+    // salesbyticket.recentordersReport
   );
   const [isPaginated, setIsPaginated] = useState(true);
 

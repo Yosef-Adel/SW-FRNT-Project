@@ -9,7 +9,7 @@ import moment from "moment";
  * @example
  * return(<RecentOrders />)
  */
-const RecentOrders = ({recentordersReport}) => {
+const RecentOrders = ({ recentordersReport }) => {
   return (
     <div
       id="CreatorDashBoardPageSalesRecentOrdersContainer"
@@ -19,81 +19,86 @@ const RecentOrders = ({recentordersReport}) => {
         className={classes.mainsectionheader}>
         Recent Orders
       </div>
-      <div
-        id="CreatorDashBoardPageSalesRecentOrdersTableContainer"
-        className={classes.salestable}>
-        <table id="CreatorDashBoardPageSalesRecentOrdersTable">
-          <thead id="CreatorDashBoardPageSalesRecentOrdersTableHead">
-            <tr id="CreatorDashBoardPageSalesRecentOrdersTableHeadRow">
-              {dashboarddata.recentordersheader.map((item, index) => {
+      {recentordersReport.length !== 0 ? (
+        <div
+          id="CreatorDashBoardPageSalesRecentOrdersTableContainer"
+          className={classes.salestable}>
+          <table id="CreatorDashBoardPageSalesRecentOrdersTable">
+            <thead id="CreatorDashBoardPageSalesRecentOrdersTableHead">
+              <tr id="CreatorDashBoardPageSalesRecentOrdersTableHeadRow">
+                {dashboarddata.recentordersheader.map((item, index) => {
+                  return (
+                    <td
+                      key={
+                        "CreatorDashBoardPageSalesRecentOrdersTableHeadRow" +
+                        index
+                      }
+                      id={
+                        "CreatorDashBoardPageSalesRecentOrdersTableHeadRow" +
+                        index
+                      }>
+                      {item}
+                    </td>
+                  );
+                })}
+              </tr>
+            </thead>
+            <tbody id="CreatorDashBoardPageSalesRecentOrdersTableBody">
+              {recentordersReport.map((item, index) => {
                 return (
-                  <td
+                  <tr
                     key={
-                      "CreatorDashBoardPageSalesRecentOrdersTableHeadRow" +
+                      "CreatorDashBoardPageSalesRecentOrdersTableBodyRow" +
                       index
                     }
                     id={
-                      "CreatorDashBoardPageSalesRecentOrdersTableHeadRow" +
+                      "CreatorDashBoardPageSalesRecentOrdersTableBodyRow" +
                       index
                     }>
-                    {item}
-                  </td>
+                    <td
+                      id={
+                        "CreatorDashBoardPageSalesRecentOrdersTableBodyDataOrderNum" +
+                        index
+                      }
+                      className={classes.sold}>
+                      {item.orderNumber}
+                    </td>
+                    <td
+                      id={
+                        "CreatorDashBoardPageSalesRecentOrdersTableBodyDataName" +
+                        index
+                      }>
+                      {item.name}
+                    </td>
+                    <td
+                      id={
+                        "CreatorDashBoardPageSalesRecentOrdersTableBodyDataQuantity" +
+                        index
+                      }>
+                      {item.quantity}
+                    </td>
+                    <td
+                      id={
+                        "CreatorDashBoardPageSalesRecentOrdersTableBodyDataPrice" +
+                        index
+                      }>
+                      {item.price}
+                    </td>
+                    <td
+                      id={
+                        "CreatorDashBoardPageSalesRecentOrdersTableBodyDataDate" +
+                        index
+                      }>
+                      {moment(item.date).format("L")}
+                    </td>
+                  </tr>
                 );
               })}
-            </tr>
-          </thead>
-          <tbody id="CreatorDashBoardPageSalesRecentOrdersTableBody">
-            {recentordersReport.map((item, index) => {
-              return (
-                <tr
-                  key={
-                    "CreatorDashBoardPageSalesRecentOrdersTableBodyRow" + index
-                  }
-                  id={
-                    "CreatorDashBoardPageSalesRecentOrdersTableBodyRow" + index
-                  }>
-                  <td
-                    id={
-                      "CreatorDashBoardPageSalesRecentOrdersTableBodyDataOrderNum" +
-                      index
-                    }
-                    className={classes.sold}>
-                    {item.orderNumber}
-                  </td>
-                  <td
-                    id={
-                      "CreatorDashBoardPageSalesRecentOrdersTableBodyDataName" +
-                      index
-                    }>
-                    {item.name}
-                  </td>
-                  <td
-                    id={
-                      "CreatorDashBoardPageSalesRecentOrdersTableBodyDataQuantity" +
-                      index
-                    }>
-                    {item.quantity}
-                  </td>
-                  <td
-                    id={
-                      "CreatorDashBoardPageSalesRecentOrdersTableBodyDataPrice" +
-                      index
-                    }>
-                    {item.price}
-                  </td>
-                  <td
-                    id={
-                      "CreatorDashBoardPageSalesRecentOrdersTableBodyDataDate" +
-                      index
-                    }>
-                    {moment(item.date).format("L")}
-                  </td>
-                </tr>
-              );
-            })}
-          </tbody>
-        </table>
-      </div>
+            </tbody>
+          </table>
+        </div>
+      ) : null}
+
       <div
         id="CreatorDashBoardPageSalesRecentOrdersHyperLink"
         className={classes.hyperlink}>
