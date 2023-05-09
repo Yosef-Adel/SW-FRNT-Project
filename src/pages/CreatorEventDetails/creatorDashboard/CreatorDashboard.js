@@ -16,6 +16,7 @@ import { useEffect, useState } from "react";
 import axios from "../../../requests/axios";
 import routes from "../../../requests/routes";
 import { useSelector } from "react-redux";
+
 /**
  * Component that returns Creator's Dashboard page
  *
@@ -42,6 +43,19 @@ const CreatorDashboard = () => {
     salesbyticket.recentordersReport
   );
   const [isPaginated, setIsPaginated] = useState(true);
+
+
+  const [copied, setCopied] = useState(false);
+
+  const handleCopy = async () => {
+    try {
+      await navigator.clipboard.writeText(eventURL); // Writes the text to the clipboard
+      setCopied(true);
+      setTimeout(() => setCopied(false), 20000); // Reset the copied state after 2 seconds
+    } catch (err) {
+      console.error("Failed to copy: ", err);
+    }
+  };
 
   const intialSalesRequest =
     routes.events +
@@ -154,13 +168,22 @@ const CreatorDashboard = () => {
     }
   }
 
-  useEffect(() => {
-    window.scrollTo(0, 0);
-    getTotalTicketsSold();
+    /**
+   * function gets all requests
+   * @function getallrequests
+   */
+    function getallrequests() {
+      getTotalTicketsSold();
     getSalesSummary();
     getSalesByTicketType(intialSalesRequest);
     getRecentOrders();
     getEventURL();
+
+    }
+
+  useEffect(() => {
+    window.scrollTo(0, 0);
+    getallrequests();
   }, []);
 
   return (
@@ -169,211 +192,249 @@ const CreatorDashboard = () => {
         <div id="CreatorDashBoardPageHeader" className={classes.header}>
           Dashboard
         </div>
-        <div
-          id="CreatorDashBoardPagestSectionContent"
-          className={classes.content}>
-          <div
-            id="CreatorDashBoardPageCardsContainer"
-            className={classes.cards}>
-            <DashboardCards
-              title="Tickets Sold"
-              amount={soldTickets}
-              total={totalTickets}
-              free={freeTickets}
-              paid={paidTickets}
-            />
-            <DashboardCards
-              title="Page Views"
-              amount="4"
-              total={false}
-              free={false}
-              paid={false}
-            />
-          </div>
-          <div
-            id="CreatorDashBoardPageRecommendedContainer"
-            className={classes.recommended}>
-            <div
-              id="CreatorDashBoardPageRecommendedHeader"
-              className={classes.secsectionheader}>
-              Recommended
-            </div>
-            <div
-              id="CreatorDashBoardPageRecommendedList"
-              className={classes.reclistContainer}>
-              {dashboarddata.recommended.map((item, index) => {
-                return (
-                  <li
-                    id={"CreatorDashBoardPageRecommendedListItem" + index}
-                    key={item.key}
-                    className={classes.recitemContainer}>
-                    <div
-                      id={
-                        "CreatorDashBoardPageRecommendedListItemIconContainer" +
-                        index
-                      }
-                      className={classes.iconContainer}>
-                      {item.icon}
-                    </div>
-                    <div
-                      id={"CreatorDashBoardPageRecommendedListItemData" + index}
-                      className={classes.reclistdata}>
-                      <div
-                        id={
-                          "CreatorDashBoardPageRecommendedListItemTitle" + index
-                        }
-                        className={classes.reclistdtitle}>
-                        {item.title}
-                      </div>
-                      <div
-                        id={
-                          "CreatorDashBoardPageRecommendedListItemHyperLink" +
-                          index
-                        }
-                        className={classes.hyperlink}>
-                        {item.hyperlink}
-                      </div>
-                    </div>
-                  </li>
-                );
-              })}
-            </div>
-          </div>
-        </div>
-        <div id="CreatorDashBoardPageShareContainer" className={classes.share}>
-          <div
-            id="CreatorDashBoardPageShareHeader"
-            className={classes.mainsectionheader}>
-            Share
-          </div>
-          <div
-            id="CreatorDashBoardPagendSectionContent"
-            className={classes.content}>
-            <div
-              id="CreatorDashBoardPageShareURLContainer"
-              className={classes.eventurl}>
-              <div
-                id="CreatorDashBoardPageShareURLHeader"
-                className={classes.eventurlheader}>
-                Event URL
-              </div>
-              <div id="CreatorDashBoardPageShareURL" className={classes.url}>
-                {eventURL}
-              </div>
-            </div>
 
             <div
-              id="CreatorDashBoardPageShareIconsContainer"
-              className={classes.shareicons}>
+              id="CreatorDashBoardPagestSectionContent"
+              className={classes.content}>
               <div
-                id="CreatorDashBoardPageShareIconsHeader"
-                className={classes.thirsectionheader}>
-                Share On
-              </div>
-              <ul id="CreatorDashBoardPageShareIconsListContainer">
-                <li id="CreatorDashBoardPageShareIconFaceBookContainer">
-                  <FaFacebookF className={classes.shareIcon} />
-                </li>
-                <li id="CreatorDashBoardPageShareIconMessengerContainer">
-                  <FaFacebookMessenger className={classes.shareIcon} />
-                </li>
-                <li id="CreatorDashBoardPageShareIconTwitterContainer">
-                  <FaTwitter className={classes.shareIcon} />
-                </li>
-                <li id="CreatorDashBoardPageShareIconEmailContainer">
-                  <MdEmail className={classes.shareIcon} />
-                </li>
-                <li id="CreatorDashBoardPageShareIconLinkedinContainer">
-                  <FaLinkedinIn className={classes.shareIcon} />
-                </li>
-                <li id="CreatorDashBoardPageShareIconWhatsappContainer">
-                  <FaWhatsapp className={classes.shareIcon} />
-                </li>
-              </ul>
-            </div>
-          </div>
-        </div>
-
-        <hr />
-
-        <div id="CreatorDashBoardPageSalesContainer">
-          <div
-            id="CreatorDashBoardPageSalesHeader"
-            className={classes.mainsectionheader}>
-            Sales Summary
-          </div>
-
-          <div
-            id="CreatorDashBoardPageSalesCardsContainer"
-            className={classes.salescards}>
-            <SalesCards title="Gross Sales" amount={grossSales} />
-            <SalesCards title="Net Sales" amount={netSales} />
-            <SalesCards title="Tickets + Add-Ons Sold" amount={soldTickets} />
-            <SalesCards title="Orders" amount={totalOrders} />
-          </div>
-          <div
-            id="CreatorDashBoardPageSalesContent"
-            className={classes.content}>
-            <SalesByTicket
-              salesReport={salesByTicketReport}
-              is_paginated={isPaginated}
-              handlePagination={handlePagination}
-            />
-            <div
-              id="CreatorDashBoardPageSalesHyperlinksContainer"
-              className={classes.recommended}>
-              <div
-                id="CreatorDashBoardPageSalesHyperlinksHeader"
-                className={classes.thirsectionheader}>
-                Other Attendee Actions
+                id="CreatorDashBoardPageCardsContainer"
+                className={classes.cards}>
+                <DashboardCards
+                  title="Tickets Sold"
+                  amount={soldTickets}
+                  total={totalTickets}
+                  free={freeTickets}
+                  paid={paidTickets}
+                />
+                <DashboardCards
+                  title="Page Views"
+                  amount="4"
+                  total={false}
+                  free={false}
+                  paid={false}
+                />
               </div>
               <div
-                id="CreatorDashBoardPageSalesHyperlinks"
-                className={classes.reclistContainer}>
-                {dashboarddata.attendee.map((item, index) => {
-                  return (
-                    <li
-                      id={"CreatorDashBoardPageSalesHyperlink" + index}
-                      key={item.key}
-                      className={classes.recitemContainer}>
-                      <div
-                        id={"CreatorDashBoardPageSalesHyperlinkIcon" + index}
-                        className={classes.acticonContainer}>
-                        {item.icon}
-                      </div>
-                      <div
-                        id={
-                          "CreatorDashBoardPageSalesHyperlinkTitleContainer" +
-                          index
-                        }
-                        className={classes.reclistdata}>
-                        <Link
+                id="CreatorDashBoardPageRecommendedContainer"
+                className={classes.recommended}>
+                <div
+                  id="CreatorDashBoardPageRecommendedHeader"
+                  className={classes.secsectionheader}>
+                  Recommended
+                </div>
+                <div
+                  id="CreatorDashBoardPageRecommendedList"
+                  className={classes.reclistContainer}>
+                  {dashboarddata.recommended.map((item, index) => {
+                    return (
+                      <li
+                        id={"CreatorDashBoardPageRecommendedListItem" + index}
+                        key={item.key}
+                        className={classes.recitemContainer}>
+                        <div
                           id={
-                            "CreatorDashBoardPageSalesHyperlinkTitleLink" +
+                            "CreatorDashBoardPageRecommendedListItemIconContainer" +
                             index
                           }
-                          to={"/attendeeSummary" + "/" + event.eventId}>
+                          className={classes.iconContainer}>
+                          {item.icon}
+                        </div>
+                        <div
+                          id={
+                            "CreatorDashBoardPageRecommendedListItemData" +
+                            index
+                          }
+                          className={classes.reclistdata}>
                           <div
                             id={
-                              "CreatorDashBoardPageSalesHyperlinkTitle" + index
+                              "CreatorDashBoardPageRecommendedListItemTitle" +
+                              index
+                            }
+                            className={classes.reclistdtitle}>
+                            {item.title}
+                          </div>
+                          <div
+                            id={
+                              "CreatorDashBoardPageRecommendedListItemHyperLink" +
+                              index
                             }
                             className={classes.hyperlink}>
                             {item.hyperlink}
                           </div>
-                        </Link>
-                      </div>
-                    </li>
-                  );
-                })}
+                        </div>
+                      </li>
+                    );
+                  })}
+                </div>
               </div>
             </div>
-          </div>
-          <div
-            id="CreatorDashBoardPageSalesRecentOrdersContent"
-            className={classes.content}>
-            <RecentOrders recentordersReport={recentordersReport} />
-          </div>
-        </div>
+            <div
+              id="CreatorDashBoardPageShareContainer"
+              className={classes.share}>
+              <div
+                id="CreatorDashBoardPageShareHeader"
+                className={classes.mainsectionheader}>
+                Share
+              </div>
+              <div
+                id="CreatorDashBoardPagendSectionContent"
+                className={classes.content}>
+                <div
+                  id="CreatorDashBoardPageShareURLContainer"
+                  className={classes.eventurl}>
+                  <div
+                    id="CreatorDashBoardPageShareURLHeader"
+                    className={classes.eventurlheader}>
+                    Event URL
+                  </div>
+                  <div className={classes.urlcontainer}>
+                    <div
+                      id="CreatorDashBoardPageShareURL"
+                      className={classes.url}>
+                      {eventURL}
+                    </div>
+                    <div
+                      className={classes.urlcopy}
+                      onClick={() => handleCopy()}>
+                      <svg
+                        id="copy-chunky_svg__eds-icon--copy-chunky_svg"
+                        x="0"
+                        y="0"
+                        viewBox="0 0 24 24">
+                        <path
+                          id="copy-chunky_svg__eds-icon--copy-chunky_base"
+                          fill-rule="evenodd"
+                          clip-rule="evenodd"
+                          d="M4 8v12h12V8H4zm10 10H6v-8h8v8z"></path>
+                        <path
+                          id="copy-chunky_svg__eds-icon--copy-chunky_corner"
+                          fill-rule="evenodd"
+                          clip-rule="evenodd"
+                          d="M20 5v10h-2V6h-8V4h10v1z"></path>
+                      </svg>
+                    </div>
+                  </div>
+                </div>
+
+                <div
+                  id="CreatorDashBoardPageShareIconsContainer"
+                  className={classes.shareicons}>
+                  <div
+                    id="CreatorDashBoardPageShareIconsHeader"
+                    className={classes.thirsectionheader}>
+                    Share On
+                  </div>
+                  <ul id="CreatorDashBoardPageShareIconsListContainer">
+                    <li id="CreatorDashBoardPageShareIconFaceBookContainer">
+                      <FaFacebookF className={classes.shareIcon} />
+                    </li>
+                    <li id="CreatorDashBoardPageShareIconMessengerContainer">
+                      <FaFacebookMessenger className={classes.shareIcon} />
+                    </li>
+                    <li id="CreatorDashBoardPageShareIconTwitterContainer">
+                      <FaTwitter className={classes.shareIcon} />
+                    </li>
+                    <li id="CreatorDashBoardPageShareIconEmailContainer">
+                      <MdEmail className={classes.shareIcon} />
+                    </li>
+                    <li id="CreatorDashBoardPageShareIconLinkedinContainer">
+                      <FaLinkedinIn className={classes.shareIcon} />
+                    </li>
+                    <li id="CreatorDashBoardPageShareIconWhatsappContainer">
+                      <FaWhatsapp className={classes.shareIcon} />
+                    </li>
+                  </ul>
+                </div>
+              </div>
+            </div>
+
+            <hr />
+
+            <div id="CreatorDashBoardPageSalesContainer">
+              <div
+                id="CreatorDashBoardPageSalesHeader"
+                className={classes.mainsectionheader}>
+                Sales Summary
+              </div>
+
+              <div
+                id="CreatorDashBoardPageSalesCardsContainer"
+                className={classes.salescards}>
+                <SalesCards title="Gross Sales" amount={grossSales} />
+                <SalesCards title="Net Sales" amount={netSales} />
+                <SalesCards
+                  title="Tickets + Add-Ons Sold"
+                  amount={soldTickets}
+                />
+                <SalesCards title="Orders" amount={totalOrders} />
+              </div>
+              <div
+                id="CreatorDashBoardPageSalesContent"
+                className={classes.content}>
+                <SalesByTicket
+                  salesReport={salesByTicketReport}
+                  is_paginated={isPaginated}
+                  handlePagination={handlePagination}
+                />
+                <div
+                  id="CreatorDashBoardPageSalesHyperlinksContainer"
+                  className={classes.recommended}>
+                  <div
+                    id="CreatorDashBoardPageSalesHyperlinksHeader"
+                    className={classes.thirsectionheader}>
+                    Other Attendee Actions
+                  </div>
+                  <div
+                    id="CreatorDashBoardPageSalesHyperlinks"
+                    className={classes.reclistContainer}>
+                    {dashboarddata.attendee.map((item, index) => {
+                      return (
+                        <li
+                          id={"CreatorDashBoardPageSalesHyperlink" + index}
+                          key={item.key}
+                          className={classes.recitemContainer}>
+                          <div
+                            id={
+                              "CreatorDashBoardPageSalesHyperlinkIcon" + index
+                            }
+                            className={classes.acticonContainer}>
+                            {item.icon}
+                          </div>
+                          <div
+                            id={
+                              "CreatorDashBoardPageSalesHyperlinkTitleContainer" +
+                              index
+                            }
+                            className={classes.reclistdata}>
+                            <Link
+                              id={
+                                "CreatorDashBoardPageSalesHyperlinkTitleLink" +
+                                index
+                              }
+                              to={"/attendeeSummary" + "/" + event.eventId}>
+                              <div
+                                id={
+                                  "CreatorDashBoardPageSalesHyperlinkTitle" +
+                                  index
+                                }
+                                className={classes.hyperlink}>
+                                {item.hyperlink}
+                              </div>
+                            </Link>
+                          </div>
+                        </li>
+                      );
+                    })}
+                  </div>
+                </div>
+              </div>
+              <div
+                id="CreatorDashBoardPageSalesRecentOrdersContent"
+                className={classes.content}>
+                <RecentOrders recentordersReport={recentordersReport} />
+              </div>
+            </div>
+
       </div>
     </div>
   );

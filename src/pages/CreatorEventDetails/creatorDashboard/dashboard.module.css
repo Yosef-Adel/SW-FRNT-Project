@@ -105,10 +105,16 @@
 }
 
 .url {
-  display: -webkit-box;
+  /* display: -webkit-box;
   overflow: hidden;
   -webkit-box-orient: vertical;
-  -webkit-line-clamp: 1;
+  -webkit-line-clamp: 1; */
+  
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+
+  width: 50%;
 }
 
 .shareicons {
@@ -166,6 +172,25 @@ hr {
   row-gap: 2rem;
   margin: 2.8rem 0 2.8rem 1.2rem;
   flex-wrap: wrap;
+}
+
+.urlcontainer {
+  display: flex;
+  justify-content: space-between;
+}
+
+.urlcopy:hover
+{
+  cursor: pointer;
+  
+}
+
+
+.urlcopy svg
+{
+  width: 20px;
+  height: 20px;
+  fill: var(--bright-blue);
 }
 
 @media screen and (max-width: 1400px) {

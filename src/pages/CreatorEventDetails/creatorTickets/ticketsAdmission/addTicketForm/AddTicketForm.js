@@ -17,19 +17,25 @@ import { DatePicker } from "@mui/x-date-pickers/DatePicker";
 import ArrowBackIosNewIcon from "@mui/icons-material/ArrowBackIosNew";
 import Checkbox from "@mui/material/Checkbox";
 import Time from "../../../../../assets/data/TimeOptions";
-const AddTicketForm = ({ ticket }) => {
+import moment from "moment";
+import axios from "../../../../../requests/axios";
+import routes from "../../../../../requests/routes";
+import { useSelector } from "react-redux";
+
+const AddTicketForm = ({ ticket, setdummydata }) => {
   const initialValues = {
     name: "General Admission",
     availablequantity: "",
     price: "",
-    ticketoption:"",
-    salesstart: "",
-    salesend: "",
-    starttime: "",
-    endtime: "",
+    ticketoption: "",
+    salesstart: "2022-04-17",
+    salesend: "2022-04-17",
+    starttime: "12:00 AM",
+    endtime: "12:00 AM",
     minimumquantity: "1",
     maximumquantity: "1",
-    description:""
+    description: "",
+    Visibility: "",
   };
 
   function handleKeyPress(event) {
@@ -55,11 +61,13 @@ const AddTicketForm = ({ ticket }) => {
       .max(1000000, "Price must be less than $1,000,000")
       .min(1, "Price must be greater than 0")
       .required("  Price is required to make a paid ticket"),
+    //salesend: Yup.date().min(new Date(), "End date cannot be in the past."),
   });
   const [advancedopen, setadvancedopen] = useState(false);
   function handleclick2() {
     setadvancedopen(!advancedopen);
   }
+  const event = useSelector((state) => state.event);
   const [value, setValue] = React.useState(dayjs("2022-04-17"));
 
   const [state, setState] = React.useState({
@@ -97,6 +105,7 @@ const AddTicketForm = ({ ticket }) => {
       SetDatetime(false);
     }
   }
+
   const toggleDrawer = (anchor, open) => (event) => {
     if (
       event.type === "keydown" &&
@@ -107,7 +116,61 @@ const AddTicketForm = ({ ticket }) => {
 
     setState({ ...state, [anchor]: open });
   };
-  const handleSubmit = (data, { setErrors }) => {};
+  async function addevent(data) {
+    try {
+      const response = await axios.post(
+        routes.tickets + "/" + event.eventId + "/createTicket",
+        data
+      );
+      setdummydata(false);
+
+      console.log(response.data);
+    } catch (err) {
+      console.log(err);
+    }
+  }
+  const handleSubmit = (data, { setErrors }) => {
+    //console.log(data);
+
+    let datasent = data;
+    let sDate = new Date(data.salesend + " " + data.endtime);
+    let endDate1 = sDate.toISOString();
+    datasent.salesEnd = endDate1;
+    datasent.event = event.eventId;
+    if (paidclicked) {
+      datasent.type = "paid";
+      datasent.price = Number(data.price);
+    } else {
+      datasent.type = "free";
+    }
+    delete datasent.salesend;
+    delete datasent.Visibility;
+    delete datasent.endtime;
+
+    if (datetime) {
+      let sDate2 = new Date(data.salesstart + " " + data.starttime);
+      let startDate2 = sDate2.toISOString();
+      console.log(startDate2);
+      datasent.salesStart = startDate2;
+    } else {
+      let tickets = ticket[Number(datasent.ticketoption)].salesEnd;
+      console.log(ticket);
+      datasent.salesStart = tickets;
+    }
+    datasent.capacity = Number(data.availablequantity);
+    datasent.fee = 2.5;
+    datasent.sold = 0;
+    datasent.minQuantityPerOrder = data.minimumquantity;
+    datasent.maxQuantityPerOrder = data.maximumquantity;
+    delete datasent.minimumquantity;
+    delete datasent.maximumquantity;
+    delete datasent.availablequantity;
+    delete datasent.salesstart;
+    delete datasent.starttime;
+    delete datasent.ticketoption;
+    console.log(datasent);
+    addevent(datasent);
+  };
 
   return (
     <div>
@@ -257,11 +320,22 @@ const AddTicketForm = ({ ticket }) => {
                     <>
                       <div className={classes.containerstart}>
                         <div className={classes.datacontainer}>
+                          <label className={classes.salesstart}>
+                            Sales start
+                          </label>
                           <LocalizationProvider dateAdapter={AdapterDayjs}>
                             <DemoContainer components={[]}>
                               <DemoItem>
                                 <DatePicker
                                   defaultValue={dayjs("2022-04-17")}
+                                  onChange={(date) => {
+                                    setFieldValue(
+                                      "salesstart",
+                                      moment(date.$d, "YYYY-MM-DD").format(
+                                        "YYYY-MM-DD"
+                                      )
+                                    ); // Update formik state directly
+                                  }}
                                   sx={{
                                     "& .MuiInputBase-input": {
                                       height: "17px",
@@ -308,10 +382,11 @@ const AddTicketForm = ({ ticket }) => {
                           className={classes.field}
                           name="ticketoption"
                           component="select"
-                          onChange={handlechangetimeorsalesend}
                         >
                           {ticket.map((Element, index) => {
-                            return <option>{Element.name}</option>;
+                            return (
+                              <option value={index}>{Element.name}</option>
+                            );
                           })}
                         </Field>
                       </div>
@@ -319,11 +394,20 @@ const AddTicketForm = ({ ticket }) => {
                   )}
                   <div className={classes.containerstart}>
                     <div className={classes.datacontainer}>
+                      <label className={classes.salesend}>Sales end</label>
                       <LocalizationProvider dateAdapter={AdapterDayjs}>
                         <DemoContainer components={[]}>
-                          <DemoItem>
+                          <DemoItem className={classes.DemoContainer}>
                             <DatePicker
                               defaultValue={dayjs("2022-04-17")}
+                              onChange={(date) => {
+                                setFieldValue(
+                                  "salesend",
+                                  moment(date.$d, "YYYY-MM-DD").format(
+                                    "YYYY-MM-DD"
+                                  )
+                                );
+                              }}
                               sx={{
                                 "& .MuiInputBase-input": {
                                   height: "17px",
@@ -340,6 +424,7 @@ const AddTicketForm = ({ ticket }) => {
                         </DemoContainer>
                       </LocalizationProvider>
                     </div>
+
                     <div className={classes.boxContainer}>
                       <div className={classes.fieldContainer}>
                         <label className={classes.label}>End time</label>
@@ -391,10 +476,13 @@ const AddTicketForm = ({ ticket }) => {
                           checkout
                         </div>
                       </div>
-                      <div className={classes.boxContainer}  >
-                        <div className={classes.fieldContainer} >
+                      <div className={classes.boxContainer}>
+                        <div
+                          className={classes.fieldContainer}
+                          style={{ paddingBottom: "4.5rem" }}
+                        >
                           <label className={classes.label}>desciption</label>
-                          <Field 
+                          <Field
                             className={classes.field}
                             name="description"
                             placeholder="Tell attendess more about this ticket"
@@ -431,6 +519,7 @@ const AddTicketForm = ({ ticket }) => {
                             <Field
                               className={classes.field}
                               name="minimumquantity"
+                              onKeyPress={handleKeyPress}
                             ></Field>
                           </div>
                         </div>
@@ -446,6 +535,7 @@ const AddTicketForm = ({ ticket }) => {
                             <Field
                               className={classes.field}
                               name="maximumquantity"
+                              onKeyPress={handleKeyPress}
                             ></Field>
                           </div>
                         </div>
