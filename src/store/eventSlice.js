@@ -3,6 +3,7 @@ import { createSlice } from "@reduxjs/toolkit";
 const eventSlice = createSlice({
     name: "event",
     initialState: {
+        eventId:"",
         eventTitle: "",
         description: "",
         startDate: "",
@@ -26,6 +27,7 @@ const eventSlice = createSlice({
     },
     reducers: {
         default: (state, action)=>{
+            state.eventId= action.payload.eventId
             state.eventTitle= action.payload.eventTitle
             state.description= action.payload.description
             state.startDate= action.payload.startDate

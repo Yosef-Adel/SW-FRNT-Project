@@ -51,16 +51,16 @@ function App() {
 
   };
 
-  useEffect(() => {
-    Notification.requestPermission();
-   const interval = setInterval(() => 
-    sendPushNotification("New Event!!",
-                         "Event Created",
-                         "Envie just launched a musical event!! Book your tickets quickly!"
-                        ),
-    10000);
-   return () => clearInterval(interval);
-  }, []);
+  // useEffect(() => {
+  //   Notification.requestPermission();
+  //  const interval = setInterval(() => 
+  //   sendPushNotification("New Event!!",
+  //                        "Event Created",
+  //                        "Envie just launched a musical event!! Book your tickets quickly!"
+  //                       ),
+  //   10000);
+  //  return () => clearInterval(interval);
+  // }, []);
 
 
   return ( 
