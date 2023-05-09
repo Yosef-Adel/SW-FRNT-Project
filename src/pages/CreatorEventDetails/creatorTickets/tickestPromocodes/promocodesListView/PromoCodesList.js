@@ -7,8 +7,10 @@ import data from "../../../../../assets/data/dummyData";
 import tableheader from "../../../../../assets/data/promocodes";
 import moment from "moment";
 import CircularProgress from "@mui/material/CircularProgress";
+import { useSelector } from "react-redux";
 
-const PromoCodesList = ({ eventID }) => {
+const PromoCodesList = () => {
+  const event = useSelector((state) => state.event);
   const [promocodes, setPromocodes] = useState(data.promocodes);
   const [loading, setloading] = useState(false);
   const now = moment();
@@ -21,7 +23,7 @@ const PromoCodesList = ({ eventID }) => {
   async function getPromoCodes() {
     try {
       setloading(true);
-      const response = await axios.get(routes.promocode + "/" + eventID);
+      const response = await axios.get(routes.promocode + "/" + event.eventId);
       setPromocodes(response.data.promocodes);
       setloading(false);
     } catch (err) {

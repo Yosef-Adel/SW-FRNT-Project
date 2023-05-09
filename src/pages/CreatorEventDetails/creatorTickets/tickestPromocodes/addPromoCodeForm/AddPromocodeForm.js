@@ -20,14 +20,16 @@ import moment from "moment";
 import Time from "../../../../../assets/data/TimeOptions";
 import axios from "../../../../../requests/axios";
 import routes from "../../../../../requests/routes";
+import { useSelector } from "react-redux";
 
-const AddPromocodeForm = ({ eventID, edit }) => {
+const AddPromocodeForm = ({  edit }) => {
   const formikRef = React.useRef(null);
 
   const [state, setState] = React.useState({
     right: false,
   });
 
+  const event = useSelector((state) => state.event);
   const [csv, setCsv] = useState(false);
   const [amountformopen, setamountformopen] = useState(false);
   const [selectedValuelimit, setSelectedValuelimit] = useState("Unlimited");
@@ -169,7 +171,7 @@ const AddPromocodeForm = ({ eventID, edit }) => {
   async function getTickets() {
     try {
       const response = await axios.get(
-        routes.tickets + "/" + eventID + "/allTickets"
+        routes.tickets + "/" + event.eventId + "/allTickets"
       );
 
       setTickets(response.data.tickets);
@@ -188,7 +190,7 @@ const AddPromocodeForm = ({ eventID, edit }) => {
   //   if (edit) {
   //     try {
   //       const response = await axios.get(
-  //         routes.tickets + "/" + eventID + "/allTickets"
+  //         routes.tickets + "/" + event.eventId + "/allTickets"
   //       );
   //     } catch (err) {}
   //   }

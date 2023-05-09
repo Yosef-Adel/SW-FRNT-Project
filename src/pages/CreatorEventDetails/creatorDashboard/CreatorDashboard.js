@@ -15,7 +15,7 @@ import RecentOrders from "./recentOrders/RecentOrders";
 import { useEffect, useState } from "react";
 import axios from "../../../requests/axios";
 import routes from "../../../requests/routes";
-
+import { useSelector } from "react-redux";
 /**
  * Component that returns Creator's Dashboard page
  *
@@ -23,7 +23,8 @@ import routes from "../../../requests/routes";
  * @example
  * return(<CreatorDashboard />)
  */
-const CreatorDashboard = ({ eventID }) => {
+const CreatorDashboard = () => {
+  const event = useSelector((state) => state.event);
   const [soldTickets, setSoldTickets] = useState(0);
   const [totalTickets, setTotalTickets] = useState(0);
   const [freeTickets, setFreeTickets] = useState(0);
@@ -45,7 +46,7 @@ const CreatorDashboard = ({ eventID }) => {
   const intialSalesRequest =
     routes.events +
     "/" +
-    eventID +
+    event.eventId +
     routes.eventSalesByTicketType +
     "?page=1&limit=3";
 
@@ -57,7 +58,7 @@ const CreatorDashboard = ({ eventID }) => {
     // console.log(routes.events + "/" + eventID + "/getTicketsSoldForEvent");
     try {
       const response = await axios.get(
-        routes.events + "/" + eventID + routes.eventSoldTickets
+        routes.events + "/" + event.eventId + routes.eventSoldTickets
       );
       setSoldTickets(response.data.soldTickets);
       setTotalTickets(response.data.totalCapacity);
@@ -75,7 +76,7 @@ const CreatorDashboard = ({ eventID }) => {
   async function getSalesSummary() {
     try {
       const response = await axios.get(
-        routes.events + "/" + eventID + routes.eventSalesSummary
+        routes.events + "/" + event.eventId + routes.eventSalesSummary
       );
       setGrossSales(response.data.grossSales);
       setNetSales(response.data.netSales);
@@ -92,7 +93,7 @@ const CreatorDashboard = ({ eventID }) => {
   async function getEventURL() {
     try {
       const response = await axios.get(
-        routes.events + "/" + eventID + routes.eventURL
+        routes.events + "/" + event.eventId + routes.eventURL
       );
       setEventURL(response.data.url);
     } catch (err) {
@@ -108,7 +109,7 @@ const CreatorDashboard = ({ eventID }) => {
     // console.log(routes.events + "/" + eventID + "/getTicketsSoldForEvent");
     try {
       const response = await axios.get(
-        routes.events + "/" + eventID + routes.eventRecentOrder
+        routes.events + "/" + event.eventId + routes.eventRecentOrder
       );
       setrecentordersReport(response.data.Report);
     } catch (err) {
@@ -138,14 +139,14 @@ const CreatorDashboard = ({ eventID }) => {
     if (isPaginated) {
       setIsPaginated(false);
       const request =
-        routes.events + "/" + eventID + routes.eventSalesByTicketType;
+        routes.events + "/" + event.eventId + routes.eventSalesByTicketType;
       getSalesByTicketType(request);
     } else {
       setIsPaginated(true);
       const request =
         routes.events +
         "/" +
-        eventID +
+        event.eventId +
         routes.eventSalesByTicketType +
         "?page=1&limit=3";
 
