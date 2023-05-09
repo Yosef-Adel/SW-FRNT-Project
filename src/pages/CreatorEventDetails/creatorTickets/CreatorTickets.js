@@ -18,9 +18,9 @@ import tickets1 from "../../../assets/data/dummytickets";
  * return(<CreatorTickets />)
  */
 
-const CreatorTickets = ({ eventID }) => {
+const CreatorTickets = ({eventID}) => {
   const [addmisionclicked, setAddmisionclicked] = useState(true);
-  const [ticketlist, setticketlist] = useState(tickets1.tickets2);
+  const[ticketlist,setticketlist]=useState(tickets1.tickets2)
   function handleClickedItem(i) {
     if (i === 2) {
       setAddmisionclicked(false);
@@ -37,16 +37,8 @@ const CreatorTickets = ({ eventID }) => {
           FilterTabsData={TicketsFilterTabs}
           clickedItem={handleClickedItem}
         />
-        {addmisionclicked ? (
-          <AddTicketForm ticket={ticketlist} />
-        ) : (
-          <AddPromocodeForm edit={false} />
-        )}
-        {addmisionclicked ? (
-          <TicketsView ticketsnew={setticketlist} eventID={eventID} />
-        ) : (
-          <PromoCodesList />
-        )}
+        {addmisionclicked ? <AddTicketForm ticket={ticketlist} /> : <AddPromocodeForm edit={false}/>}
+        {addmisionclicked? <TicketsView ticketsnew={setticketlist} eventID={eventID} />:<PromoCodesList  />}
       </div>
     </div>
   );
