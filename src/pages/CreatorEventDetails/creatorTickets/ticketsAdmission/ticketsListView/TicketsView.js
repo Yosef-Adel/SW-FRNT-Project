@@ -17,17 +17,21 @@ const TicketsView = ({ ticketsnew, dummydata }) => {
   const now = moment();
   const eventi = useSelector((state) => state.event);
   const [loading, setloading] = useState(false);
+  const [loading2, setloading2] = useState(false);
   const [tickets, setTickets] = useState(tickets1.tickets2);
   const [fullcapacity, setfullcapacity] = useState(0);
   const [sold, setsold] = useState(0);
   const [event, seteventdata] = useState(CardInfo);
+  const [editchange, seteditchange] = useState(false);
 
   const [state, setState] = React.useState({
     right: false,
   });
 
   const handleSubmit = (data, { setErrors }) => {
-    editcap(data);
+    let datar = data;
+    datar.capacity = Number(data.capacity);
+    editcap(datar);
   };
 
   const validationSchema = Yup.object().shape({
@@ -64,7 +68,9 @@ const TicketsView = ({ ticketsnew, dummydata }) => {
 
   async function getevent() {
     try {
-      const response = await axios.get(routes.createEvent + "/" + eventi.eventId);
+      const response = await axios.get(
+        routes.createEvent + "/" + eventi.eventId
+      );
       console.log(response.data);
       seteventdata(response.data);
       setfullcapacity(response.data.capacity);
@@ -75,13 +81,20 @@ const TicketsView = ({ ticketsnew, dummydata }) => {
   }
   useEffect(() => {
     getevent();
-  }, []);
+  }, [editchange]);
   async function editcap(data) {
     try {
-      const response = await axios.put(routes.events + "/" + eventi.eventId, data);
+      setloading2(true);
+      const response = await axios.put(
+        routes.events + "/" + eventi.eventId,
+        data
+      );
+      setloading2(false);
       console.log(response.data);
+      seteditchange(!editchange);
     } catch (err) {
       console.log(err);
+      setloading2(false);
     }
   }
   const initialValues = {
@@ -200,6 +213,7 @@ const TicketsView = ({ ticketsnew, dummydata }) => {
           </div>
         </div>
       )}
+
       <SwipeableDrawer
         anchor={"right"}
         open={state["right"]}
@@ -229,24 +243,35 @@ const TicketsView = ({ ticketsnew, dummydata }) => {
             {({ values, setFieldValue }) => (
               <Form className={classes.form}>
                 <div className={classes.forminfo}>
-                  <div className={classes.capacityinfop}>
-                    Event capacity is the total number of tickets available for
-                    sale at your event. When you set an event capacity, your
-                    event will sell out as soon as you sell that number of total
-                    tickets. You can adjust your event capacity to prevent
-                    overselling.
-                  </div>
-                  <div className={classes.boxContainer}>
-                    <div className={classes.fieldContainer}>
-                      <label className={classes.label}>Capacity</label>
-                      <Field
-                        className={classes.field}
-                        name="capacity"
-                        value={values.capacity}
-                      />
-                    </div>
-                    <ErrorMessage name="capacity" component="span" />
-                  </div>
+                  {loading2 ? (
+                    <>
+                      <div className={classes.loading}>
+                        <CircularProgress color="success" size={80} />
+                      </div>
+                    </>
+                  ) : (
+                    <>
+                      <div className={classes.capacityinfop}>
+                        Event capacity is the total number of tickets available
+                        for sale at your event. When you set an event capacity,
+                        your event will sell out as soon as you sell that number
+                        of total tickets. You can adjust your event capacity to
+                        prevent overselling.
+                      </div>
+
+                      <div className={classes.boxContainer}>
+                        <div className={classes.fieldContainer}>
+                          <label className={classes.label}>Capacity</label>
+                          <Field
+                            className={classes.field}
+                            name="capacity"
+                            value={values.capacity}
+                          />
+                        </div>
+                        <ErrorMessage name="capacity" component="span" />
+                      </div>
+                    </>
+                  )}
                 </div>
                 <div className={classes.leavecheckoutbuttons}>
                   <div className={classes.stayleavebtn}>

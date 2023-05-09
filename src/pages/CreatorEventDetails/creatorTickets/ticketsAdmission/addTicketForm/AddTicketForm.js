@@ -21,6 +21,7 @@ import moment from "moment";
 import axios from "../../../../../requests/axios";
 import routes from "../../../../../requests/routes";
 import { useSelector } from "react-redux";
+import CircularProgress from "@mui/material/CircularProgress";
 
 const AddTicketForm = ({ ticket, setdummydata }) => {
   const initialValues = {
@@ -78,7 +79,7 @@ const AddTicketForm = ({ ticket, setdummydata }) => {
   const [donationclicked, setdonationClicked] = useState(false);
   const [checked, setChecked] = React.useState(true);
   const [datetime, SetDatetime] = useState(true);
-
+  const [loading, setloading] = useState(false);
   const handleChange = (event) => {
     setChecked(event.target.checked);
   };
@@ -118,11 +119,14 @@ const AddTicketForm = ({ ticket, setdummydata }) => {
   };
   async function addevent(data) {
     try {
+      setloading(true);
       const response = await axios.post(
         routes.tickets + "/" + event.eventId + "/createTicket",
         data
       );
       setdummydata(false);
+      toggleDrawer("right", false);
+      setloading(false);
 
       console.log(response.data);
     } catch (err) {
@@ -170,7 +174,12 @@ const AddTicketForm = ({ ticket, setdummydata }) => {
     delete datasent.ticketoption;
     console.log(datasent);
     addevent(datasent);
+    Formik.resetForm();
   };
+  function handlecancel() {
+    console.log("ay7agaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa");
+    toggleDrawer("right", false);
+  }
 
   return (
     <div>
@@ -183,10 +192,11 @@ const AddTicketForm = ({ ticket, setdummydata }) => {
           Add Ticket
         </Button>
       </div>
+
       <SwipeableDrawer
         anchor={"right"}
         open={state["right"]}
-        onClose={toggleDrawer("right", false)}
+        //onClose={toggleDrawer("right", false)}
         onOpen={toggleDrawer("right", true)}
         BackdropProps={{
           invisible: true,
@@ -204,137 +214,223 @@ const AddTicketForm = ({ ticket, setdummydata }) => {
             <p className={classes.ticketp}>Add tickets</p>
             <a>Learn more</a>
           </div>
+          {loading ? (
+            <>
+              <div className={classes.loading}>
+                <CircularProgress color="success" size={80} />
+              </div>
+            </>
+          ) : (
+            <>
+              <Formik
+                initialValues={initialValues}
+                validationSchema={validationSchema}
+                onSubmit={handleSubmit}
+              >
+                {({ values, setFieldValue, resetForm }) => (
+                  <Form className={classes.form}>
+                    <div className={classes.forminfo}>
+                      <div className={classes.typeofform}>
+                        <div
+                          onClick={handlepaidclicked}
+                          className={
+                            paidclicked ? classes.clickeditem : classes.item
+                          }
+                        >
+                          Paid
+                        </div>
+                        <div
+                          onClick={handlefreeclicked}
+                          className={
+                            freeclicked ? classes.clickeditem : classes.item
+                          }
+                        >
+                          Free
+                        </div>
+                        <div
+                          onClick={handledonationclicked}
+                          className={
+                            donationclicked ? classes.clickeditem : classes.item
+                          }
+                        >
+                          Donation
+                        </div>
+                      </div>
+                      <div className={classes.boxContainer}>
+                        <div className={classes.fieldContainer}>
+                          <label className={classes.label}>Name</label>
+                          <Field
+                            className={classes.field}
+                            name="name"
+                            type="text"
+                            autoComplete="off"
+                            data-testid="LoginFormEmailInput"
+                            placeholder="Ticket name"
+                          />
+                        </div>
+                        <ErrorMessage name="name" component="span" />
+                      </div>
 
-          <Formik
-            initialValues={initialValues}
-            validationSchema={validationSchema}
-            onSubmit={handleSubmit}
-          >
-            {({ values, setFieldValue }) => (
-              <Form className={classes.form}>
-                <div className={classes.forminfo}>
-                  <div className={classes.typeofform}>
-                    <div
-                      onClick={handlepaidclicked}
-                      className={
-                        paidclicked ? classes.clickeditem : classes.item
-                      }
-                    >
-                      Paid
-                    </div>
-                    <div
-                      onClick={handlefreeclicked}
-                      className={
-                        freeclicked ? classes.clickeditem : classes.item
-                      }
-                    >
-                      Free
-                    </div>
-                    <div
-                      onClick={handledonationclicked}
-                      className={
-                        donationclicked ? classes.clickeditem : classes.item
-                      }
-                    >
-                      Donation
-                    </div>
-                  </div>
-                  <div className={classes.boxContainer}>
-                    <div className={classes.fieldContainer}>
-                      <label className={classes.label}>Name</label>
-                      <Field
-                        className={classes.field}
-                        name="name"
-                        type="text"
-                        autoComplete="off"
-                        data-testid="LoginFormEmailInput"
-                        placeholder="Ticket name"
-                      />
-                    </div>
-                    <ErrorMessage name="name" component="span" />
-                  </div>
-
-                  <div className={classes.boxContainer}>
-                    <div className={classes.fieldContainer}>
-                      <label className={classes.label}>
-                        Available quantity
-                      </label>
-                      <Field
-                        className={classes.field}
-                        name="availablequantity"
-                        autoComplete="off"
-                        onKeyPress={handleKeyPress}
-                      />
-                    </div>
-                    <ErrorMessage name="availablequantity" component="span" />
-                  </div>
-                  <div className={classes.boxContainer}>
-                    <div
-                      className={
-                        freeclicked || donationclicked
-                          ? classes.fielddisable
-                          : classes.fieldContainer
-                      }
-                    >
-                      <label
-                        className={classes.label}
-                        style={{ paddingLeft: "20px" }}
-                      >
-                        Price
-                      </label>
-                      <div className={classes.container2}>
-                        <p className={classes.dollar}>$</p>
-                        <Field
-                          disabled={freeclicked || donationclicked}
-                          className={classes.field}
-                          name="price"
-                          placeholder="0.00"
-                          onKeyPress={handleKeyPress}
+                      <div className={classes.boxContainer}>
+                        <div className={classes.fieldContainer}>
+                          <label className={classes.label}>
+                            Available quantity
+                          </label>
+                          <Field
+                            className={classes.field}
+                            name="availablequantity"
+                            autoComplete="off"
+                            onKeyPress={handleKeyPress}
+                          />
+                        </div>
+                        <ErrorMessage
+                          name="availablequantity"
+                          component="span"
                         />
                       </div>
-                    </div>
-                    {paidclicked ? (
-                      <>
-                        <ErrorMessage name="price" component="span" />
-                      </>
-                    ) : null}
-                  </div>
-                  <div className={classes.boxContainer}>
-                    <div className={classes.fieldContainer}>
-                      <label className={classes.label}>
-                        When are tickets available?
-                      </label>
-                      <Field
-                        className={classes.field}
-                        name="ticketavailable"
-                        component="select"
-                        onChange={handlechangetimeorsalesend}
-                      >
-                        <option>Data & time</option>
-                        <option>When sales end for...</option>
-                      </Field>
-                    </div>
-                  </div>
+                      <div className={classes.boxContainer}>
+                        <div
+                          className={
+                            freeclicked || donationclicked
+                              ? classes.fielddisable
+                              : classes.fieldContainer
+                          }
+                        >
+                          <label
+                            className={classes.label}
+                            style={{ paddingLeft: "20px" }}
+                          >
+                            Price
+                          </label>
+                          <div className={classes.container2}>
+                            <p className={classes.dollar}>$</p>
+                            <Field
+                              disabled={freeclicked || donationclicked}
+                              className={classes.field}
+                              name="price"
+                              placeholder="0.00"
+                              onKeyPress={handleKeyPress}
+                            />
+                          </div>
+                        </div>
+                        {paidclicked ? (
+                          <>
+                            <ErrorMessage name="price" component="span" />
+                          </>
+                        ) : null}
+                      </div>
+                      <div className={classes.boxContainer}>
+                        <div className={classes.fieldContainer}>
+                          <label className={classes.label}>
+                            When are tickets available?
+                          </label>
+                          <Field
+                            className={classes.field}
+                            name="ticketavailable"
+                            component="select"
+                            onChange={handlechangetimeorsalesend}
+                          >
+                            <option>Data & time</option>
+                            <option>When sales end for...</option>
+                          </Field>
+                        </div>
+                      </div>
 
-                  {datetime ? (
-                    <>
+                      {datetime ? (
+                        <>
+                          <div className={classes.containerstart}>
+                            <div className={classes.datacontainer}>
+                              <label className={classes.salesstart}>
+                                Sales start
+                              </label>
+                              <LocalizationProvider dateAdapter={AdapterDayjs}>
+                                <DemoContainer components={[]}>
+                                  <DemoItem>
+                                    <DatePicker
+                                      defaultValue={dayjs("2022-04-17")}
+                                      onChange={(date) => {
+                                        setFieldValue(
+                                          "salesstart",
+                                          moment(date.$d, "YYYY-MM-DD").format(
+                                            "YYYY-MM-DD"
+                                          )
+                                        ); // Update formik state directly
+                                      }}
+                                      sx={{
+                                        "& .MuiInputBase-input": {
+                                          height: "17px",
+                                          fontSize: 13,
+                                          paddingBottom: "18px",
+                                          paddingTop: "18px",
+                                        },
+                                      }}
+                                    />
+                                  </DemoItem>
+                                </DemoContainer>
+                              </LocalizationProvider>
+                            </div>
+
+                            <div className={classes.boxContainer}>
+                              <div className={classes.fieldContainer}>
+                                <label className={classes.label}>
+                                  Start time
+                                </label>
+                                <Field
+                                  className={classes.field}
+                                  name="starttime"
+                                  component="select"
+                                >
+                                  {Time.options.map((item, index) => {
+                                    return (
+                                      <option
+                                        key={"AddPromoCodeStartTime" + index}
+                                        id={"AddPromoCodeStartTime" + index}
+                                        value={item}
+                                      >
+                                        {item}
+                                      </option>
+                                    );
+                                  })}
+                                </Field>
+                              </div>
+                            </div>
+                          </div>
+                        </>
+                      ) : (
+                        <div className={classes.boxContainer}>
+                          <div className={classes.fieldContainer}>
+                            <label className={classes.label}>
+                              Ticket options
+                            </label>
+                            <Field
+                              className={classes.field}
+                              name="ticketoption"
+                              component="select"
+                            >
+                              {ticket.map((Element, index) => {
+                                return (
+                                  <option value={index}>{Element.name}</option>
+                                );
+                              })}
+                            </Field>
+                          </div>
+                        </div>
+                      )}
                       <div className={classes.containerstart}>
                         <div className={classes.datacontainer}>
-                          <label className={classes.salesstart}>
-                            Sales start
-                          </label>
+                          <label className={classes.salesend}>Sales end</label>
                           <LocalizationProvider dateAdapter={AdapterDayjs}>
                             <DemoContainer components={[]}>
-                              <DemoItem>
+                              <DemoItem className={classes.DemoContainer}>
                                 <DatePicker
                                   defaultValue={dayjs("2022-04-17")}
                                   onChange={(date) => {
                                     setFieldValue(
-                                      "salesstart",
+                                      "salesend",
                                       moment(date.$d, "YYYY-MM-DD").format(
                                         "YYYY-MM-DD"
                                       )
-                                    ); // Update formik state directly
+                                    );
                                   }}
                                   sx={{
                                     "& .MuiInputBase-input": {
@@ -342,6 +438,9 @@ const AddTicketForm = ({ ticket, setdummydata }) => {
                                       fontSize: 13,
                                       paddingBottom: "18px",
                                       paddingTop: "18px",
+                                    },
+                                    "& .MuiPickersCalendar-root": {
+                                      fontSize: 14,
                                     },
                                   }}
                                 />
@@ -352,10 +451,10 @@ const AddTicketForm = ({ ticket, setdummydata }) => {
 
                         <div className={classes.boxContainer}>
                           <div className={classes.fieldContainer}>
-                            <label className={classes.label}>Start time</label>
+                            <label className={classes.label}>End time</label>
                             <Field
                               className={classes.field}
-                              name="starttime"
+                              name="endtime"
                               component="select"
                             >
                               {Time.options.map((item, index) => {
@@ -373,210 +472,146 @@ const AddTicketForm = ({ ticket, setdummydata }) => {
                           </div>
                         </div>
                       </div>
-                    </>
-                  ) : (
-                    <div className={classes.boxContainer}>
-                      <div className={classes.fieldContainer}>
-                        <label className={classes.label}>Ticket options</label>
-                        <Field
-                          className={classes.field}
-                          name="ticketoption"
-                          component="select"
-                        >
-                          {ticket.map((Element, index) => {
-                            return (
-                              <option value={index}>{Element.name}</option>
-                            );
-                          })}
-                        </Field>
-                      </div>
-                    </div>
-                  )}
-                  <div className={classes.containerstart}>
-                    <div className={classes.datacontainer}>
-                      <label className={classes.salesend}>Sales end</label>
-                      <LocalizationProvider dateAdapter={AdapterDayjs}>
-                        <DemoContainer components={[]}>
-                          <DemoItem className={classes.DemoContainer}>
-                            <DatePicker
-                              defaultValue={dayjs("2022-04-17")}
-                              onChange={(date) => {
-                                setFieldValue(
-                                  "salesend",
-                                  moment(date.$d, "YYYY-MM-DD").format(
-                                    "YYYY-MM-DD"
-                                  )
-                                );
-                              }}
-                              sx={{
-                                "& .MuiInputBase-input": {
-                                  height: "17px",
-                                  fontSize: 13,
-                                  paddingBottom: "18px",
-                                  paddingTop: "18px",
-                                },
-                                "& .MuiPickersCalendar-root": {
-                                  fontSize: 14,
-                                },
-                              }}
-                            />
-                          </DemoItem>
-                        </DemoContainer>
-                      </LocalizationProvider>
-                    </div>
 
-                    <div className={classes.boxContainer}>
-                      <div className={classes.fieldContainer}>
-                        <label className={classes.label}>End time</label>
-                        <Field
-                          className={classes.field}
-                          name="endtime"
-                          component="select"
-                        >
-                          {Time.options.map((item, index) => {
-                            return (
-                              <option
-                                key={"AddPromoCodeStartTime" + index}
-                                id={"AddPromoCodeStartTime" + index}
-                                value={item}
-                              >
-                                {item}
-                              </option>
-                            );
-                          })}
-                        </Field>
-                      </div>
-                    </div>
-                  </div>
-
-                  <div className={classes.advancedsettings}>
-                    <div className={classes.advancedp}>Advanced settings</div>
-                    <div
-                      onClick={handleclick2}
-                      className={
-                        advancedopen ? classes.icondown : classes.iconup
-                      }
-                    >
-                      <ArrowBackIosNewIcon />
-                    </div>
-                  </div>
-                  {advancedopen ? (
-                    <>
-                      <div className={classes.containercheckbutton}>
-                        <div className={classes.checkbutton}>
-                          <Checkbox
-                            checked={checked}
-                            onChange={handleChange}
-                            inputProps={{ "aria-label": "controlled" }}
-                            sx={{ "& .MuiSvgIcon-root": { fontSize: 28 } }}
-                          />
+                      <div className={classes.advancedsettings}>
+                        <div className={classes.advancedp}>
+                          Advanced settings
                         </div>
-                        <div className={classes.checkbuttonp}>
-                          Show tickets sale end dates and sale status at
-                          checkout
-                        </div>
-                      </div>
-                      <div className={classes.boxContainer}>
                         <div
-                          className={classes.fieldContainer}
-                          style={{ paddingBottom: "4.5rem" }}
+                          onClick={handleclick2}
+                          className={
+                            advancedopen ? classes.icondown : classes.iconup
+                          }
                         >
-                          <label className={classes.label}>desciption</label>
-                          <Field
-                            className={classes.field}
-                            name="description"
-                            placeholder="Tell attendess more about this ticket"
-                          />
+                          <ArrowBackIosNewIcon />
                         </div>
                       </div>
-                      <div className={classes.boxContainer}>
-                        <div className={classes.fieldContainer}>
-                          <label className={classes.label}>Visibility</label>
-                          <Field
-                            className={classes.field}
-                            name="Visibility"
-                            component="select"
-                          >
-                            <option>Visible</option>
-                            <option>Hidden</option>
-                            <option>Hidden when not on sale</option>
-                            <option>Custom schedule</option>
-                          </Field>
-                        </div>
-                      </div>
-                      <div className={classes.ticketperorder}>
-                        Tickets per order
-                      </div>
-                      <div className={classes.containerstart}>
-                        <div className={classes.boxContainer}>
-                          <div
-                            className={classes.fieldContainer}
-                            style={{ width: "77%" }}
-                          >
-                            <label className={classes.label}>
-                              Minimum quantity
-                            </label>
-                            <Field
-                              className={classes.field}
-                              name="minimumquantity"
-                              onKeyPress={handleKeyPress}
-                            ></Field>
+                      {advancedopen ? (
+                        <>
+                          <div className={classes.containercheckbutton}>
+                            <div className={classes.checkbutton}>
+                              <Checkbox
+                                checked={checked}
+                                onChange={handleChange}
+                                inputProps={{ "aria-label": "controlled" }}
+                                sx={{ "& .MuiSvgIcon-root": { fontSize: 28 } }}
+                              />
+                            </div>
+                            <div className={classes.checkbuttonp}>
+                              Show tickets sale end dates and sale status at
+                              checkout
+                            </div>
                           </div>
-                        </div>
-
-                        <div className={classes.boxContainer}>
-                          <div
-                            className={classes.fieldContainer}
-                            style={{ width: "77%" }}
-                          >
-                            <label className={classes.label}>
-                              Maximum quantity
-                            </label>
-                            <Field
-                              className={classes.field}
-                              name="maximumquantity"
-                              onKeyPress={handleKeyPress}
-                            ></Field>
+                          <div className={classes.boxContainer}>
+                            <div
+                              className={classes.fieldContainer}
+                              style={{ paddingBottom: "4.5rem" }}
+                            >
+                              <label className={classes.label}>
+                                desciption
+                              </label>
+                              <Field
+                                className={classes.field}
+                                name="description"
+                                placeholder="Tell attendess more about this ticket"
+                              />
+                            </div>
                           </div>
-                        </div>
-                      </div>
-                      <div
-                        className={classes.boxContainer}
-                        style={{ marginBottom: "5rem" }}
-                      >
-                        <div className={classes.fieldContainer}>
-                          <label className={classes.label}>Sales channel</label>
-                          <Field
-                            className={classes.field}
-                            name="saleschannel"
-                            component="select"
-                          >
-                            <option>Online only</option>
-                          </Field>
-                        </div>
-                      </div>
-                    </>
-                  ) : null}
-                </div>
-                <div className={classes.leavecheckoutbuttons}>
-                  <div className={classes.stayleavebtn}>
-                    <button
-                      className={classes.staybutton}
-                      onClick={toggleDrawer("right", false)}
-                    >
-                      Cancel
-                    </button>
-                  </div>
+                          <div className={classes.boxContainer}>
+                            <div className={classes.fieldContainer}>
+                              <label className={classes.label}>
+                                Visibility
+                              </label>
+                              <Field
+                                className={classes.field}
+                                name="Visibility"
+                                component="select"
+                              >
+                                <option>Visible</option>
+                                <option>Hidden</option>
+                                <option>Hidden when not on sale</option>
+                                <option>Custom schedule</option>
+                              </Field>
+                            </div>
+                          </div>
+                          <div className={classes.ticketperorder}>
+                            Tickets per order
+                          </div>
+                          <div className={classes.containerstart}>
+                            <div className={classes.boxContainer}>
+                              <div
+                                className={classes.fieldContainer}
+                                style={{ width: "77%" }}
+                              >
+                                <label className={classes.label}>
+                                  Minimum quantity
+                                </label>
+                                <Field
+                                  className={classes.field}
+                                  name="minimumquantity"
+                                  onKeyPress={handleKeyPress}
+                                ></Field>
+                              </div>
+                            </div>
 
-                  <div className={classes.stayleavebtn}>
-                    <button type="submit" className={classes.leavebutton}>
-                      Save
-                    </button>
-                  </div>
-                </div>
-              </Form>
-            )}
-          </Formik>
+                            <div className={classes.boxContainer}>
+                              <div
+                                className={classes.fieldContainer}
+                                style={{ width: "77%" }}
+                              >
+                                <label className={classes.label}>
+                                  Maximum quantity
+                                </label>
+                                <Field
+                                  className={classes.field}
+                                  name="maximumquantity"
+                                  onKeyPress={handleKeyPress}
+                                ></Field>
+                              </div>
+                            </div>
+                          </div>
+                          <div
+                            className={classes.boxContainer}
+                            style={{ marginBottom: "5rem" }}
+                          >
+                            <div className={classes.fieldContainer}>
+                              <label className={classes.label}>
+                                Sales channel
+                              </label>
+                              <Field
+                                className={classes.field}
+                                name="saleschannel"
+                                component="select"
+                              >
+                                <option>Online only</option>
+                              </Field>
+                            </div>
+                          </div>
+                        </>
+                      ) : null}
+                    </div>
+                    <div className={classes.leavecheckoutbuttons}>
+                      <div className={classes.stayleavebtn}>
+                        <button
+                          className={classes.staybutton}
+                          onClick={toggleDrawer("right", false)}
+                          type="reset"
+                        >
+                          Cancel
+                        </button>
+                      </div>
+
+                      <div className={classes.stayleavebtn}>
+                        <button type="submit" className={classes.leavebutton}>
+                          Save
+                        </button>
+                      </div>
+                    </div>
+                  </Form>
+                )}
+              </Formik>
+            </>
+          )}
         </Box>
       </SwipeableDrawer>
     </div>

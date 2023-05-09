@@ -356,3 +356,9 @@ color:#39364f;
 
  
   }
+  .loading{
+    margin-top: 20rem;
+    display: flex;
+    justify-content: center;
+  
+}
