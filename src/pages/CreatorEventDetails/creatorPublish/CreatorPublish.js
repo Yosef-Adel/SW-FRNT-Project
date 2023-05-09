@@ -154,9 +154,10 @@ const CreatorPublish = () => {
                               className={classes.field}
                               name="link"
                               component="select"
+                              data-testid="PublishDropDown"
                             >
-                              <option value="link">Anyone with link</option>
-                              <option value="pass">
+                              <option value="link" data-testid="PublishDropOption1">Anyone with link</option>
+                              <option value="pass" data-testid="PublishDropOption2">
                                 Only people with password
                               </option>
                             </Field>
@@ -170,6 +171,7 @@ const CreatorPublish = () => {
                                 className={classes.field}
                                 name="password"
                                 placeholder="password"
+                                data-testid="PublishPasswordField"
                               />
                             </div>
                           </div>
@@ -193,6 +195,7 @@ const CreatorPublish = () => {
                                     setDisable(true);
                                     setButtonContent("Publish");
                                   }}
+                                  data-testid="PublishRadioKeepPrivate"
                                 />
                                 No, keep it private
                               </label>
@@ -205,6 +208,7 @@ const CreatorPublish = () => {
                                     setDisable(false);
                                     setButtonContent("Schedule");
                                   }}
+                                  data-testid="PublishRadioShedule"
                                 />
                                 Yes, schedule to share publicly
                               </label>
@@ -223,6 +227,7 @@ const CreatorPublish = () => {
                                     setDisable(true);
                                     setButtonContent("Publish");
                                   }}
+                                  data-testid="PublishRadioPublishNow"
                                 />
                                 Publish Now
                               </label>
@@ -235,6 +240,7 @@ const CreatorPublish = () => {
                                     setDisable(false);
                                     setButtonContent("Schedule");
                                   }}
+                                  data-testid="PublishRadioShedule2"
                                 />
                                 Schedule for later
                               </label>
@@ -260,6 +266,8 @@ const CreatorPublish = () => {
                                         paddingTop: "18px",
                                       },
                                     }}
+                                    data-testid="PublishDatePicker"
+
                                   />
                                 </DemoItem>
                               </DemoContainer>
@@ -277,6 +285,8 @@ const CreatorPublish = () => {
                               name="starttime"
                               type="time"
                               disabled={disable}
+                              data-testid="PublishTimePicker"
+
                             ></Field>
                           </div>
                         </div>
@@ -292,6 +302,8 @@ const CreatorPublish = () => {
                         disableSubmit && classes.btnDisabled
                       }`}
                       disabled={disableSubmit}
+                      data-testid="PublishSubmit"
+
                     >
                       {buttonContent}
                     </button>
