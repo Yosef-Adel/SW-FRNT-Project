@@ -9,7 +9,7 @@ import AddPromocodeForm from "./tickestPromocodes/addPromoCodeForm/AddPromocodeF
 import PromoCodesList from "./tickestPromocodes/promocodesListView/PromoCodesList";
 import TicketsView from "./ticketsAdmission/ticketsListView/TicketsView";
 import tickets1 from "../../../assets/data/dummytickets";
-
+import TicketModal from "../../../generic components/ticketsModal/TicketsModal";
 /**
  * Component that returns Creator's Manage Tickets page
  *
@@ -18,10 +18,11 @@ import tickets1 from "../../../assets/data/dummytickets";
  * return(<CreatorTickets />)
  */
 
-const CreatorTickets = ({eventID}) => {
+const CreatorTickets = ({ eventID }) => {
   const [addmisionclicked, setAddmisionclicked] = useState(true);
-  const[ticketlist,setticketlist]=useState(tickets1.tickets2)
-  const[dummydata,setdummydata]=useState(true);
+  const [ticketlist, setticketlist] = useState(tickets1.tickets2);
+  const [dummydata, setdummydata] = useState(true);
+  const [modalopen, setticketsmodalopen] = useState(false);
   function handleClickedItem(i) {
     if (i === 2) {
       setAddmisionclicked(false);
@@ -38,8 +39,21 @@ const CreatorTickets = ({eventID}) => {
           FilterTabsData={TicketsFilterTabs}
           clickedItem={handleClickedItem}
         />
-        {addmisionclicked ? <AddTicketForm setdummydata={setdummydata} ticket={ticketlist} /> : <AddPromocodeForm  edit={false}/>}
-        {addmisionclicked? <TicketsView dummydata={dummydata} ticketsnew={setticketlist}  />:<PromoCodesList />}
+        {addmisionclicked ? (
+          <AddTicketForm setdummydata={setdummydata} ticket={ticketlist} />
+        ) : (
+          <AddPromocodeForm edit={false} setmodalopen={setticketsmodalopen} />
+        )}
+        {addmisionclicked ? (
+          <TicketsView dummydata={dummydata} ticketsnew={setticketlist} />
+        ) : (
+          <PromoCodesList />
+        )}
+        <TicketModal
+          tickets={ticketlist}
+          modalopen={modalopen}
+          setticketsmodalopen={setticketsmodalopen}
+        />
       </div>
     </div>
   );

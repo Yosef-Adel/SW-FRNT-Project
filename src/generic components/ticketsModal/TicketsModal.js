@@ -4,59 +4,76 @@ import { AiOutlineCheck } from "react-icons/ai";
 import Box from "@mui/material/Box";
 import Modal from "@mui/material/Modal";
 import TicketData from "../../assets/data/TicketData";
+import { allSettled } from "q";
 
 const ticketsmap = TicketData.Ticketsinfo;
-const TicketModal = (props) => {
-  const [stateofform, changestateofform] = useState(true);
-  const handleClose = () => {
-    changestateofform(false);
-  };
-  const [selectedall, setselectall] = useState(false);
+const TicketModal = ({ tickets, modalopen, setticketsmodalopen }) => {
+  // const [stateofform, changestateofform] = useState(true);
+  // const handleClose = () => {
+  //   changestateofform(false);
+  // };
+  const [Selectedall, setselectall] = useState(false);
 
-  let n = ticketsmap[0].length;
-  let myArray = Array(n)
-    .fill()
-    .map((element, index) => ({
-      checked: 0,
-    }));
-  console.log(myArray);
-  const [selected, setselected] = useState(myArray);
+  const [updatedTickets, setupdatetickets] = useState([]);
+
+  useEffect(() => {
+    setupdatetickets(tickets.map((ticket) => ({ ...ticket, selected2: 0 })));
+  }, [tickets]);
+
+  //const [updatedTickets, setupdatetickets] = useState(tickets);
+
+  // let n = ticketsmap[0].length;
+  // let myArray = Array(n)
+  //   .fill()
+  //   .map((element, index) => ({
+  //     checked: 0,
+  //   }));
+
   let selectednum = 0;
 
-  function selectall() {
-    selectednum = n;
-    if (selectedall == true) {
-      let newselected = Array(n).fill(0);
-      setselectall(!selectedall);
-      setselected((selected) => [...selected, newselected]);
-      console.log(selected);
+  function handleSelectAll() {
+    setselectall(!Selectedall);
+
+    if (Selectedall) {
+      const updated = updatedTickets.map((ticket) => ({
+        ...ticket,
+        selected2: 0,
+      }));
+
+      setupdatetickets(updated);
     } else {
-      setselectall(!selectedall);
-      let newselected = Array(n).fill(1);
-      setselected(newselected);
-      console.log(selected);
+      const updated = updatedTickets.map((ticket) => ({
+        ...ticket,
+        selected2: 1,
+      }));
+
+      setupdatetickets(updated);
+      console.log(updated);
     }
   }
+  function handleClose() {
+    setticketsmodalopen(false);
+  }
   function handleClick(index) {
-    console.log(selected);
-    console.log(index);
-    if (selected[index] == 0) {
-      let newselected = selected;
-      newselected[index] = 1;
-      setselected(newselected);
-      console.log(selected);
-      selectednum = selectednum + 1;
-    }
-    if (selected[index] == 1) {
-      let newselected = selected;
-      newselected[index] = 0;
-      setselected(newselected);
-      console.log(selected);
-    }
+    // console.log(selected);
+    // console.log(index);
+    // if (selected[index] == 0) {
+    //   let newselected = selected;
+    //   newselected[index] = 1;
+    //   setselected(newselected);
+    //   console.log(selected);
+    //   selectednum = selectednum + 1;
+    // }
+    // if (selected[index] == 1) {
+    //   let newselected = selected;
+    //   newselected[index] = 0;
+    //   setselected(newselected);
+    //   console.log(selected);
+    // }
   }
   return (
     <Modal
-      open={stateofform}
+      open={modalopen}
       aria-labelledby="modal-modal-title"
       aria-describedby="modal-modal-description"
       className={classes.genericmodal}
@@ -75,10 +92,10 @@ const TicketModal = (props) => {
           <div className={classes.header}>Select Tickets</div>
           <div className={classes.staticheader}>
             <div
-              className={!selectedall ? classes.radiobutton : classes.selected}
-              onClick={selectall}
+              className={Selectedall ? classes.selected : classes.radiobutton}
+              onClick={handleSelectAll}
             >
-              {selectedall ? (
+              {Selectedall ? (
                 <>
                   <AiOutlineCheck className={classes.icon} size="13" />
                 </>
@@ -88,24 +105,24 @@ const TicketModal = (props) => {
             <div className={classes.pricep}>Price</div>
           </div>
           <ul>
-            {ticketsmap[0].map((element, index) => {
+            {tickets.map((element, index) => {
               return (
                 <div className={classes.staticheaderticket}>
                   <div
                     className={
-                      (selected[index] = 1
-                        ? classes.radiobutton
-                        : classes.selected)
+                      (updatedTickets[index] &&
+                        updatedTickets[index].selected2) == 1
+                        ? classes.selected
+                        : classes.radiobutton
                     }
                     onClick={() => handleClick(index)}
                   >
-                    {
-                      (selected[index] = 1 ? (
-                        <>
-                          <AiOutlineCheck className={classes.icon} />
-                        </>
-                      ) : null)
-                    }
+                    {(updatedTickets[index] &&
+                      updatedTickets[index].selected2) == 1 ? (
+                      <>
+                        <AiOutlineCheck className={classes.icon} />
+                      </>
+                    ) : null}
                   </div>
                   <div className={classes.staticheader2}>{element.name}</div>
                   <div className={classes.pricep}>{element.type}</div>

@@ -22,7 +22,7 @@ import axios from "../../../../../requests/axios";
 import routes from "../../../../../requests/routes";
 import { useSelector } from "react-redux";
 
-const AddPromocodeForm = ({  edit }) => {
+const AddPromocodeForm = ({  edit,setmodalopen }) => {
   const formikRef = React.useRef(null);
 
   const [state, setState] = React.useState({
@@ -646,7 +646,7 @@ const AddPromocodeForm = ({  edit }) => {
                               },
                             }}
                           />
-                          {!alltickets && <button>Apply</button>}
+                          {!alltickets && <button onClick={()=>setmodalopen(true)}>Apply</button>}
                         </div>
                       </RadioGroup>
                     </FormControl>
