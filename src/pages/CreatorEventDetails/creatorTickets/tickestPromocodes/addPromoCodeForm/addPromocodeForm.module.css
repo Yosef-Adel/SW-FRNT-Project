@@ -28,7 +28,7 @@
   cursor: pointer;
 }
 
-.selbutton
+.btn .selbutton
 {
   min-width: 15%;
   color: var(--primary-text);

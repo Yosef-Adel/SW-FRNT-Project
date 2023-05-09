@@ -8,6 +8,9 @@ import { useSelector } from "react-redux";
 import { useDispatch } from "react-redux";
 import { userActions } from "../../store/userSlice";
 import SideBar from "../../layouts/sideBar/Sidebar";
+import EventListCard from "./eventListCard";
+import IosShareIcon from "@mui/icons-material/IosShare";
+
 
 /**
  * Component that returns Creator's main page
@@ -22,6 +25,9 @@ const CreatorEvents = () => {
   const [name, setName] = useState([]);
   const navigate = useNavigate();
   const dispatch = useDispatch();
+  const [eventList, setEventList] = useState([]);
+  const [transactionData, setTransactionData] = useState([]);
+
 
   /**
    * function that sends the request that switchs user type from user to creator
@@ -64,11 +70,79 @@ const CreatorEvents = () => {
     checkCreator();
   }, []);
 
+
+  async function getEvents() {
+    try {
+      const request = await axios.get(routes.getAllEventsCreator + user.id + "/all-events");
+      setEventList(request.data.events);
+    } catch (err) {
+
+    }
+  }
+
+  async function handleExport() {
+    try {
+      axios
+        .get(
+          routes.getAllEventsCreator +
+            user.id +
+            "/all-events/download"
+        )
+        .then((resp) => {
+          setTransactionData(resp.data);
+        });
+    } catch (error) {
+      if (error.response) {
+        return error.response;
+      }
+    }
+  }
+
+
+
+  useEffect(() => {
+    getEvents();
+    handleExport();
+  }, []);
+
   return (
     <>
       <CreatorNav/>
       <div className={classes.container}>
         <SideBar/>
+        <div className={classes.main}>
+          <div className={classes.header}>
+            <h1>Events</h1>
+          </div>
+          <div className={classes.events}>
+            <ul className={classes.eventTableHeader}>
+              <li>Event</li>
+              <li>Sold</li>
+              <li>Gross</li>
+              <li>Status</li>
+            </ul>
+            <div className={classes.eventTable}>
+              {eventList.map((event,index)=>(<EventListCard event={event}/>))}
+            </div>
+          </div>
+          {(transactionData.length !== 0)? (
+          <div className={classes.export}>
+            <IosShareIcon sx={{ fontSize: "18px" }} />
+            <a
+              href={`data:text/csv;charset=utf-8,${escape(transactionData)}`}
+              download="events.csv"
+              data-testid="EventsExport"
+            >
+              CSV Export
+            </a>
+          </div>
+        ) : (
+          <div className={classes.exportDisabled}>
+            <IosShareIcon sx={{ fontSize: "18px" }} />
+            <p className={classes.disabled} data-testid="EventsExportDisabled">CSV Export</p>
+          </div>
+        )}
+        </div>
       </div>
     </>
   );

@@ -10,7 +10,7 @@ import routes from "../../../requests/routes";
 import ErrorNotification from "../../../generic components/error message/ErrorNotification";
 import { useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
-import categoryList from "../../../assets/data/categoriesData.js";
+import categoryList from "../../../assets/data/dropDownCategory.js";
 import moment from "moment/moment";
 
 
@@ -52,6 +52,7 @@ const CreatorBasicInfo = () => {
     address1: "",
     country: "",
     postalCode: "",
+    category: "",
     image:
       "https://res.cloudinary.com/dv2ei7dxk/image/upload/v1681137937/DEV/ca7lxvsjologe9h46n99.jpg",
 
@@ -105,21 +106,12 @@ const CreatorBasicInfo = () => {
     formData.append("description", data.description);
     formData.append("category", data.category);
     formData.append("summary", data.summary);
-    formData.append("isOnline", true);
     formData.append("venueName", data.venueName);
     formData.append("city", data.city);
     formData.append("address1", data.address1);
     formData.append("country", data.country);
     formData.append("postalCode", data.postalCode);
     formData.append("capacity", data.capacity);
-    formData.append("image", data.image);
-    formData.append("createdBy", false);
-
-
-    // for (const value of formData.values()) {
-    //   console.log(value);
-    // }
-
 
     sendData(formData);
   };

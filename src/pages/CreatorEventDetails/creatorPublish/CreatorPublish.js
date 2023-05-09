@@ -9,6 +9,10 @@ import { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayjs";
 import { LocalizationProvider } from "@mui/x-date-pickers/LocalizationProvider";
 import { DatePicker } from "@mui/x-date-pickers/DatePicker";
 import { useState } from "react";
+import axios from "../../../requests/axios";
+import routes from "../../../requests/routes";
+import moment from "moment/moment";
+import { useSelector } from "react-redux";
 
 /**
  * Component that returns Creator's Publish Event page
@@ -18,15 +22,54 @@ import { useState } from "react";
  * return(<CreatorPublish />)
  */
 const CreatorPublish = () => {
-  const [isPrivate, setIsPrivate] = useState(false)
-  const [disable, setDisable] = useState(true)
-  const [buttonContent, setButtonContent] = useState("Publish")
+  const event = useSelector((state) => state.event);
 
+  const [disable, setDisable] = useState(true);
+  const [disableSubmit, setDisableSubmit] = useState(event.isPublished);
+
+  const [buttonContent, setButtonContent] = useState("Publish");
+
+  // const [radioContent, setRadioContent] = useState("Publish");
 
   const initialValues = {
-    isPrivate: "false",
-    publishDate: "1",
+    isPrivate: (event.isPrivate)? (event.isPrivate).toString(): "false",
+    isScheduled: (event.isScheduled)?(event.isScheduled).toString():"false",
+    isPublished: (event.isPublished)?(event.isPublished).toString(): "false",
+    publishDate: event.publishDate,
     starttime: "",
+    password: "",
+    link: "link",
+  };
+
+  async function publishData(data) {
+    console.log(data);
+    console.log(event.eventId);
+    try {
+      const request = await axios.put(
+        routes.createEvent + "/" + event.eventId,
+        data
+      );
+      console.log(request);
+    } catch (err) {}
+  }
+
+  const handleSubmit = (data) => {
+    // console.log(data);
+
+    let start = moment(data.publishDate).format("YYYY-MM-DD");
+    console.log(start + "T" + data.sTime);
+    const formData = new FormData();
+    formData.append("isPrivate", data.isPrivate === "true");
+    formData.append("isScheduled", data.isScheduled === "true");
+    formData.append(
+      "isPublished",
+      data.isScheduled === "false" && data.isPrivate === "false"
+    );
+    //if published event
+    if (!(data.isScheduled === "false" && data.isPrivate === "false"))
+      formData.append("publishDate", start + "T" + data.starttime);
+    if (data.link === "pass") formData.append("password", data.password);
+    publishData(formData);
   };
 
   const tipsIcon = (
@@ -51,129 +94,231 @@ const CreatorPublish = () => {
     </svg>
   );
   return (
-    <div className={classes.container}>
-      <div className={classes.publish}>
-        <h1 className={classes.header}>Publish Your Event</h1>
-        <CreatorEventCard
-          image={image}
-          title="Rana Trial"
-          date="Monday, June 12, 2023 at 7:00 PM EET"
-          type="Online Event"
-          tickets="15"
-          followers="120"
-        />
-        <div className={classes.section2}>
-          <Formik className={classes.form} initialValues={initialValues} enableReinitialize>
-            <Form>
-              <div className={classes.boxContainer}>
-                <div className={classes.fieldContainer} role="group">
-                  <p className={classes.fieldTitle}>Who can see your event?</p>
-                  <label>
-                    <Field type="radio" name="isPrivate" value="false" onClick = {() => setIsPrivate(false)}/>
-                    <span>
-                      Public
-                      <p className={classes.fieldDesc}>Shared on Eventbrite and search engines</p>
-                    </span>
-                  </label>  
-                  
-                  <label>
-                    <Field type="radio" name="isPrivate" value="true" onClick = {() => setIsPrivate(true)}/>
-                    <span>
-                      Private
-                      <p className={classes.fieldDesc}>Only available to a selected audience</p>
-                    </span>
-                  </label>
-                </div>
+    <>
+      <div className={classes.container}>
+        <div className={classes.publish}>
+          <h1 className={classes.header}>Publish Your Event</h1>
+          <CreatorEventCard
+            image={event.image}
+            title={event.eventTitle}
+            date={event.startDate}
+            type={!event.isOnline ? event.venueName : "Online Event"}
+            tickets={event.tickets.length}
+            followers="120"
+          />
+          <div className={classes.section2}>
+            <Formik
+              className={classes.form}
+              initialValues={initialValues}
+              onSubmit={handleSubmit}
+              enableReinitialize
 
-                {isPrivate && <div className={classes.fieldContainer} >
-                  <p className={classes.fieldTitle}>Choose your audience</p>
-                  <label className={classes.dropDown} role="group">
-                        <span>Audience</span>
-                        <Field
-                          className={classes.field}
-                          name="starttime"
-                          component="select">
-                          <option>Anyone with link</option>
-                          <option>Only people with password</option>                        
-                        </Field>
-                  </label>
-                </div>}
+            >
+              {({ values }) => (
+                <Form data-testid="PublishForm">
+                  <div className={classes.boxContainer}>
+                    <div className={classes.fieldContainer} role="group">
+                      <p className={classes.fieldTitle} data-testid="PublishInputHead1">
+                        Who can see your event?
+                      </p>
+                      <label>
+                        <Field type="radio" name="isPrivate" value="false" data-testid="PublishRadioPublic"/>
+                        <span data-testid="PublishRadioPublicContent">
+                          Public
+                          <p className={classes.fieldDesc} >
+                            Shared on Eventbrite and search engines
+                          </p>
+                        </span>
+                      </label>
 
-                <div className={classes.fieldContainer} role="group">
-                  <p className={classes.fieldTitle}>
-                  Will this event ever be public?
-                  </p>
-                  <label>
-                    <Field type="radio" name="publishDate" value="1" onClick = {() =>{ setDisable(true);  setButtonContent("Publish");}}/>
-                    No, keep it private
-                  </label>
-                  <label>
-                    <Field type="radio" name="publishDate" value="2" onClick = {() =>{ setDisable(false); setButtonContent("Schedule");}}/>
-                    Yes, schedule to share publicly
-                  </label>
-                </div>
+                      <label>
+                        <Field type="radio" name="isPrivate" value="true" data-testid="PublishRadioPrivate"/>
+                        <span data-testid="PublishRadioPrivateContent">
+                          Private
+                          <p className={classes.fieldDesc}>
+                            Only available to a selected audience
+                          </p>
+                        </span>
+                      </label>
+                    </div>
 
-                <div className={classes.containerstart}>
-                  <div className={classes.datacontainer}>
-                    <LocalizationProvider dateAdapter={AdapterDayjs}>
-                      <DemoContainer components={[]}>
-                        <DemoItem >
-                          <DatePicker
-                            className={`${disable && classes.disabled}`}
-                            defaultValue={dayjs("2022-04-17")}
-                            disabled = {disable}
-                            sx={{
-                              "& .MuiInputBase-input": {
-                                height: "17px",
-                                fontSize: 13,
-                                paddingBottom: "18px",
-                                paddingTop: "18px",
-                              },
-                            }}
-                          />
-                        </DemoItem>
-                      </DemoContainer>
-                    </LocalizationProvider>
+                    {values.isPrivate === "true" && (
+                      <>
+                        <div className={classes.fieldContainer}>
+                          <p className={classes.fieldTitle} data-testid="PublishInputHead2">
+                            Choose your audience
+                          </p>
+                          <label className={classes.dropDown} role="group">
+                            <span className={classes.span} data-testid="PublishDropDownContent">Audience</span>
+                            <Field
+                              className={classes.field}
+                              name="link"
+                              component="select"
+                            >
+                              <option value="link">Anyone with link</option>
+                              <option value="pass">
+                                Only people with password
+                              </option>
+                            </Field>
+                          </label>
+                        </div>
+                        {values.link === "pass" && (
+                          <div className={classes.boxContainerInput}>
+                            <div className={classes.fieldContainerInput}>
+                              <label className={classes.label}>Password</label>
+                              <Field
+                                className={classes.field}
+                                name="password"
+                                placeholder="password"
+                              />
+                            </div>
+                          </div>
+                        )}
+                      </>
+                    )}
+                    {!disableSubmit &&
+                      <>
+                        <div className={classes.fieldContainer} role="group">
+                          {values.isPrivate === "true" ? (
+                            <>
+                              <p className={classes.fieldTitle} data-testid="PublishInputHead3">
+                                When should we publish your event?
+                              </p>
+                              <label>
+                                <Field
+                                  type="radio"
+                                  name="isScheduled"
+                                  value="false"
+                                  onClick={() => {
+                                    setDisable(true);
+                                    setButtonContent("Publish");
+                                  }}
+                                />
+                                No, keep it private
+                              </label>
+                              <label>
+                                <Field
+                                  type="radio"
+                                  name="isScheduled"
+                                  value="true"
+                                  onClick={() => {
+                                    setDisable(false);
+                                    setButtonContent("Schedule");
+                                  }}
+                                />
+                                Yes, schedule to share publicly
+                              </label>
+                            </>
+                          ) : (
+                            <>
+                              <p className={classes.fieldTitle} data-testid="PublishInputHead4">
+                                Will this event ever be public?
+                              </p>
+                              <label>
+                                <Field
+                                  type="radio"
+                                  name="isScheduled"
+                                  value="false"
+                                  onClick={() => {
+                                    setDisable(true);
+                                    setButtonContent("Publish");
+                                  }}
+                                />
+                                Publish Now
+                              </label>
+                              <label>
+                                <Field
+                                  type="radio"
+                                  name="isScheduled"
+                                  value="true"
+                                  onClick={() => {
+                                    setDisable(false);
+                                    setButtonContent("Schedule");
+                                  }}
+                                />
+                                Schedule for later
+                              </label>
+                            </>
+                          )}
+                        </div>
+
+                        <div className={classes.containerstart}>
+                          <div className={classes.datacontainer}>
+                            <LocalizationProvider dateAdapter={AdapterDayjs}>
+                              <DemoContainer components={[]}>
+                                <DemoItem>
+                                  <DatePicker
+                                    className={`${disable && classes.disabled}`}
+                                    defaultValue={dayjs("2022-04-17")}
+                                    disabled={disable}
+                                    name="publishDate"
+                                    sx={{
+                                      "& .MuiInputBase-input": {
+                                        height: "17px",
+                                        fontSize: 13,
+                                        paddingBottom: "18px",
+                                        paddingTop: "18px",
+                                      },
+                                    }}
+                                  />
+                                </DemoItem>
+                              </DemoContainer>
+                            </LocalizationProvider>
+                          </div>
+
+                          <div
+                            className={`${classes.fieldContainerDate} ${
+                              disable && classes.disabled
+                            } ${disable && classes.disabledBorder}`}
+                          >
+                            <label className={classes.label}>Start time</label>
+                            <Field
+                              className={classes.field}
+                              name="starttime"
+                              type="time"
+                              disabled={disable}
+                            ></Field>
+                          </div>
+                        </div>
+                      </>
+                    }
                   </div>
 
-                  <div className={`${classes.fieldContainerDate} ${disable && classes.disabled} ${disable && classes.disabledBorder}`}>
-                    <label className={classes.label}>Start time</label>
-                    <Field
-                      className={classes.field}
-                      name="starttime"
-                      type="time"
-                      disabled = {disable}
+                  <div className={classes.footer}>
+                    <hr></hr>
+                    <button
+                      type="submit"
+                      className={`${classes.btn} ${
+                        disableSubmit && classes.btnDisabled
+                      }`}
+                      disabled={disableSubmit}
                     >
-                    </Field>
+                      {buttonContent}
+                    </button>
                   </div>
-                </div>
+                </Form>
+              )}
+            </Formik>
+            <div className={classes.tips}>
+              <h3 className={classes.tipsHeader}>
+                {tipsIcon} Tips before you publish
+              </h3>
+              <div className={classes.options}>
+                <p>Create promo codes for your event {arrowIcon}</p>
+                <p>Customize your order form {arrowIcon}</p>
+                <p>Manage how you get paid {arrowIcon}</p>
+                <p>Set your refund policy {arrowIcon}</p>
+                <p>
+                  Add this event to a collection to increase visibility{" "}
+                  {arrowIcon}
+                </p>
+                <p>Develop a safety plan for your event {arrowIcon}</p>
               </div>
-            </Form>
-          </Formik>
-          <div className={classes.tips}>
-            <h3 className={classes.tipsHeader}>
-              {tipsIcon} Tips before you publish
-            </h3>
-            <div className={classes.options}>
-              <p>Create promo codes for your event {arrowIcon}</p>
-              <p>Customize your order form {arrowIcon}</p>
-              <p>Manage how you get paid {arrowIcon}</p>
-              <p>Set your refund policy {arrowIcon}</p>
-              <p>
-                Add this event to a collection to increase visibility{" "}
-                {arrowIcon}
-              </p>
-              <p>Develop a safety plan for your event {arrowIcon}</p>
             </div>
           </div>
         </div>
-
-        <div className={classes.footer}>
-          <hr></hr>
-          <button className={classes.btn}>{buttonContent}</button>
-        </div>
       </div>
-    </div>
+    </>
   );
 };
 

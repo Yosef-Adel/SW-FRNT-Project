@@ -16,6 +16,8 @@ const routes = {
   eventSalesByTicketType: "/getSalesByTicketTypeDashboard",
   eventRecentOrder: "/getOrderSummaryReportMostRecent",
   createEvent: "/api/events",
-  sendNotificationToken: "/user/notification"
+  sendNotificationToken: "/user/notification",
+  getAllEventsCreator: "/api/events/",
+  updateEvent: "/api/events/"
 };
 export default routes;
