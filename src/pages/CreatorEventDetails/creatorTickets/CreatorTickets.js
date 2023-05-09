@@ -23,6 +23,7 @@ const CreatorTickets = ({ eventID }) => {
   const [ticketlist, setticketlist] = useState(tickets1.tickets2);
   const [dummydata, setdummydata] = useState(true);
   const [modalopen, setticketsmodalopen] = useState(false);
+  const[tickets,setticketsmodal]=useState(tickets1.tickets2)
   function handleClickedItem(i) {
     if (i === 2) {
       setAddmisionclicked(false);
@@ -42,7 +43,7 @@ const CreatorTickets = ({ eventID }) => {
         {addmisionclicked ? (
           <AddTicketForm setdummydata={setdummydata} ticket={ticketlist} />
         ) : (
-          <AddPromocodeForm edit={false} setmodalopen={setticketsmodalopen} />
+          <AddPromocodeForm edit={false} ticketsselected={tickets} setmodalopen={setticketsmodalopen} />
         )}
         {addmisionclicked ? (
           <TicketsView dummydata={dummydata} ticketsnew={setticketlist} />
@@ -53,6 +54,7 @@ const CreatorTickets = ({ eventID }) => {
           tickets={ticketlist}
           modalopen={modalopen}
           setticketsmodalopen={setticketsmodalopen}
+          ticketsmodal={setticketsmodal}
         />
       </div>
     </div>

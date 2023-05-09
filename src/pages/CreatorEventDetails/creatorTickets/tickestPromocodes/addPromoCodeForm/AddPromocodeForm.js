@@ -22,13 +22,13 @@ import axios from "../../../../../requests/axios";
 import routes from "../../../../../requests/routes";
 import { useSelector } from "react-redux";
 
-const AddPromocodeForm = ({  edit,setmodalopen }) => {
+const AddPromocodeForm = ({  edit,setmodalopen,ticketsselected }) => {
   const formikRef = React.useRef(null);
 
   const [state, setState] = React.useState({
     right: false,
   });
-
+console.log(ticketsselected);
   const event = useSelector((state) => state.event);
   const [csv, setCsv] = useState(false);
   const [amountformopen, setamountformopen] = useState(false);
@@ -695,7 +695,7 @@ const AddPromocodeForm = ({  edit,setmodalopen }) => {
                               },
                             }}
                           />
-                          {!alltickets && <button onClick={()=>setmodalopen(true)}>Apply</button>}
+                          {!alltickets && <button onClick={()=>setmodalopen(true)} type="button">Apply</button>}
                         </div>
                       </RadioGroup>
                     </FormControl>

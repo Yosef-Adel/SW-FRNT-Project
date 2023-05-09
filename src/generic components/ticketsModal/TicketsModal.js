@@ -7,7 +7,7 @@ import TicketData from "../../assets/data/TicketData";
 import { allSettled } from "q";
 
 const ticketsmap = TicketData.Ticketsinfo;
-const TicketModal = ({ tickets, modalopen, setticketsmodalopen }) => {
+const TicketModal = ({ tickets, modalopen, setticketsmodalopen,ticketsmodal }) => {
   // const [stateofform, changestateofform] = useState(true);
   // const handleClose = () => {
   //   changestateofform(false);
@@ -41,6 +41,7 @@ const TicketModal = ({ tickets, modalopen, setticketsmodalopen }) => {
       }));
 
       setupdatetickets(updated);
+      ticketsmodal(updated);
     } else {
       const updated = updatedTickets.map((ticket) => ({
         ...ticket,
@@ -48,28 +49,24 @@ const TicketModal = ({ tickets, modalopen, setticketsmodalopen }) => {
       }));
 
       setupdatetickets(updated);
-      console.log(updated);
+      ticketsmodal(updated);
+     
     }
   }
   function handleClose() {
     setticketsmodalopen(false);
   }
   function handleClick(index) {
-    // console.log(selected);
-    // console.log(index);
-    // if (selected[index] == 0) {
-    //   let newselected = selected;
-    //   newselected[index] = 1;
-    //   setselected(newselected);
-    //   console.log(selected);
-    //   selectednum = selectednum + 1;
-    // }
-    // if (selected[index] == 1) {
-    //   let newselected = selected;
-    //   newselected[index] = 0;
-    //   setselected(newselected);
-    //   console.log(selected);
-    // }
+
+    var temp =updatedTickets.map((ticket,ind) => ({
+      
+    
+        ...ticket,
+        selected2:(index==ind)?!ticket.selected2:ticket.selected2
+
+  
+    }));
+    setupdatetickets(temp);
   }
   return (
     <Modal
