@@ -59,7 +59,7 @@ const CreatorPublish = () => {
     formData.append("isPublished", data.isScheduled === "false" && data.isPrivate === "false");
     //if published event
     if(!(data.isScheduled === "false" && data.isPrivate === "false")) formData.append("publishDate", start + "T" + data.starttime);
-    if(data.password !== "") formData.append("password", data.password);
+    if(data.link === "pass") formData.append("password", data.password);
     publishData(formData);
   };
 

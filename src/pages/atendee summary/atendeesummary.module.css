@@ -1,46 +1,90 @@
-.container{
-    padding: 10rem;
+.container {
+  padding-inline: 18rem;
+  padding-block: 8rem;
+  font-family: "Fjalla One", sans-serif;
 }
 
 .header {
-    font-size: 3rem;
-    font-weight: 800;
-    color: var(--content-text);
-  }
-  
-.cards{
-    display:flex;
-    width: 50rem;
-    gap: 5rem;
-}
-.export{
-    display: flex;
-    align-items: center;
-    gap: 0.5rem;
-    font-size: 1.8rem;
-    justify-content: flex-end;
-    color: var(--bright-blue);
+  font-size: 3rem;
+  font-weight: 900;
+  color: var(--content-text);
 }
 
+.cards {
+  display: flex;
+  width: 50rem;
+  gap: 5rem;
+}
+.export {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  font-size: 1.8rem;
+  justify-content: flex-end;
+  color: var(--bright-blue);
+  cursor: pointer;
+  text-decoration: underline;
+}
 
-.salestable table {
-    width: 100%;
-    text-align: start;
-  }
-  
-  table {
-    border-bottom: 1px solid #eeedf2;
-    margin-bottom: 1.5rem;
-  }
-  
-  td {
-    color: var(--primary-text);
-    font-size: 1.4rem;
-    letter-spacing: 0.05rem;
-    font-weight: 500;
-    padding: 1rem 0;
-  }
+.exportDisabled{
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  font-size: 1.8rem;
+  justify-content: flex-end;
+  color: grey;
+}
 
-  .sold {
-    color: var(--bright-blue);
-  }
+.tableHeader {
+  background-color: var(--primary-background);
+  margin: 20rem;
+}
+
+.attendeetable {
+  overflow-x: scroll;
+  width: 100%;
+  margin-block: 3rem;
+}
+
+.attendeetable::-webkit-scrollbar {
+  display: none;
+}
+
+/* Hide scrollbar for IE, Edge and Firefox */
+.attendeetable {
+  -ms-overflow-style: none;  /* IE and Edge */
+  scrollbar-width: none;  /* Firefox */
+} 
+
+.attendeetable table {
+  text-align: start;
+  border-bottom: 1px solid #eeedf2;
+  margin-bottom: 1.5rem;
+
+  column-gap: 5rem;
+}
+
+.tableItslef > thead {
+  white-space: nowrap;
+}
+
+.tableItslef td {
+  color: var(--primary-text);
+  font-size: 1.4rem;
+  letter-spacing: 0.05rem;
+  font-weight: 500;
+  padding: 2rem 1rem;
+  min-width: 5rem;
+  border-bottom: 1px solid rgb(224, 224, 224);
+}
+
+.tableItslef th {
+  color: var(--primary-text);
+  font-size: 1.4rem;
+  letter-spacing: 0.05rem;
+  font-weight: 500;
+  padding: 2rem 1rem;
+  min-width: 5rem;
+  text-align: left;
+
+}

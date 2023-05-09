@@ -352,7 +352,7 @@ const CreatorDashboard = () => {
                             "CreatorDashBoardPageSalesHyperlinkTitleLink" +
                             index
                           }
-                          to={"/atendeeSummary"}>
+                          to={"/attendeeSummary" + "/" + event.eventId}>
                           <div
                             id={
                               "CreatorDashBoardPageSalesHyperlinkTitle" + index
