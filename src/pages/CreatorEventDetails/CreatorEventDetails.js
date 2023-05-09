@@ -35,10 +35,7 @@ const CreatorEventDetails = () => {
               element={<CreatorTickets eventID="64331c1e1d3382d35d5b3a43" />}
             />
             <Route path="/publish" element={<CreatorPublish />} />
-            <Route
-              path="/dashboard"
-              element={<CreatorDashboard eventID="645415818d0b47c6a89b390e" />}
-            />
+            <Route path="/dashboard" element={<CreatorDashboard />} />
             <Route path="/addattendee" element={<CreatorAddAttendee />} />
           </Routes>
         </div>

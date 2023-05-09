@@ -20,14 +20,17 @@ import moment from "moment";
 import Time from "../../../../../assets/data/TimeOptions";
 import axios from "../../../../../requests/axios";
 import routes from "../../../../../requests/routes";
+import { useSelector } from "react-redux";
 
-const AddPromocodeForm = ({ eventID, edit }) => {
+const AddPromocodeForm = ({  edit }) => {
   const formikRef = React.useRef(null);
 
   const [state, setState] = React.useState({
     right: false,
   });
 
+  const event = useSelector((state) => state.event);
+  const [csv, setCsv] = useState(false);
   const [amountformopen, setamountformopen] = useState(false);
   const [selectedValuelimit, setSelectedValuelimit] = useState("Unlimited");
   const [scheduleopen, setscheduleopen] = useState(false);
@@ -123,6 +126,7 @@ const AddPromocodeForm = ({ eventID, edit }) => {
       let endDate = eDate.toISOString();
       datasent.endDate = endDate;
     } else {
+      //get event end time
     }
 
     delete datasent.endtime;
@@ -132,13 +136,20 @@ const AddPromocodeForm = ({ eventID, edit }) => {
         .fill()
         .map((element, index) => tickets[index]._id);
       datasent.tickets = filledArray;
+    } else {
+      //get selected tickets
+    }
+
+    if (csv) {
+      // convert them to form data
     }
 
     console.log(datasent);
+
     formikRef.current.resetForm();
   };
 
-  const toggleDrawer = (anchor, open) => (event) => {
+  const toggleDrawer = (anchor, open, csv) => (event) => {
     if (
       event.type === "keydown" &&
       (event.key === "Tab" || event.key === "Shift")
@@ -148,6 +159,7 @@ const AddPromocodeForm = ({ eventID, edit }) => {
 
     setState({ ...state, [anchor]: open });
     formikRef.current.resetForm();
+    setCsv(csv);
   };
 
   /**
@@ -159,7 +171,7 @@ const AddPromocodeForm = ({ eventID, edit }) => {
   async function getTickets() {
     try {
       const response = await axios.get(
-        routes.tickets + "/" + eventID + "/allTickets"
+        routes.tickets + "/" + event.eventId + "/allTickets"
       );
 
       setTickets(response.data.tickets);
@@ -178,7 +190,7 @@ const AddPromocodeForm = ({ eventID, edit }) => {
   //   if (edit) {
   //     try {
   //       const response = await axios.get(
-  //         routes.tickets + "/" + eventID + "/allTickets"
+  //         routes.tickets + "/" + event.eventId + "/allTickets"
   //       );
   //     } catch (err) {}
   //   }
@@ -201,10 +213,6 @@ const AddPromocodeForm = ({ eventID, edit }) => {
 
   const getValidationSchema = () => {
     let schema = Yup.object().shape({
-      name: Yup.string()
-        .max(50, "Name must be at most 50 characters")
-
-        .required("Provide a code name"),
       amountOff: Yup.number().test(
         "one-required",
         "Discount amount or percentage required",
@@ -220,6 +228,14 @@ const AddPromocodeForm = ({ eventID, edit }) => {
         }
       ),
     });
+    if (!csv) {
+      schema = schema.shape({
+        name: Yup.string()
+          .max(50, "Name must be at most 50 characters")
+
+          .required("Provide a code name"),
+      });
+    }
     if (amountformopen) {
       schema = schema.shape({
         limit: Yup.number().required("Limit Amount is required"),
@@ -242,18 +258,17 @@ const AddPromocodeForm = ({ eventID, edit }) => {
     <div>
       <div className={classes.modalbtns}>
         <div className={classes.btn}>
-          <select
+          <Button
             className={classes.selbutton}
-            // onClick={toggleDrawer("right", true)}
+            onClick={toggleDrawer("right", true, true)}
             data-testid="AddTicketButton">
-            <option value="Upload">Upload PromoCode.CSV</option>
-            <option value="Delete">Delete unused codes</option>
-          </select>
+            Upload CSV
+          </Button>
         </div>
         <div className={classes.btn}>
           <Button
             className={classes.button}
-            onClick={toggleDrawer("right", true)}
+            onClick={toggleDrawer("right", true, false)}
             data-testid="AddTicketButton">
             Create promo code
           </Button>
@@ -288,24 +303,26 @@ const AddPromocodeForm = ({ eventID, edit }) => {
             {({ values }) => (
               <Form className={classes.form}>
                 <div className={classes.forminfo}>
-                  <div className={classes.boxContainer}>
-                    <div className={classes.fieldContainer}>
-                      <label className={classes.label}>Code name</label>
-                      <Field
-                        className={classes.field}
-                        name="name"
-                        autoComplete="off"
-                        data-testid="LoginFormEmailInput"
-                        placeholder="General Admission"
-                      />
-                    </div>
+                  {!csv && (
+                    <div className={classes.boxContainer}>
+                      <div className={classes.fieldContainer}>
+                        <label className={classes.label}>Code name</label>
+                        <Field
+                          className={classes.field}
+                          name="name"
+                          autoComplete="off"
+                          data-testid="LoginFormEmailInput"
+                          placeholder="General Admission"
+                        />
+                      </div>
 
-                    <ErrorMessage name="name" component="span" />
+                      <ErrorMessage name="name" component="span" />
 
-                    <div className={classes.namep}>
-                      Customers can also access this code via custom URL
+                      <div className={classes.namep}>
+                        Customers can also access this code via custom URL
+                      </div>
                     </div>
-                  </div>
+                  )}
 
                   <div className={classes.limitcontainer}>
                     <div className={classes.containerstart}>
