@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import classes from "./dashboardsidebar.module.css";
 import { BiChevronLeft } from "react-icons/bi";
 import { BsBoxArrowUpRight } from "react-icons/bs";
+import {CiMenuBurger} from "react-icons/ci";
 import dashboardSidebarData from "../../assets/data/dashboardSidebarData";
 import { MdKeyboardArrowDown } from "react-icons/md";
 import { useSelector } from "react-redux";
@@ -18,6 +19,7 @@ const DashboardSidebar = (props) => {
   const eventManagementList = dashboardSidebarData.eventManagement;
   const [selected, setSelected] = useState("/" + lastPart);
   const [openlist, setopenlist] = useState(false);
+  const [openSideBar, setOpenSideBar] = useState(false);
 
   const handleroute = (route) => {
     if (route !== "") {
@@ -38,7 +40,11 @@ const DashboardSidebar = (props) => {
     // console.log(location);
   }, []);
   return (
-    <div className={classes.main}>
+    <>
+    <div className={classes.burger} onClick={()=>setOpenSideBar(!openSideBar)}>
+      <CiMenuBurger className={classes.icon}/>
+    </div>
+    <div className={openSideBar?classes.mainHide:classes.main}>
       <div className={classes.eventDescription}>
         <div className={classes.backbutton}>
           <div>
@@ -122,6 +128,7 @@ const DashboardSidebar = (props) => {
         </div>
       </div>
     </div>
+    </>
   );
 };
 

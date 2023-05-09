@@ -7,13 +7,13 @@ import { CgDetailsMore } from "react-icons/cg";
 import { CiImageOn } from "react-icons/ci";
 import axios from "../../../requests/axios";
 import routes from "../../../requests/routes";
-import ErrorNotification from "../../../generic components/error message/ErrorNotification";
 import { useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
-import moment from "moment/moment";
+import { useDispatch } from "react-redux";
+import { eventActions } from "../../../store/eventSlice";
 
 /**
- * Component that returns Creator's BAsic Info page
+ * Component that returns Creator's Event details page
  *
  * @component
  * @example
@@ -22,13 +22,14 @@ import moment from "moment/moment";
 
 const CreatorDetails = () => {
   const navigate = useNavigate();
+  const dispatch = useDispatch();
   const event = useSelector((state) => state.event);
   const [uploadImg, setUploadImg] = useState()
 
   const initialValues = {
-    description: "",
-    summary: "",
-    image:""
+    description: event.description,
+    summary: event.summary,
+    image: event.image,
   };
 
   const validationSchema = Yup.object().shape({
@@ -49,7 +50,14 @@ const CreatorDetails = () => {
     // console.log(data);
     try {
       const request = await axios.put(routes.updateEvent + event.eventId, data);
-      console.log(request);
+      console.log(request.data);
+      dispatch(
+        eventActions.updateDetails({
+          image: request.data.image,
+          summary: request.data.summary,
+          description: request.data.description,
+        })
+      );
     } catch (err) {}
   }
 
@@ -112,7 +120,7 @@ const CreatorDetails = () => {
                 </div>
               </div>
               <div className={classes.imageContainer}>
-                <img id="img" src="choose.png"/>
+                <img id="img" src={event.image}/>
               </div>
               <div className={classes.uploadBtn}>
                 <input id="input" type="file" className={classes.customfileinput}/>

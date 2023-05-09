@@ -4,7 +4,7 @@ import { Formik, Form, Field, ErrorMessage } from "formik";
 import * as Yup from "yup";
 import { TfiText } from "react-icons/tfi";
 import { TbMap2 } from "react-icons/tb";
-import {RxCalendar} from "react-icons/rx";
+import { RxCalendar } from "react-icons/rx";
 import axios from "../../../requests/axios";
 import routes from "../../../requests/routes";
 import ErrorNotification from "../../../generic components/error message/ErrorNotification";
@@ -37,35 +37,77 @@ const CreatorBasicInfo = (props) => {
   const [stateoftheconditionform, setstateoftheconditionform] = useState(false);
   const [agreeformstate, setagreeformstate] = useState(false);
   const [datainfo, setdatainfo] = useState();
+  const [onlineEvent, setOnlineEvent] = useState("Venue");
 
-  const initialValues = {
-    name: "",
-    description: "",
-    startDate: "",
-    endDate: "",
-    summary: "This is hard Coded",
-    tickets: [],
-    hostedBy: "",
-    isPrivate: false,
-    venueName: "",
-    city: "",
-    address1: "",
-    country: "",
-    postalCode: "",
-    category: "",
-    image:"",
 
-    // Not used
-    organizer: "",
-    Locationpicked: "Venue",
-    Datepicked: "Single Event",
-    SDCheckbox: false,
-    EDCheckbox: false,
-    sTime:  "",
-    eTime: "",
-    address2: "",
-    state: "",
-  };
+  useEffect(() => {
+    if( event.isOnline){
+      setOnlineEvent("Online Events")
+    }
+    else{
+      setOnlineEvent("Venue")
+    }
+  }, []);
+  var initialValues;
+  if (disabled) {
+    initialValues = {
+      name: event.eventTitle,
+      description: event.description,
+      startDate: event.startDate,
+      endDate: event.endDate,
+      summary: event.summary,
+      tickets: event.tickets,
+      hostedBy: event.hostedBy,
+      isPrivate: event.isPrivate,
+      venueName: event.venueName,
+      city: event.city,
+      address1: event.address1,
+      country: event.country,
+      postalCode: event.postalCode,
+      category: event.category,
+      image: event.image,
+
+      // Not used
+      organizer: "",
+      Locationpicked: onlineEvent,
+      Datepicked: "Single Event",
+      SDCheckbox: false,
+      EDCheckbox: false,
+      sTime: "",
+      eTime: "",
+      address2: event.address2,
+      state: "",
+    };
+  } else {
+    initialValues = {
+      name: "",
+      description: "",
+      startDate: "",
+      endDate: "",
+      summary: "",
+      tickets: [],
+      hostedBy: "",
+      isPrivate: false,
+      venueName: "",
+      city: "",
+      address1: "",
+      country: "",
+      postalCode: "",
+      category: "",
+      image: "",
+
+      // Not used
+      organizer: "",
+      Locationpicked: "Venue",
+      Datepicked: "Single Event",
+      SDCheckbox: false,
+      EDCheckbox: false,
+      sTime: "",
+      eTime: "",
+      address2: "",
+      state: "",
+    };
+  }
 
   const validationSchema = Yup.object().shape({
     name: Yup.string().max(75).required("Title is required."),
@@ -86,30 +128,36 @@ const CreatorBasicInfo = (props) => {
     try {
       const request = await axios.post(routes.createEvent, data);
       console.log(request);
-    } catch (err) {
-
-    }
+    } catch (err) {}
   }
 
   const handleSubmit = (data) => {
     console.log(data);
-    console.log(user)
+    console.log(user);
 
     let start = moment(data.startDate).format("YYYY-MM-DD");
     let end = moment(data.endDate).format("YYYY-MM-DD");
-    console.log(start+"T"+data.sTime);
+    console.log(start + "T" + data.sTime);
     const formData = new FormData();
     formData.append("name", data.name);
-    formData.append("startDate", start+"T"+data.sTime);
-    formData.append("endDate", end+"T"+data.eTime);
-    formData.append("description", data.description);
+    formData.append("startDate", start + "T" + data.sTime);
+    formData.append("endDate", end + "T" + data.eTime);
     formData.append("category", data.category);
-    formData.append("summary", data.summary);
-    formData.append("venueName", data.venueName);
-    formData.append("city", data.city);
-    formData.append("address1", data.address1);
-    formData.append("country", data.country);
-    formData.append("postalCode", data.postalCode);
+    // formData.append("summary", data.summary);
+    // formData.append("description", data.description);
+    
+    if(data.Locationpicked==="Online Events"){
+      formData.append("isOnline", true);
+    }
+    else if (data.Locationpicked==="Venue"){
+      formData.append("venueName", data.venueName);
+      formData.append("city", data.city);
+      formData.append("address1", data.address1);
+      formData.append("country", data.country);
+      formData.append("postalCode", data.postalCode);
+    }
+      
+
 
     sendData(formData);
   };
@@ -167,6 +215,7 @@ const CreatorBasicInfo = (props) => {
                     className={classes.field}
                     name="organizer"
                     placeholder="Tell attendies who is organzing this event"
+                    disabled={disabled}
                   />
                 </div>
               </div>
@@ -192,7 +241,7 @@ const CreatorBasicInfo = (props) => {
               </div>
 
               {/* Location */}
-              <div className={classes.horizontal} >
+              <div className={classes.horizontal}>
                 <hr />
               </div>
               <div className={classes.headerContainer}>
@@ -234,144 +283,161 @@ const CreatorBasicInfo = (props) => {
                   <p>To be announced</p>
                 </label>
               </div>
-              {values.Locationpicked === "Online Events" &&
-              <div className={classes.header}>
-                <p>Online events have unique event pages where you can add links to livestreams and more</p>
-              </div>}
-              {values.Locationpicked === "Venue" &&
-              <>
-              <div className={classes.boxContainer}>
-                <div className={classes.fieldContainer}>
-                  <label className={classes.label}>
-                    Venue name <p style={{ color: "red" }}> *</p>
-                  </label>
-                  <Field
-                    className={classes.field}
-                    id="venueName"
-                    name="venueName"
-                    autoComplete="off"
-                    disabled={disabled}
-                    data-testid="venueNameFieldInput"
-                    placeholder="eg: Madison Square Garden"
-                  />
+              {values.Locationpicked === "Online Events" && (
+                <div className={classes.header}>
+                  <p>
+                    Online events have unique event pages where you can add
+                    links to livestreams and more
+                  </p>
                 </div>
-                <ErrorMessage name="venueName" component="span" />
-              </div>
+              )}
+              {values.Locationpicked === "Venue" && (
+                <>
+                  <div className={classes.boxContainer}>
+                    <div className={classes.fieldContainer}>
+                      <label className={classes.label}>
+                        Venue name <p style={{ color: "red" }}> *</p>
+                      </label>
+                      <Field
+                        className={classes.field}
+                        id="venueName"
+                        name="venueName"
+                        autoComplete="off"
+                        disabled={disabled}
+                        data-testid="venueNameFieldInput"
+                        placeholder="eg: Madison Square Garden"
+                      />
+                    </div>
+                    <ErrorMessage name="venueName" component="span" />
+                  </div>
 
-              <div className={classes.date}>
-                <div className={classes.boxContainer} style={{ width: "45%" }}>
-                  <div className={classes.fieldContainer}>
-                    <label className={classes.label}>
-                      Address 1 <p style={{ color: "red" }}> *</p>
-                    </label>
-                    <Field
-                      className={classes.field}
-                      id="address1"
-                      name="address1"
-                      autoComplete="off"
-                      disabled={disabled}
-                      data-testid="address1FieldInput"
-                      placeholder="eg: 155 5th street"
-                    />
-                  </div>
-                  <ErrorMessage name="address1" component="span" />
-                </div>
+                  <div className={classes.date}>
+                    <div
+                      className={classes.boxContainer}
+                      style={{ width: "45%" }}
+                    >
+                      <div className={classes.fieldContainer}>
+                        <label className={classes.label}>
+                          Address 1 <p style={{ color: "red" }}> *</p>
+                        </label>
+                        <Field
+                          className={classes.field}
+                          id="address1"
+                          name="address1"
+                          autoComplete="off"
+                          disabled={disabled}
+                          data-testid="address1FieldInput"
+                          placeholder="eg: 155 5th street"
+                        />
+                      </div>
+                      <ErrorMessage name="address1" component="span" />
+                    </div>
 
-                <div className={classes.boxContainer} style={{ width: "45%" }}>
-                  <div className={classes.fieldContainer}>
-                    <label className={classes.label}>Address 2</label>
-                    <Field
-                      className={classes.field}
-                      id="address2"
-                      name="address2"
-                      autoComplete="off"
-                      disabled={disabled}
-                      data-testid="address2FieldInput"
-                      placeholder="eg: Apt, Suite, Bldg (optional)"
-                    />
-                  </div>
-                  <ErrorMessage name="address2" component="span" />
-                </div>
+                    <div
+                      className={classes.boxContainer}
+                      style={{ width: "45%" }}
+                    >
+                      <div className={classes.fieldContainer}>
+                        <label className={classes.label}>Address 2</label>
+                        <Field
+                          className={classes.field}
+                          id="address2"
+                          name="address2"
+                          autoComplete="off"
+                          disabled={disabled}
+                          data-testid="address2FieldInput"
+                          placeholder="eg: Apt, Suite, Bldg (optional)"
+                        />
+                      </div>
+                      <ErrorMessage name="address2" component="span" />
+                    </div>
 
-                <div className={classes.boxContainer} style={{ width: "45%" }}>
-                  <div className={classes.fieldContainer}>
-                    <label className={classes.label}>
-                      City <p style={{ color: "red" }}> *</p>
-                    </label>
-                    <Field
-                      className={classes.field}
-                      id="city"
-                      name="city"
-                      autoComplete="off"
-                      disabled={disabled}
-                      data-testid="cityFieldInput"
-                      placeholder="eg: New York"
-                    />
-                  </div>
-                  <ErrorMessage name="city" component="span" />
-                </div>
+                    <div
+                      className={classes.boxContainer}
+                      style={{ width: "45%" }}
+                    >
+                      <div className={classes.fieldContainer}>
+                        <label className={classes.label}>
+                          City <p style={{ color: "red" }}> *</p>
+                        </label>
+                        <Field
+                          className={classes.field}
+                          id="city"
+                          name="city"
+                          autoComplete="off"
+                          disabled={disabled}
+                          data-testid="cityFieldInput"
+                          placeholder="eg: New York"
+                        />
+                      </div>
+                      <ErrorMessage name="city" component="span" />
+                    </div>
 
-                <div
-                  className={classes.boxContainer}
-                  style={{ width: "17.5%" }}
-                >
-                  <div className={classes.fieldContainer}>
-                    <label className={classes.label}>State/Provision</label>
-                    <Field
-                      className={classes.field}
-                      id="state"
-                      name="state"
-                      autoComplete="off"
-                      disabled={disabled}
-                      data-testid="stateFieldInput"
-                      placeholder="eg: California"
-                    />
-                  </div>
-                  <ErrorMessage name="state" component="span" />
-                </div>
-                <div
-                  className={classes.boxContainer}
-                  style={{ width: "17.5%" }}
-                >
-                  <div className={classes.fieldContainer}>
-                    <label className={classes.label}>
-                      Postal code <p style={{ color: "red" }}> *</p>
-                    </label>
-                    <Field
-                      className={classes.field}
-                      id="postalCode"
-                      name="postalCode"
-                      autoComplete="off"
-                      disabled={disabled}
-                      data-testid="postalCodeFieldInput"
-                      placeholder="eg: 9431"
-                    />
-                  </div>
-                  <ErrorMessage name="postalCode" component="span" />
-                </div>
+                    <div
+                      className={classes.boxContainer}
+                      style={{ width: "17.5%" }}
+                    >
+                      <div className={classes.fieldContainer}>
+                        <label className={classes.label}>State/Provision</label>
+                        <Field
+                          className={classes.field}
+                          id="state"
+                          name="state"
+                          autoComplete="off"
+                          disabled={disabled}
+                          data-testid="stateFieldInput"
+                          placeholder="eg: California"
+                        />
+                      </div>
+                      <ErrorMessage name="state" component="span" />
+                    </div>
+                    <div
+                      className={classes.boxContainer}
+                      style={{ width: "17.5%" }}
+                    >
+                      <div className={classes.fieldContainer}>
+                        <label className={classes.label}>
+                          Postal code <p style={{ color: "red" }}> *</p>
+                        </label>
+                        <Field
+                          className={classes.field}
+                          id="postalCode"
+                          name="postalCode"
+                          autoComplete="off"
+                          disabled={disabled}
+                          data-testid="postalCodeFieldInput"
+                          placeholder="eg: 9431"
+                        />
+                      </div>
+                      <ErrorMessage name="postalCode" component="span" />
+                    </div>
 
-                <div className={classes.boxContainer} style={{ width: "45%" }}>
-                  <div className={classes.fieldContainer}>
-                    <label className={classes.label}>
-                      Country <p style={{ color: "red" }}> *</p>
-                    </label>
-                    <Field
-                      className={classes.field}
-                      id="country"
-                      name="country"
-                      autoComplete="off"
-                      disabled={disabled}
-                      data-testid="countryFieldInput"
-                      placeholder="eg: New York"
-                    />
+                    <div
+                      className={classes.boxContainer}
+                      style={{ width: "45%" }}
+                    >
+                      <div className={classes.fieldContainer}>
+                        <label className={classes.label}>
+                          Country <p style={{ color: "red" }}> *</p>
+                        </label>
+                        <Field
+                          className={classes.field}
+                          id="country"
+                          name="country"
+                          autoComplete="off"
+                          disabled={disabled}
+                          data-testid="countryFieldInput"
+                          placeholder="eg: New York"
+                        />
+                      </div>
+                      <ErrorMessage name="country" component="span" />
+                    </div>
                   </div>
-                  <ErrorMessage name="country" component="span" />
-                </div>
-              </div>
-              </>}
+                </>
+              )}
 
               {/* Date & Time */}
-              <div className={classes.horizontal} >
+              <div className={classes.horizontal}>
                 <hr />
               </div>
               <div className={classes.headerContainer}>
@@ -405,85 +471,108 @@ const CreatorBasicInfo = (props) => {
                 </label>
               </div>
               <div className={classes.header}>
-                {values.Datepicked === "Single Event" ? 
-                <p>Single event happens once and can last multiple days</p>
-                : <p>You'll be able to set a schedule for your recurring event in the next step. Event details and ticket types will apply to all instances.</p>}
+                {values.Datepicked === "Single Event" ? (
+                  <p>Single event happens once and can last multiple days</p>
+                ) : (
+                  <p>
+                    You'll be able to set a schedule for your recurring event in
+                    the next step. Event details and ticket types will apply to
+                    all instances.
+                  </p>
+                )}
               </div>
-              {values.Datepicked === "Single Event" &&
-              <div className={classes.date}>
-                <div className={classes.boxContainer} style={{ width: "45%" }}>
-                  <div className={classes.fieldContainer}>
-                    <label className={classes.label}>
-                      Start Date <p style={{ color: "red" }}> *</p>
-                    </label>
-                    <Field
-                      className={classes.field}
-                      name="startDate"
-                      type="date"
-                      disabled={disabled}
-                      data-testid="startDateFieldInput"
-                    />
+              {values.Datepicked === "Single Event" && (
+                <div className={classes.date}>
+                  <div
+                    className={classes.boxContainer}
+                    style={{ width: "45%" }}
+                  >
+                    <div className={classes.fieldContainer}>
+                      <label className={classes.label}>
+                        Start Date <p style={{ color: "red" }}> *</p>
+                      </label>
+                      <Field
+                        className={classes.field}
+                        name="startDate"
+                        type="date"
+                        disabled={disabled}
+                        data-testid="startDateFieldInput"
+                      />
+                    </div>
+                    <ErrorMessage name="startDate" component="span" />
                   </div>
-                  <ErrorMessage name="startDate" component="span" />
-                </div>
 
-                <div className={classes.boxContainer} style={{ width: "45%" }}>
-                  <div className={classes.fieldContainer}>
-                    <label className={classes.label}>Start time</label>
-                    <Field className={classes.field} 
-                      name="sTime" 
-                      type="time"
-                      disabled={disabled}
-                      data-testid="sTimeFieldInput" 
-                    />
+                  <div
+                    className={classes.boxContainer}
+                    style={{ width: "45%" }}
+                  >
+                    <div className={classes.fieldContainer}>
+                      <label className={classes.label}>Start time</label>
+                      <Field
+                        className={classes.field}
+                        name="sTime"
+                        type="time"
+                        disabled={disabled}
+                        data-testid="sTimeFieldInput"
+                      />
+                    </div>
+                    <ErrorMessage name="sTime" component="span" />
                   </div>
-                  <ErrorMessage name="sTime" component="span" />
-                </div>
 
-                <div className={classes.boxContainer} style={{ width: "45%" }}>
-                  <div className={classes.fieldContainer}>
-                    <label className={classes.label}>
-                      End Date <p style={{ color: "red" }}> *</p>
-                    </label>
-                    <Field
-                      className={classes.field}
-                      name="endDate"
-                      type="date"
-                      disabled={disabled}
-                      data-testid="endDateFieldInput"
-                    />
+                  <div
+                    className={classes.boxContainer}
+                    style={{ width: "45%" }}
+                  >
+                    <div className={classes.fieldContainer}>
+                      <label className={classes.label}>
+                        End Date <p style={{ color: "red" }}> *</p>
+                      </label>
+                      <Field
+                        className={classes.field}
+                        name="endDate"
+                        type="date"
+                        disabled={disabled}
+                        data-testid="endDateFieldInput"
+                      />
+                    </div>
+                    <ErrorMessage name="endDate" component="span" />
                   </div>
-                  <ErrorMessage name="endDate" component="span" />
-                </div>
 
-                <div className={classes.boxContainer} style={{ width: "45%" }}>
-                  <div className={classes.fieldContainer}>
-                    <label className={classes.label}>End time</label>
-                    <Field className={classes.field} 
-                      name="eTime" 
-                      type="time"
-                      disabled={disabled}
-                      data-testid="eTimeFieldInput" 
-                    />
+                  <div
+                    className={classes.boxContainer}
+                    style={{ width: "45%" }}
+                  >
+                    <div className={classes.fieldContainer}>
+                      <label className={classes.label}>End time</label>
+                      <Field
+                        className={classes.field}
+                        name="eTime"
+                        type="time"
+                        disabled={disabled}
+                        data-testid="eTimeFieldInput"
+                      />
+                    </div>
+                    <ErrorMessage name="eTime" component="span" />
                   </div>
-                  <ErrorMessage name="eTime" component="span" />
                 </div>
-              </div>}
+              )}
 
               <div className={classes.checkboxContainer}>
-                {values.Datepicked === "Single Event" && 
-                <div className={classes.checkbox}>
-                  <Field
-                    type="checkbox"
-                    name="SDCheckbox"
-                    data-testid="TOSCheckbox"
-                    disabled={disabled}
-                  />
-                  <label>
-                    <h5>Display start time.</h5>
-                    The start time of your event will be displayed to attendees.
-                  </label>
-                </div>}
+                {values.Datepicked === "Single Event" && (
+                  <div className={classes.checkbox}>
+                    <Field
+                      type="checkbox"
+                      name="SDCheckbox"
+                      data-testid="TOSCheckbox"
+                      disabled={disabled}
+                    />
+                    <label>
+                      <h5>Display start time.</h5>
+                      The start time of your event will be displayed to
+                      attendees.
+                    </label>
+                  </div>
+                )}
                 <div className={classes.checkbox}>
                   <Field
                     type="checkbox"
@@ -497,20 +586,21 @@ const CreatorBasicInfo = (props) => {
                   </label>
                 </div>
               </div>
-              
-              <div className={classes.horizontal} >
+
+              <div className={classes.horizontal}>
                 <hr />
               </div>
-              {!disabled&&
-              <div className={classes.btn} style={{ margin: "2rem auto" }}>
-                <button
-                  type="submit"
-                  className={classes.button}
-                  data-testid="CreateBtn"
-                >
-                  Save & Continue
-                </button>
-              </div>}
+              {!disabled && (
+                <div className={classes.btn} style={{ margin: "2rem auto" }}>
+                  <button
+                    type="submit"
+                    className={classes.button}
+                    data-testid="CreateBtn"
+                  >
+                    Save & Continue
+                  </button>
+                </div>
+              )}
             </Form>
           )}
         </Formik>

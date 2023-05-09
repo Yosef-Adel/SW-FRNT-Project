@@ -1,3 +1,7 @@
+.whole{
+    display: flex;
+    width: 100%;
+}
 
 .container{
     background-color: #fff;
@@ -5,10 +9,6 @@
     margin-top:5rem;
     margin:  9rem;
     width: 100%;
-
-   
-    
-   
 }
 .namep{
     padding-left:8px;

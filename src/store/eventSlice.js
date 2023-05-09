@@ -63,6 +63,11 @@ const eventSlice = createSlice({
             state.eventDay= action.payload.eventDay
             state.dayName= action.payload.dayName
             state.year= action.payload.year
+        },
+        updateDetails: (state, action)=>{
+            state.image= action.payload.image
+            state.description= action.payload.description
+            state.summary= action.payload.summary
         }
     }   
 })
