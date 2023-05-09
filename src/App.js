@@ -11,6 +11,7 @@ import Footer from "./layouts/footer/Footer";
 import CreatorEvents from "./pages/creator events/CreatorEvents";
 import CreatorEventDetails from "./pages/CreatorEventDetails/CreatorEventDetails";
 import { useEffect } from "react";
+import AtendeeSummary from "./pages/atendee summary/AtendeeSummary";
 
 function App() {
   const user = useSelector((state) => state.user);
@@ -51,16 +52,16 @@ function App() {
 
   };
 
-  useEffect(() => {
-    Notification.requestPermission();
-   const interval = setInterval(() => 
-    sendPushNotification("New Event!!",
-                         "Event Created",
-                         "Envie just launched a musical event!! Book your tickets quickly!"
-                        ),
-    10000);
-   return () => clearInterval(interval);
-  }, []);
+  // useEffect(() => {
+  //   Notification.requestPermission();
+  //  const interval = setInterval(() => 
+  //   sendPushNotification("New Event!!",
+  //                        "Event Created",
+  //                        "Envie just launched a musical event!! Book your tickets quickly!"
+  //                       ),
+  //   10000);
+  //  return () => clearInterval(interval);
+  // }, []);
 
 
   return ( 
@@ -74,6 +75,7 @@ function App() {
         <Route path="/events" element={<CreatorEvents />} />
         <Route path="/events/:id/*" element={<CreatorEventDetails />} />
         <Route path="/forgetPassword/:id" element={<ForgetPasswordPage/>}/>
+        <Route path="/atendeeSummary/:id" element={<AtendeeSummary/>}/>
       </Routes>
 
       {!user.isCreator && <Footer/>}
