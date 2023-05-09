@@ -178,9 +178,12 @@ const AddPromocodeForm = ({ edit }) => {
     if (csv) {
       // convert them to form data
       // --form 'file=@"/E:/projects/eventbrite/SW-BACKEND-Project/test.csv"' \
-      formData.append("file", csvfile);
-      console.log(csvfile);
-      uploadData(formData);
+      let input2 = document.getElementById("input");
+      console.log(input2.files[0]);
+      if (input2.files[0]) {
+        formData.append("file", input2.files[0]);
+        uploadData(formData);
+      }
     } else {
       console.log(datasent);
       sendData(datasent);
@@ -188,20 +191,6 @@ const AddPromocodeForm = ({ edit }) => {
 
     // formikRef.current.resetForm();
   };
-
-  let input = document.getElementById("input");
-
-  useEffect(() => {
-    input = document.getElementById("input");
-
-    if (input) {
-      input.onchange = (e) => {
-        if (input.files[0]) {
-          setCsvfile(input.files[0]);
-        }
-      };
-    }
-  }, [input]);
 
   const toggleDrawer = (anchor, open, csv) => (event) => {
     if (
