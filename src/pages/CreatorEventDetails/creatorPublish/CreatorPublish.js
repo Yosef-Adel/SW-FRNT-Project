@@ -112,27 +112,28 @@ const CreatorPublish = () => {
               initialValues={initialValues}
               onSubmit={handleSubmit}
               enableReinitialize
+
             >
               {({ values }) => (
-                <Form>
+                <Form data-testid="PublishForm">
                   <div className={classes.boxContainer}>
                     <div className={classes.fieldContainer} role="group">
-                      <p className={classes.fieldTitle}>
+                      <p className={classes.fieldTitle} data-testid="PublishInputHead1">
                         Who can see your event?
                       </p>
                       <label>
-                        <Field type="radio" name="isPrivate" value="false" />
-                        <span>
+                        <Field type="radio" name="isPrivate" value="false" data-testid="PublishRadioPublic"/>
+                        <span data-testid="PublishRadioPublicContent">
                           Public
-                          <p className={classes.fieldDesc}>
+                          <p className={classes.fieldDesc} >
                             Shared on Eventbrite and search engines
                           </p>
                         </span>
                       </label>
 
                       <label>
-                        <Field type="radio" name="isPrivate" value="true" />
-                        <span>
+                        <Field type="radio" name="isPrivate" value="true" data-testid="PublishRadioPrivate"/>
+                        <span data-testid="PublishRadioPrivateContent">
                           Private
                           <p className={classes.fieldDesc}>
                             Only available to a selected audience
@@ -144,11 +145,11 @@ const CreatorPublish = () => {
                     {values.isPrivate === "true" && (
                       <>
                         <div className={classes.fieldContainer}>
-                          <p className={classes.fieldTitle}>
+                          <p className={classes.fieldTitle} data-testid="PublishInputHead2">
                             Choose your audience
                           </p>
                           <label className={classes.dropDown} role="group">
-                            <span className={classes.span}>Audience</span>
+                            <span className={classes.span} data-testid="PublishDropDownContent">Audience</span>
                             <Field
                               className={classes.field}
                               name="link"
@@ -180,7 +181,7 @@ const CreatorPublish = () => {
                         <div className={classes.fieldContainer} role="group">
                           {values.isPrivate === "true" ? (
                             <>
-                              <p className={classes.fieldTitle}>
+                              <p className={classes.fieldTitle} data-testid="PublishInputHead3">
                                 When should we publish your event?
                               </p>
                               <label>
@@ -210,7 +211,7 @@ const CreatorPublish = () => {
                             </>
                           ) : (
                             <>
-                              <p className={classes.fieldTitle}>
+                              <p className={classes.fieldTitle} data-testid="PublishInputHead4">
                                 Will this event ever be public?
                               </p>
                               <label>

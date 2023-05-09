@@ -44,7 +44,7 @@
 }
 
 .btnDisabled{
-    background-color: var(--secondary-background);
+    background-color: var(--primary-background);
     color: var(--faded-grey);
     cursor: unset;
 }
