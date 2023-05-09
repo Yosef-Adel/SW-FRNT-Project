@@ -12,9 +12,8 @@ import { Formik, Form, Field, ErrorMessage } from "formik";
 import SwipeableDrawer from "@mui/material/SwipeableDrawer";
 import * as Yup from "yup";
 import Box from "@mui/material/Box";
-import data from "../../../../../assets/data/dummyData";
-import { element } from "prop-types";
-const TicketsView = ({ticketsnew,eventID}) => {
+
+const TicketsView = ({ticketsnew,eventID,dummydata}) => {
   const now = moment();
 
   const [loading, setloading] = useState(false);
@@ -61,7 +60,7 @@ const TicketsView = ({ticketsnew,eventID}) => {
 
   useEffect(() => {
     getticketsforevent();
-  }, []);
+  }, [dummydata]);
 
   async function getevent() {
     try {
@@ -143,7 +142,16 @@ const TicketsView = ({ticketsnew,eventID}) => {
                             Ended {moment(Element.salesEnd).format("ll")}
                           </div>
                         </div>
-                      ) : (Element.sold >= Element.capacity) ? (
+                      ) : (now.diff(moment(Element.salesStart))) < 0 ?(
+                        <div className={classes.enddatecontainer}>
+                          <div className={classes.iconewaiting}></div>
+
+                          <div className={classes.enddate}>
+                           Sales hasn't started yet 
+                          </div>
+                        </div>
+
+                      ):(Element.sold >= Element.capacity) ? (
                         <div className={classes.enddatecontainer}>
                           <div className={classes.iconended}></div>
 
