@@ -11,6 +11,7 @@ import Footer from "./layouts/footer/Footer";
 import CreatorEvents from "./pages/creator events/CreatorEvents";
 import CreatorEventDetails from "./pages/CreatorEventDetails/CreatorEventDetails";
 import { useEffect } from "react";
+import AtendeeSummary from "./pages/atendee summary/AtendeeSummary";
 
 function App() {
   const user = useSelector((state) => state.user);
@@ -74,6 +75,7 @@ function App() {
         <Route path="/events" element={<CreatorEvents />} />
         <Route path="/events/:id/*" element={<CreatorEventDetails />} />
         <Route path="/forgetPassword/:id" element={<ForgetPasswordPage/>}/>
+        <Route path="/atendeeSummary/:id" element={<AtendeeSummary/>}/>
       </Routes>
 
       {!user.isCreator && <Footer/>}
