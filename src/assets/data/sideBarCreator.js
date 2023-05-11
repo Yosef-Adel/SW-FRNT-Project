@@ -39,7 +39,7 @@ const sideBarCreator = {
           key: "4",
           title: "Reports",
           icon: <BiBarChartAlt2 className={classes.icon}/>,
-          route: "/create/reports",
+          route: "/attendeeSummary",
         },
         {
           key: "5",  

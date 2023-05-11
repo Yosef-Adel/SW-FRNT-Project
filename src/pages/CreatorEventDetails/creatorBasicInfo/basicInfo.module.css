@@ -258,6 +258,21 @@
   justify-content: space-between;
 }
 
+.icon{
+  width: 2.5rem;
+  height: 2.5rem;
+  padding-top: 1rem;
+  padding-right: 1.5rem;
+}
+.modalicon{
+  width:4rem;
+  height:4rem;
+  margin: auto;
+  align-items: center;
+  color:var( --content-text)
+}
+
+
 @media screen and (max-width: 960px) {
   .main {
     align-items: center;

@@ -135,7 +135,6 @@ const handleSubmit = (data) => {
   //onSubmit(data);
 };
 const accepthandle=() =>{
-  console.log(datainfo);
   setstateoftheconditionform(false);
   sendData(datainfo);
 

@@ -1,4 +1,4 @@
-.main
+.main,.mainHide
 {
     display: flex;
     flex-direction: column;

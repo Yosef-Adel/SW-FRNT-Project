@@ -44,7 +44,7 @@ const DashboardSidebar = (props) => {
     <div className={classes.burger} onClick={()=>setOpenSideBar(!openSideBar)}>
       <CiMenuBurger className={classes.icon}/>
     </div>
-    <div className={openSideBar?classes.mainHide:classes.main}>
+    <div className={!openSideBar?classes.mainHide:classes.main}>
       <div className={classes.eventDescription}>
         <div className={classes.backbutton}>
           <div>

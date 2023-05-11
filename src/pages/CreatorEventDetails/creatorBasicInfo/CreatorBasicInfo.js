@@ -12,9 +12,11 @@ import { useNavigate } from "react-router-dom";
 import categoryList from "../../../assets/data/dropDownCategory.js";
 import moment from "moment/moment";
 import { useSelector } from "react-redux";
+import GenericModal from "../../../generic components/generic modal/GenericModal";
+import { TiTick } from "react-icons/ti";
 
 /**
- * Component that returns Creator's BAsic Info page
+ * Component that returns Creator's Basic Info page
  *
  * @component
  * @example
@@ -34,18 +36,14 @@ const CreatorBasicInfo = (props) => {
   const [errorMsg, setErrorMsg] = useState("");
   const [errorLink, setErrorLink] = useState("");
   const [errorLinkMsg, setErrorLinkMsg] = useState("");
-  const [stateoftheconditionform, setstateoftheconditionform] = useState(false);
-  const [agreeformstate, setagreeformstate] = useState(false);
-  const [datainfo, setdatainfo] = useState();
   const [onlineEvent, setOnlineEvent] = useState("Venue");
-
+  const [success, setSuccess] = useState(false);
 
   useEffect(() => {
-    if( event.isOnline){
-      setOnlineEvent("Online Events")
-    }
-    else{
-      setOnlineEvent("Venue")
+    if (event.isOnline) {
+      setOnlineEvent("Online Events");
+    } else {
+      setOnlineEvent("Venue");
     }
   }, []);
   var initialValues;
@@ -53,8 +51,8 @@ const CreatorBasicInfo = (props) => {
     initialValues = {
       name: event.eventTitle,
       description: event.description,
-      startDate: event.startDate,
-      endDate: event.endDate,
+      startDate: moment(event.startDate).format("YYYY-MM-DD"),
+      endDate: moment(event.endDate).format("YYYY-MM-DD"),
       summary: event.summary,
       tickets: event.tickets,
       hostedBy: event.hostedBy,
@@ -73,8 +71,8 @@ const CreatorBasicInfo = (props) => {
       Datepicked: "Single Event",
       SDCheckbox: false,
       EDCheckbox: false,
-      sTime: "",
-      eTime: "",
+      sTime: moment(event.startDate).format("hh:mm"),
+      eTime: moment(event.endDate).format("hh:mm"),
       address2: event.address2,
       state: "",
     };
@@ -111,30 +109,42 @@ const CreatorBasicInfo = (props) => {
 
   const validationSchema = Yup.object().shape({
     name: Yup.string().max(75).required("Title is required."),
+    startDate: Yup.date().required("Start Date is required."),
+    endDate: Yup.date().required("End Date is required."),
+    sTime: Yup.string().required("Start Time is required."),
+    eTime: Yup.string().required("End Time is required."),
+    category: Yup.string().required("Category is required."),
   });
 
   /**
    * Submits the form signup data to the server
    * @namespace onSubmit
-   * @param   {string} email      User valid email
-   * @param   {string} confirmemail      User input matching email
-   * @param   {string} firstName      User valid first name
-   * @param   {string} lastName      User valid last name
-   * @param   {string} password   User password
+   * @param  {string} name      Event title
+   * @param  {string} description description for the event creation,
+   * @param {string} startDate date in format("YYYY-MM-DD"),
+   * @param {string} endDate date in format("YYYY-MM-DD"),
+   * @param {string} summary  summary for the event creation,
+   * @param {string} tickets  tickets for the event creation,
+   * @param {string} hostedBy  hostedBy for the event creation,
+   * @param {string} isPrivate  isPrivate for the event creation,
+   * @param {string} venueName  venueName for the event creation,
+   * @param {string} city  city for the event creation,
+   * @param {string} address1  address1 for the event creation,
+   * @param {string} country  country for the event creation,
+   * @param {string} postalCode  postalCode for the event creation,
+   * @param {string} category  category for the event creation,
+   * @param {string} image  image for the event creation,
    */
 
   async function sendData(data) {
-    console.log(data);
+    setSuccess(false);
     try {
       const request = await axios.post(routes.createEvent, data);
-      console.log(request);
+      setSuccess(true);
     } catch (err) {}
   }
 
   const handleSubmit = (data) => {
-    console.log(data);
-    console.log(user);
-
     let start = moment(data.startDate).format("YYYY-MM-DD");
     let end = moment(data.endDate).format("YYYY-MM-DD");
     console.log(start + "T" + data.sTime);
@@ -145,22 +155,23 @@ const CreatorBasicInfo = (props) => {
     formData.append("category", data.category);
     // formData.append("summary", data.summary);
     // formData.append("description", data.description);
-    
-    if(data.Locationpicked==="Online Events"){
+
+    if (data.Locationpicked === "Online Events") {
       formData.append("isOnline", true);
-    }
-    else if (data.Locationpicked==="Venue"){
+    } else if (data.Locationpicked === "Venue") {
       formData.append("venueName", data.venueName);
       formData.append("city", data.city);
       formData.append("address1", data.address1);
       formData.append("country", data.country);
       formData.append("postalCode", data.postalCode);
     }
-      
-
 
     sendData(formData);
   };
+
+  const accepthandle=() =>{
+    navigate("/events");
+  }
 
   return (
     <div className={classes.container}>
@@ -229,7 +240,7 @@ const CreatorBasicInfo = (props) => {
                     disabled={disabled}
                     data-testid="categoryFieldInput"
                   >
-                    <option disabled selected value>
+                    <option disabled selected value={""}>
                       Select a category
                     </option>
                     {categoryList.map((item) => (
@@ -261,6 +272,7 @@ const CreatorBasicInfo = (props) => {
                     name="Locationpicked"
                     value="Venue"
                     data-testid="venueRadioInput"
+                    disabled={disabled}
                   />
                   <p>Venue</p>
                 </label>
@@ -270,6 +282,7 @@ const CreatorBasicInfo = (props) => {
                     name="Locationpicked"
                     value="Online Events"
                     data-testid="onlineEventsRadioInput"
+                    disabled={disabled}
                   />
                   <p>Online Events</p>
                 </label>
@@ -279,6 +292,7 @@ const CreatorBasicInfo = (props) => {
                     name="Locationpicked"
                     value="To be announced"
                     data-testid="locationRadioInput"
+                    disabled={disabled}
                   />
                   <p>To be announced</p>
                 </label>
@@ -427,7 +441,7 @@ const CreatorBasicInfo = (props) => {
                           autoComplete="off"
                           disabled={disabled}
                           data-testid="countryFieldInput"
-                          placeholder="eg: New York"
+                          placeholder="eg: United States"
                         />
                       </div>
                       <ErrorMessage name="country" component="span" />
@@ -456,6 +470,7 @@ const CreatorBasicInfo = (props) => {
                     type="radio"
                     name="Datepicked"
                     value="Single Event"
+                    disabled={disabled}
                     data-testid="singleEventRadioInput"
                   />
                   <p>Single Event</p>
@@ -465,6 +480,7 @@ const CreatorBasicInfo = (props) => {
                     type="radio"
                     name="Datepicked"
                     value="Reccurring Event"
+                    disabled={disabled}
                     data-testid="reccuringEventRadioInput"
                   />
                   <p>Reccurring Event</p>
@@ -605,6 +621,15 @@ const CreatorBasicInfo = (props) => {
           )}
         </Formik>
       </div>
+      {success && (
+        <GenericModal
+          header="Event Created"
+          details={"You have succesfully created an Event."}
+          icon={<TiTick className={classes.modalicon} />}
+          confirmbtn='Explore Events'
+          accepthandle={accepthandle}
+        />
+      )}
     </div>
   );
 };

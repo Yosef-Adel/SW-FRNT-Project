@@ -29,8 +29,8 @@ const AddTicketForm = ({ ticket, setdummydata }) => {
     availablequantity: "",
     price: "",
     ticketoption: "",
-    salesstart: "2022-04-17",
-    salesend: "2022-04-17",
+    salesstart: "2023-05-25",
+    salesend: "2023-05-27",
     starttime: "12:00 AM",
     endtime: "12:00 AM",
     minimumquantity: "1",
@@ -347,7 +347,7 @@ const AddTicketForm = ({ ticket, setdummydata }) => {
                                 <DemoContainer components={[]}>
                                   <DemoItem>
                                     <DatePicker
-                                      defaultValue={dayjs("2022-04-17")}
+                                      defaultValue={dayjs("2023-05-25")}
                                       onChange={(date) => {
                                         setFieldValue(
                                           "salesstart",
@@ -423,7 +423,7 @@ const AddTicketForm = ({ ticket, setdummydata }) => {
                             <DemoContainer components={[]}>
                               <DemoItem className={classes.DemoContainer}>
                                 <DatePicker
-                                  defaultValue={dayjs("2022-04-17")}
+                                  defaultValue={dayjs("2023-05-27")}
                                   onChange={(date) => {
                                     setFieldValue(
                                       "salesend",

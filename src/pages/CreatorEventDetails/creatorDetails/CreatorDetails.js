@@ -11,6 +11,8 @@ import { useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import { useDispatch } from "react-redux";
 import { eventActions } from "../../../store/eventSlice";
+import GenericModal from "../../../generic components/generic modal/GenericModal";
+import {TiTick} from "react-icons/ti";
 
 /**
  * Component that returns Creator's Event details page
@@ -25,6 +27,8 @@ const CreatorDetails = () => {
   const dispatch = useDispatch();
   const event = useSelector((state) => state.event);
   const [uploadImg, setUploadImg] = useState()
+  const [imgPresence, setImagePresence] = useState(false)
+  const [success, setSuccess] = useState(false)
 
   const initialValues = {
     description: event.description,
@@ -33,24 +37,22 @@ const CreatorDetails = () => {
   };
 
   const validationSchema = Yup.object().shape({
-    
+    summary: Yup.string().max(140),
   });
 
   /**
-   * Submits the form signup data to the server
+   * Submits the form data to the server
    * @namespace onSubmit
-   * @param   {string} email      User valid email
-   * @param   {string} confirmemail      User input matching email
-   * @param   {string} firstName      User valid first name
-   * @param   {string} lastName      User valid last name
-   * @param   {string} password   User password
+   * @param   {file} image      Event image
+   * @param   {string} summary    Event summary
+   * @param   {string} description      Event description
    */
 
   async function sendData(data) {
     // console.log(data);
     try {
       const request = await axios.put(routes.updateEvent + event.eventId, data);
-      console.log(request.data);
+      setSuccess(true)
       dispatch(
         eventActions.updateDetails({
           image: request.data.image,
@@ -66,7 +68,7 @@ const CreatorDetails = () => {
 
   useEffect(() => {
     input = document.getElementById("input");
-
+    console.log(uploadImg)
     if(input){
       input.onchange= (e)=>{
         if (input.files[0])
@@ -115,15 +117,24 @@ const CreatorDetails = () => {
                   <h1>Event media</h1>
                   <p>
                     Images Add photos to show what your event will be about. You
-                    can upload up to 10 images.
+                    can't upload up to 10 images.
                   </p>
                 </div>
               </div>
+              {event.image||imgPresence?
               <div className={classes.imageContainer}>
-                <img id="img" src={event.image}/>
-              </div>
+                  <img id="img" src={event.image}/>:
+              </div>:
+              <div className={classes.defaultImageContainer}>
+                <CiImageOn className={classes.logoImgUpload} /> 
+              </div>}
               <div className={classes.uploadBtn}>
-                <input id="input" type="file" className={classes.customfileinput}/>
+                <input 
+                  id="input" 
+                  type="file" 
+                  data-testid="fileFieldInput"
+                  className={classes.customfileinput}
+                  onClick={()=>setImagePresence(true)}/>
               </div>
 
               {/* Event summary */}
@@ -150,6 +161,7 @@ const CreatorDetails = () => {
                     className={classes.field}
                     id="summary"
                     name="summary"
+                    data-testid="summaryFieldInput"
                   />
                 </div>
                 <ErrorMessage name="summary" component="span" />
@@ -176,6 +188,7 @@ const CreatorDetails = () => {
                     as="textarea"
                     className={classes.field}
                     id="description"
+                    data-testid="descriptionFieldInput"
                     name="description"
                   />
                 </div>
@@ -189,7 +202,7 @@ const CreatorDetails = () => {
                 <button
                   type="submit"
                   className={classes.button}
-                  data-testid="CreateBtn"
+                  data-testid="submitBtn"
                 >
                   Update
                 </button>
@@ -198,6 +211,12 @@ const CreatorDetails = () => {
           )}
         </Formik>
       </div>
+      {success &&
+        <GenericModal 
+            header='Event updated' 
+            details={'Event details was updated successfully'}
+            icon={<TiTick className={classes.modalicon}/>}
+        />}
     </div>
   );
 };

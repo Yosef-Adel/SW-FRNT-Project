@@ -109,7 +109,7 @@ const CreatorPublish = () => {
           <CreatorEventCard
             image={event.image}
             title={event.eventTitle}
-            date={event.startDate}
+            date={moment(event.startDate).format("DD MMM YYYY")+ ' at ' +moment(event.startDate).format("hh:mm")}
             type={!event.isOnline ? event.venueName : "Online Event"}
             tickets={event.tickets.length}
             followers="120"

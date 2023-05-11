@@ -31,6 +31,7 @@ const EventListCard = (props) => {
   const eventMonth= monthDic[1][moment(props.event.startDate).format('MM')];
   const eventDay= moment(props.event.startDate).format('DD');
   const year = moment(props.event.startDate).format('YYYY');
+  const gross = props.event.numberOfTicketsSold * props.event.price;
 
   var days = ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'];
   var d = new Date(moment(props.event.startDate).format('YYYY-MM-DD'));
@@ -95,17 +96,19 @@ const EventListCard = (props) => {
               <p>{props.event.address1}</p>
               <p>{dayName}, {eventMonth} </p>
             </>}
+
+            {props.event.isPrivate && <p>Private Event</p>}
         </div>
       </div>
       <div className={classes.eventStats}>
-        <p className={classes.eventSold}>0 / 0</p>
+        <p className={classes.eventSold}>{props.event.numberOfTicketsSold} / {props.event.numberOfTicketsCapacity}</p>
         <div className={classes.line}></div>
       </div>
       <div className={classes.eventStats}>
-        <p>$0.00</p>
+        <p>${gross}.00</p>
       </div>
       <div className={classes.eventStats}>
-        <p>Draft</p>
+        {props.event.isPublished?<p>Published</p>:<p>Draft</p>}
       </div>
     </div>
   );

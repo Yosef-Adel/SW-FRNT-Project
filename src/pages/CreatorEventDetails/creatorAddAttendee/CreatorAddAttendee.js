@@ -90,7 +90,7 @@ import { useSelector } from "react-redux";
     async function getTicketTypes() {
       let response = "";
       try {
-        response = await axios.get(routes.tickets +"/643c95f238d25b145a747a90/availableTickets");
+        response = await axios.get(routes.tickets + "/" + event.eventId +"/availableTickets");
         setTicketTypes(response.data.tickets);
       } catch (error) {
       }
