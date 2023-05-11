@@ -28,8 +28,7 @@
   cursor: pointer;
 }
 
-.btn .selbutton
-{
+.btn .selbutton {
   min-width: 15%;
   color: var(--primary-text);
   border: 2px solid var(--faded-grey);
@@ -52,7 +51,7 @@
   cursor: pointer;
 }
 
-.selbutton option{
+.selbutton option {
   padding: 3rem;
 }
 
@@ -361,32 +360,53 @@
   color: var(--errorText);
 }
 
-.presuffix
-{
+.presuffix {
   display: flex;
   column-gap: 0.5rem;
 }
 
-.presuffix .field
-{
-  width :70%
+.presuffix .field {
+  width: 70%;
 }
 
-.modalbtns
-{
+.modalbtns {
   display: flex;
   column-gap: 2rem;
   justify-content: end;
 }
 
+.buttoncontainer button {
+  color: #3659e3;
+  outline: none;
+  background-color: white;
+  border: none;
+  font-size: 1.2rem;
+  font-weight: 600;
+  padding: 1.2rem 2.2rem;
+  transition: all 0.4s cubic-bezier(0.4, 0, 0.3, 1);
+  border-radius: 4px;
+}
+.buttoncontainer button:hover {
+  cursor: pointer;
+  background-color: #f5f1f1;
+}
 
+.radiobtntickets {
+  display: flex;
+  justify-content: space-between;
+}
+
+.loading {
+  margin-top: 20rem;
+  display: flex;
+  justify-content: center;
+}
 
 @media screen and (max-width: 480px) {
-  .css-1160xiw-MuiPaper-root-MuiDrawer-paper
-  {
+  .css-1160xiw-MuiPaper-root-MuiDrawer-paper {
     width: 100%;
-    margin:0;
-    height:100%
+    margin: 0;
+    height: 100%;
   }
   .box {
     width: 100%;

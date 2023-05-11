@@ -9,7 +9,7 @@ import moment from "moment";
 import CircularProgress from "@mui/material/CircularProgress";
 import { useSelector } from "react-redux";
 
-const PromoCodesList = () => {
+const PromoCodesList = ({dummydata}) => {
   const event = useSelector((state) => state.event);
   const [promocodes, setPromocodes] = useState(data.promocodes);
   const [loading, setloading] = useState(false);
@@ -33,7 +33,7 @@ const PromoCodesList = () => {
 
   useEffect(() => {
     getPromoCodes();
-  }, []);
+  }, [dummydata]);
 
  
   return (

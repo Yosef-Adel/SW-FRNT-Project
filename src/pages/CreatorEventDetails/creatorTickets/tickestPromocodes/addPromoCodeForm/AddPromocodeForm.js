@@ -21,14 +21,14 @@ import Time from "../../../../../assets/data/TimeOptions";
 import axios from "../../../../../requests/axios";
 import routes from "../../../../../requests/routes";
 import { useSelector } from "react-redux";
+import CircularProgress from "@mui/material/CircularProgress";
 
-const AddPromocodeForm = ({  edit,setmodalopen,ticketsselected }) => {
-  const formikRef = React.useRef(null);
-
+const AddPromocodeForm = ({ setdummydata, dummydata }) => {
+  // const formikRef = React.useRef(null);
+  const [loading, setloading] = useState(false);
   const [state, setState] = React.useState({
     right: false,
   });
-console.log(ticketsselected);
   const event = useSelector((state) => state.event);
   const [csv, setCsv] = useState(false);
   const [amountformopen, setamountformopen] = useState(false);
@@ -99,23 +99,31 @@ console.log(ticketsselected);
 
   async function sendData(data) {
     console.log(data);
+    setloading(true);
     try {
       const request = await axios.post(
         routes.promocode + "/" + event.eventId,
         data
       );
       console.log(request);
+      setdummydata(!dummydata);
+      toggleDrawer("right", false, csv);
+      setloading(false);
     } catch (err) {}
   }
 
   async function uploadData(data) {
     console.log(data);
+    setloading(true);
     try {
       const request = await axios.post(
         routes.promocode + "/" + event.eventId + "/upload",
         data
       );
       console.log(request);
+      setdummydata(!dummydata);
+      toggleDrawer("right", false, csv);
+      setloading(false);
     } catch (err) {}
   }
 
@@ -189,7 +197,7 @@ console.log(ticketsselected);
       sendData(datasent);
     }
 
-    // formikRef.current.resetForm();
+    // Formik.resetForm();
   };
 
   const toggleDrawer = (anchor, open, csv) => (event) => {
@@ -200,9 +208,8 @@ console.log(ticketsselected);
       return;
     }
 
-    setState({ ...state, [anchor]: open });
-    formikRef.current.resetForm();
     setCsv(csv);
+    setState({ ...state, [anchor]: open });
   };
 
   /**
@@ -320,37 +327,42 @@ console.log(ticketsselected);
           <div className={classes.headercontainer}>
             <p className={classes.ticketp}>Add code</p>
           </div>
-          {/* <div > */}
-          <Formik
-            innerRef={formikRef}
-            initialValues={initialValues}
-            validationSchema={getValidationSchema()}
-            onSubmit={handleSubmit}>
-            {({ values }) => (
-              <Form className={classes.form}>
-                <div className={classes.forminfo}>
-                  {!csv ? (
-                    <div className={classes.boxContainer}>
-                      <div className={classes.fieldContainer}>
-                        <label className={classes.label}>Code name</label>
-                        <Field
-                          className={classes.field}
-                          name="name"
-                          autoComplete="off"
-                          data-testid="LoginFormEmailInput"
-                          placeholder="General Admission"
-                        />
-                      </div>
+          {loading ? (
+            <>
+              <div className={classes.loading}>
+                <CircularProgress color="success" size={80} />
+              </div>
+            </>
+          ) : (
+            <Formik
+              initialValues={initialValues}
+              validationSchema={getValidationSchema()}
+              onSubmit={handleSubmit}>
+              {({ values, resetForm }) => (
+                <Form className={classes.form}>
+                  <div className={classes.forminfo}>
+                    {!csv ? (
+                      <div className={classes.boxContainer}>
+                        <div className={classes.fieldContainer}>
+                          <label className={classes.label}>Code name</label>
+                          <Field
+                            className={classes.field}
+                            name="name"
+                            autoComplete="off"
+                            data-testid="LoginFormEmailInput"
+                            placeholder="General Admission"
+                          />
+                        </div>
 
-                      <ErrorMessage name="name" component="span" />
+                        <ErrorMessage name="name" component="span" />
 
-                      <div className={classes.namep}>
-                        Customers can also access this code via custom URL
+                        <div className={classes.namep}>
+                          Customers can also access this code via custom URL
+                        </div>
                       </div>
-                    </div>
-                  ) : (
-                    <div>
-                      {/* <div>
+                    ) : (
+                      <div>
+                        {/* <div>
                         Upload up to 500 codes from a .csv or .txt file.
                         <br />
                         Separate codes with commas, or list them on separate
@@ -359,331 +371,119 @@ console.log(ticketsselected);
                         Spaces, apostrophes, and special characters (except: -_
                         , @ . ) are not allowed.
                       </div> */}
-                      <div className={classes.uploadBtn}>
-                        <input
-                          id="input"
-                          type="file"
-                          className={classes.customfileinput}
-                        />
-                      </div>
-                    </div>
-                  )}
-
-                  <div className={classes.limitcontainer}>
-                    <div className={classes.containerstart}>
-                      <div className={classes.boxContainer}>
-                        <div className={classes.fieldContainer}>
-                          <label className={classes.label}>Ticket limit</label>
-                          <Field
-                            className={classes.field}
-                            name="ticketlimitoption"
-                            autoComplete="off"
-                            component="select"
-                            value={selectedValuelimit}
-                            onChange={(e) =>
-                              handleSelectedlimit(e.target.value)
-                            }>
-                            <option value="Limited to">Limited to</option>
-                            <option value="Unlimited">Unlimited</option>
-                          </Field>
-                        </div>
-                      </div>
-                      {amountformopen ? (
-                        <>
-                          <div className={classes.boxContainer}>
-                            <div className={classes.fieldContainer}>
-                              <label className={classes.label}>Amount</label>
-                              <div className={classes.presuffix}>
-                                <Field
-                                  className={classes.field}
-                                  name="limit"
-                                  autoComplete="off"
-                                />
-                                <p>tickets</p>
-                              </div>
-                            </div>
-                            <ErrorMessage name="limit" component="span" />
-                          </div>
-                        </>
-                      ) : null}
-                    </div>
-                    <div className={classes.namep}>
-                      Total number of tickets that can be purchased with this
-                      code
-                    </div>
-                  </div>
-
-                  <div className={classes.limitcontainer}>
-                    <div className={classes.headercontainer2}>
-                      Discount Amount
-                    </div>
-                    <div className={classes.containerstart2}>
-                      <div className={classes.boxContainer}>
-                        <div className={classes.fieldContainer}>
-                          {/* <div className={classes.container2}> */}
-                          {/* <span className={classes.dollar}>$</span> */}
-                          <Field
-                            className={classes.field}
-                            name="amountOff"
-                            placeholder="0.00"
-                            type="text"
-                            autoComplete="off"
-                            disabled={values.percentOff !== ""}
+                        <div className={classes.uploadBtn}>
+                          <input
+                            id="input"
+                            type="file"
+                            className={classes.customfileinput}
                           />
-                          {/* </div> */}
                         </div>
                       </div>
+                    )}
 
-                      <div className={classes.insidep}>or</div>
-
-                      <div className={classes.boxContainer}>
-                        <div className={classes.fieldContainer}>
-                          {/* <div className={classes.container2}> */}
-                          {/* <span className={classes.dollar}>$</span> */}
-                          <Field
-                            className={classes.field}
-                            name="percentOff"
-                            placeholder="0.00"
-                            type="text"
-                            autoComplete="off"
-                            disabled={values.amountOff !== ""}
-                          />
-                          {/* </div> */}
-                        </div>
-                      </div>
-                    </div>
-
-                    <ErrorMessage name="percentOff" component="span" />
-                  </div>
-
-                  <div className={classes.limitcontainer}>
-                    <div className={classes.headercontainer2}>
-                      Promo code starts
-                    </div>
-                    <FormControl>
-                      <RadioGroup
-                        aria-labelledby="demo-controlled-radio-buttons-group"
-                        name="controlled-radio-buttons-group"
-                        value={selectedValuestart}
-                        onChange={(e) => handleSelectedStart(e.target.value)}>
-                        <FormControlLabel
-                          value="Now"
-                          control={<Radio />}
-                          label="Now"
-                          sx={{
-                            "& .MuiSvgIcon-root": {
-                              fontSize: 20,
-                            },
-                            "& .MuiTypography-root": {
-                              fontSize: 13,
-                              fontWeight: 4,
-                              color: "rgb(57, 54, 79)",
-                            },
-                          }}
-                        />
-                        <FormControlLabel
-                          value="Scheduledtime"
-                          control={<Radio />}
-                          label="Scheduled time"
-                          sx={{
-                            "& .MuiSvgIcon-root": {
-                              fontSize: 20,
-                            },
-                            "& .MuiTypography-root": {
-                              fontSize: 13,
-                              fontWeight: 4,
-                              color: "rgb(57, 54, 79)",
-                            },
-                          }}
-                        />
-                      </RadioGroup>
-                    </FormControl>
-                  </div>
-
-                  {scheduleopen ? (
-                    <div
-                      className={classes.limitcontainer}
-                      style={{ marginTop: "0" }}>
+                    <div className={classes.limitcontainer}>
                       <div className={classes.containerstart}>
                         <div className={classes.boxContainer}>
-                          <LocalizationProvider dateAdapter={AdapterDayjs}>
-                            <DemoContainer components={[]}>
-                              <DemoItem>
-                                <DatePicker
-                                  defaultValue={dayjs(
-                                    moment().format("YYYY-MM-DD")
-                                  )}
-                                  onChange={(e) => handlestartDatechange(e)}
-                                  sx={{
-                                    "& .MuiInputBase-input": {
-                                      height: "2rem",
-                                      fontSize: 13,
-                                      paddingBottom: "1.8rem",
-                                      paddingTop: "1.8rem",
-                                    },
-                                  }}
-                                />
-                              </DemoItem>
-                            </DemoContainer>
-                          </LocalizationProvider>
-                        </div>
-
-                        <div
-                          className={classes.boxContainer}
-                          style={{ paddingTop: "0.9rem" }}>
-                          <div className={classes.fieldContainer}>
-                            <label className={classes.label}>Start time</label>
-                            <Field
-                              className={classes.field}
-                              name="starttime"
-                              component="select">
-                              {Time.options.map((item, index) => {
-                                return (
-                                  <option
-                                    key={"AddPromoCodeStartTime" + index}
-                                    id={"AddPromoCodeStartTime" + index}
-                                    value={item}>
-                                    {item}
-                                  </option>
-                                );
-                              })}
-                            </Field>
-                          </div>
-                        </div>
-                      </div>
-                    </div>
-                  ) : null}
-
-                  <div className={classes.limitcontainer}>
-                    <div className={classes.headercontainer2}>
-                      Promo code ends
-                    </div>
-                    <FormControl>
-                      <RadioGroup
-                        aria-labelledby="demo-controlled-radio-buttons-group"
-                        name="controlled-radio-buttons-group"
-                        value={selectedValueend}
-                        onChange={(e) => handleSelectedend(e.target.value)}>
-                        <FormControlLabel
-                          value="When ticket sales end"
-                          control={<Radio />}
-                          label="When ticket sales end"
-                          sx={{
-                            "& .MuiSvgIcon-root": {
-                              fontSize: 20,
-                            },
-                            "& .MuiTypography-root": {
-                              fontSize: 13,
-                              fontWeight: 4,
-                              color: "rgb(57, 54, 79)",
-                            },
-                          }}
-                        />
-                        <FormControlLabel
-                          value="Scheduledtime"
-                          control={<Radio />}
-                          label="Scheduled time"
-                          sx={{
-                            "& .MuiSvgIcon-root": {
-                              fontSize: 20,
-                            },
-                            "& .MuiTypography-root": {
-                              fontSize: 13,
-                              fontWeight: 4,
-                              color: "rgb(57, 54, 79)",
-                            },
-                          }}
-                        />
-                      </RadioGroup>
-                    </FormControl>
-                  </div>
-
-                  {scheduleopenend ? (
-                    <div
-                      className={classes.limitcontainer}
-                      style={{ marginTop: "0" }}>
-                      <div className={classes.containerstart}>
-                        <div className={classes.boxContainer}>
-                          <LocalizationProvider dateAdapter={AdapterDayjs}>
-                            <DemoContainer components={[]}>
-                              <DemoItem>
-                                <DatePicker
-                                  defaultValue={dayjs(
-                                    moment().format("YYYY-MM-DD")
-                                  )}
-                                  onChange={(e) => handleendDatechange(e)}
-                                  sx={{
-                                    "& .MuiInputBase-input": {
-                                      height: "2rem",
-                                      fontSize: 13,
-                                      paddingBottom: "1.8rem",
-                                      paddingTop: "1.8rem",
-                                    },
-                                  }}
-                                />
-                              </DemoItem>
-                            </DemoContainer>
-                          </LocalizationProvider>
-                        </div>
-
-                        <div
-                          className={classes.boxContainer}
-                          style={{ paddingTop: "0.9rem" }}>
                           <div className={classes.fieldContainer}>
                             <label className={classes.label}>
-                              Expiration time
+                              Ticket limit
                             </label>
                             <Field
                               className={classes.field}
-                              name="endtime"
-                              component="select">
-                              {Time.options.map((item, index) => {
-                                return (
-                                  <option
-                                    key={"AddPromoCodeendTime" + index}
-                                    id={"AddPromoCodeendTime" + index}
-                                    value={item}>
-                                    {item}
-                                  </option>
-                                );
-                              })}
+                              name="ticketlimitoption"
+                              autoComplete="off"
+                              component="select"
+                              value={selectedValuelimit}
+                              onChange={(e) =>
+                                handleSelectedlimit(e.target.value)
+                              }>
+                              <option value="Limited to">Limited to</option>
+                              <option value="Unlimited">Unlimited</option>
                             </Field>
                           </div>
                         </div>
+                        {amountformopen ? (
+                          <>
+                            <div className={classes.boxContainer}>
+                              <div className={classes.fieldContainer}>
+                                <label className={classes.label}>Amount</label>
+                                <div className={classes.presuffix}>
+                                  <Field
+                                    className={classes.field}
+                                    name="limit"
+                                    autoComplete="off"
+                                  />
+                                  <p>tickets</p>
+                                </div>
+                              </div>
+                              <ErrorMessage name="limit" component="span" />
+                            </div>
+                          </>
+                        ) : null}
+                      </div>
+                      <div className={classes.namep}>
+                        Total number of tickets that can be purchased with this
+                        code
                       </div>
                     </div>
-                  ) : null}
-                  <hr className={classes.promohr} />
-                  <div className={classes.limitcontainer}>
-                    <div className={classes.headercontainer2}>
-                      Apply code to :
+
+                    <div className={classes.limitcontainer}>
+                      <div className={classes.headercontainer2}>
+                        Discount Amount
+                      </div>
+                      <div className={classes.containerstart2}>
+                        <div className={classes.boxContainer}>
+                          <div className={classes.fieldContainer}>
+                            {/* <div className={classes.container2}> */}
+                            {/* <span className={classes.dollar}>$</span> */}
+                            <Field
+                              className={classes.field}
+                              name="amountOff"
+                              placeholder="0.00"
+                              type="text"
+                              autoComplete="off"
+                              disabled={values.percentOff !== ""}
+                            />
+                            {/* </div> */}
+                          </div>
+                        </div>
+
+                        <div className={classes.insidep}>or</div>
+
+                        <div className={classes.boxContainer}>
+                          <div className={classes.fieldContainer}>
+                            {/* <div className={classes.container2}> */}
+                            {/* <span className={classes.dollar}>$</span> */}
+                            <Field
+                              className={classes.field}
+                              name="percentOff"
+                              placeholder="0.00"
+                              type="text"
+                              autoComplete="off"
+                              disabled={values.amountOff !== ""}
+                            />
+                            {/* </div> */}
+                          </div>
+                        </div>
+                      </div>
+
+                      <ErrorMessage name="percentOff" component="span" />
                     </div>
-                    <FormControl>
-                      <RadioGroup
-                        aria-labelledby="demo-controlled-radio-buttons-group"
-                        name="controlled-radio-buttons-group"
-                        value={selectedvaluetickets}
-                        onChange={(e) => handleTickets(e.target.value)}>
-                        <FormControlLabel
-                          value="All visible tickets"
-                          control={<Radio />}
-                          label="All visible tickets"
-                          sx={{
-                            "& .MuiSvgIcon-root": {
-                              fontSize: 20,
-                            },
-                            "& .MuiTypography-root": {
-                              fontSize: 13,
-                              fontWeight: 4,
-                              color: "rgb(57, 54, 79)",
-                            },
-                          }}
-                        />
-                        <div className={classes.radiobtntickets}>
+
+                    <div className={classes.limitcontainer}>
+                      <div className={classes.headercontainer2}>
+                        Promo code starts
+                      </div>
+                      <FormControl>
+                        <RadioGroup
+                          aria-labelledby="demo-controlled-radio-buttons-group"
+                          name="controlled-radio-buttons-group"
+                          value={selectedValuestart}
+                          onChange={(e) => handleSelectedStart(e.target.value)}>
                           <FormControlLabel
-                            value="Only certain visible tickets"
+                            value="Now"
                             control={<Radio />}
-                            label="Only certain visible tickets"
+                            label="Now"
                             sx={{
                               "& .MuiSvgIcon-root": {
                                 fontSize: 20,
@@ -695,40 +495,262 @@ console.log(ticketsselected);
                               },
                             }}
                           />
-                          {!alltickets && <button onClick={()=>setmodalopen(true)} type="button">Apply</button>}
-                        </div>
-                      </RadioGroup>
-                    </FormControl>
-                  </div>
-                </div>
-                <div
-                  id="EventPageBookingPopUpLeaveCheckOutBtnsContainer"
-                  className={classes.leavecheckoutbuttons}>
-                  <div
-                    id="EventPageBookingPopUpLeaveCheckOutStayBtnContainer"
-                    className={classes.stayleavebtn}>
-                    <button
-                      id="EventPageBookingPopUpLeaveCheckOutStayBtn"
-                      className={classes.staybutton}
-                      onClick={toggleDrawer("right", false)}>
-                      Cancel
-                    </button>
-                  </div>
+                          <FormControlLabel
+                            value="Scheduledtime"
+                            control={<Radio />}
+                            label="Scheduled time"
+                            sx={{
+                              "& .MuiSvgIcon-root": {
+                                fontSize: 20,
+                              },
+                              "& .MuiTypography-root": {
+                                fontSize: 13,
+                                fontWeight: 4,
+                                color: "rgb(57, 54, 79)",
+                              },
+                            }}
+                          />
+                        </RadioGroup>
+                      </FormControl>
+                    </div>
 
-                  <div
-                    id="EventPageBookingPopUpLeaveCheckOutLeaveBtnContainer"
-                    className={classes.stayleavebtn}>
-                    <button
-                      type="submit"
-                      id="EventPageBookingPopUpLeaveCheckOutLeaveBtn"
-                      className={classes.leavebutton}>
-                      Save
-                    </button>
+                    {scheduleopen ? (
+                      <div
+                        className={classes.limitcontainer}
+                        style={{ marginTop: "0" }}>
+                        <div className={classes.containerstart}>
+                          <div className={classes.boxContainer}>
+                            <LocalizationProvider dateAdapter={AdapterDayjs}>
+                              <DemoContainer components={[]}>
+                                <DemoItem>
+                                  <DatePicker
+                                    defaultValue={dayjs(
+                                      moment().format("YYYY-MM-DD")
+                                    )}
+                                    onChange={(e) => handlestartDatechange(e)}
+                                    sx={{
+                                      "& .MuiInputBase-input": {
+                                        height: "2rem",
+                                        fontSize: 13,
+                                        paddingBottom: "1.8rem",
+                                        paddingTop: "1.8rem",
+                                      },
+                                    }}
+                                  />
+                                </DemoItem>
+                              </DemoContainer>
+                            </LocalizationProvider>
+                          </div>
+
+                          <div
+                            className={classes.boxContainer}
+                            style={{ paddingTop: "0.9rem" }}>
+                            <div className={classes.fieldContainer}>
+                              <label className={classes.label}>
+                                Start time
+                              </label>
+                              <Field
+                                className={classes.field}
+                                name="starttime"
+                                component="select">
+                                {Time.options.map((item, index) => {
+                                  return (
+                                    <option
+                                      key={"AddPromoCodeStartTime" + index}
+                                      id={"AddPromoCodeStartTime" + index}
+                                      value={item}>
+                                      {item}
+                                    </option>
+                                  );
+                                })}
+                              </Field>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                    ) : null}
+
+                    <div className={classes.limitcontainer}>
+                      <div className={classes.headercontainer2}>
+                        Promo code ends
+                      </div>
+                      <FormControl>
+                        <RadioGroup
+                          aria-labelledby="demo-controlled-radio-buttons-group"
+                          name="controlled-radio-buttons-group"
+                          value={selectedValueend}
+                          onChange={(e) => handleSelectedend(e.target.value)}>
+                          <FormControlLabel
+                            value="When ticket sales end"
+                            control={<Radio />}
+                            label="When ticket sales end"
+                            sx={{
+                              "& .MuiSvgIcon-root": {
+                                fontSize: 20,
+                              },
+                              "& .MuiTypography-root": {
+                                fontSize: 13,
+                                fontWeight: 4,
+                                color: "rgb(57, 54, 79)",
+                              },
+                            }}
+                          />
+                          <FormControlLabel
+                            value="Scheduledtime"
+                            control={<Radio />}
+                            label="Scheduled time"
+                            sx={{
+                              "& .MuiSvgIcon-root": {
+                                fontSize: 20,
+                              },
+                              "& .MuiTypography-root": {
+                                fontSize: 13,
+                                fontWeight: 4,
+                                color: "rgb(57, 54, 79)",
+                              },
+                            }}
+                          />
+                        </RadioGroup>
+                      </FormControl>
+                    </div>
+
+                    {scheduleopenend ? (
+                      <div
+                        className={classes.limitcontainer}
+                        style={{ marginTop: "0" }}>
+                        <div className={classes.containerstart}>
+                          <div className={classes.boxContainer}>
+                            <LocalizationProvider dateAdapter={AdapterDayjs}>
+                              <DemoContainer components={[]}>
+                                <DemoItem>
+                                  <DatePicker
+                                    defaultValue={dayjs(
+                                      moment().format("YYYY-MM-DD")
+                                    )}
+                                    onChange={(e) => handleendDatechange(e)}
+                                    sx={{
+                                      "& .MuiInputBase-input": {
+                                        height: "2rem",
+                                        fontSize: 13,
+                                        paddingBottom: "1.8rem",
+                                        paddingTop: "1.8rem",
+                                      },
+                                    }}
+                                  />
+                                </DemoItem>
+                              </DemoContainer>
+                            </LocalizationProvider>
+                          </div>
+
+                          <div
+                            className={classes.boxContainer}
+                            style={{ paddingTop: "0.9rem" }}>
+                            <div className={classes.fieldContainer}>
+                              <label className={classes.label}>
+                                Expiration time
+                              </label>
+                              <Field
+                                className={classes.field}
+                                name="endtime"
+                                component="select">
+                                {Time.options.map((item, index) => {
+                                  return (
+                                    <option
+                                      key={"AddPromoCodeendTime" + index}
+                                      id={"AddPromoCodeendTime" + index}
+                                      value={item}>
+                                      {item}
+                                    </option>
+                                  );
+                                })}
+                              </Field>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                    ) : null}
+                    <hr className={classes.promohr} />
+                    <div className={classes.limitcontainer}>
+                      <div className={classes.headercontainer2}>
+                        Apply code to :
+                      </div>
+                      <FormControl>
+                        <RadioGroup
+                          aria-labelledby="demo-controlled-radio-buttons-group"
+                          name="controlled-radio-buttons-group"
+                          value={selectedvaluetickets}
+                          onChange={(e) => handleTickets(e.target.value)}>
+                          <FormControlLabel
+                            value="All visible tickets"
+                            control={<Radio />}
+                            label="All visible tickets"
+                            sx={{
+                              "& .MuiSvgIcon-root": {
+                                fontSize: 20,
+                              },
+                              "& .MuiTypography-root": {
+                                fontSize: 13,
+                                fontWeight: 4,
+                                color: "rgb(57, 54, 79)",
+                              },
+                            }}
+                          />
+                          <div className={classes.radiobtntickets}>
+                            <FormControlLabel
+                              value="Only certain visible tickets"
+                              control={<Radio />}
+                              label="Only certain visible tickets"
+                              sx={{
+                                "& .MuiSvgIcon-root": {
+                                  fontSize: 20,
+                                },
+                                "& .MuiTypography-root": {
+                                  fontSize: 13,
+                                  fontWeight: 4,
+                                  color: "rgb(57, 54, 79)",
+                                },
+                              }}
+                            />
+                            {!alltickets && (
+                              <div className={classes.buttoncontainer}>
+                                <button>Select</button>
+                              </div>
+                            )}
+                          </div>
+                        </RadioGroup>
+                      </FormControl>
+                    </div>
                   </div>
-                </div>
-              </Form>
-            )}
-          </Formik>
+                  <div
+                    id="EventPageBookingPopUpLeaveCheckOutBtnsContainer"
+                    className={classes.leavecheckoutbuttons}>
+                    <div
+                      id="EventPageBookingPopUpLeaveCheckOutStayBtnContainer"
+                      className={classes.stayleavebtn}>
+                      <button
+                        id="EventPageBookingPopUpLeaveCheckOutStayBtn"
+                        className={classes.staybutton}
+                        onClick={toggleDrawer("right", false, csv)}
+                        type="reset">
+                        Cancel
+                      </button>
+                    </div>
+
+                    <div
+                      id="EventPageBookingPopUpLeaveCheckOutLeaveBtnContainer"
+                      className={classes.stayleavebtn}>
+                      <button
+                        type="submit"
+                        id="EventPageBookingPopUpLeaveCheckOutLeaveBtn"
+                        className={classes.leavebutton}>
+                        Save
+                      </button>
+                    </div>
+                  </div>
+                </Form>
+              )}
+            </Formik>
+          )}
           {/* </div> */}
         </Box>
       </SwipeableDrawer>

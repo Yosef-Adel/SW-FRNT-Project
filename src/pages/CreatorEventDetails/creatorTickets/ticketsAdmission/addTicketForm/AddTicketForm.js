@@ -174,7 +174,7 @@ const AddTicketForm = ({ ticket, setdummydata }) => {
     delete datasent.ticketoption;
     console.log(datasent);
     addevent(datasent);
-    Formik.resetForm();
+    // Formik.resetForm();
   };
   function handlecancel() {
     console.log("ay7agaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa");
