@@ -51,7 +51,9 @@ const BookingForm = (props) => {
       setTos(true)
     }
     else{
-      props.onRegister(data.firstName, data.surName, data.email);
+      // console.log("show tickets bought");
+      // console.log(props.ticketsBought);
+      props.onRegister(data.firstName, data.surName, data.email,props.ticketsBought);
     }
   }
 

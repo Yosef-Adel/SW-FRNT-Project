@@ -21,6 +21,9 @@ import CloseIcon from "@mui/icons-material/Close";
 const GenericModal = (props) => {
   const[statebtn,changestatebtn]=useState(true);
   const handleClose = () => {
+    if(props.reloadClose){
+      console.log("not reloading")
+      window.location.reload()} 
     changestatebtn(false);
   };
   return (

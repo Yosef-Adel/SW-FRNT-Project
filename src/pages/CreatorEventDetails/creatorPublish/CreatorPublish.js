@@ -8,11 +8,13 @@ import { DemoContainer, DemoItem } from "@mui/x-date-pickers/internals/demo";
 import { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayjs";
 import { LocalizationProvider } from "@mui/x-date-pickers/LocalizationProvider";
 import { DatePicker } from "@mui/x-date-pickers/DatePicker";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import axios from "../../../requests/axios";
 import routes from "../../../requests/routes";
 import moment from "moment/moment";
 import { useSelector } from "react-redux";
+import { useNavigate } from "react-router-dom";
+import ErrorNotification from "../../../generic components/error message/ErrorNotification"
 
 /**
  * Component that returns Creator's Publish Event page
@@ -23,11 +25,16 @@ import { useSelector } from "react-redux";
  */
 const CreatorPublish = () => {
   const event = useSelector((state) => state.event);
+  const navigate = useNavigate()
+  const ticketsLink = "/events/" + event.eventId + "/tickets" 
 
   const [disable, setDisable] = useState(true);
   const [disableSubmit, setDisableSubmit] = useState(event.isPublished);
+  const [disableForm, setDisableForm] = useState(event.tickets.length===0);
+
 
   const [buttonContent, setButtonContent] = useState("Publish");
+
 
 
   const initialValues = {
@@ -40,6 +47,9 @@ const CreatorPublish = () => {
     link: "link",
   };
 
+  const [formValues, setFormValues] = useState(initialValues);
+
+
   async function publishData(data) {
     console.log(data);
     console.log(event.eventId);
@@ -48,20 +58,27 @@ const CreatorPublish = () => {
         routes.createEvent + "/" + event.eventId,
         data
       );
-      console.log(request);
+      navigate("/user/event/" + event.eventId)
     } catch (err) {}
   }
 
   function compare(data){
-    console.log(data)
-    console.log(initialValues)
-
-    if(data != initialValues) setDisableSubmit(false)
-    // else setDisableSubmit(true)
+    if (JSON.stringify(data) === JSON.stringify(initialValues)){
+      setDisableSubmit(true)
+      return true
+    } else {
+      setDisableSubmit(false)
+      return false
+    }
   }
 
+  // useEffect(() => {
+  //   console.log(formValues);
+  //   console.log(initialValues);
+  //   compare(formValues);
+  // }, [formValues]);
+
   const handleSubmit = (data) => {
-    // console.log(data);
 
     let start = moment(data.publishDate).format("YYYY-MM-DD");
     let sDate = new Date(start + " " + data.starttime);
@@ -106,6 +123,8 @@ const CreatorPublish = () => {
       <div className={classes.container}>
         <div className={classes.publish}>
           <h1 className={classes.header}>Publish Your Event</h1>
+          {/* TODO : add link*/}
+          {disableForm && <ErrorNotification mssg="Create tickets in order to be able to publish your event"/>}
           <CreatorEventCard
             image={event.image}
             title={event.eventTitle}
@@ -123,14 +142,14 @@ const CreatorPublish = () => {
 
             >
               {({ values, setFieldValue }) => (
-                <Form data-testid="PublishForm">
+                <Form data-testid="PublishForm" >
                   <div className={classes.boxContainer}>
                     <div className={classes.fieldContainer} role="group">
                       <p className={classes.fieldTitle} data-testid="PublishInputHead1">
                         Who can see your event?
                       </p>
                       <label>
-                        <Field type="radio" name="isPrivate" value="false" data-testid="PublishRadioPublic" onClick={()=>compare(values)}/>
+                        <Field type="radio" name="isPrivate" value="false" data-testid="PublishRadioPublic" onClick={()=>{setFormValues(values)}} disabled={disableForm}/>
                         <span data-testid="PublishRadioPublicContent">
                           Public
                           <p className={classes.fieldDesc} >
@@ -140,7 +159,7 @@ const CreatorPublish = () => {
                       </label>
 
                       <label>
-                        <Field type="radio" name="isPrivate" value="true" data-testid="PublishRadioPrivate" onClick={()=>compare(values)}/>
+                        <Field type="radio" name="isPrivate" value="true" data-testid="PublishRadioPrivate" onClick={()=>{setFormValues(values)}} disabled={disableForm}/>
                         <span data-testid="PublishRadioPrivateContent">
                           Private
                           <p className={classes.fieldDesc}>
@@ -163,7 +182,7 @@ const CreatorPublish = () => {
                               name="link"
                               component="select"
                               data-testid="PublishDropDown"
-                              onClick={()=>compare(values)}
+                              onClick={()=>setFormValues(values)}
                             >
                               <option value="link" data-testid="PublishDropOption1">Anyone with link</option>
                               <option value="pass" data-testid="PublishDropOption2">
@@ -181,7 +200,7 @@ const CreatorPublish = () => {
                                 name="password"
                                 placeholder="password"
                                 data-testid="PublishPasswordField"
-                                onClick={()=>compare(values)}
+                                onClick={()=>setFormValues(values)}
                               />
                             </div>
                           </div>
@@ -315,13 +334,10 @@ const CreatorPublish = () => {
                   <div className={classes.footer}>
                     <hr></hr>
                     <button
+                      disabled={compare(values)}
                       type="submit"
-                      className={`${classes.btn} ${
-                        disableSubmit && classes.btnDisabled
-                      }`}
-                      disabled={disableSubmit}
+                      className={classes.btn}
                       data-testid="PublishSubmit"
-
                     >
                       {buttonContent}
                     </button>

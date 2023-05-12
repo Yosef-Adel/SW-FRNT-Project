@@ -6,14 +6,16 @@ import routes from "../../../../../requests/routes";
 import tickets1 from "../../../../../assets/data/dummytickets";
 import { BiErrorCircle } from "react-icons/bi";
 import moment from "moment";
-import CircularProgress from "@mui/material/CircularProgress";
+// import CircularProgress from "@mui/material/CircularProgress";
 import CardInfo from "../../../../../assets/data/eventsData";
 import { Formik, Form, Field, ErrorMessage } from "formik";
 import SwipeableDrawer from "@mui/material/SwipeableDrawer";
 import * as Yup from "yup";
 import Box from "@mui/material/Box";
-import { useSelector } from "react-redux";
-const TicketsView = ({ ticketsnew, dummydata, setallticketmodal,setindex,seteditform}) => {
+import { useSelector } from "react-redux"
+import CircleLoader from "../../../../../layouts/loader/CircleLoader";
+
+const TicketsView = ({ ticketsnew, dummydata, empty, isloading,setallticketmodal,setindex,seteditform }) => {
   const now = moment();
   const eventi = useSelector((state) => state.event);
   const [loading, setloading] = useState(false);
@@ -42,6 +44,7 @@ const TicketsView = ({ ticketsnew, dummydata, setallticketmodal,setindex,setedit
   });
   async function getticketsforevent() {
     try {
+      isloading(true);
       setloading(true);
       const response = await axios.get(
         routes.tickets + "/" + eventi.eventId + "/" + "allTickets"
@@ -49,6 +52,12 @@ const TicketsView = ({ ticketsnew, dummydata, setallticketmodal,setindex,setedit
       setTickets(response.data.tickets);
       ticketsnew(response.data.tickets);
       setloading(false);
+      isloading(false);
+      if (response.data.tickets.length == 0) {
+        empty(true);
+      } else {
+        empty(false);
+      }
       let totalCapacity = 0;
       let totalSold = 0;
       response.data.tickets.forEach((ticket) => {
@@ -122,9 +131,10 @@ const TicketsView = ({ ticketsnew, dummydata, setallticketmodal,setindex,setedit
     <div>
       {loading ? (
         <>
-          <div className={classes.loading}>
+          {/* <div className={classes.loading}>
             <CircularProgress color="success" size={80} />
-          </div>
+          </div> */}
+          <CircleLoader color={"#4be1a0"} />
         </>
       ) : (
         <div className={classes.container}>
@@ -138,13 +148,11 @@ const TicketsView = ({ ticketsnew, dummydata, setallticketmodal,setindex,setedit
                         <i
                           data-spec="icon"
                           data-testid="icon"
-                          aria-hidden="true"
-                        >
+                          aria-hidden="true">
                           <svg x="0" y="0" viewBox="0 0 24 24">
                             <path
                               fill="#dbdae3"
-                              d="M6 10V8h12v2H6zm0 6v-2h12v2H6z"
-                            ></path>
+                              d="M6 10V8h12v2H6zm0 6v-2h12v2H6z"></path>
                           </svg>
                         </i>
                       </span>
@@ -210,8 +218,7 @@ const TicketsView = ({ ticketsnew, dummydata, setallticketmodal,setindex,setedit
                 </div>
                 <div
                   className={classes.buttoncontainer}
-                  onClick={toggleDrawer("right", true)}
-                >
+                  onClick={toggleDrawer("right", true)}>
                   <button>Edit capacity</button>
                 </div>
               </div>
@@ -234,8 +241,7 @@ const TicketsView = ({ ticketsnew, dummydata, setallticketmodal,setindex,setedit
             marginTop: 60,
             marginRight: 20,
           },
-        }}
-      >
+        }}>
         <Box className={classes.box} sx={{ width: 420, height: "100%" }}>
           <div className={classes.headercontainer}>
             <p className={classes.ticketp}>Event capacity</p>
@@ -244,16 +250,16 @@ const TicketsView = ({ ticketsnew, dummydata, setallticketmodal,setindex,setedit
           <Formik
             initialValues={initialValues}
             validationSchema={validationSchema}
-            onSubmit={handleSubmit}
-          >
+            onSubmit={handleSubmit}>
             {({ values, setFieldValue }) => (
               <Form className={classes.form}>
                 <div className={classes.forminfo}>
                   {loading2 ? (
                     <>
-                      <div className={classes.loading}>
+                      {/* <div className={classes.loading}>
                         <CircularProgress color="success" size={80} />
-                      </div>
+                      </div> */}
+                      <CircleLoader color={"#4be1a0"} />
                     </>
                   ) : (
                     <>
@@ -283,8 +289,7 @@ const TicketsView = ({ ticketsnew, dummydata, setallticketmodal,setindex,setedit
                   <div className={classes.stayleavebtn}>
                     <button
                       className={classes.staybutton}
-                      onClick={toggleDrawer("right", false)}
-                    >
+                      onClick={toggleDrawer("right", false)}>
                       Cancel
                     </button>
                   </div>
@@ -293,8 +298,7 @@ const TicketsView = ({ ticketsnew, dummydata, setallticketmodal,setindex,setedit
                     <button
                       type="submit"
                       className={classes.leavebutton}
-                      onClick={toggleDrawer("right", false)}
-                    >
+                      onClick={toggleDrawer("right", false)}>
                       Save
                     </button>
                   </div>

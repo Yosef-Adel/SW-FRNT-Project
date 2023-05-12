@@ -7,17 +7,17 @@ import TicketData from "../../assets/data/TicketData";
 import { allSettled } from "q";
 
 const ticketsmap = TicketData.Ticketsinfo;
-const TicketModal = ({ tickets, modalopen, setticketsmodalopen,ticketsmodal }) => {
+const TicketModal = ({ tickets, modalopen, setticketsmodalopen,update }) => {
   // const [stateofform, changestateofform] = useState(true);
   // const handleClose = () => {
   //   changestateofform(false);
   // };
   const [Selectedall, setselectall] = useState(false);
 
-  const [updatedTickets, setupdatetickets] = useState([]);
+  const [updatedTickets, setupdatedtickets] = useState([]);
 
   useEffect(() => {
-    setupdatetickets(tickets.map((ticket) => ({ ...ticket, selected2: 0 })));
+    setupdatedtickets(tickets.map((ticket) => ({ ...ticket, selected2: 0 })));
   }, [tickets]);
 
   //const [updatedTickets, setupdatetickets] = useState(tickets);
@@ -40,20 +40,21 @@ const TicketModal = ({ tickets, modalopen, setticketsmodalopen,ticketsmodal }) =
         selected2: 0,
       }));
 
-      setupdatetickets(updated);
-      ticketsmodal(updated);
+      setupdatedtickets(updated);
+      // ticketsmodal(updated);
     } else {
       const updated = updatedTickets.map((ticket) => ({
         ...ticket,
         selected2: 1,
       }));
 
-      setupdatetickets(updated);
-      ticketsmodal(updated);
+      setupdatedtickets(updated);
+      // ticketsmodal(updated);
      
     }
   }
   function handleClose() {
+    update(updatedTickets)
     setticketsmodalopen(false);
   }
   function handleClick(index) {
@@ -66,7 +67,7 @@ const TicketModal = ({ tickets, modalopen, setticketsmodalopen,ticketsmodal }) =
 
   
     }));
-    setupdatetickets(temp);
+    setupdatedtickets(temp);
   }
   return (
     <Modal

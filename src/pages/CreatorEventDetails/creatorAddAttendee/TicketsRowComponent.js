@@ -19,13 +19,17 @@ const TicketsRowComponent = (props) => {
     useEffect(() => {setQuanArr();setfaceValue(Price*Quantity)}, [Quantity]);
     useEffect(() => {
         const newfaceValues = [...props.faceValues];
-        newfaceValues[props.index] = faceValue;
+        // let newfaceValues = props.faceValues;
+        newfaceValues[props.index] = Number(faceValue);
         props.setfaceValues(newfaceValues);
+        // console.log(newfaceValues);
     }, [faceValue]);
 
     function setQuanArr () {
+      // let newQuantityArr = props.QuantityArr;
         const newQuantityArr = [...props.QuantityArr];
         newQuantityArr[props.index] = Quantity;
+        // console.log(newQuantityArr);
         props.setQuantityArr(newQuantityArr);
     }
   return (

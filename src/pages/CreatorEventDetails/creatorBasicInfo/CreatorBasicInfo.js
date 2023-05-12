@@ -109,8 +109,11 @@ const CreatorBasicInfo = (props) => {
 
   const validationSchema = Yup.object().shape({
     name: Yup.string().max(75).required("Title is required."),
-    startDate: Yup.date().required("Start Date is required."),
-    endDate: Yup.date().required("End Date is required."),
+    startDate: Yup.date().min(moment(new Date()).format("MM-DD-YYYY"),"Start date must be later than "+moment(new Date()).format("DD-MM-YYYY")).required("Start Date is required."),
+    endDate: Yup.date().min(
+      Yup.ref('startDate'),
+      "End date must be after Start Date"
+    ).required("End Date is required."),
     sTime: Yup.string().required("Start Time is required."),
     eTime: Yup.string().required("End Time is required."),
     category: Yup.string().required("Category is required."),
