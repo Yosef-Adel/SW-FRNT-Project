@@ -6,8 +6,9 @@ import routes from "../../../../../requests/routes";
 import data from "../../../../../assets/data/dummyData";
 import tableheader from "../../../../../assets/data/promocodes";
 import moment from "moment";
-import CircularProgress from "@mui/material/CircularProgress";
+// import CircularProgress from "@mui/material/CircularProgress";
 import { useSelector } from "react-redux";
+import CircleLoader from "../../../../../layouts/loader/CircleLoader";
 
 const PromoCodesList = ({ dummydata, setemptypromo, setloadinglist }) => {
   const event = useSelector((state) => state.event);
@@ -46,9 +47,10 @@ const PromoCodesList = ({ dummydata, setemptypromo, setloadinglist }) => {
     <div>
       {loading ? (
         <>
-          <div className={classes.loading}>
+          {/* <div className={classes.loading}>
             <CircularProgress color="success" size={80} />
-          </div>
+          </div> */}
+          <CircleLoader color={"#4be1a0"} />
         </>
       ) : (
         <div

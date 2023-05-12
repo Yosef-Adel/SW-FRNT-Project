@@ -21,10 +21,11 @@ import moment from "moment";
 import axios from "../../../../../requests/axios";
 import routes from "../../../../../requests/routes";
 import { useSelector } from "react-redux";
-import CircularProgress from "@mui/material/CircularProgress";
+// import CircularProgress from "@mui/material/CircularProgress";
 import GenericModal from "../../../../../generic components/generic modal/GenericModal";
 import { TiTick } from "react-icons/ti";
 import ErrorNotification from "../../../../../generic components/error message/ErrorNotification";
+import CircleLoader from "../../../../../layouts/loader/CircleLoader";
 
 const AddTicketForm = ({ ticket, setdummydata, isempty, isloading }) => {
   const initialValues = {
@@ -290,9 +291,10 @@ const AddTicketForm = ({ ticket, setdummydata, isempty, isloading }) => {
           </div>
           {loading ? (
             <>
-              <div className={classes.loading}>
+              {/* <div className={classes.loading}>
                 <CircularProgress color="success" size={80} />
-              </div>
+              </div> */}
+              <CircleLoader color={"#4be1a0"} />
             </>
           ) : (
             <>

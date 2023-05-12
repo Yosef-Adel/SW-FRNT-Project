@@ -6,13 +6,15 @@ import routes from "../../../../../requests/routes";
 import tickets1 from "../../../../../assets/data/dummytickets";
 import { BiErrorCircle } from "react-icons/bi";
 import moment from "moment";
-import CircularProgress from "@mui/material/CircularProgress";
+// import CircularProgress from "@mui/material/CircularProgress";
 import CardInfo from "../../../../../assets/data/eventsData";
 import { Formik, Form, Field, ErrorMessage } from "formik";
 import SwipeableDrawer from "@mui/material/SwipeableDrawer";
 import * as Yup from "yup";
 import Box from "@mui/material/Box";
 import { useSelector } from "react-redux";
+import CircleLoader from "../../../../../layouts/loader/CircleLoader";
+
 const TicketsView = ({ ticketsnew, dummydata, empty, isloading }) => {
   const now = moment();
   const eventi = useSelector((state) => state.event);
@@ -123,9 +125,10 @@ const TicketsView = ({ ticketsnew, dummydata, empty, isloading }) => {
     <div>
       {loading ? (
         <>
-          <div className={classes.loading}>
+          {/* <div className={classes.loading}>
             <CircularProgress color="success" size={80} />
-          </div>
+          </div> */}
+          <CircleLoader color={"#4be1a0"} />
         </>
       ) : (
         <div className={classes.container}>
@@ -247,9 +250,10 @@ const TicketsView = ({ ticketsnew, dummydata, empty, isloading }) => {
                 <div className={classes.forminfo}>
                   {loading2 ? (
                     <>
-                      <div className={classes.loading}>
+                      {/* <div className={classes.loading}>
                         <CircularProgress color="success" size={80} />
-                      </div>
+                      </div> */}
+                      <CircleLoader color={"#4be1a0"} />
                     </>
                   ) : (
                     <>

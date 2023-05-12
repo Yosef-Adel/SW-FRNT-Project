@@ -21,11 +21,13 @@ import Time from "../../../../../assets/data/TimeOptions";
 import axios from "../../../../../requests/axios";
 import routes from "../../../../../requests/routes";
 import { useSelector } from "react-redux";
-import CircularProgress from "@mui/material/CircularProgress";
+// import CircularProgress from "@mui/material/CircularProgress";
 import empty from "../../../../../assets/imgs/events/emptypromos.svg";
 import GenericModal from "../../../../../generic components/generic modal/GenericModal";
 import { TiTick } from "react-icons/ti";
 import ErrorNotification from "../../../../../generic components/error message/ErrorNotification";
+import CircleLoader from "../../../../../layouts/loader/CircleLoader";
+import TicketModal from "../../../../../generic components/ticketsModal/TicketsModal";
 
 const AddPromocodeForm = ({
   setdummydata,
@@ -65,6 +67,9 @@ const AddPromocodeForm = ({
   );
   const [alltickets, setAlltickets] = useState(true);
   const [csvfile, setCsvfile] = useState("");
+
+  const [openticketsmodal, setOpenticketsmodal] = useState(false);
+  const [updatedTickets, setupdatedTickets] = useState([]);
 
   const handleSelectedlimit = (selected) => {
     setSelectedValuelimit(selected);
@@ -204,6 +209,13 @@ const AddPromocodeForm = ({
       formData.append("tickets", filledArray);
     } else {
       //get selected tickets
+      let filledArray = updatedTickets.filter((ticket) => ticket.selected2 > 0);
+      let filledArray2 = new Array(filledArray.length)
+        .fill()
+        .map((element, index) => filledArray[index]._id);
+      console.log(filledArray2);
+      datasent.tickets = filledArray2;
+      formData.append("tickets", filledArray2);
     }
 
     if (csv) {
@@ -400,9 +412,10 @@ const AddPromocodeForm = ({
           </div>
           {loading ? (
             <>
-              <div className={classes.loading}>
+              {/* <div className={classes.loading}>
                 <CircularProgress color="success" size={80} />
-              </div>
+              </div> */}
+              <CircleLoader color={"#4be1a0"} />
             </>
           ) : (
             <Formik
@@ -791,7 +804,17 @@ const AddPromocodeForm = ({
                             />
                             {!alltickets && (
                               <div className={classes.buttoncontainer}>
-                                <button>Select</button>
+                                <button
+                                  onClick={() => setOpenticketsmodal(true)}
+                                  type="button">
+                                  Select
+                                </button>
+                                <TicketModal
+                                  tickets={tickets}
+                                  modalopen={openticketsmodal}
+                                  setticketsmodalopen={setOpenticketsmodal}
+                                  update={setupdatedTickets}
+                                />
                               </div>
                             )}
                           </div>
