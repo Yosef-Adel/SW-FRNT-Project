@@ -115,6 +115,11 @@ const AddPromocodeForm = ({
     }
   };
 
+  const handlefileclick = () => {
+    let input2 = document.getElementById("input");
+    input2.click();
+  };
+
   async function sendData(data) {
     console.log(data);
     setloading(true);
@@ -496,22 +501,41 @@ const AddPromocodeForm = ({
                       </div>
                     ) : (
                       <div>
-                        {/* <div>
-                        Upload up to 500 codes from a .csv or .txt file.
-                        <br />
-                        Separate codes with commas, or list them on separate
-                        lines.
-                        <br />
-                        Spaces, apostrophes, and special characters (except: -_
-                        , @ . ) are not allowed.
-                      </div> */}
-                        <div className={classes.uploadBtn}>
-                          <input
-                            id="input"
-                            type="file"
-                            className={classes.customfileinput}
-                            data-testid="CreatorTicketsPromoCodesCSVInput"
-                          />
+                        <div className={classes.limitcontainer}>
+                          <div className={classes.emptypromosumm}>
+                            Upload up to 500 codes from a .csv or .txt file.
+                          </div>
+                          <div className={classes.emptypromosumm}>
+                            Separate codes with commas, or list them on separate
+                            lines.
+                          </div>
+                          <div className={classes.emptypromosumm}>
+                            Spaces, apostrophes, and special characters (except:
+                            -_ , @ . ) are not allowed.
+                          </div>
+                          <div>
+                            <div
+                              data-testid="CreatorTicketsPromoCodesCSVInput"
+                              className={classes.uploadBtn}
+                              onClick={handlefileclick}>
+                              <div className={classes.uploadBtnicon}>
+                                <svg viewBox="0 0 24 24">
+                                  <g fill-rule="evenodd">
+                                    <path d="M18 3h-3V2H9v1H6.052L6 4H4v18h16V4h-2V3zm-1 2H7V4v.026h2l1.027.004L10.025 3H14v1h3v1zM7 19V8H6v12h12V8h-1v11H7zm-2 2V5h1v-.159V6h12V5h1v16H5zm4-9v1h6v-1H9zm0-3v1h6V9H9zm0 6v1h6v-1H9z"></path>
+                                  </g>
+                                </svg>
+                              </div>
+                              <div className={classes.headercontainer2}>
+                                Import Codes
+                              </div>
+                            </div>
+                            <input
+                              style={{ display: "none" }}
+                              id="input"
+                              type="file"
+                              className={classes.customfileinput}
+                            />
+                          </div>
                         </div>
                       </div>
                     )}
@@ -575,6 +599,7 @@ const AddPromocodeForm = ({
                           <div className={classes.fieldContainer}>
                             {/* <div className={classes.container2}> */}
                             {/* <span className={classes.dollar}>$</span> */}
+                            <p className={classes.egy}>E£</p>
                             <Field
                               id="CreatorTicketsPromoCodesAmountOffInput"
                               data-testid="CreatorTicketsPromoCodesAmountOffInput"
@@ -605,6 +630,7 @@ const AddPromocodeForm = ({
                               autoComplete="off"
                               disabled={values.amountOff !== ""}
                             />
+                            <p className={classes.egy}>%</p>
                             {/* </div> */}
                           </div>
                         </div>

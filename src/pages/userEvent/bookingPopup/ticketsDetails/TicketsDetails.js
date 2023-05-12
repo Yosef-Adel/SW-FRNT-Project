@@ -461,7 +461,7 @@ const TicketsDetails = ({
                       }
                       className={classes.sales}>
                       sales end on{" "}
-                      {moment(element.salesStart).format("MMMM Do YYYY")}
+                      {moment(element.salesEnd).format("MMMM Do YYYY")}
                     </p>
                   </div>
                   <div
