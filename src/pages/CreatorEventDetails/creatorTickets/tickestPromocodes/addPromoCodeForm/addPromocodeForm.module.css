@@ -445,6 +445,14 @@
   margin-bottom: 3rem;
 }
 
+.modalicon {
+  width: 4rem;
+  height: 4rem;
+  margin: auto;
+  align-items: center;
+  color: var(--content-text);
+}
+
 @media screen and (max-width: 480px) {
   .css-1160xiw-MuiPaper-root-MuiDrawer-paper {
     width: 100%;

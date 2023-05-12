@@ -22,6 +22,9 @@ import axios from "../../../../../requests/axios";
 import routes from "../../../../../requests/routes";
 import { useSelector } from "react-redux";
 import CircularProgress from "@mui/material/CircularProgress";
+import GenericModal from "../../../../../generic components/generic modal/GenericModal";
+import { TiTick } from "react-icons/ti";
+import ErrorNotification from "../../../../../generic components/error message/ErrorNotification";
 
 const AddTicketForm = ({ ticket, setdummydata, isempty, isloading }) => {
   const initialValues = {
@@ -49,28 +52,38 @@ const AddTicketForm = ({ ticket, setdummydata, isempty, isloading }) => {
     }
   }
 
-  const validationSchema = Yup.object().shape({
-    name: Yup.string()
-      .max(50, "Name must be at most 50 characters")
+  const getValidationSchema = () => {
+    let schema = Yup.object().shape({
+      name: Yup.string()
+        .max(50, "Name must be at most 50 characters")
 
-      .required("Name is required."),
-    availablequantity: Yup.number()
-      .min(1, "Quantity must be between 1 and 500,000")
-      .max(500000, "Quantity must be between 1 and 500,000")
-      .required("Quantity is required"),
-    price: Yup.number()
-      .max(1000000, "Price must be less than $1,000,000")
-      .min(1, "Price must be greater than 0")
-      .required("  Price is required to make a paid ticket"),
+        .required("Name is required."),
+      availablequantity: Yup.number()
+        .min(1, "Quantity must be between 1 and 500,000")
+        .max(500000, "Quantity must be between 1 and 500,000")
+        .required("Quantity is required"),
+    });
+    if (paidclicked) {
+      schema = schema.shape({
+        price: Yup.number()
+          .max(1000000, "Price must be less than $1,000,000")
+          .min(1, "Price must be greater than 0")
+          .required("  Price is required to make a paid ticket"),
+      });
+    }
+
     //salesend: Yup.date().min(new Date(), "End date cannot be in the past."),
-  });
+  };
   const [advancedopen, setadvancedopen] = useState(false);
   function handleclick2() {
     setadvancedopen(!advancedopen);
   }
   const event = useSelector((state) => state.event);
   const [value, setValue] = React.useState(dayjs("2022-04-17"));
-
+  const [success, setSuccess] = useState(false);
+  const [errorMsg, setErrorMsg] = useState("");
+  const [errorLink, setErrorLink] = useState("");
+  const [errorLinkMsg, setErrorLinkMsg] = useState("");
   const [state, setState] = React.useState({
     right: false,
   });
@@ -131,6 +144,8 @@ const AddTicketForm = ({ ticket, setdummydata, isempty, isloading }) => {
       console.log(response.data);
     } catch (err) {
       console.log(err);
+      setloading(false);
+      setErrorMsg(err.response.data.message);
     }
   }
   const handleSubmit = (data, { setErrors }) => {
@@ -142,7 +157,7 @@ const AddTicketForm = ({ ticket, setdummydata, isempty, isloading }) => {
     datasent.salesEnd = endDate1;
     datasent.event = event.eventId;
     if (paidclicked) {
-      datasent.type = "paid";
+      datasent.type = "Paid";
       datasent.price = Number(data.price);
     } else {
       datasent.type = "free";
@@ -283,11 +298,18 @@ const AddTicketForm = ({ ticket, setdummydata, isempty, isloading }) => {
             <>
               <Formik
                 initialValues={initialValues}
-                validationSchema={validationSchema}
+                validationSchema={getValidationSchema()}
                 onSubmit={handleSubmit}>
                 {({ values, setFieldValue, resetForm }) => (
                   <Form className={classes.form}>
                     <div className={classes.forminfo}>
+                      {errorMsg ? (
+                        <ErrorNotification
+                          mssg={errorMsg}
+                          linkmsg={errorLinkMsg}
+                          link={errorLink}
+                        />
+                      ) : null}
                       <div className={classes.typeofform}>
                         <div
                           onClick={handlepaidclicked}
@@ -651,6 +673,15 @@ const AddTicketForm = ({ ticket, setdummydata, isempty, isloading }) => {
           )}
         </Box>
       </SwipeableDrawer>
+      {success && (
+        <GenericModal
+          header="Ticket Added"
+          details={"You have succesfully Added a ticket."}
+          icon={<TiTick className={classes.modalicon} />}
+          rejectbtn="Close"
+          rejecthandle={() => setSuccess(false)}
+        />
+      )}
     </div>
   );
 };

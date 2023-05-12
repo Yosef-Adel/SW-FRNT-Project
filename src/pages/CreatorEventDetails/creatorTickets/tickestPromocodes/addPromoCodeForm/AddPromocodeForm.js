@@ -23,6 +23,9 @@ import routes from "../../../../../requests/routes";
 import { useSelector } from "react-redux";
 import CircularProgress from "@mui/material/CircularProgress";
 import empty from "../../../../../assets/imgs/events/emptypromos.svg";
+import GenericModal from "../../../../../generic components/generic modal/GenericModal";
+import { TiTick } from "react-icons/ti";
+import ErrorNotification from "../../../../../generic components/error message/ErrorNotification";
 
 const AddPromocodeForm = ({
   setdummydata,
@@ -31,7 +34,11 @@ const AddPromocodeForm = ({
   loadinglist,
 }) => {
   // const formikRef = React.useRef(null);
+  const [success, setSuccess] = useState(false);
   const [loading, setloading] = useState(false);
+  const [errorMsg, setErrorMsg] = useState("");
+  const [errorLink, setErrorLink] = useState("");
+  const [errorLinkMsg, setErrorLinkMsg] = useState("");
   const [state, setState] = React.useState({
     right: false,
   });
@@ -106,6 +113,7 @@ const AddPromocodeForm = ({
   async function sendData(data) {
     console.log(data);
     setloading(true);
+    setSuccess(false);
     try {
       const request = await axios.post(
         routes.promocode + "/" + event.eventId,
@@ -115,12 +123,17 @@ const AddPromocodeForm = ({
       setdummydata(!dummydata);
       toggleDrawer("right", false, csv);
       setloading(false);
-    } catch (err) {}
+      setSuccess(true);
+    } catch (err) {
+      setloading(false);
+      setErrorMsg(err.response.data.message);
+    }
   }
 
   async function uploadData(data) {
     console.log(data);
     setloading(true);
+    setSuccess(false);
     try {
       const request = await axios.post(
         routes.promocode + "/" + event.eventId + "/upload",
@@ -130,7 +143,11 @@ const AddPromocodeForm = ({
       setdummydata(!dummydata);
       toggleDrawer("right", false, csv);
       setloading(false);
-    } catch (err) {}
+      setSuccess(true);
+    } catch (err) {
+      setloading(false);
+      setErrorMsg(err.response.data.message);
+    }
   }
 
   const handleSubmit = (data) => {
@@ -395,6 +412,13 @@ const AddPromocodeForm = ({
               {({ values, resetForm }) => (
                 <Form className={classes.form}>
                   <div className={classes.forminfo}>
+                    {errorMsg ? (
+                      <ErrorNotification
+                        mssg={errorMsg}
+                        linkmsg={errorLinkMsg}
+                        link={errorLink}
+                      />
+                    ) : null}
                     {!csv ? (
                       <div className={classes.boxContainer}>
                         <div className={classes.fieldContainer}>
@@ -805,9 +829,18 @@ const AddPromocodeForm = ({
               )}
             </Formik>
           )}
-          {/* </div> */}
         </Box>
       </SwipeableDrawer>
+
+      {success && (
+        <GenericModal
+          header="PromoCode Created"
+          details={"You have succesfully created a PromoCode."}
+          icon={<TiTick className={classes.modalicon} />}
+          rejectbtn="Close"
+          rejecthandle={() => setSuccess(false)}
+        />
+      )}
     </div>
   );
 };
