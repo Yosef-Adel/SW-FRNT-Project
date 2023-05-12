@@ -453,6 +453,41 @@
   color: var(--content-text);
 }
 
+.egy {
+  font-size: 1.5rem;
+  font-weight: 500;
+  padding: 8px;
+  color: #a9a8b3;
+}
+
+.containerstart2 .boxContainer .fieldContainer {
+  flex-direction: row;
+  align-items: center;
+}
+
+.containerstart2 .boxContainer .fieldContainer .field {
+  width: 95%;
+}
+
+.uploadBtn {
+  display: flex;
+  cursor: pointer;
+  padding: 2.6rem;
+  border: 1px solid #eeedf2;
+  background-color: var(--primary-background);
+  column-gap: 2rem;
+  align-items: center;
+}
+
+
+.uploadBtnicon svg
+{
+  width: 5rem;
+  height: 5rem;
+  fill: var(--icons);
+}
+
+
 @media screen and (max-width: 480px) {
   .css-1160xiw-MuiPaper-root-MuiDrawer-paper {
     width: 100%;
