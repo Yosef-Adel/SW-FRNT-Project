@@ -106,20 +106,25 @@ const PromoCodesList = ({ dummydata, setemptypromo, setloadinglist }) => {
                         <td id="CreatorTicketsPagePromoCodesTableBodypromostatus">
                           <div className={classes.status}>
                             <div
+                              id="CreatorTicketsPagePromoCodesTableBodypromostatusIcon"
                               className={
                                 now.diff(moment(item.endDate)) > 0
                                   ? classes.statusicon
                                   : classes.statusiconactive
                               }></div>
                             {now.diff(moment(item.endDate)) > 0 ? (
-                              <div className={classes.statusdesc}>
+                              <div
+                                id="CreatorTicketsPagePromoCodesTableBodypromostatusDesc"
+                                className={classes.statusdesc}>
                                 <div>Ended</div>
                                 <div className={classes.statustitle}>
                                   Event has ended
                                 </div>
                               </div>
                             ) : (
-                              <div className={classes.statusdesc}>
+                              <div
+                                id="CreatorTicketsPagePromoCodesTableBodypromostatusDesc"
+                                className={classes.statusdesc}>
                                 <div>Active</div>
                                 <div className={classes.statustitle}>
                                   Ends:{moment(item.endDate).format("ll")}

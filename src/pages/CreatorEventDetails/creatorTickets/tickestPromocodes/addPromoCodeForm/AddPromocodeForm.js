@@ -479,10 +479,11 @@ const AddPromocodeForm = ({
                         <div className={classes.fieldContainer}>
                           <label className={classes.label}>Code name</label>
                           <Field
+                            id="CreatorTicketsPromoCodesNameInput"
+                            data-testid="CreatorTicketsPromoCodesNameInput"
                             className={classes.field}
                             name="name"
                             autoComplete="off"
-                            data-testid="LoginFormEmailInput"
                             placeholder="General Admission"
                           />
                         </div>
@@ -509,6 +510,7 @@ const AddPromocodeForm = ({
                             id="input"
                             type="file"
                             className={classes.customfileinput}
+                            data-testid="CreatorTicketsPromoCodesCSVInput"
                           />
                         </div>
                       </div>
@@ -522,6 +524,8 @@ const AddPromocodeForm = ({
                               Ticket limit
                             </label>
                             <Field
+                              id="CreatorTicketsPromoCodeslimitedInput"
+                              data-testid="CreatorTicketsPromoCodeslimitedInput"
                               className={classes.field}
                               name="ticketlimitoption"
                               autoComplete="off"
@@ -542,6 +546,8 @@ const AddPromocodeForm = ({
                                 <label className={classes.label}>Amount</label>
                                 <div className={classes.presuffix}>
                                   <Field
+                                    id="CreatorTicketsPromoCodesLimitInput"
+                                    data-testid="CreatorTicketsPromoCodeslimitInput"
                                     className={classes.field}
                                     name="limit"
                                     autoComplete="off"
@@ -570,6 +576,8 @@ const AddPromocodeForm = ({
                             {/* <div className={classes.container2}> */}
                             {/* <span className={classes.dollar}>$</span> */}
                             <Field
+                              id="CreatorTicketsPromoCodesAmountOffInput"
+                              data-testid="CreatorTicketsPromoCodesAmountOffInput"
                               className={classes.field}
                               name="amountOff"
                               placeholder="0.00"
@@ -588,6 +596,8 @@ const AddPromocodeForm = ({
                             {/* <div className={classes.container2}> */}
                             {/* <span className={classes.dollar}>$</span> */}
                             <Field
+                              id="CreatorTicketsPromoCodesPercentOffInput"
+                              data-testid="CreatorTicketsPromoCodesPercentOffInput"
                               className={classes.field}
                               name="percentOff"
                               placeholder="0.00"
@@ -614,6 +624,8 @@ const AddPromocodeForm = ({
                           value={selectedValuestart}
                           onChange={(e) => handleSelectedStart(e.target.value)}>
                           <FormControlLabel
+                            id="CreatorTicketsPromoCodesStartDateRadioButtonInputNow"
+                            data-testid="CreatorTicketsPromoCodesStartDateRadioButtonInputNow"
                             value="Now"
                             control={<Radio />}
                             label="Now"
@@ -629,6 +641,8 @@ const AddPromocodeForm = ({
                             }}
                           />
                           <FormControlLabel
+                            id="CreatorTicketsPromoCodesStartDateRadioButtonInputLater"
+                            data-testid="CreatorTicketsPromoCodesStartDateRadioButtonInputLater"
                             value="Scheduledtime"
                             control={<Radio />}
                             label="Scheduled time"
@@ -660,6 +674,8 @@ const AddPromocodeForm = ({
                                     defaultValue={dayjs(
                                       moment().format("YYYY-MM-DD")
                                     )}
+                                    id="CreatorTicketsPromoCodesStartDateInput"
+                                    data-testid="CreatorTicketsPromoCodesStartDateInput"
                                     onChange={(e) => handlestartDatechange(e)}
                                     sx={{
                                       "& .MuiInputBase-input": {
@@ -683,6 +699,8 @@ const AddPromocodeForm = ({
                                 Start time
                               </label>
                               <Field
+                                id="CreatorTicketsPromoCodesStarttimeInput"
+                                data-testid="CreatorTicketsPromoCodesStarttimeInput"
                                 className={classes.field}
                                 name="starttime"
                                 component="select">
@@ -714,6 +732,8 @@ const AddPromocodeForm = ({
                           value={selectedValueend}
                           onChange={(e) => handleSelectedend(e.target.value)}>
                           <FormControlLabel
+                            id="CreatorTicketsPromoCodesEndDateRadioButtonInputticketene"
+                            data-testid="CreatorTicketsPromoCodesEndDateRadioButtonInputticketend"
                             value="When ticket sales end"
                             control={<Radio />}
                             label="When ticket sales end"
@@ -730,6 +750,8 @@ const AddPromocodeForm = ({
                           />
                           <FormControlLabel
                             value="Scheduledtime"
+                            id="CreatorTicketsPromoCodesEndDateRadioButtonInputLater"
+                            data-testid="CreatorTicketsPromoCodesEndDateRadioButtonInputLater"
                             control={<Radio />}
                             label="Scheduled time"
                             sx={{
@@ -757,6 +779,8 @@ const AddPromocodeForm = ({
                               <DemoContainer components={[]}>
                                 <DemoItem>
                                   <DatePicker
+                                    id="CreatorTicketsPromoCodesEndDateInput"
+                                    data-testid="CreatorTicketsPromoCodesEndDateInput"
                                     defaultValue={dayjs(
                                       moment().format("YYYY-MM-DD")
                                     )}
@@ -783,6 +807,8 @@ const AddPromocodeForm = ({
                                 Expiration time
                               </label>
                               <Field
+                                id="CreatorTicketsPromoCodesEndtimeInput"
+                                data-testid="CreatorTicketsPromoCodesEndtimeInput"
                                 className={classes.field}
                                 name="endtime"
                                 component="select">
@@ -814,6 +840,8 @@ const AddPromocodeForm = ({
                           value={selectedvaluetickets}
                           onChange={(e) => handleTickets(e.target.value)}>
                           <FormControlLabel
+                            id="CreatorTicketsPromoCodesTicketsRadioButtonInputAll"
+                            data-testid="CreatorTicketsPromoCodesTicketsRadioButtonInputAll"
                             value="All visible tickets"
                             control={<Radio />}
                             label="All visible tickets"
@@ -830,6 +858,8 @@ const AddPromocodeForm = ({
                           />
                           <div className={classes.radiobtntickets}>
                             <FormControlLabel
+                              id="CreatorTicketsPromoCodesTicketsRadioButtonInputSome"
+                              data-testid="CreatorTicketsPromoCodesTicketsRadioButtonInputSome"
                               value="Only certain visible tickets"
                               control={<Radio />}
                               label="Only certain visible tickets"
@@ -847,6 +877,8 @@ const AddPromocodeForm = ({
                             {!alltickets && (
                               <div className={classes.buttoncontainer}>
                                 <button
+                                  id="CreatorTicketsPromoCodesTicketsSelectBtn"
+                                  data-testid="CreatorTicketsPromoCodesTicketsSelectBtn"
                                   onClick={() => setOpenticketsmodal(true)}
                                   type="button">
                                   Select
@@ -864,14 +896,11 @@ const AddPromocodeForm = ({
                       </FormControl>
                     </div>
                   </div>
-                  <div
-                    id="EventPageBookingPopUpLeaveCheckOutBtnsContainer"
-                    className={classes.leavecheckoutbuttons}>
-                    <div
-                      id="EventPageBookingPopUpLeaveCheckOutStayBtnContainer"
-                      className={classes.stayleavebtn}>
+                  <div className={classes.leavecheckoutbuttons}>
+                    <div className={classes.stayleavebtn}>
                       <button
-                        id="EventPageBookingPopUpLeaveCheckOutStayBtn"
+                        id="CreatorTicketsPromoCodesCancelBtn"
+                        data-testid="CreatorTicketsPromoCodesCancelBtn"
                         className={classes.staybutton}
                         onClick={toggleDrawer("right", false, csv)}
                         type="reset">
@@ -879,12 +908,11 @@ const AddPromocodeForm = ({
                       </button>
                     </div>
 
-                    <div
-                      id="EventPageBookingPopUpLeaveCheckOutLeaveBtnContainer"
-                      className={classes.stayleavebtn}>
+                    <div className={classes.stayleavebtn}>
                       <button
                         type="submit"
-                        id="EventPageBookingPopUpLeaveCheckOutLeaveBtn"
+                        id="CreatorTicketsPromoCodesSubmitBtn"
+                        data-testid="CreatorTicketsPromoCodesSubmitBtn"
                         className={classes.leavebutton}>
                         Save
                       </button>
