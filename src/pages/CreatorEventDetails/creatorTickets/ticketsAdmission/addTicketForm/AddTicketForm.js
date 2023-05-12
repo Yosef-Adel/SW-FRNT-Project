@@ -22,8 +22,11 @@ import axios from "../../../../../requests/axios";
 import routes from "../../../../../requests/routes";
 import { useSelector } from "react-redux";
 import CircularProgress from "@mui/material/CircularProgress";
+import GenericModal from "../../../../../generic components/generic modal/GenericModal";
+import { TiTick } from "react-icons/ti";
+import ErrorNotification from "../../../../../generic components/error message/ErrorNotification";
 
-const AddTicketForm = ({ ticket, setdummydata }) => {
+const AddTicketForm = ({ ticket, setdummydata, isempty, isloading }) => {
   const initialValues = {
     name: "General Admission",
     availablequantity: "",
@@ -49,28 +52,38 @@ const AddTicketForm = ({ ticket, setdummydata }) => {
     }
   }
 
-  const validationSchema = Yup.object().shape({
-    name: Yup.string()
-      .max(50, "Name must be at most 50 characters")
+  const getValidationSchema = () => {
+    let schema = Yup.object().shape({
+      name: Yup.string()
+        .max(50, "Name must be at most 50 characters")
 
-      .required("Name is required."),
-    availablequantity: Yup.number()
-      .min(1, "Quantity must be between 1 and 500,000")
-      .max(500000, "Quantity must be between 1 and 500,000")
-      .required("Quantity is required"),
-    price: Yup.number()
-      .max(1000000, "Price must be less than $1,000,000")
-      .min(1, "Price must be greater than 0")
-      .required("  Price is required to make a paid ticket"),
+        .required("Name is required."),
+      availablequantity: Yup.number()
+        .min(1, "Quantity must be between 1 and 500,000")
+        .max(500000, "Quantity must be between 1 and 500,000")
+        .required("Quantity is required"),
+    });
+    if (paidclicked) {
+      schema = schema.shape({
+        price: Yup.number()
+          .max(1000000, "Price must be less than $1,000,000")
+          .min(1, "Price must be greater than 0")
+          .required("  Price is required to make a paid ticket"),
+      });
+    }
+
     //salesend: Yup.date().min(new Date(), "End date cannot be in the past."),
-  });
+  };
   const [advancedopen, setadvancedopen] = useState(false);
   function handleclick2() {
     setadvancedopen(!advancedopen);
   }
   const event = useSelector((state) => state.event);
   const [value, setValue] = React.useState(dayjs("2022-04-17"));
-
+  const [success, setSuccess] = useState(false);
+  const [errorMsg, setErrorMsg] = useState("");
+  const [errorLink, setErrorLink] = useState("");
+  const [errorLinkMsg, setErrorLinkMsg] = useState("");
   const [state, setState] = React.useState({
     right: false,
   });
@@ -131,6 +144,8 @@ const AddTicketForm = ({ ticket, setdummydata }) => {
       console.log(response.data);
     } catch (err) {
       console.log(err);
+      setloading(false);
+      setErrorMsg(err.response.data.message);
     }
   }
   const handleSubmit = (data, { setErrors }) => {
@@ -142,7 +157,7 @@ const AddTicketForm = ({ ticket, setdummydata }) => {
     datasent.salesEnd = endDate1;
     datasent.event = event.eventId;
     if (paidclicked) {
-      datasent.type = "paid";
+      datasent.type = "Paid";
       datasent.price = Number(data.price);
     } else {
       datasent.type = "free";
@@ -174,7 +189,7 @@ const AddTicketForm = ({ ticket, setdummydata }) => {
     delete datasent.ticketoption;
     console.log(datasent);
     addevent(datasent);
-    Formik.resetForm();
+    // Formik.resetForm();
   };
   function handlecancel() {
     console.log("ay7agaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa");
@@ -183,15 +198,75 @@ const AddTicketForm = ({ ticket, setdummydata }) => {
 
   return (
     <div>
-      <div className={classes.btn}>
-        <Button
-          className={classes.button}
-          onClick={toggleDrawer("right", true)}
-          data-testid="AddTicketButton"
-        >
-          Add Ticket
-        </Button>
-      </div>
+      {!isloading && (
+        <div>
+          {isempty ? (
+            <div className={classes.emptypromos}>
+              <div className={classes.emptyticketsicon}>
+                <svg viewBox="0 0 144 144">
+                  <g fill="none" fill-rule="evenodd">
+                    <g>
+                      <path d="M0 0h144v144H0z"></path>
+                      <path
+                        d="M27 84v-.6c0-4.5 4.05-8.25 8.85-8.25 4.95 0 9.15 4.2 9.15 8.55v.3h3V42h42c.6 4.35 4.2 7.5 8.85 7.5 4.65 0 8.25-3.15 8.85-7.5h7.8v51h-7.8c-.6-4.35-4.2-7.5-8.85-7.5-4.65 0-8.25 3.15-8.85 7.5H35.85c-4.95 0-8.7-3-8.85-9z"
+                        fill="#D2D6DF"
+                        fill-rule="nonzero"></path>
+                      <path
+                        fill="#363A43"
+                        fill-rule="nonzero"
+                        d="M81 103h6v3h-6zM99 103h6v3h-6zM107 103h6v3h-6zM72 103h6v3h-6zM90 103h6v3h-6zM63 103h6v3h-6zM54 102.9h6v3h-6zM45 102.9h6v3h-6zM36 102.9h6v3h-6zM36 94h3v6h-3zM110 94h3v6h-3z"></path>
+                      <path
+                        d="M24 84.45c0 6.6 5.25 11.7 11.85 11.7H93v-1.5c0-3.45 2.55-6 6-6s6 2.55 6 6v1.5h13.5v-57H105v1.5c0 3.45-2.55 6-6 6s-6-2.55-6-6v-1.5H47.7c-1.05-5.7-5.85-9.9-11.7-9.9-6.75 0-12 5.4-12 12.15v43.05zM45 41.4v35.4c-3-2.7-5.55-4.35-9.15-4.35-3.6 0-7.35 1.65-8.85 4.05V41.25c0-5.1 3.9-9.15 9-9.15s9 4.2 9 9.3zM27 84v-.6c0-4.5 4.05-8.25 8.85-8.25 4.95 0 9.15 4.2 9.15 8.55v.3h3V42h42c.6 4.35 4.2 7.5 8.85 7.5 4.65 0 8.25-3.15 8.85-7.5h7.8v51h-7.8c-.6-4.35-4.2-7.5-8.85-7.5-4.65 0-8.25 3.15-8.85 7.5H35.85c-4.95 0-8.7-3-8.85-9z"
+                        fill="#363A43"
+                        fill-rule="nonzero"></path>
+                      <path
+                        d="M45 41.4v35.4c-3-2.7-5.55-4.35-9.15-4.35-3.6 0-7.35 1.65-8.85 4.05V41.25c0-5.1 3.9-9.15 9-9.15s9 4.2 9 9.3z"
+                        fill="#FFF"
+                        fill-rule="nonzero"></path>
+                      <path
+                        fill="#363A43"
+                        fill-rule="nonzero"
+                        d="M97.35 70.8h3v3h-3zM97.35 64.8h3v3h-3zM97.35 76.8h3v3h-3zM97.35 58.8h3v3h-3zM97.35 52.8h3v3h-3z"></path>
+                      <path
+                        fill="#3A3A3A"
+                        fill-rule="nonzero"
+                        d="M54 58.8h37.5v3H54zM54 64.8h15v3H54z"></path>
+                    </g>
+                  </g>
+                </svg>
+              </div>
+              <div className={classes.emptypromossec}>
+                <div
+                  id="CreatorticketsPagepromocodesHeader"
+                  className={classes.mainsectionheader}>
+                  Let's Create Tickets
+                </div>
+                <div className={classes.emptypromosumm}>
+                  Create a section if you want to sell multiple ticket types
+                  that share the same inventory. i.e. Floor, Mezzanine.
+                </div>
+              </div>
+              <div className={classes.btn}>
+                <Button
+                  className={classes.button}
+                  onClick={toggleDrawer("right", true)}
+                  data-testid="AddTicketButton">
+                  Add Ticket
+                </Button>
+              </div>
+            </div>
+          ) : (
+            <div className={classes.btn}>
+              <Button
+                className={classes.button}
+                onClick={toggleDrawer("right", true)}
+                data-testid="AddTicketButton">
+                Add Ticket
+              </Button>
+            </div>
+          )}
+        </div>
+      )}
 
       <SwipeableDrawer
         anchor={"right"}
@@ -207,8 +282,7 @@ const AddTicketForm = ({ ticket, setdummydata }) => {
             marginTop: 60,
             marginRight: 20,
           },
-        }}
-      >
+        }}>
         <Box className={classes.box} sx={{ width: 420, height: "100%" }}>
           <div className={classes.headercontainer}>
             <p className={classes.ticketp}>Add tickets</p>
@@ -224,35 +298,38 @@ const AddTicketForm = ({ ticket, setdummydata }) => {
             <>
               <Formik
                 initialValues={initialValues}
-                validationSchema={validationSchema}
-                onSubmit={handleSubmit}
-              >
+                validationSchema={getValidationSchema()}
+                onSubmit={handleSubmit}>
                 {({ values, setFieldValue, resetForm }) => (
                   <Form className={classes.form}>
                     <div className={classes.forminfo}>
+                      {errorMsg ? (
+                        <ErrorNotification
+                          mssg={errorMsg}
+                          linkmsg={errorLinkMsg}
+                          link={errorLink}
+                        />
+                      ) : null}
                       <div className={classes.typeofform}>
                         <div
                           onClick={handlepaidclicked}
                           className={
                             paidclicked ? classes.clickeditem : classes.item
-                          }
-                        >
+                          }>
                           Paid
                         </div>
                         <div
                           onClick={handlefreeclicked}
                           className={
                             freeclicked ? classes.clickeditem : classes.item
-                          }
-                        >
+                          }>
                           Free
                         </div>
                         <div
                           onClick={handledonationclicked}
                           className={
                             donationclicked ? classes.clickeditem : classes.item
-                          }
-                        >
+                          }>
                           Donation
                         </div>
                       </div>
@@ -294,12 +371,10 @@ const AddTicketForm = ({ ticket, setdummydata }) => {
                             freeclicked || donationclicked
                               ? classes.fielddisable
                               : classes.fieldContainer
-                          }
-                        >
+                          }>
                           <label
                             className={classes.label}
-                            style={{ paddingLeft: "20px" }}
-                          >
+                            style={{ paddingLeft: "20px" }}>
                             Price
                           </label>
                           <div className={classes.container2}>
@@ -328,8 +403,7 @@ const AddTicketForm = ({ ticket, setdummydata }) => {
                             className={classes.field}
                             name="ticketavailable"
                             component="select"
-                            onChange={handlechangetimeorsalesend}
-                          >
+                            onChange={handlechangetimeorsalesend}>
                             <option>Data & time</option>
                             <option>When sales end for...</option>
                           </Field>
@@ -378,15 +452,13 @@ const AddTicketForm = ({ ticket, setdummydata }) => {
                                 <Field
                                   className={classes.field}
                                   name="starttime"
-                                  component="select"
-                                >
+                                  component="select">
                                   {Time.options.map((item, index) => {
                                     return (
                                       <option
                                         key={"AddPromoCodeStartTime" + index}
                                         id={"AddPromoCodeStartTime" + index}
-                                        value={item}
-                                      >
+                                        value={item}>
                                         {item}
                                       </option>
                                     );
@@ -405,8 +477,7 @@ const AddTicketForm = ({ ticket, setdummydata }) => {
                             <Field
                               className={classes.field}
                               name="ticketoption"
-                              component="select"
-                            >
+                              component="select">
                               {ticket.map((Element, index) => {
                                 return (
                                   <option value={index}>{Element.name}</option>
@@ -455,15 +526,13 @@ const AddTicketForm = ({ ticket, setdummydata }) => {
                             <Field
                               className={classes.field}
                               name="endtime"
-                              component="select"
-                            >
+                              component="select">
                               {Time.options.map((item, index) => {
                                 return (
                                   <option
                                     key={"AddPromoCodeStartTime" + index}
                                     id={"AddPromoCodeStartTime" + index}
-                                    value={item}
-                                  >
+                                    value={item}>
                                     {item}
                                   </option>
                                 );
@@ -481,8 +550,7 @@ const AddTicketForm = ({ ticket, setdummydata }) => {
                           onClick={handleclick2}
                           className={
                             advancedopen ? classes.icondown : classes.iconup
-                          }
-                        >
+                          }>
                           <ArrowBackIosNewIcon />
                         </div>
                       </div>
@@ -505,8 +573,7 @@ const AddTicketForm = ({ ticket, setdummydata }) => {
                           <div className={classes.boxContainer}>
                             <div
                               className={classes.fieldContainer}
-                              style={{ paddingBottom: "4.5rem" }}
-                            >
+                              style={{ paddingBottom: "4.5rem" }}>
                               <label className={classes.label}>
                                 desciption
                               </label>
@@ -525,8 +592,7 @@ const AddTicketForm = ({ ticket, setdummydata }) => {
                               <Field
                                 className={classes.field}
                                 name="Visibility"
-                                component="select"
-                              >
+                                component="select">
                                 <option>Visible</option>
                                 <option>Hidden</option>
                                 <option>Hidden when not on sale</option>
@@ -541,39 +607,34 @@ const AddTicketForm = ({ ticket, setdummydata }) => {
                             <div className={classes.boxContainer}>
                               <div
                                 className={classes.fieldContainer}
-                                style={{ width: "77%" }}
-                              >
+                                style={{ width: "77%" }}>
                                 <label className={classes.label}>
                                   Minimum quantity
                                 </label>
                                 <Field
                                   className={classes.field}
                                   name="minimumquantity"
-                                  onKeyPress={handleKeyPress}
-                                ></Field>
+                                  onKeyPress={handleKeyPress}></Field>
                               </div>
                             </div>
 
                             <div className={classes.boxContainer}>
                               <div
                                 className={classes.fieldContainer}
-                                style={{ width: "77%" }}
-                              >
+                                style={{ width: "77%" }}>
                                 <label className={classes.label}>
                                   Maximum quantity
                                 </label>
                                 <Field
                                   className={classes.field}
                                   name="maximumquantity"
-                                  onKeyPress={handleKeyPress}
-                                ></Field>
+                                  onKeyPress={handleKeyPress}></Field>
                               </div>
                             </div>
                           </div>
                           <div
                             className={classes.boxContainer}
-                            style={{ marginBottom: "5rem" }}
-                          >
+                            style={{ marginBottom: "5rem" }}>
                             <div className={classes.fieldContainer}>
                               <label className={classes.label}>
                                 Sales channel
@@ -581,8 +642,7 @@ const AddTicketForm = ({ ticket, setdummydata }) => {
                               <Field
                                 className={classes.field}
                                 name="saleschannel"
-                                component="select"
-                              >
+                                component="select">
                                 <option>Online only</option>
                               </Field>
                             </div>
@@ -595,8 +655,7 @@ const AddTicketForm = ({ ticket, setdummydata }) => {
                         <button
                           className={classes.staybutton}
                           onClick={toggleDrawer("right", false)}
-                          type="reset"
-                        >
+                          type="reset">
                           Cancel
                         </button>
                       </div>
@@ -614,6 +673,15 @@ const AddTicketForm = ({ ticket, setdummydata }) => {
           )}
         </Box>
       </SwipeableDrawer>
+      {success && (
+        <GenericModal
+          header="Ticket Added"
+          details={"You have succesfully Added a ticket."}
+          icon={<TiTick className={classes.modalicon} />}
+          rejectbtn="Close"
+          rejecthandle={() => setSuccess(false)}
+        />
+      )}
     </div>
   );
 };

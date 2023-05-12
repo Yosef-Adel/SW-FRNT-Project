@@ -13,7 +13,7 @@ import SwipeableDrawer from "@mui/material/SwipeableDrawer";
 import * as Yup from "yup";
 import Box from "@mui/material/Box";
 import { useSelector } from "react-redux";
-const TicketsView = ({ ticketsnew, dummydata }) => {
+const TicketsView = ({ ticketsnew, dummydata, empty, isloading }) => {
   const now = moment();
   const eventi = useSelector((state) => state.event);
   const [loading, setloading] = useState(false);
@@ -42,6 +42,7 @@ const TicketsView = ({ ticketsnew, dummydata }) => {
   });
   async function getticketsforevent() {
     try {
+      isloading(true);
       setloading(true);
       const response = await axios.get(
         routes.tickets + "/" + eventi.eventId + "/" + "allTickets"
@@ -49,6 +50,12 @@ const TicketsView = ({ ticketsnew, dummydata }) => {
       setTickets(response.data.tickets);
       ticketsnew(response.data.tickets);
       setloading(false);
+      isloading(false);
+      if (response.data.tickets.length == 0) {
+        empty(true);
+      } else {
+        empty(false);
+      }
       let totalCapacity = 0;
       let totalSold = 0;
       response.data.tickets.forEach((ticket) => {
@@ -132,13 +139,11 @@ const TicketsView = ({ ticketsnew, dummydata }) => {
                         <i
                           data-spec="icon"
                           data-testid="icon"
-                          aria-hidden="true"
-                        >
+                          aria-hidden="true">
                           <svg x="0" y="0" viewBox="0 0 24 24">
                             <path
                               fill="#dbdae3"
-                              d="M6 10V8h12v2H6zm0 6v-2h12v2H6z"
-                            ></path>
+                              d="M6 10V8h12v2H6zm0 6v-2h12v2H6z"></path>
                           </svg>
                         </i>
                       </span>
@@ -204,8 +209,7 @@ const TicketsView = ({ ticketsnew, dummydata }) => {
                 </div>
                 <div
                   className={classes.buttoncontainer}
-                  onClick={toggleDrawer("right", true)}
-                >
+                  onClick={toggleDrawer("right", true)}>
                   <button>Edit capacity</button>
                 </div>
               </div>
@@ -228,8 +232,7 @@ const TicketsView = ({ ticketsnew, dummydata }) => {
             marginTop: 60,
             marginRight: 20,
           },
-        }}
-      >
+        }}>
         <Box className={classes.box} sx={{ width: 420, height: "100%" }}>
           <div className={classes.headercontainer}>
             <p className={classes.ticketp}>Event capacity</p>
@@ -238,8 +241,7 @@ const TicketsView = ({ ticketsnew, dummydata }) => {
           <Formik
             initialValues={initialValues}
             validationSchema={validationSchema}
-            onSubmit={handleSubmit}
-          >
+            onSubmit={handleSubmit}>
             {({ values, setFieldValue }) => (
               <Form className={classes.form}>
                 <div className={classes.forminfo}>
@@ -277,8 +279,7 @@ const TicketsView = ({ ticketsnew, dummydata }) => {
                   <div className={classes.stayleavebtn}>
                     <button
                       className={classes.staybutton}
-                      onClick={toggleDrawer("right", false)}
-                    >
+                      onClick={toggleDrawer("right", false)}>
                       Cancel
                     </button>
                   </div>
@@ -287,8 +288,7 @@ const TicketsView = ({ ticketsnew, dummydata }) => {
                     <button
                       type="submit"
                       className={classes.leavebutton}
-                      onClick={toggleDrawer("right", false)}
-                    >
+                      onClick={toggleDrawer("right", false)}>
                       Save
                     </button>
                   </div>
