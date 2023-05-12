@@ -298,7 +298,12 @@
     flex-direction: column;
   }
 
-  
+button[disabled]{
+    background-color: #f8f7fa;
+    color: #a9a8a8;
+    border: solid 1px #a9a8a8;
+    cursor: not-allowed;
+}
   
 
 @media screen and (max-width:789px) {

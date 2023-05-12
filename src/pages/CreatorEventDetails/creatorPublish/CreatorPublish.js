@@ -62,14 +62,20 @@ const CreatorPublish = () => {
     } catch (err) {}
   }
 
-  // function compare(data){
-  //   console.log(data)
-  //   console.log(initialValues)
-  //   if(data != initialValues) setDisableSubmit(false)
-  // }
+  function compare(data){
+    if (JSON.stringify(data) === JSON.stringify(initialValues)){
+      setDisableSubmit(true)
+      return true
+    } else {
+      setDisableSubmit(false)
+      return false
+    }
+  }
 
   // useEffect(() => {
-  //   compare();
+  //   console.log(formValues);
+  //   console.log(initialValues);
+  //   compare(formValues);
   // }, [formValues]);
 
   const handleSubmit = (data) => {
@@ -143,7 +149,7 @@ const CreatorPublish = () => {
                         Who can see your event?
                       </p>
                       <label>
-                        <Field type="radio" name="isPrivate" value="false" data-testid="PublishRadioPublic" onClick={()=>setFormValues(values)} disabled={disableForm}/>
+                        <Field type="radio" name="isPrivate" value="false" data-testid="PublishRadioPublic" onClick={()=>{setFormValues(values)}} disabled={disableForm}/>
                         <span data-testid="PublishRadioPublicContent">
                           Public
                           <p className={classes.fieldDesc} >
@@ -153,7 +159,7 @@ const CreatorPublish = () => {
                       </label>
 
                       <label>
-                        <Field type="radio" name="isPrivate" value="true" data-testid="PublishRadioPrivate" onClick={()=>setFormValues(values)} disabled={disableForm}/>
+                        <Field type="radio" name="isPrivate" value="true" data-testid="PublishRadioPrivate" onClick={()=>{setFormValues(values)}} disabled={disableForm}/>
                         <span data-testid="PublishRadioPrivateContent">
                           Private
                           <p className={classes.fieldDesc}>
@@ -328,10 +334,10 @@ const CreatorPublish = () => {
                   <div className={classes.footer}>
                     <hr></hr>
                     <button
+                      disabled={compare(values)}
                       type="submit"
-                      className={`${classes.btn} `}
+                      className={classes.btn}
                       data-testid="PublishSubmit"
-
                     >
                       {buttonContent}
                     </button>
