@@ -5,9 +5,8 @@ import TicketsRowComponent from "./TicketsRowComponent";
 import axios from "../../../requests/axios";
 import routes from "../../../requests/routes";
 import { useSelector } from "react-redux";
-
-
-
+import GenericModal from "../../../generic components/generic modal/GenericModal"
+import HourglassBottomIcon from '@mui/icons-material/HourglassBottom';
 /**
  * Component that returns Creator's Add Attendee page
  *
@@ -127,7 +126,10 @@ import { useSelector } from "react-redux";
               </div>
             </div>
           </div>
+         {timerClose && <GenericModal reloadClose={true} header='Time Limit Reached.
+          Please re-start the process' icon={<HourglassBottomIcon sx={{ fontSize: "3rem" }}/>}/>}
           </div>
+
         </div>
       </div>)
       :(<div className={classes.container}>
@@ -190,6 +192,7 @@ import { useSelector } from "react-redux";
         </button>
       </div>
       </div>
+
       </div>
     </div> )
       

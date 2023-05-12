@@ -8,6 +8,8 @@ import { useSelector } from "react-redux";
 import SalesCards from "../CreatorEventDetails/creatorDashboard/salesCards/SalesCards";
 import IosShareIcon from "@mui/icons-material/IosShare";
 import moment from "moment/moment";
+import Loader from "../../layouts/loader/Loader";
+
 
 
 /**
@@ -18,10 +20,19 @@ import moment from "moment/moment";
  * return(<CreatorHomePage />)
  */
 const AtendeeSummary = () => {
+  const arrow = <svg  x="0" y="0" viewBox="0 0 24 24" ><path fill-rule="evenodd" clip-rule="evenodd" d="M13.8 7l-5 5 5 5 1.4-1.4-3.6-3.6 3.6-3.6z"></path></svg>
   const event = useSelector((state) => state.event);
+
+  const initialPag = {"nextPage":null,"prevPage":null}
+
   const [report, setReport] = useState([]);
   const [orders, setOrders] = useState("");
+  const [page, setPage] = useState(1);
+
+  const [pagination, setPagination] = useState(initialPag);
   const [attendees, setAttendees] = useState("");
+  const [loader, setLoader] = useState(false);
+
 
   const [transactionData, setTransactionData] = useState([]);
 
@@ -43,27 +54,34 @@ const AtendeeSummary = () => {
     }
   }
 
-  useEffect(() => {
-    async function getAtendees() {
-      let response = "";
-      try {
-        response = await axios.get(
-          routes.getAllEventsCreator +
-            event.eventId +
-            "/getAttendeeReport?page=1&orderLimit=2"
-        );
-        setReport(response.data.Report);
-        setOrders(response.data.totalOrders)
-        setAttendees(response.data.totalAttendees)
+  async function getAtendees() {
+    setLoader(true);
+    let response = "";
+    try {
+      response = await axios.get(
+        routes.getAllEventsCreator +
+          event.eventId +
+          "/getAttendeeReport?page=" + page + "&orderLimit=5"
+      );
+      setLoader(false)
+      setReport(response.data.Report);
+      setPagination(response.data.pagination)
+      setOrders(response.data.totalOrders)
+      setAttendees(response.data.totalAttendees)
 
-        return response.data;
-      } catch (error) {
-        if (error.response) {
-          return error.response;
-        }
+      return response.data;
+    } catch (error) {
+      if (error.response) {
+        return error.response;
       }
     }
+  }
+
+  useEffect(() => {
     getAtendees();
+  }, [page]);
+
+  useEffect(() => {
     handleExport();
   }, []);
 
@@ -92,13 +110,18 @@ const AtendeeSummary = () => {
             <p className={classes.disabled}>Export</p>
           </div>
         )}
-        <div className={classes.cards}>
-          <SalesCards title="Total orders" amount={orders} />
-          <SalesCards title="Total Atendees" amount={attendees} />
+        <div className={classes.cardsContainer}>
+          <div className={classes.cards}>
+            <SalesCards title="Total orders" amount={orders} />
+            <SalesCards title="Total Atendees" amount={attendees} />
+          </div>
+          <div className={classes.icons}>
+            <span className={`${pagination.prevPage===null && classes.disable}`} onClick={(pagination.prevPage!==null ? ()=> {setPage(page-1); }: undefined)}>{arrow}</span>
+            <span className={`${pagination.nextPage===null && classes.disable}`} onClick={(pagination.nextPage!==null ? ()=> {setPage(page+1); }: undefined)}>{arrow}</span>            
+          </div>
         </div>
-
+            {loader && <Loader color={"#4be1a0"}/>}
         <div
-          id="CreatorDashBoardPageSalesRecentOrdersTableContainer"
           className={classes.attendeetable}
         >
           <table className={classes.tableItslef}>
