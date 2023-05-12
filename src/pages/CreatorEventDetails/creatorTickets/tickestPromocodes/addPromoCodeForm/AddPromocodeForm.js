@@ -323,43 +323,67 @@ const AddPromocodeForm = ({
   };
 
   return (
-    <div>
+    <div id="CreatorTicketsPromoCodesContainer">
       {!loadinglist && (
-        <div>
+        <div id="CreatorTicketsaddPromoCodesContainer">
           {emptypromo ? (
-            <div className={classes.emptypromos}>
-              <div className={classes.emptypromosdesc}>
-                <div className={classes.emptypromossec}>
+            <div
+              id="CreatorTicketsemptyPromoCodesContainer"
+              className={classes.emptypromos}>
+              <div
+                id="CreatorTicketsemptyPromoCodesdescription"
+                className={classes.emptypromosdesc}>
+                <div
+                  id="CreatorTicketsemptyPromoCodesheadersection"
+                  className={classes.emptypromossec}>
                   <div
-                    id="CreatorticketsPagepromocodesHeader"
+                    id="CreatorTicketsemptyPromoCodesheader"
                     className={classes.mainsectionheader}>
                     Attract more attendees with promo codes
                   </div>
-                  <div className={classes.emptypromosumm}>
+                  <div
+                    id="CreatorTicketsemptyPromoCodesparaI"
+                    className={classes.emptypromosumm}>
                     With promo codes, you can offer reduced prices with discount
                     codes or reveal hidden tickets to attendees with access
                     codes.
                   </div>
-                  <div className={classes.emptypromosumm}>
+                  <div
+                    id="CreatorTicketsemptyPromoCodesparaII"
+                    className={classes.emptypromosumm}>
                     You can create codes or upload a CSV to import ones you’ve
                     already made.
                   </div>
                 </div>
-                <div className={classes.emptyimg}>
-                  <img src={empty} alt="Empty-PromoList" />
+                <div
+                  id="CreatorTicketsemptyPromoCodesimagecontainer"
+                  className={classes.emptyimg}>
+                  <img
+                    id="CreatorTicketsemptyPromoCodesimage"
+                    src={empty}
+                    alt="Empty-PromoList"
+                  />
                 </div>
               </div>
-              <div className={classes.modalemptybtns}>
-                <div className={classes.btn}>
+              <div
+                id="CreatorTicketsemptyPromoCodesbuttonscontainer"
+                className={classes.modalemptybtns}>
+                <div
+                  id="CreatorTicketsemptyPromoCodesbuttonCSVcontainer"
+                  className={classes.btn}>
                   <Button
+                    id="CreatorTicketsemptyPromoCodesbuttonCSV"
                     className={classes.selbutton}
                     onClick={toggleDrawer("right", true, true)}
                     data-testid="AddTicketButton">
                     Upload CSV
                   </Button>
                 </div>
-                <div className={classes.btn}>
+                <div
+                  id="CreatorTicketsemptyPromoCodesbuttoncreatecontainer"
+                  className={classes.btn}>
                   <Button
+                    id="CreatorTicketsemptyPromoCodesbuttoncreate"
                     className={classes.button}
                     onClick={toggleDrawer("right", true, false)}
                     data-testid="AddTicketButton">
@@ -369,17 +393,25 @@ const AddPromocodeForm = ({
               </div>
             </div>
           ) : (
-            <div className={classes.modalbtns}>
-              <div className={classes.btn}>
+            <div
+              id="CreatorTicketsPromoCodesbuttonscontainer"
+              className={classes.modalbtns}>
+              <div
+                id="CreatorTicketsPromoCodesbuttonCSVcontainer"
+                className={classes.btn}>
                 <Button
+                  id="CreatorTicketsPromoCodesbuttonCSV"
                   className={classes.selbutton}
                   onClick={toggleDrawer("right", true, true)}
                   data-testid="AddTicketButton">
                   Upload CSV
                 </Button>
               </div>
-              <div className={classes.btn}>
+              <div
+                id="CreatorTicketsPromoCodesbuttonaddcontainer"
+                className={classes.btn}>
                 <Button
+                  id="CreatorTicketsPromoCodesbuttonadd"
                   className={classes.button}
                   onClick={toggleDrawer("right", true, false)}
                   data-testid="AddTicketButton">
@@ -392,6 +424,7 @@ const AddPromocodeForm = ({
       )}
 
       <SwipeableDrawer
+        id="CreatorTicketsPromoCodesSwipe"
         anchor={"right"}
         open={state["right"]}
         // onClose={toggleDrawer("right", false)}
@@ -406,9 +439,18 @@ const AddPromocodeForm = ({
             marginRight: 20,
           },
         }}>
-        <Box className={classes.box} sx={{ width: 407 }}>
-          <div className={classes.headercontainer}>
-            <p className={classes.ticketp}>Add code</p>
+        <Box
+          id="CreatorTicketsPromoCodesSwipeBox"
+          className={classes.box}
+          sx={{ width: 407 }}>
+          <div
+            id="CreatorTicketsPromoCodesSwipeheadercontainer"
+            className={classes.headercontainer}>
+            <p
+              id="CreatorTicketsPromoCodesSwipeheader"
+              className={classes.ticketp}>
+              Add code
+            </p>
           </div>
           {loading ? (
             <>
