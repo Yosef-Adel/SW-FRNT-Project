@@ -26,3 +26,10 @@
 .events:hover{
     cursor: pointer;
 }
+.modalicon {
+    width: 4rem;
+    height: 4rem;
+    margin: auto;
+    align-items: center;
+    color: var(--content-text);
+  }

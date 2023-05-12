@@ -6,7 +6,9 @@ import axios from "../../../requests/axios";
 import routes from "../../../requests/routes";
 import { useSelector } from "react-redux";
 import GenericModal from "../../../generic components/generic modal/GenericModal";
+import ErrorNotification from "../../../generic components/error message/ErrorNotification";
 import HourglassBottomIcon from "@mui/icons-material/HourglassBottom";
+import { TiTick } from "react-icons/ti";
 /**
  * Component that returns Creator's Add Attendee page
  *
@@ -25,12 +27,16 @@ const CreatorAddAttendee = () => {
   const [totalPrice, setTotalPrice] = useState(0);
   const [ticketsSubmit, setTicketsSubmit] = useState([]);
   const [ticketsBought, setticketsBought] = useState([]);
-
-  const [faceValues, setfaceValues] = useState(Array(100).fill(0));
-  const [QuantityArr, setQuantityArr] = useState(Array(100).fill(0)); //Quantity Array will be used to store the quantity of each ticket type (sent to each row as a prop)
+  const [success, setSuccess] = useState(false);
+  const [faceValues, setfaceValues] = useState([]);
+  const [QuantityArr, setQuantityArr] = useState([]); //Quantity Array will be used to store the quantity of each ticket type (sent to each row as a prop)
+  const [errorMsg, setErrorMsg] = useState("");
+  const [errorLink, setErrorLink] = useState("");
+  const [errorLinkMsg, setErrorLinkMsg] = useState("");
 
   async function addAttendee(data) {
     let response = "";
+    setSuccess(false);
     try {
       response = await axios.post(
         routes.getAllEventsCreator +
@@ -40,10 +46,11 @@ const CreatorAddAttendee = () => {
           "/attendees",
         data
       );
-
+      setSuccess(true);
       return response.data;
     } catch (error) {
       if (error.response) {
+        setErrorMsg(error.response.data.message);
         return error.response;
       }
     }
@@ -67,7 +74,6 @@ const CreatorAddAttendee = () => {
     console.log("show tickets bought");
     console.log(the_tickets);
   }
-
   function register(fName, lName, email, tickets) {
     let obj = {};
     let filledArray = tickets.filter(
@@ -104,6 +110,9 @@ const CreatorAddAttendee = () => {
         routes.tickets + "/" + event.eventId + "/availableTickets"
       );
       setTicketTypes(response.data.tickets);
+      let Arr1 = Array(response.data.tickets.length).fill(0);
+      setQuantityArr(Arr1);
+      setfaceValues(Arr1);
     } catch (error) {}
   }
 
@@ -123,6 +132,13 @@ const CreatorAddAttendee = () => {
         </div>
         <div className={classes.regContainer}>
           <div className={classes.RegForm}>
+            {errorMsg ? (
+              <ErrorNotification
+                mssg={errorMsg}
+                linkmsg={errorLinkMsg}
+                link={errorLink}
+              />
+            ) : null}
             <BookingForm
               setTimeout={timeout}
               ticketsBought={ticketsBought}
@@ -134,16 +150,14 @@ const CreatorAddAttendee = () => {
               <div className={classes.regSummaryHeader}>
                 <h2>Order Summary</h2>
               </div>
-              {faceValues[0] !== null && console.log(faceValues)}
               <div className={classes.regSummaryBody}>
-                {ticketTypes.map(
-                  (ticket, index) =>
-                    QuantityArr[index] +
-                    " x " +
-                    ticket.name +
-                    "    $" +
-                    faceValues[index] +
-                    ".00"
+                {ticketTypes.map((ticket, index) =>
+                  QuantityArr[index] !== 0 ? (
+                    <div>
+                      {QuantityArr[index]} x {ticket.name} ${faceValues[index]}
+                      .00
+                    </div>
+                  ) : null
                 )}
               </div>
             </div>
@@ -154,6 +168,16 @@ const CreatorAddAttendee = () => {
               header="Time Limit Reached.
           Please re-start the process"
               icon={<HourglassBottomIcon sx={{ fontSize: "3rem" }} />}
+            />
+          )}
+
+          {success && (
+            <GenericModal
+              header="Attendee Added"
+              details={"You have succesfully added an attendee."}
+              icon={<TiTick className={classes.modalicon} />}
+              rejectbtn="Close"
+              rejecthandle={() => setSuccess(false)}
             />
           )}
         </div>
@@ -237,7 +261,8 @@ const CreatorAddAttendee = () => {
                 setTicketsSubmit(ticketsBought);
               }}
               className={classes.button}
-              data-testid="ContinueBtn">
+              data-testid="ContinueBtn"
+            >
               Continue
             </button>
           </div>
