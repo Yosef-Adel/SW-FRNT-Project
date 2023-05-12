@@ -1,7 +1,7 @@
 import React from "react";
 import { useState, useEffect } from "react";
 import classes from "./tickets.module.css";
-import {  useParams, useNavigate } from "react-router-dom";
+import { useParams, useNavigate } from "react-router-dom";
 import logo from "../../../../assets/brand/envie.svg";
 // import tickets from "../../../../assets/data/dummytickets";
 import moment from "moment";
@@ -168,7 +168,7 @@ const TicketsDetails = ({
     async function sendpromo() {
       try {
         const response = await axios.get(
-          routes.promocode + "/" + _id + "/" + inputValue + "/checkPromo"
+          routes.promocode + "/" + _id + "/" + inputValue + "/checkPromoSecured"
         );
         // console.log(response);
         setErrorMsg(false);
@@ -216,10 +216,16 @@ const TicketsDetails = ({
 
         setTicketsAmount(array);
         summary(array, ticketsNum);
-      } catch (err) {
+      } catch (error) {
         // console.log(err);
         setErrorMsg(true);
         setHelper("Sorry, we don’t recognise that code.");
+        if (
+          error.response.data.message ===
+          "You have exceeded the limit of this request."
+        ) {
+          setErrorMsg1(error.response.data.message);
+        }
       }
     }
     if (!promocode) {

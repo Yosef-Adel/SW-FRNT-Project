@@ -346,7 +346,7 @@ const BookingPopup = ({ eventtitle, date, image }) => {
                       <div
                         id="EventPageBookingPopUpSummaryTicketsSubTotalPrice"
                         className={classes.ticketprice}>
-                        {subtotal}
+                        {subtotal.toFixed(2)}
                       </div>
                     </div>
                     {discount != 0 && (
@@ -398,7 +398,7 @@ const BookingPopup = ({ eventtitle, date, image }) => {
                       <div
                         id="EventPageBookingPopUpSummaryTicketsFeesPrice"
                         className={classes.ticketprice}>
-                        {fee}
+                        {fee.toFixed(2)}
                       </div>
                     </div>
                   </div>
@@ -418,7 +418,7 @@ const BookingPopup = ({ eventtitle, date, image }) => {
                       <div
                         id="EventPageBookingPopUpSummaryTicketsTotalPrice"
                         className={classes.ticketprice}>
-                        {total}
+                        {total.toFixed(2)}
                       </div>
                     </div>
                   </div>
