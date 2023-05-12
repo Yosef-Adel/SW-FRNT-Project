@@ -13,7 +13,7 @@ import SwipeableDrawer from "@mui/material/SwipeableDrawer";
 import * as Yup from "yup";
 import Box from "@mui/material/Box";
 import { useSelector } from "react-redux";
-const TicketsView = ({ ticketsnew, dummydata }) => {
+const TicketsView = ({ ticketsnew, dummydata, setallticketmodal,setindex,seteditform}) => {
   const now = moment();
   const eventi = useSelector((state) => state.event);
   const [loading, setloading] = useState(false);
@@ -111,6 +111,12 @@ const TicketsView = ({ ticketsnew, dummydata }) => {
 
     setState({ ...state, [anchor]: open });
   };
+  function handleclick(index){
+    setallticketmodal(true);
+    setindex(index);
+    seteditform(true);
+
+  }
 
   return (
     <div>
@@ -124,7 +130,7 @@ const TicketsView = ({ ticketsnew, dummydata }) => {
         <div className={classes.container}>
           {tickets.map((Element, index) => {
             return (
-              <div className={classes.ticketcontainer}>
+              <div className={classes.ticketcontainer} onClick={() => handleclick(index)}>
                 <div className={classes.ticketinfo}>
                   <div className={classes.nameanddatecontainer}>
                     <div className={classes.iconbar}>

@@ -4,6 +4,7 @@
 .ticketcontainer{
  
     width: 100%;
+   cursor: pointer;
 }
 .ticketinfo{
   width: 90%;
