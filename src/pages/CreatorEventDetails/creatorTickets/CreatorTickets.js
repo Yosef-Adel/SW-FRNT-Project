@@ -38,7 +38,7 @@ const CreatorTickets = ({ eventID }) => {
         )}
 
         {addmisionclicked ? (
-          <Tickets empty={setEmpty} loading={setLoading}/>
+          <Tickets empty={setEmpty} isempty={empty} loading={setLoading} isloading={loading}/>
         ) : (
           <Promocodes />
         )}

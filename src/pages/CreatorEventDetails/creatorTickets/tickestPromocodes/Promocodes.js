@@ -5,11 +5,12 @@ import PromoCodesList from "../tickestPromocodes/promocodesListView/PromoCodesLi
 
 export default function Promocodes() {
     const [dummydata, setdummydata] = useState(true);
-    const [promolist, setpromolist] = useState([]);
+    const [emptypromo,setEmptypromo] = useState(false);
+    const [loadinglist,setloadinglist] = useState(true);
   return (
     <div>
-      <AddPromocodeForm setdummydata={setdummydata} dummydata={dummydata} />
-      <PromoCodesList dummydata={dummydata}  />
+      <AddPromocodeForm setdummydata={setdummydata} dummydata={dummydata} emptypromo={emptypromo} loadinglist={loadinglist} />
+      <PromoCodesList dummydata={dummydata} setemptypromo={setEmptypromo} setloadinglist={setloadinglist} />
     </div>
   );
 }

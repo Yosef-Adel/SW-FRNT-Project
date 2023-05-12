@@ -375,6 +375,13 @@
   justify-content: end;
 }
 
+.modalemptybtns {
+  display: flex;
+  flex-direction: row-reverse;
+  column-gap: 2rem;
+  justify-content: start;
+}
+
 .buttoncontainer button {
   color: #3659e3;
   outline: none;
@@ -402,6 +409,42 @@
   justify-content: center;
 }
 
+.emptypromosdesc {
+  display: flex;
+  column-gap: 2rem;
+  justify-content: center;
+  align-items: center;
+}
+
+.emptypromos {
+  margin-top: 10rem;
+}
+.emptypromossec {
+  width: 50%;
+}
+.mainsectionheader {
+  font-size: 3.2rem;
+  font-weight: 600;
+  color: var(--content-text);
+  margin: 1.4rem 0 3rem;
+}
+
+.emptyimg {
+  width: calc(50% - 3rem);
+}
+
+.emptyimg img {
+  width: 100%;
+}
+
+.emptypromosumm {
+  color: var(--primary-text);
+  font-size: 1.4rem;
+  letter-spacing: 0.05rem;
+  font-weight: 500;
+  margin-bottom: 3rem;
+}
+
 @media screen and (max-width: 480px) {
   .css-1160xiw-MuiPaper-root-MuiDrawer-paper {
     width: 100%;
@@ -410,5 +453,34 @@
   }
   .box {
     width: 100%;
+  }
+
+  .emptypromosdesc {
+    flex-direction: column-reverse;
+
+    row-gap: 2rem;
+  }
+
+  .emptypromossec {
+    width: 100%;
+  }
+  .emptyimg {
+    width: 80%;
+  }
+
+  .mainsectionheader {
+    text-align: center;
+  }
+
+  .emptypromosumm {
+    text-align: center;
+  }
+
+  .modalbtns {
+    justify-content: center;
+  }
+
+  .modalemptybtns {
+    justify-content: center;
   }
 }

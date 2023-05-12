@@ -22,8 +22,14 @@ import axios from "../../../../../requests/axios";
 import routes from "../../../../../requests/routes";
 import { useSelector } from "react-redux";
 import CircularProgress from "@mui/material/CircularProgress";
+import empty from "../../../../../assets/imgs/events/emptypromos.svg";
 
-const AddPromocodeForm = ({ setdummydata, dummydata }) => {
+const AddPromocodeForm = ({
+  setdummydata,
+  dummydata,
+  emptypromo,
+  loadinglist,
+}) => {
   // const formikRef = React.useRef(null);
   const [loading, setloading] = useState(false);
   const [state, setState] = React.useState({
@@ -289,24 +295,72 @@ const AddPromocodeForm = ({ setdummydata, dummydata }) => {
 
   return (
     <div>
-      <div className={classes.modalbtns}>
-        <div className={classes.btn}>
-          <Button
-            className={classes.selbutton}
-            onClick={toggleDrawer("right", true, true)}
-            data-testid="AddTicketButton">
-            Upload CSV
-          </Button>
+      {!loadinglist && (
+        <div>
+          {emptypromo ? (
+            <div className={classes.emptypromos}>
+              <div className={classes.emptypromosdesc}>
+                <div className={classes.emptypromossec}>
+                  <div
+                    id="CreatorticketsPagepromocodesHeader"
+                    className={classes.mainsectionheader}>
+                    Attract more attendees with promo codes
+                  </div>
+                  <div className={classes.emptypromosumm}>
+                    With promo codes, you can offer reduced prices with discount
+                    codes or reveal hidden tickets to attendees with access
+                    codes.
+                  </div>
+                  <div className={classes.emptypromosumm}>
+                    You can create codes or upload a CSV to import ones you’ve
+                    already made.
+                  </div>
+                </div>
+                <div className={classes.emptyimg}>
+                  <img src={empty} alt="Empty-PromoList" />
+                </div>
+              </div>
+              <div className={classes.modalemptybtns}>
+                <div className={classes.btn}>
+                  <Button
+                    className={classes.selbutton}
+                    onClick={toggleDrawer("right", true, true)}
+                    data-testid="AddTicketButton">
+                    Upload CSV
+                  </Button>
+                </div>
+                <div className={classes.btn}>
+                  <Button
+                    className={classes.button}
+                    onClick={toggleDrawer("right", true, false)}
+                    data-testid="AddTicketButton">
+                    Create promo code
+                  </Button>
+                </div>
+              </div>
+            </div>
+          ) : (
+            <div className={classes.modalbtns}>
+              <div className={classes.btn}>
+                <Button
+                  className={classes.selbutton}
+                  onClick={toggleDrawer("right", true, true)}
+                  data-testid="AddTicketButton">
+                  Upload CSV
+                </Button>
+              </div>
+              <div className={classes.btn}>
+                <Button
+                  className={classes.button}
+                  onClick={toggleDrawer("right", true, false)}
+                  data-testid="AddTicketButton">
+                  Add Code
+                </Button>
+              </div>
+            </div>
+          )}
         </div>
-        <div className={classes.btn}>
-          <Button
-            className={classes.button}
-            onClick={toggleDrawer("right", true, false)}
-            data-testid="AddTicketButton">
-            Create promo code
-          </Button>
-        </div>
-      </div>
+      )}
 
       <SwipeableDrawer
         anchor={"right"}
