@@ -388,12 +388,13 @@ const AddTicketForm = ({
         PaperProps={{
           style: {
             height: "calc(100% - 60px)",
-            marginTop: 60,
-            marginRight: 20,
+            marginRight: "auto",
+            marginLeft: "auto",
+            marginTop:60,
           },
         }}
       >
-        <Box className={classes.box} sx={{ width: 420, height: "100%" }}>
+        <Box className={classes.box} sx={{ width: 390, height: "100%" }}>
           <div className={classes.headercontainer}>
             {editform2 ? (
               <p className={classes.ticketp}>Edit ticket</p>

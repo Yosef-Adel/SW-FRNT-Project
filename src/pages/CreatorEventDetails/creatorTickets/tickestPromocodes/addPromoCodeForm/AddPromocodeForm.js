@@ -482,14 +482,15 @@ const AddPromocodeForm = ({
         PaperProps={{
           style: {
             height: "calc(100% - 60px)",
-            marginTop: 60,
-            marginRight: 20,
+            marginRight: "auto",
+            marginLeft: "auto",
+            marginTop:60,
           },
         }}>
         <Box
           id="CreatorTicketsPromoCodesSwipeBox"
           className={classes.box}
-          sx={{ width: 407 }}>
+          sx={{ width: 390 }}>
           <div
             id="CreatorTicketsPromoCodesSwipeheadercontainer"
             className={classes.headercontainer}>
