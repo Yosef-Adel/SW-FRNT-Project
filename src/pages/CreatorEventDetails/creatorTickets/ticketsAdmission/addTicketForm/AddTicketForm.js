@@ -30,6 +30,7 @@ import initialValuedata from "../../../../../assets/data/initialValuedata";
 const AddTicketForm = ({
   ticket,
   setdummydata,
+  dummydata,
   isempty,
   isloading,
   openmodal,
@@ -188,7 +189,7 @@ const AddTicketForm = ({
         routes.tickets + "/" + event.eventId + "/createTicket",
         data
       );
-      setdummydata(false);
+      setdummydata(!dummydata);
       setallticketmodal(false);
       setloading(false);
 
@@ -208,7 +209,7 @@ const AddTicketForm = ({
         routes.tickets + "/" + event.eventId + "/"+ticket[index]._id,
         data
       );
-      setdummydata(false);
+      setdummydata(!dummydata);
       setallticketmodal(false);
       setloading(false);
 

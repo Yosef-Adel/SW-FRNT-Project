@@ -15,7 +15,7 @@ import Box from "@mui/material/Box";
 import { useSelector } from "react-redux"
 import CircleLoader from "../../../../../layouts/loader/CircleLoader";
 
-const TicketsView = ({ ticketsnew, dummydata, empty, isloading,setallticketmodal,setindex,seteditform,seteditform2 }) => {
+const TicketsView = ({ ticketsnew, dummydata, empty, isloading,setallticketmodal,setindex,seteditform,seteditform2,allticketmodal }) => {
   const now = moment();
   const eventi = useSelector((state) => state.event);
   const [loading, setloading] = useState(false);
@@ -76,7 +76,7 @@ const TicketsView = ({ ticketsnew, dummydata, empty, isloading,setallticketmodal
 
   useEffect(() => {
     getticketsforevent();
-  }, [dummydata]);
+  }, [seteditform2,dummydata,setallticketmodal]);
 
   async function getevent() {
     try {
@@ -127,7 +127,7 @@ const TicketsView = ({ ticketsnew, dummydata, empty, isloading,setallticketmodal
     setallticketmodal(true);
     setindex(index);
     seteditform(true);
-    seteditform2(true)
+    seteditform2(true);
 
   }
 

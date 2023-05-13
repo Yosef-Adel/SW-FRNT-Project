@@ -19,6 +19,7 @@ export default function Tickets({ empty, isempty, loading, isloading }) {
     <div>
       <AddTicketForm
         setdummydata={setdummydata}
+        dummydata={dummydata}
         ticket={ticketlist}
         isempty={isempty}
         isloading={isloading}
@@ -26,6 +27,7 @@ export default function Tickets({ empty, isempty, loading, isloading }) {
         openmodal={allticketmodal}
         index={index}
         seteditform={seteditform}
+        allticketmodal={allticketmodal}
         editform={editform}
         Initialvalues={initialvalues}
         setintialvalues={setintialvalues}
