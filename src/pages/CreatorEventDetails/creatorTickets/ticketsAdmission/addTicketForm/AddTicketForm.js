@@ -26,7 +26,7 @@ import GenericModal from "../../../../../generic components/generic modal/Generi
 import { TiTick } from "react-icons/ti";
 import ErrorNotification from "../../../../../generic components/error message/ErrorNotification";
 import CircleLoader from "../../../../../layouts/loader/CircleLoader";
-
+import initialValuedata from "../../../../../assets/data/initialValuedata";
 const AddTicketForm = ({
   ticket,
   setdummydata,
@@ -39,6 +39,8 @@ const AddTicketForm = ({
   seteditform,
   Initialvalues,
   setintialvalues,
+  editform2={editform2},
+  seteditform2={seteditform2}
 }) => {
   const initialValues = {
     name: Initialvalues.name,
@@ -85,7 +87,7 @@ const AddTicketForm = ({
           .required("  Price is required to make a paid ticket"),
       });
     }
-
+    return schema;
     //salesend: Yup.date().min(new Date(), "End date cannot be in the past."),
   };
   const [advancedopen, setadvancedopen] = useState(false);
@@ -107,6 +109,7 @@ const AddTicketForm = ({
   const [checked, setChecked] = React.useState(true);
   const [datetime, SetDatetime] = useState(true);
   const [loading, setloading] = useState(false);
+  
   const handleChange = (event) => {
     setChecked(event.target.checked);
   };
@@ -135,7 +138,7 @@ const AddTicketForm = ({
       SetDatetime(false);
     }
   }
-  if (editform && setallticketmodal) {
+  if (editform ) {
     let Price = "";
     console.log(typeof ticket[index].type);
     if (ticket[index].type == "Paid") {
@@ -166,6 +169,7 @@ const AddTicketForm = ({
     };
     setintialvalues(updateinitialvalues);
     seteditform(false);
+    
   }
   // const toggleDrawer = (anchor, open) => (event) => {
   //   if (
@@ -191,11 +195,40 @@ const AddTicketForm = ({
       console.log(response.data);
     } catch (err) {
       console.log(err);
-      setallticketmodal(false);
+
       setloading(false);
       setErrorMsg(err.response.data.message);
     }
   }
+
+  async function editticket(data) {
+    try {
+      setloading(true);
+      const response = await axios.put(
+        routes.tickets + "/" + event.eventId + "/"+ticket[index]._id,
+        data
+      );
+      setdummydata(false);
+      setallticketmodal(false);
+      setloading(false);
+
+      console.log(response.data);
+      seteditform2(false);
+    } catch (err) {
+      console.log(err);
+
+      setloading(false);
+      setErrorMsg(err.response.data.message);
+      seteditform2(false);
+    }
+  }
+
+
+
+
+
+
+
   const handleSubmit = (data, { setErrors }) => {
     //console.log(data);
 
@@ -207,6 +240,7 @@ const AddTicketForm = ({
     if (paidclicked) {
       datasent.type = "Paid";
       datasent.price = Number(data.price);
+      delete datasent.freeprice;
     } else {
       datasent.type = "free";
       delete datasent.freeprice;
@@ -237,14 +271,29 @@ const AddTicketForm = ({
     delete datasent.salesstart;
     delete datasent.starttime;
     delete datasent.ticketoption;
+    delete datasent.event;
     console.log(datasent);
-    addevent(datasent);
+  
+    if(editform2)
+    {
+      editticket(datasent);
+
+
+    }else{
+      addevent(datasent);
+    }
+ 
     // Formik.resetForm();
   };
   // function handlecancel() {
   //   console.log("ay7agaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa");
   //   toggleDrawer("right", false);
   // }
+  function handlecancelclick() {
+    setallticketmodal(false);
+    setintialvalues(initialValuedata);
+    seteditform2(false);
+  }
 
   return (
     <div>
@@ -345,7 +394,7 @@ const AddTicketForm = ({
       >
         <Box className={classes.box} sx={{ width: 420, height: "100%" }}>
           <div className={classes.headercontainer}>
-            {editform ? (
+            {editform2 ? (
               <p className={classes.ticketp}>Edit ticket</p>
             ) : (
               <p className={classes.ticketp}>Add tickets</p>
@@ -750,7 +799,7 @@ const AddTicketForm = ({
                       <div className={classes.stayleavebtn}>
                         <button
                           className={classes.staybutton}
-                          onClick={() => setallticketmodal(false)}
+                          onClick={() => handlecancelclick()}
                           type="reset"
                         >
                           Cancel

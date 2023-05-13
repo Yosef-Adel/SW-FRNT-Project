@@ -1,4 +1,4 @@
-const initialValues = {
+const initialValuedata = {
 
     name: "General Admission",
     availablequantity: "",
@@ -15,5 +15,5 @@ const initialValues = {
       
   };
   
-  export default initialValues;
+  export default initialValuedata;
   
