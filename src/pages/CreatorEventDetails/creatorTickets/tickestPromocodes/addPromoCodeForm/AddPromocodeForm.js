@@ -50,16 +50,16 @@ const AddPromocodeForm = ({
   const [selectedValuelimit, setSelectedValuelimit] = useState("Unlimited");
   const [scheduleopen, setscheduleopen] = useState(false);
   const [selectedValuestart, setSelectedValuestart] = useState("Now");
-  const [dateValuestart, setdateValuestart] = useState(
-    moment().format("YYYY-MM-DD")
-  );
+  // const [dateValuestart, setdateValuestart] = useState(
+  //   moment().format("YYYY-MM-DD")
+  // );
   const [scheduleopenend, setscheduleopenend] = useState(false);
   const [selectedValueend, setSelectedValueend] = useState(
     "When ticket sales end"
   );
-  const [dateValueend, setdateValueend] = useState(
-    moment().format("YYYY-MM-DD")
-  );
+  // const [dateValueend, setdateValueend] = useState(
+  //   moment().format("YYYY-MM-DD")
+  // );
 
   const [tickets, setTickets] = useState([]);
   const [selectedvaluetickets, setselectedvaluetickets] = useState(
@@ -89,9 +89,9 @@ const AddPromocodeForm = ({
     }
   };
 
-  const handlestartDatechange = (date) => {
-    setdateValuestart(moment(date.$d, "YYYY-MM-DD").format("YYYY-MM-DD"));
-  };
+  // const handlestartDatechange = (date) => {
+  //   setdateValuestart(moment(date.$d, "YYYY-MM-DD").format("YYYY-MM-DD"));
+  // };
 
   const handleSelectedend = (selected) => {
     setSelectedValueend(selected);
@@ -102,9 +102,9 @@ const AddPromocodeForm = ({
     }
   };
 
-  const handleendDatechange = (date) => {
-    setdateValueend(moment(date.$d, "YYYY-MM-DD").format("YYYY-MM-DD"));
-  };
+  // const handleendDatechange = (date) => {
+  //   setdateValueend(moment(date.$d, "YYYY-MM-DD").format("YYYY-MM-DD"));
+  // };
 
   const handleTickets = (choose) => {
     setselectedvaluetickets(choose);
@@ -182,7 +182,7 @@ const AddPromocodeForm = ({
     }
 
     if (scheduleopen) {
-      let sDate = new Date(dateValuestart + " " + data.starttime);
+      let sDate = new Date(data.dateValuestart + " " + data.starttime);
       let startDate = sDate.toISOString();
       datasent.startDate = startDate;
     } else {
@@ -194,9 +194,10 @@ const AddPromocodeForm = ({
     formData.append("startDate", datasent.startDate);
 
     delete datasent.starttime;
+    delete datasent.dateValuestart;
 
     if (scheduleopenend) {
-      let eDate = new Date(dateValueend + " " + data.endtime);
+      let eDate = new Date(data.dateValueend + " " + data.endtime);
       let endDate = eDate.toISOString();
       datasent.endDate = endDate;
     } else {
@@ -205,6 +206,7 @@ const AddPromocodeForm = ({
     }
     formData.append("endDate", datasent.endDate);
     delete datasent.endtime;
+    delete datasent.dateValueend;
 
     if (alltickets) {
       let filledArray = new Array(tickets.length)
@@ -282,6 +284,8 @@ const AddPromocodeForm = ({
     starttime: "10:00 AM",
     endtime: "10:00 PM",
     tickets: [],
+    dateValuestart: moment().format("YYYY-MM-DD"),
+    dateValueend: moment().format("YYYY-MM-DD"),
   };
 
   const getValidationSchema = () => {
@@ -317,11 +321,49 @@ const AddPromocodeForm = ({
     if (scheduleopen) {
       schema = schema.shape({
         starttime: Yup.string().required("Start Time is required"),
+        dateValuestart: Yup.date()
+          .min(
+            moment(new Date()).format("MM-DD-YYYY"),
+            "Start date must be later than " +
+              moment(new Date()).format("DD-MM-YYYY")
+          )
+          .required("Start Date is required."),
       });
     }
     if (scheduleopenend) {
       schema = schema.shape({
-        endtime: Yup.string().required("Start Time is required"),
+        endtime: Yup.string().required("End Time is required"),
+        dateValueend: Yup.date()
+          .min(Yup.ref("dateValuestart"), "End date must be after Start Date")
+          .required("End Date is required."),
+        // .test(
+        //   "datetime",
+        //   "End date&time must be later than start date&time",
+        //   function () {
+        //     const { dateValuestart, starttime, dateValueend, endtime } =
+        //       this.parent;
+
+        //     // Convert start time to 24-hour format
+        //     const startTime24 = moment(starttime, ["h:mm A"]).format("HH:mm");
+
+        //     // Convert end time to 24-hour format
+        //     const endTime24 = moment(endtime, ["h:mm A"]).format("HH:mm");
+
+        //     // Combine start date and time
+        //     const startDateTime = moment(
+        //       `${dateValuestart} ${startTime24}`,
+        //       "YYYY-MM-DD HH:mm"
+        //     );
+
+        //     // Combine end date and time
+        //     const endDateTime = moment(
+        //       `${dateValueend} ${endTime24}`,
+        //       "YYYY-MM-DD HH:mm"
+        //     );
+
+        //     return endDateTime.diff(startDateTime) > 0;
+        //   }
+        // ),
       });
     }
     return schema;
@@ -469,7 +511,7 @@ const AddPromocodeForm = ({
               initialValues={initialValues}
               validationSchema={getValidationSchema()}
               onSubmit={handleSubmit}>
-              {({ values, resetForm }) => (
+              {({ values, setFieldValue, resetForm }) => (
                 <Form className={classes.form}>
                   <div className={classes.forminfo}>
                     {errorMsg ? (
@@ -698,11 +740,18 @@ const AddPromocodeForm = ({
                                 <DemoItem>
                                   <DatePicker
                                     defaultValue={dayjs(
-                                      moment().format("YYYY-MM-DD")
+                                      initialValues.dateValuestart
                                     )}
                                     id="CreatorTicketsPromoCodesStartDateInput"
                                     data-testid="CreatorTicketsPromoCodesStartDateInput"
-                                    onChange={(e) => handlestartDatechange(e)}
+                                    onChange={(date) =>
+                                      setFieldValue(
+                                        "dateValuestart",
+                                        moment(date.$d, "YYYY-MM-DD").format(
+                                          "YYYY-MM-DD"
+                                        )
+                                      )
+                                    }
                                     sx={{
                                       "& .MuiInputBase-input": {
                                         height: "2rem",
@@ -715,6 +764,11 @@ const AddPromocodeForm = ({
                                 </DemoItem>
                               </DemoContainer>
                             </LocalizationProvider>
+
+                            <ErrorMessage
+                              name="dateValuestart"
+                              component="span"
+                            />
                           </div>
 
                           <div
@@ -808,9 +862,16 @@ const AddPromocodeForm = ({
                                     id="CreatorTicketsPromoCodesEndDateInput"
                                     data-testid="CreatorTicketsPromoCodesEndDateInput"
                                     defaultValue={dayjs(
-                                      moment().format("YYYY-MM-DD")
+                                      initialValues.dateValueend
                                     )}
-                                    onChange={(e) => handleendDatechange(e)}
+                                    onChange={(date) =>
+                                      setFieldValue(
+                                        "dateValueend",
+                                        moment(date.$d, "YYYY-MM-DD").format(
+                                          "YYYY-MM-DD"
+                                        )
+                                      )
+                                    }
                                     sx={{
                                       "& .MuiInputBase-input": {
                                         height: "2rem",
@@ -823,6 +884,11 @@ const AddPromocodeForm = ({
                                 </DemoItem>
                               </DemoContainer>
                             </LocalizationProvider>
+
+                            <ErrorMessage
+                              name="dateValueend"
+                              component="span"
+                            />
                           </div>
 
                           <div

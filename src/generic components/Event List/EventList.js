@@ -9,26 +9,45 @@ import moment from "moment";
 const EventList = (props) => {
   const [Eventcards, SetEventcards] = useState([0, 0, 0, 0]);
   const [loading, setLoading] = useState(true);
+  const [limit, setLimit] = useState(true);
 
   async function getEventCards() {
     SetEventcards([0, 0, 0, 0]);
     setLoading(true);
     let response = "";
+    let cat = props.category == "All" ? "" : props.category;
+    let req = "";
+    if (limit) {
+      req =
+        routes.paginatedevents +
+        "?category=" +
+        cat +
+        "&lat=" +
+        (props.location[0] ? props.location[0] : "") +
+        "&lng=" +
+        (props.location[1] ? props.location[1] : "") +
+        "&time=" +
+        props.time +
+        "&isOnline=" +
+        props.online +
+        "&limit=8";
+    } else {
+      req =
+        routes.paginatedevents +
+        "?category=" +
+        cat +
+        "&lat=" +
+        (props.location[0] ? props.location[0] : "") +
+        "&lng=" +
+        (props.location[1] ? props.location[1] : "") +
+        "&time=" +
+        props.time +
+        "&isOnline=" +
+        props.online;
+    }
+
     try {
-      let cat = props.category == "All" ? "" : props.category;
-      response = await axios.get(
-        routes.events +
-          "?category=" +
-          cat +
-          "&lat=" +
-          (props.location[0] ? props.location[0] : "") +
-          "&lng=" +
-          (props.location[1] ? props.location[1] : "") +
-          "&time=" +
-          props.time +
-          "&isOnline=" +
-          props.online
-      );
+      response = await axios.get(req);
       SetEventcards(response.data.events);
       setLoading(false);
       props.detectCity(response.data.city);
@@ -45,13 +64,12 @@ const EventList = (props) => {
 
   useEffect(() => {
     getEventCards();
-  }, [props.location, props.category, props.time, props.online]);
+  }, [props.location, props.category, props.time, props.online, limit]);
 
   return (
     <div>
       <div className={classes.secheader}>
-      {props.city?<h3>Events in {props.city}</h3> : <h3>Events</h3>}
-        
+        {props.city ? <h3>Events in {props.city}</h3> : <h3>Events</h3>}
       </div>
       <div className={classes.list}>
         {Eventcards.length == 0 ? (
@@ -76,7 +94,9 @@ const EventList = (props) => {
       </div>
       {!loading && Eventcards.length != 0 && (
         <div className={classes.moreBtn}>
-          <button type="button">See more</button>
+          <button onClick={() => setLimit(!limit)} type="button">
+            {limit ? "See more" : "See less"}
+          </button>
         </div>
       )}
     </div>

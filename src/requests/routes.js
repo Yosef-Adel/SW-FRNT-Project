@@ -2,6 +2,7 @@ const routes = {
   signUp: "/auth/sign-up",
   logIn: "/auth/login",
   events: "/api/events",
+  paginatedevents: "/api/events/paginated",
   getUser: "/user",
   userToCreator: "/user/to-creator",
   promocode: "/promocode",
@@ -18,6 +19,6 @@ const routes = {
   createEvent: "/api/events",
   sendNotificationToken: "/user/notification",
   getAllEventsCreator: "/api/events/",
-  updateEvent: "/api/events/"
+  updateEvent: "/api/events/",
 };
 export default routes;

@@ -123,9 +123,11 @@ const TicketsDetails = ({
    */
 
   function addamount(index) {
-    if (
-      ticketsAmount[index].number < tickets.tickets[index].maxQuantityPerOrder
-    ) {
+    let max = Math.min(
+      tickets.tickets[index].maxQuantityPerOrder,
+      tickets.tickets[index].capacity - tickets.tickets[index].sold
+    );
+    if (ticketsAmount[index].number < max) {
       let amount = ticketsAmount;
       amount[index].number = amount[index].number + 1;
       setTicketsAmount(amount);
@@ -371,7 +373,10 @@ const TicketsDetails = ({
                       data-testid="AddTicketBtn"
                       className={
                         ticketsAmount[index].number ==
-                        element.maxQuantityPerOrder
+                        Math.min(
+                          element.maxQuantityPerOrder,
+                          element.capacity - element.sold
+                        )
                           ? classes.addremove
                           : classes.addremoveactive
                       }
