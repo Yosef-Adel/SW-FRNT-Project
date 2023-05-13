@@ -573,7 +573,9 @@ const AddTicketForm = ({
                                           paddingBottom: "18px",
                                           paddingTop: "18px",
                                         },
+                                        
                                       }}
+                                      data-testid="SalesstartDateForAddTicketInput"
                                     />
                                   </DemoItem>
                                 </DemoContainer>
@@ -655,6 +657,7 @@ const AddTicketForm = ({
                                       fontSize: 14,
                                     },
                                   }}
+                                  data-testid="SalesEndDateForAddTicketInput"
                                 />
                               </DemoItem>
                             </DemoContainer>
@@ -727,6 +730,7 @@ const AddTicketForm = ({
                                 className={classes.field}
                                 name="description"
                                 placeholder="Tell attendess more about this ticket"
+                                data-testid="DesciptionForAddTicketInput"
                               />
                             </div>
                           </div>
@@ -739,6 +743,7 @@ const AddTicketForm = ({
                                 className={classes.field}
                                 name="Visibility"
                                 component="select"
+                                data-testid="VisibilityForAddTicketInput"
                               >
                                 <option>Visible</option>
                                 <option>Hidden</option>
@@ -763,6 +768,7 @@ const AddTicketForm = ({
                                   className={classes.field}
                                   name="minimumquantity"
                                   onKeyPress={handleKeyPress}
+                                  data-testid=" MinimumQuantityForAddTicketInput"
                                 ></Field>
                               </div>
                             </div>
@@ -779,6 +785,7 @@ const AddTicketForm = ({
                                   className={classes.field}
                                   name="maximumquantity"
                                   onKeyPress={handleKeyPress}
+                                  data-testid="MaximumQuantityForAddTicketInput"
                                 ></Field>
                               </div>
                             </div>
@@ -795,6 +802,7 @@ const AddTicketForm = ({
                                 className={classes.field}
                                 name="saleschannel"
                                 component="select"
+                                data-testid="SalesChannelForAddTicketInput"
                               >
                                 <option>Online only</option>
                               </Field>
@@ -809,13 +817,14 @@ const AddTicketForm = ({
                           className={classes.staybutton}
                           onClick={() => handlecancelclick()}
                           type="reset"
+                          data-testid="CreatorTicketsAddTicketCancelBtn"
                         >
                           Cancel
                         </button>
                       </div>
 
                       <div className={classes.stayleavebtn}>
-                        <button type="submit" className={classes.leavebutton}>
+                        <button type="submit" className={classes.leavebutton}    data-testid="CreatorTicketsAddTicketSubmitBtn">
                           Save
                         </button>
                       </div>
