@@ -46,5 +46,29 @@ td {
 }
 
 .hyperlink:hover {
-    text-decoration: underline;
-  }
+  text-decoration: underline;
+}
+
+.emptypromos {
+  width: 50%;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  row-gap: 2rem;
+  margin: 3rem auto;
+}
+
+
+.emptyticketsicon svg {
+  width: 12rem;
+  height: 12rem;
+}
+
+.mainsectionheaderno {
+  font-size: 1.7rem;
+  font-weight: 600;
+  color: #6f7287;
+  margin: 3rem auto;
+  text-align: center;
+}

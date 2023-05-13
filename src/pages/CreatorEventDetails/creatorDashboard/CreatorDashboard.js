@@ -360,8 +360,8 @@ const CreatorDashboard = () => {
               <div
                 id="CreatorDashBoardPageSalesCardsContainer"
                 className={classes.salescards}>
-                <SalesCards title="Gross Sales" amount={grossSales.toFixed(2)} />
-                <SalesCards title="Net Sales" amount={netSales.toFixed(2)} />
+                <SalesCards title="Gross Sales" amount={grossSales} />
+                <SalesCards title="Net Sales" amount={netSales} />
                 <SalesCards
                   title="Tickets + Add-Ons Sold"
                   amount={soldTickets}
