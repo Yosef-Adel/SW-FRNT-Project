@@ -89,12 +89,13 @@ const CreatorEvents = () => {
       const request = await axios.get(
         routes.getAllEventsCreator + user.id + filterValue
       );
-      setLoader(false);
+
       if (filterValue == "/all-events") {
         setEventList(request.data.events);
       } else {
         setEventList(request.data.userEvents);
       }
+      setLoader(false);
     } catch (err) {
       setLoader(false);
     }
