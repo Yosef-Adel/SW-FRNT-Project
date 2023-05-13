@@ -209,6 +209,8 @@ const AddTicketForm = ({
       datasent.price = Number(data.price);
     } else {
       datasent.type = "free";
+      delete datasent.freeprice;
+      delete datasent.price;
     }
     delete datasent.salesend;
     delete datasent.Visibility;
