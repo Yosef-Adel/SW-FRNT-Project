@@ -15,7 +15,7 @@
   width: 50rem;
   gap: 5rem;
 }
-.cardsContainer{
+.cardsContainer {
   display: flex;
   justify-content: space-between;
 }
@@ -30,7 +30,7 @@
   text-decoration: underline;
 }
 
-.exportDisabled{
+.exportDisabled {
   display: flex;
   align-items: center;
   gap: 0.5rem;
@@ -56,9 +56,9 @@
 
 /* Hide scrollbar for IE, Edge and Firefox */
 .attendeetable {
-  -ms-overflow-style: none;  /* IE and Edge */
-  scrollbar-width: none;  /* Firefox */
-} 
+  -ms-overflow-style: none; /* IE and Edge */
+  scrollbar-width: none; /* Firefox */
+}
 
 .attendeetable table {
   text-align: start;
@@ -90,35 +90,177 @@
   padding: 2rem 1rem;
   min-width: 5rem;
   text-align: left;
-
 }
 
-.icons{
+.icons {
   margin-top: auto;
   display: flex;
   gap: 1rem;
 }
-.icons svg{
+.icons svg {
   width: 3rem;
   height: 3rem;
   fill: var(--primary-text);
 }
 
-.icons>span:nth-child(2){
+.icons > span:nth-child(2) {
   transform: rotate(180deg);
 }
 
-.icons svg:hover{
+.icons svg:hover {
   background-color: var(--primary-background);
   border-radius: 100%;
   cursor: pointer;
 }
 
-.disable>svg{
+.disable > svg {
   fill: var(--faded-grey);
 }
 
-.disable>svg:hover{
+.disable > svg:hover {
   background-color: transparent;
   cursor: not-allowed;
+}
+
+.emptypromos {
+  width: 50%;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  row-gap: 2rem;
+  margin: 3rem auto;
+}
+
+.emptyticketsicon svg {
+  width: 12rem;
+  height: 12rem;
+}
+
+.mainsectionheaderno {
+  font-size: 1.7rem;
+  font-weight: 600;
+  color: #6f7287;
+  margin: 3rem auto;
+  text-align: center;
+}
+
+.emptyticketsicon {
+  border-radius: 100%;
+  background-color: var(--primary-background);
+}
+
+.btn {
+  width: 100%;
+  margin: 3rem auto;
+  justify-content: space-between;
+  display: flex;
+}
+
+.btnsList {
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+  gap: 1.5rem;
+  width: 65%;
+}
+
+.btnsList2 {
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+  gap: 1.5rem;
+  width: 35%;
+}
+
+.searchField {
+  display: flex;
+  justify-self: baseline;
+  width: 100%;
+  border: 0.2rem solid var(--border-color);
+  border-radius: 0.2rem;
+  height: 5rem;
+  /* justify-content: center; */
+  align-items: center;
+  padding: 0 1rem;
+}
+.search {
+  display: flex;
+  justify-self: baseline;
+  width: 25rem;
+  height: 5rem;
+  border: none;
+  background-color: white;
+}
+
+.search::placeholder {
+  color: var(--secondary-text);
+  font-size: 1.3rem;
+  padding-left: 2rem;
+}
+
+hr {
+  width: 100%;
+  border-top: 1px solid #eeedf2;
+  margin: 3rem 0 !important;
+}
+
+.hyperlink {
+  color: var(--bright-blue);
+  font-size: 1.4rem;
+  letter-spacing: 0.05rem;
+  font-weight: 600;
+  cursor: pointer;
+  display: flex;
+  /* justify-content: end; */
+  margin: 2rem 0;
+}
+
+.hyperlink:hover {
+  text-decoration: underline;
+}
+
+.box {
+  background-color: #ebeffd;
+  border: 2px solid #3659e3;
+  width: 100%;
+  border-radius: 5px;
+  margin: 3rem 0;
+}
+
+.innerbox {
+  padding: 2rem;
+  display: flex;
+  column-gap: 2rem;
+  align-items: center;
+}
+
+.boxicon {
+  border-radius: 100%;
+  background-color: var(--bright-blue);
+  width: 4rem;
+  height: 4rem;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.boxicon svg {
+  width: 2rem;
+  height: 2rem;
+  fill: white;
+}
+
+.boxdesc {
+  font-size: 1.4rem;
+  color: var(--primary-text);
+  width: calc(100% - 18rem);
+}
+
+@media screen and (max-width: 790px) {
+  .container {
+    padding-inline: 4rem;
+  }
 }
