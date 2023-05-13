@@ -1,6 +1,6 @@
 const initialValuedata = {
 
-    name: "General Admission",
+    name: "",
     availablequantity: "",
     price: "",
     ticketoption: "",
