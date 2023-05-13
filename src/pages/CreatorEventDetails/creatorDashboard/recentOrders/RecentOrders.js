@@ -82,7 +82,7 @@ const RecentOrders = ({ recentordersReport }) => {
                         "CreatorDashBoardPageSalesRecentOrdersTableBodyDataPrice" +
                         index
                       }>
-                      {item.price}
+                      {item.price.toFixed(2)}
                     </td>
                     <td
                       id={
