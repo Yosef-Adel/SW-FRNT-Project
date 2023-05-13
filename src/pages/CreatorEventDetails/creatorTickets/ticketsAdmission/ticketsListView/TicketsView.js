@@ -42,6 +42,7 @@ const TicketsView = ({ ticketsnew, dummydata, empty, isloading,setallticketmodal
 
       .required("Capacity is required."),
   });
+  
   async function getticketsforevent() {
     try {
       isloading(true);
@@ -51,6 +52,7 @@ const TicketsView = ({ ticketsnew, dummydata, empty, isloading,setallticketmodal
       );
       setTickets(response.data.tickets);
       ticketsnew(response.data.tickets);
+      console.log(response.data.tickets);
       setloading(false);
       isloading(false);
       if (response.data.tickets.length == 0) {
@@ -66,6 +68,7 @@ const TicketsView = ({ ticketsnew, dummydata, empty, isloading,setallticketmodal
       });
       setfullcapacity(totalCapacity);
       setsold(totalSold);
+     
     } catch (err) {
       console.log(err);
     }

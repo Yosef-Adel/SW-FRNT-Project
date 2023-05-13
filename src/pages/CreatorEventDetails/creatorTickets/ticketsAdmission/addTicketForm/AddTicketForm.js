@@ -53,6 +53,7 @@ const AddTicketForm = ({
     maximumquantity: Initialvalues.maximumquantity,
     description: Initialvalues.description,
     Visibility: Initialvalues.Visibility,
+    freeprice: "",
   };
 
   function handleKeyPress(event) {
@@ -123,6 +124,8 @@ const AddTicketForm = ({
     setfreeClicked(true);
     setpaidClicked(false);
     setdonationClicked(false);
+
+    console.log(Initialvalues);
     console.log(freeclicked);
   }
   function handlechangetimeorsalesend(e) {
@@ -446,13 +449,22 @@ const AddTicketForm = ({
                           </label>
                           <div className={classes.container2}>
                             <p className={classes.dollar}>$</p>
-                            <Field
-                              disabled={freeclicked || donationclicked}
-                              className={classes.field}
-                              name="price"
-                              placeholder="0.00"
-                              onKeyPress={handleKeyPress}
-                            />
+                            {freeclicked || donationclicked ? (
+                              <Field
+                                disabled={true}
+                                className={classes.field}
+                                name="freeprice"
+                                placeholder="0.00"
+                              />
+                            ) : (
+                              <Field
+                                disabled={false}
+                                className={classes.field}
+                                name="price"
+                                placeholder="0.00"
+                                onKeyPress={handleKeyPress}
+                              />
+                            )}
                           </div>
                         </div>
                         {paidclicked ? (
@@ -489,9 +501,7 @@ const AddTicketForm = ({
                                 <DemoContainer components={[]}>
                                   <DemoItem>
                                     <DatePicker
-                                      value={dayjs(
-                                        Initialvalues.salesstart)
-                                      }
+                                      value={dayjs(Initialvalues.salesstart)}
                                       onChange={(date) => {
                                         setFieldValue(
                                           "salesstart",
@@ -567,9 +577,7 @@ const AddTicketForm = ({
                             <DemoContainer components={[]}>
                               <DemoItem className={classes.DemoContainer}>
                                 <DatePicker
-                                   value={dayjs(
-                                    Initialvalues.salesend)
-                                  }
+                                  value={dayjs(Initialvalues.salesend)}
                                   onChange={(date) => {
                                     setFieldValue(
                                       "salesend",
