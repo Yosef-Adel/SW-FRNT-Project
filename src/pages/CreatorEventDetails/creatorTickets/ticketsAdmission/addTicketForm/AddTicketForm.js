@@ -461,7 +461,7 @@ const AddTicketForm = ({
                             name="name"
                             type="text"
                             autoComplete="off"
-                            data-testid="LoginFormEmailInput"
+                            data-testid="NameForAddTicketInput"
                             placeholder="Ticket name"
                           />
                         </div>
@@ -478,6 +478,7 @@ const AddTicketForm = ({
                             name="availablequantity"
                             autoComplete="off"
                             onKeyPress={handleKeyPress}
+                            data-testid="AvailablequantityForAddTicketInput"
                           />
                         </div>
                         <ErrorMessage
@@ -507,6 +508,7 @@ const AddTicketForm = ({
                                 className={classes.field}
                                 name="freeprice"
                                 placeholder="0.00"
+                                data-testid="priceForAddTicketInput"
                               />
                             ) : (
                               <Field
@@ -515,6 +517,7 @@ const AddTicketForm = ({
                                 name="price"
                                 placeholder="0.00"
                                 onKeyPress={handleKeyPress}
+                                data-testid="priceForAddTicketInput"
                               />
                             )}
                           </div>
@@ -535,6 +538,7 @@ const AddTicketForm = ({
                             name="ticketavailable"
                             component="select"
                             onChange={handlechangetimeorsalesend}
+                            data-testid=" WhenareticketsavailableForAddTicketInput"
                           >
                             <option>Data & time</option>
                             <option>When sales end for...</option>
@@ -569,7 +573,9 @@ const AddTicketForm = ({
                                           paddingBottom: "18px",
                                           paddingTop: "18px",
                                         },
+                                        
                                       }}
+                                      data-testid="SalesstartDateForAddTicketInput"
                                     />
                                   </DemoItem>
                                 </DemoContainer>
@@ -585,6 +591,7 @@ const AddTicketForm = ({
                                   className={classes.field}
                                   name="starttime"
                                   component="select"
+                                  data-testid=" StartTimeForAddTicketInput"
                                 >
                                   {Time.options.map((item, index) => {
                                     return (
@@ -612,6 +619,7 @@ const AddTicketForm = ({
                               className={classes.field}
                               name="ticketoption"
                               component="select"
+                              data-testid=" TicketOptionForAddTicketInput"
                             >
                               {ticket.map((Element, index) => {
                                 return (
@@ -649,6 +657,7 @@ const AddTicketForm = ({
                                       fontSize: 14,
                                     },
                                   }}
+                                  data-testid="SalesEndDateForAddTicketInput"
                                 />
                               </DemoItem>
                             </DemoContainer>
@@ -662,11 +671,12 @@ const AddTicketForm = ({
                               className={classes.field}
                               name="endtime"
                               component="select"
+                              data-testid=" EndtimeForAddTicketInput"
                             >
                               {Time.options.map((item, index) => {
                                 return (
                                   <option
-                                    key={"AddPromoCodeStartTime" + index}
+                                    key={"AddTickettartTime" + index}
                                     id={"AddPromoCodeStartTime" + index}
                                     value={item}
                                   >
@@ -720,6 +730,7 @@ const AddTicketForm = ({
                                 className={classes.field}
                                 name="description"
                                 placeholder="Tell attendess more about this ticket"
+                                data-testid="DesciptionForAddTicketInput"
                               />
                             </div>
                           </div>
@@ -732,6 +743,7 @@ const AddTicketForm = ({
                                 className={classes.field}
                                 name="Visibility"
                                 component="select"
+                                data-testid="VisibilityForAddTicketInput"
                               >
                                 <option>Visible</option>
                                 <option>Hidden</option>
@@ -756,6 +768,7 @@ const AddTicketForm = ({
                                   className={classes.field}
                                   name="minimumquantity"
                                   onKeyPress={handleKeyPress}
+                                  data-testid=" MinimumQuantityForAddTicketInput"
                                 ></Field>
                               </div>
                             </div>
@@ -772,6 +785,7 @@ const AddTicketForm = ({
                                   className={classes.field}
                                   name="maximumquantity"
                                   onKeyPress={handleKeyPress}
+                                  data-testid="MaximumQuantityForAddTicketInput"
                                 ></Field>
                               </div>
                             </div>
@@ -788,6 +802,7 @@ const AddTicketForm = ({
                                 className={classes.field}
                                 name="saleschannel"
                                 component="select"
+                                data-testid="SalesChannelForAddTicketInput"
                               >
                                 <option>Online only</option>
                               </Field>
@@ -802,13 +817,14 @@ const AddTicketForm = ({
                           className={classes.staybutton}
                           onClick={() => handlecancelclick()}
                           type="reset"
+                          data-testid="CreatorTicketsAddTicketCancelBtn"
                         >
                           Cancel
                         </button>
                       </div>
 
                       <div className={classes.stayleavebtn}>
-                        <button type="submit" className={classes.leavebutton}>
+                        <button type="submit" className={classes.leavebutton}    data-testid="CreatorTicketsAddTicketSubmitBtn">
                           Save
                         </button>
                       </div>
