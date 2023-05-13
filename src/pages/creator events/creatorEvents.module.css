@@ -206,7 +206,17 @@
 }
 
 @media screen and (max-width: 960px) {
-  .btn {
+  .unusedBtnCalendar {
+    display: none;
+  }
+
+  .unusedBtn
+  {
+    display: none;
+  }
+
+  .searchField
+  {
     display: none;
   }
 }
