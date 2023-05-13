@@ -63,6 +63,9 @@ const CreatorPublish = () => {
   }
 
   function compare(data){
+    if(!event.isPublished){
+      return false
+    }
     if (JSON.stringify(data) === JSON.stringify(initialValues)){
       setDisableSubmit(true)
       return true
@@ -72,11 +75,9 @@ const CreatorPublish = () => {
     }
   }
 
-  // useEffect(() => {
-  //   console.log(formValues);
-  //   console.log(initialValues);
-  //   compare(formValues);
-  // }, [formValues]);
+  useEffect(() => {
+    compare(formValues);
+  }, []);
 
   const handleSubmit = (data) => {
 
@@ -207,7 +208,7 @@ const CreatorPublish = () => {
                         )}
                       </>
                     )}
-                    {!disableSubmit &&
+                    {!event.isPublished &&
                       <>
                         <div className={classes.fieldContainer} role="group">
                           {values.isPrivate === "true" ? (
