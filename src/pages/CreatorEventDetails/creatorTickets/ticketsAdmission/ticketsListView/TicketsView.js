@@ -12,10 +12,20 @@ import { Formik, Form, Field, ErrorMessage } from "formik";
 import SwipeableDrawer from "@mui/material/SwipeableDrawer";
 import * as Yup from "yup";
 import Box from "@mui/material/Box";
-import { useSelector } from "react-redux"
+import { useSelector } from "react-redux";
 import CircleLoader from "../../../../../layouts/loader/CircleLoader";
 
-const TicketsView = ({ ticketsnew, dummydata, empty, isloading,setallticketmodal,setindex,seteditform,seteditform2,allticketmodal }) => {
+const TicketsView = ({
+  ticketsnew,
+  dummydata,
+  empty,
+  isloading,
+  setallticketmodal,
+  setindex,
+  seteditform,
+  seteditform2,
+  allticketmodal,
+}) => {
   const now = moment();
   const eventi = useSelector((state) => state.event);
   const [loading, setloading] = useState(false);
@@ -76,7 +86,6 @@ const TicketsView = ({ ticketsnew, dummydata, empty, isloading,setallticketmodal
       });
       setfullcapacity(totalCapacity);
       setsold(totalSold);
-     
     } catch (err) {
       console.log(err);
     }
@@ -84,18 +93,18 @@ const TicketsView = ({ ticketsnew, dummydata, empty, isloading,setallticketmodal
 
   useEffect(() => {
     getticketsforevent();
-  }, [seteditform2,dummydata,setallticketmodal]);
+  }, [seteditform2, dummydata, setallticketmodal]);
 
   async function getevent() {
     try {
       const response = await axios.get(
         routes.createEvent + "/" + eventi.eventId
       );
-      console.log(response.data);
-      seteventdata(response.data);
-      setfullcapacity(response.data.capacity);
-      console.log(event)
-      initialValues.capacity = response.data.capacity;
+      console.log(response.data[0]);
+      seteventdata(response.data[0]);
+      setfullcapacity(response.data[0].capacity);
+      console.log(event);
+      initialValues.capacity = response.data[0].capacity;
     } catch (err) {
       console.log(err);
     }
@@ -113,12 +122,13 @@ const TicketsView = ({ ticketsnew, dummydata, empty, isloading,setallticketmodal
       setloading2(false);
       console.log(response.data);
       seteditchange(!editchange);
+      initialValues.capacity = response.data[0].capacity;
     } catch (err) {
       console.log(err);
       setloading2(false);
     }
   }
-  const initialValues = {
+ let initialValues = {
     capacity: event.capacity,
   };
 
@@ -132,12 +142,11 @@ const TicketsView = ({ ticketsnew, dummydata, empty, isloading,setallticketmodal
 
     setState({ ...state, [anchor]: open });
   };
-  function handleclick(index){
+  function handleclick(index) {
     setallticketmodal(true);
     setindex(index);
     seteditform(true);
     seteditform2(true);
-
   }
 
   return (
@@ -153,7 +162,9 @@ const TicketsView = ({ ticketsnew, dummydata, empty, isloading,setallticketmodal
         <div className={classes.container}>
           {tickets.map((Element, index) => {
             return (
-              <div className={classes.ticketcontainer} onClick={() => handleclick(index)}>
+              <div
+                className={classes.ticketcontainer}
+                onClick={() => handleclick(index)}>
                 <div className={classes.ticketinfo}>
                   <div className={classes.nameanddatecontainer}>
                     <div className={classes.iconbar}>
@@ -303,7 +314,8 @@ const TicketsView = ({ ticketsnew, dummydata, empty, isloading,setallticketmodal
                   <div className={classes.stayleavebtn}>
                     <button
                       className={classes.staybutton}
-                      onClick={toggleDrawer("right", false)}>
+                      onClick={toggleDrawer("right", false)}
+                      type="reset">
                       Cancel
                     </button>
                   </div>

@@ -88,25 +88,8 @@ const AddTicketForm = ({
           .required("  Price is required to make a paid ticket"),
          
       });
-      schema = schema.shape({
-        starttime: Yup.string().required("Start Time is required"),
-        dateValuestart: Yup.date()
-          .min(
-            moment(new Date()).format("MM-DD-YYYY"),
-            "Start date must be later than " +
-              moment(new Date()).format("DD-MM-YYYY")
-          )
-          .required("Start Date is required."),
-      });
     }
     
-      schema = schema.shape({
-        endtime: Yup.string().required("End Time is required"),
-        dateValueend: Yup.date()
-          .min(Yup.ref("dateValuestart"), "End date must be after Start Date")
-          .required("End Date is required."),
-      
-      });
     return schema;
     //salesend: Yup.date().min(new Date(), "End date cannot be in the past."),
   };
