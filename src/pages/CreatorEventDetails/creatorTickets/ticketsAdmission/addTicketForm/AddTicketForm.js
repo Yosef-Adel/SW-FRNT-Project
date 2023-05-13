@@ -86,8 +86,27 @@ const AddTicketForm = ({
           .max(1000000, "Price must be less than $1,000,000")
           .min(1, "Price must be greater than 0")
           .required("  Price is required to make a paid ticket"),
+         
+      });
+      schema = schema.shape({
+        starttime: Yup.string().required("Start Time is required"),
+        dateValuestart: Yup.date()
+          .min(
+            moment(new Date()).format("MM-DD-YYYY"),
+            "Start date must be later than " +
+              moment(new Date()).format("DD-MM-YYYY")
+          )
+          .required("Start Date is required."),
       });
     }
+    
+      schema = schema.shape({
+        endtime: Yup.string().required("End Time is required"),
+        dateValueend: Yup.date()
+          .min(Yup.ref("dateValuestart"), "End date must be after Start Date")
+          .required("End Date is required."),
+      
+      });
     return schema;
     //salesend: Yup.date().min(new Date(), "End date cannot be in the past."),
   };
@@ -228,61 +247,63 @@ const AddTicketForm = ({
 
 
 
-
+ 
 
   const handleSubmit = (data, { setErrors }) => {
     //console.log(data);
 
-    let datasent = data;
-    let sDate = new Date(data.salesend + " " + data.endtime);
-    let endDate1 = sDate.toISOString();
-    datasent.salesEnd = endDate1;
-    datasent.event = event.eventId;
-    if (paidclicked) {
-      datasent.type = "Paid";
-      datasent.price = Number(data.price);
-      delete datasent.freeprice;
-    } else {
-      datasent.type = "free";
-      delete datasent.freeprice;
-      delete datasent.price;
-    }
-    delete datasent.salesend;
-    delete datasent.Visibility;
-    delete datasent.endtime;
-
-    if (datetime) {
-      let sDate2 = new Date(data.salesstart + " " + data.starttime);
-      let startDate2 = sDate2.toISOString();
-      console.log(startDate2);
-      datasent.salesStart = startDate2;
-    } else {
-      let tickets = ticket[Number(datasent.ticketoption)].salesEnd;
-      console.log(ticket);
-      datasent.salesStart = tickets;
-    }
-    datasent.capacity = Number(data.availablequantity);
-    datasent.fee = 2.5;
-    datasent.sold = 0;
-    datasent.minQuantityPerOrder = data.minimumquantity;
-    datasent.maxQuantityPerOrder = data.maximumquantity;
-    delete datasent.minimumquantity;
-    delete datasent.maximumquantity;
-    delete datasent.availablequantity;
-    delete datasent.salesstart;
-    delete datasent.starttime;
-    delete datasent.ticketoption;
-    delete datasent.event;
-    console.log(datasent);
+      let datasent = data;
+      let sDate = new Date(data.salesend + " " + data.endtime);
+      let endDate1 = sDate.toISOString();
+      datasent.salesEnd = endDate1;
+      datasent.event = event.eventId;
+      if (paidclicked) {
+        datasent.type = "Paid";
+        datasent.price = Number(data.price);
+        delete datasent.freeprice;
+      } else {
+        datasent.type = "free";
+        delete datasent.freeprice;
+        delete datasent.price;
+      }
+      delete datasent.salesend;
+      delete datasent.Visibility;
+      delete datasent.endtime;
   
-    if(editform2)
-    {
-      editticket(datasent);
+      if (datetime) {
+        let sDate2 = new Date(data.salesstart + " " + data.starttime);
+        let startDate2 = sDate2.toISOString();
+        console.log(startDate2);
+        datasent.salesStart = startDate2;
+      } else {
+        let tickets = ticket[Number(datasent.ticketoption)].salesEnd;
+        console.log(ticket);
+        datasent.salesStart = tickets;
+      }
+      datasent.capacity = Number(data.availablequantity);
+      datasent.fee = 2.5;
+      datasent.sold = 0;
+      datasent.minQuantityPerOrder = data.minimumquantity;
+      datasent.maxQuantityPerOrder = data.maximumquantity;
+      delete datasent.minimumquantity;
+      delete datasent.maximumquantity;
+      delete datasent.availablequantity;
+      delete datasent.salesstart;
+      delete datasent.starttime;
+      delete datasent.ticketoption;
+      delete datasent.event;
+      console.log(datasent);
+    
+      if(editform2)
+      {
+        editticket(datasent);
+  
+  
+      }else{
+        addevent(datasent);
+      }
+   
 
-
-    }else{
-      addevent(datasent);
-    }
  
     // Formik.resetForm();
   };

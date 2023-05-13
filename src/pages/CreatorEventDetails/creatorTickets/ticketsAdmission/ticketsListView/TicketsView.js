@@ -7,7 +7,7 @@ import tickets1 from "../../../../../assets/data/dummytickets";
 import { BiErrorCircle } from "react-icons/bi";
 import moment from "moment";
 // import CircularProgress from "@mui/material/CircularProgress";
-import CardInfo from "../../../../../assets/data/eventsData";
+//import CardInfo from "../../../../../assets/data/eventsData";
 import { Formik, Form, Field, ErrorMessage } from "formik";
 import SwipeableDrawer from "@mui/material/SwipeableDrawer";
 import * as Yup from "yup";
@@ -23,7 +23,7 @@ const TicketsView = ({ ticketsnew, dummydata, empty, isloading,setallticketmodal
   const [tickets, setTickets] = useState(tickets1.tickets2);
   const [fullcapacity, setfullcapacity] = useState(0);
   const [sold, setsold] = useState(0);
-  const [event, seteventdata] = useState(CardInfo);
+  const [event, seteventdata] = useState([]);
   const [editchange, seteditchange] = useState(false);
 
   const [state, setState] = React.useState({
@@ -42,7 +42,15 @@ const TicketsView = ({ ticketsnew, dummydata, empty, isloading,setallticketmodal
 
       .required("Capacity is required."),
   });
-  
+  function handleKeyPress(event) {
+    const keyCode = event.keyCode || event.which;
+    const keyValue = String.fromCharCode(keyCode);
+
+    // Only allow numeric values
+    if (/[^0-9]/.test(keyValue)) {
+      event.preventDefault();
+    }
+  }
   async function getticketsforevent() {
     try {
       isloading(true);
@@ -86,6 +94,7 @@ const TicketsView = ({ ticketsnew, dummydata, empty, isloading,setallticketmodal
       console.log(response.data);
       seteventdata(response.data);
       setfullcapacity(response.data.capacity);
+      console.log(event)
       initialValues.capacity = response.data.capacity;
     } catch (err) {
       console.log(err);
@@ -282,6 +291,7 @@ const TicketsView = ({ ticketsnew, dummydata, empty, isloading,setallticketmodal
                             className={classes.field}
                             name="capacity"
                             value={values.capacity}
+                            onKeyPress={handleKeyPress}
                           />
                         </div>
                         <ErrorMessage name="capacity" component="span" />
