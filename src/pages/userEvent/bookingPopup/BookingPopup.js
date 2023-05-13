@@ -1,8 +1,8 @@
 import React from "react";
-import { useState} from "react";
+import { useState } from "react";
 
 import classes from "./bookingpopup.module.css";
-import {useParams } from "react-router-dom";
+import { useParams } from "react-router-dom";
 // import tickets from "../../../assets/data/dummytickets";
 import BookingForm from "./bookingForm/BookingForm";
 import Box from "@mui/material/Box";
@@ -262,15 +262,18 @@ const BookingPopup = ({ eventtitle, date, image }) => {
                   ? classes.openSummaryContainer
                   : classes.summarycontainer
               }>
-              <div
-                id="EventPageBookingPopUpSummaryImgContainer"
-                className={classes.cardImage}>
-                <img
-                  id="EventPageBookingPopUpSummaryImg"
-                  src={image}
-                  alt="event_img"
-                />
-              </div>
+              {image ? (
+                <div
+                  id="EventPageBookingPopUpSummaryImgContainer"
+                  className={classes.cardImage}>
+                  <img
+                    id="EventPageBookingPopUpSummaryImg"
+                    src={image}
+                    alt="event_img"
+                  />
+                </div>
+              ) : null}
+
               {empty && (
                 <div
                   id="EventPageBookingPopUpSummaryEmptyCartContainer"
