@@ -10,7 +10,7 @@ const Timer = (props) => {
 
   /**
    * function that calculates the current remaining time
-   * @namespace register
+   * @namespace updateTime
    *
    */
   function updateTime() {
