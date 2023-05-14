@@ -54,7 +54,7 @@ const navData = {
     ],
     [
       {
-        title: "Log In",
+        title: "aaaaaaaaaaaa",
         route: "/login",
       },
       {
