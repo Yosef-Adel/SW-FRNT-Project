@@ -3,11 +3,11 @@ import React, { useEffect, useState } from "react";
 import ErrorNotification from "../../../generic components/error message/ErrorNotification";
 
 /**
- * Component that returns Creator's Add Attendee page
+ * Component that returns ticket row componenet in add attendee
  *
  * @component
  * @example
- * return(<CreatorAddAttendee />)
+ * return(<TicketsRowComponent />)
  */
 
 const TicketsRowComponent = (props) => {
@@ -27,6 +27,10 @@ const TicketsRowComponent = (props) => {
     // console.log(newfaceValues);
   }, [faceValue]);
 
+    /**
+   * function that reflects changes of qualinity in parent's array
+   * @namespace setQuanArr
+   */
   function setQuanArr() {
     // let newQuantityArr = props.QuantityArr;
     const newQuantityArr = [...props.QuantityArr];

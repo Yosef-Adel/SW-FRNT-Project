@@ -37,6 +37,11 @@ const EventListCard = (props) => {
   var d = new Date(moment(props.event.startDate).format('YYYY-MM-DD'));
   var dayName = days[d.getDay()];
 
+  /**
+   * function that sends the saves event infor in event slice, triggered when an event from the list is clicked on
+   * @namespace handleEventClicked
+   * @param {object}  event  chosen event info 
+   */
   const handleEventClicked = (event) => {
     dispatch(
       eventActions.default({

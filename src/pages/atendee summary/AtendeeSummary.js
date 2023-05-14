@@ -41,6 +41,11 @@ const AtendeeSummary = () => {
 
   const [transactionData, setTransactionData] = useState([]);
 
+  /**
+   * function that sends the request that gets attendees info as csv for export
+   * @namespace handleExport
+   */
+
   async function handleExport() {
     try {
       axios
@@ -59,6 +64,10 @@ const AtendeeSummary = () => {
     }
   }
 
+  /**
+   * function that sends the request to get all attendees for an event (paginated)
+   * @namespace getAtendees
+   */
   async function getAtendees() {
     setLoader(true);
     let response = "";

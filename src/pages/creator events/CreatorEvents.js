@@ -82,6 +82,10 @@ const CreatorEvents = () => {
     checkCreator();
   }, []);
 
+  /**
+   * function that sends the request that gets all events created by a certain user(creator)
+   * @namespace getEvents
+   */
   async function getEvents() {
     setLoader(true);
     setEventList([]);

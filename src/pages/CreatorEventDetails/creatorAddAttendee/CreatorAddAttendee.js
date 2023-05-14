@@ -34,6 +34,11 @@ const CreatorAddAttendee = () => {
   const [errorLink, setErrorLink] = useState("");
   const [errorLinkMsg, setErrorLinkMsg] = useState("");
 
+    /**
+   * function that sends post request of add attendee
+   * @namespace handleEventClicked
+   * @param {object}  data  form data 
+   */
   async function addAttendee(data) {
     let response = "";
     setSuccess(false);
@@ -56,7 +61,10 @@ const CreatorAddAttendee = () => {
     }
   }
 
-  // let ticketsBought = [];
+    /**
+   * function that construct the tickets' object to be sent in the post request
+   * @namespace setTotalTickets
+   */
   function setTotalTickets() {
     let index = 0;
     let the_tickets = [];

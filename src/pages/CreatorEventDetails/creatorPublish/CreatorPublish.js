@@ -50,6 +50,10 @@ const CreatorPublish = () => {
   const [formValues, setFormValues] = useState(initialValues);
 
 
+  /**
+   * function that send the put request to publish an event
+   * @namespace publishData
+   */
   async function publishData(data) {
     console.log(data);
     console.log(event.eventId);
@@ -62,6 +66,11 @@ const CreatorPublish = () => {
     } catch (err) {}
   }
 
+  /**
+   * function that compares initial form values to changed one to disable form submit when values = initial values
+   * @namespace compare
+   * @param   {object} data     current form data
+   */
   function compare(data){
     if(!event.isPublished){
       return false
