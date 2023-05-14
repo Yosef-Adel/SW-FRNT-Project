@@ -100,11 +100,11 @@ const TicketsView = ({
       const response = await axios.get(
         routes.createEvent + "/" + eventi.eventId
       );
-      console.log(response.data[0]);
-      seteventdata(response.data[0]);
-      setfullcapacity(response.data[0].capacity);
+      console.log(response.data);
+      seteventdata(response.data);
+      setfullcapacity(response.data.capacity);
       console.log(event);
-      initialValues.capacity = response.data[0].capacity;
+      initialValues.capacity = response.data.capacity;
     } catch (err) {
       console.log(err);
     }
@@ -122,7 +122,7 @@ const TicketsView = ({
       setloading2(false);
       console.log(response.data);
       seteditchange(!editchange);
-      initialValues.capacity = response.data[0].capacity;
+      initialValues.capacity = response.data.capacity;
     } catch (err) {
       console.log(err);
       setloading2(false);

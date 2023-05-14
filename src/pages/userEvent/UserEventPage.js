@@ -13,8 +13,6 @@ import EventDetails from "./eventDetails/EventDetails";
 import { useSelector, useDispatch } from "react-redux";
 import { userActions } from "../../store/userSlice";
 
-
-
 /**
  * Component that returns Event page attendee veiw
  *
@@ -47,7 +45,7 @@ const UserEventPage = () => {
   }
 
   useEffect(() => {
-    window.scrollTo(0, 0)
+    window.scrollTo(0, 0);
     getEvent();
   }, []);
 
@@ -85,10 +83,9 @@ const UserEventPage = () => {
 
   return (
     <div className={classes.container}>
-      <NavBar/>
+      <NavBar />
       <EventBanner image={event.image} />
       <div className={classes.eventdetailscontainer}>
-        
         <EventDetails event={event} />
         <BookingPopup
           eventtitle={event.name}
