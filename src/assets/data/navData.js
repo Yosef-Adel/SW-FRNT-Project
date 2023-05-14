@@ -44,6 +44,11 @@ const navData = {
             icon: "//balbla",
             route: "/",
           },
+          {
+            title: "gg",
+            icon: "//balbla",
+            route: "/",
+          },
         ],
       },
       {
