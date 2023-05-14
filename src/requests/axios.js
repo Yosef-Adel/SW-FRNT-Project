@@ -18,11 +18,12 @@ if(user){
   id = user.id;
 }
 
-const url = "https://yosefadel.com/";
+const url =
+  process.env.API_URL || "http://ec2-3-219-197-102.compute-1.amazonaws.com/";
 
 let instance = "";
   instance = axios.create({
-    baseURL: url,
+    baseURL: "https://sw-backend-project.vercel.app/",
     headers: {
       Authorization:
         "Bearer " + token,
