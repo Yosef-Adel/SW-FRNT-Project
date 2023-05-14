@@ -5,6 +5,14 @@ import tickets1 from "../../../../assets/data/dummytickets";
 import TicketsView from "./ticketsListView/TicketsView";
 import initialValuedata from "../../../../assets/data/initialValuedata";
 
+/**
+ * Component that returns Creator's Manage Tickets List and form
+ *
+ * @component
+ * @example
+ * return(<Tickets empty={setEmpty} isempty={empty} loading={setLoading} isloading={loading} />)
+ */
+
 export default function Tickets({ empty, isempty, loading, isloading }) {
   const [dummydata, setdummydata] = useState(true);
   const [ticketlist, setticketlist] = useState(tickets1.tickets2);

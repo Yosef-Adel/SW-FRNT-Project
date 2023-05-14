@@ -29,6 +29,14 @@ import ErrorNotification from "../../../../../generic components/error message/E
 import CircleLoader from "../../../../../layouts/loader/CircleLoader";
 import TicketModal from "../../../../../generic components/ticketsModal/TicketsModal";
 
+/**
+ * Component that returns Creator's Manage Promo codes form
+ *
+ * @component
+ * @example
+ * return(<AddPromocodeForm setdummydata={setdummydata} dummydata={dummydata} emptypromo={emptypromo} loadinglist={loadinglist}/>)
+ */
+
 const AddPromocodeForm = ({
   setdummydata,
   dummydata,
@@ -120,6 +128,13 @@ const AddPromocodeForm = ({
     input2.click();
   };
 
+  /**
+   * function that is is triggerd to add promo code manually 
+   * @function sendData
+   * @param data data
+
+   */
+
   async function sendData(data) {
     console.log(data);
     setloading(true);
@@ -140,6 +155,13 @@ const AddPromocodeForm = ({
     }
   }
 
+  /**
+   * function that is is triggerd to add promo code using csv file
+   * @function uploadData
+   * @param data data
+
+   */
+
   async function uploadData(data) {
     console.log(data);
     setloading(true);
@@ -159,6 +181,13 @@ const AddPromocodeForm = ({
       setErrorMsg(err.response.data.message);
     }
   }
+
+  /**
+   * function that is is triggerd to submit promo code form
+   * @function handleSubmit
+   * @param data data
+
+   */
 
   const handleSubmit = (data) => {
     console.log(tickets);
@@ -484,7 +513,7 @@ const AddPromocodeForm = ({
             height: "calc(100% - 60px)",
             marginRight: "auto",
             marginLeft: "auto",
-            marginTop:60,
+            marginTop: 60,
           },
         }}>
         <Box

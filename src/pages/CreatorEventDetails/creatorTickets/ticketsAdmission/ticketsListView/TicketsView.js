@@ -15,6 +15,14 @@ import Box from "@mui/material/Box";
 import { useSelector } from "react-redux";
 import CircleLoader from "../../../../../layouts/loader/CircleLoader";
 
+/**
+ * Component that returns Creator's Manage Tickets List
+ *
+ * @component
+ * @example
+ * return(<TicketsView  setallticketmodal={setallticketmodal} empty={empty} isloading={loading} dummydata={dummydata} ticketsnew={setticketlist} setindex={setindex} seteditform={seteditform} seteditform2={seteditform2} />)
+ */
+
 const TicketsView = ({
   ticketsnew,
   dummydata,
@@ -40,6 +48,14 @@ const TicketsView = ({
     right: false,
   });
 
+  /**
+   * function that is triggered to submit the form edit capacity
+   * @function handleSubmit
+   * @param {Object} data  data of the form
+   * @param setErrors
+
+   */
+
   const handleSubmit = (data, { setErrors }) => {
     let datar = data;
     datar.capacity = Number(data.capacity);
@@ -61,6 +77,13 @@ const TicketsView = ({
       event.preventDefault();
     }
   }
+
+  /**
+   * function that is triggered to get tickets
+   * @function getticketsforevent
+
+   */
+
   async function getticketsforevent() {
     try {
       isloading(true);
@@ -95,6 +118,12 @@ const TicketsView = ({
     getticketsforevent();
   }, [seteditform2, dummydata, setallticketmodal]);
 
+  /**
+   * function that is triggered to get event by ID
+   * @function getevent
+
+   */
+
   async function getevent() {
     try {
       const response = await axios.get(
@@ -112,6 +141,14 @@ const TicketsView = ({
   useEffect(() => {
     getevent();
   }, [editchange]);
+
+  /**
+   * function that is triggered to edit the capacity of the event
+   * @function editcap
+   * @param {Object} data  data of the form
+
+   */
+
   async function editcap(data) {
     try {
       setloading2(true);
@@ -128,7 +165,7 @@ const TicketsView = ({
       setloading2(false);
     }
   }
- let initialValues = {
+  let initialValues = {
     capacity: event.capacity,
   };
 
@@ -142,6 +179,13 @@ const TicketsView = ({
 
     setState({ ...state, [anchor]: open });
   };
+
+  /**
+   * function that is triggered to open the edit form for the specific ticket
+   * @function handleclick
+   * @param {Number} index  index of the ticket
+
+   */
   function handleclick(index) {
     setallticketmodal(true);
     setindex(index);

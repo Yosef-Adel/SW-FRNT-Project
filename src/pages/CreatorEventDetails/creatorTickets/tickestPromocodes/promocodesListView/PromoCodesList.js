@@ -10,6 +10,14 @@ import moment from "moment";
 import { useSelector } from "react-redux";
 import CircleLoader from "../../../../../layouts/loader/CircleLoader";
 
+/**
+ * Component that returns Creator's Manage Promo codes List
+ *
+ * @component
+ * @example
+ * return(<PromoCodesList  dummydata={dummydata} setemptypromo={setEmptypromo} setloadinglist={setloadinglist} />)
+ */
+
 const PromoCodesList = ({ dummydata, setemptypromo, setloadinglist }) => {
   const event = useSelector((state) => state.event);
   const [promocodes, setPromocodes] = useState(data.promocodes);

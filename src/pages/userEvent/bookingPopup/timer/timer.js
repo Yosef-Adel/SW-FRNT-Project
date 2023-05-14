@@ -6,7 +6,7 @@ const Timer = (props) => {
   const [timer, setTimer] = useState(""); // current time
   let finished;
 
-  var timePeriodMillis = 20 * 60 * 1000; //20 minutes
+  var timePeriodMillis = 1 * 60 * 1000; //20 minutes
 
   /**
    * function that calculates the current remaining time

@@ -7,7 +7,7 @@ import moment from "moment";
  *
  * @component
  * @example
- * return(<RecentOrders />)
+ * return(<RecentOrders  recentordersReport ={ recentordersReport } />)
  */
 const RecentOrders = ({ recentordersReport }) => {
   return (
