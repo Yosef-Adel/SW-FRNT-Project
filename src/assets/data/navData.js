@@ -44,11 +44,6 @@ const navData = {
             icon: "//balbla",
             route: "/",
           },
-          {
-            title: "gg",
-            icon: "//balbla",
-            route: "/",
-          },
         ],
       },
       {
@@ -59,7 +54,7 @@ const navData = {
     ],
     [
       {
-        title: "aaaaaaaaaaaa",
+        title: "Login",
         route: "/login",
       },
       {
